@@ -10,5 +10,5 @@
         <Sprite texture="@image_sky"/>
     </entity>
 
-    <include path="res/scene/entities" name="Player" />
+    <include path="res/scene/entities/stick_player.xml" name="Player" />
 </scene>
