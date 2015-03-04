@@ -57,6 +57,27 @@ public abstract class Collider extends Component {
 	}
 
 	public static Collision aabb(AABBCollider box1, AABBCollider box2) {
+		if (!(
+				box1.getBot() >= box2.getTop() ||
+				box1.getTop() <= box2.getBot() ||
+				box1.getLeft() >= box2.getRight() ||
+				box1.getRight() <= box2.getLeft())) {
+
+			float top = box2.getTop() - box1.getBot();
+			float bot = box1.getTop() - box2.getBot();
+			float left = box1.getRight() - box2.getLeft();
+			float right = box2.getRight() - box1.getLeft();
+
+			float y = (top < bot) ? top : 0 - bot;
+			float x = (right < left) ? right : 0 - left;
+
+			if (Math.abs(y) < Math.abs(x))
+				return new Collision(box2.getEntity(), new Vector2(0, 1), y);
+
+			else
+				return new Collision(box2.getEntity(), new Vector2(1, 0), x);
+		}
+
 		return null;
 	}
 

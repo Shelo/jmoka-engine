@@ -7,11 +7,9 @@
         <Sprite texture="@image_sky"/>
     </entity>
 
-    <entity position="180, 50, 1" rotation="25" name="Box1">
+    <entity position="180, 50, 1" rotation="0" name="Box1">
         <Sprite texture="@image_green_box" />
-        <SATCollider />
-
-        <Rotator />
+        <AABBCollider/>
 
         <Controllable
                 topSpeed="500"
