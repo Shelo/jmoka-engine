@@ -10,5 +10,10 @@
         <Sprite texture="@image_sky"/>
     </entity>
 
+    <entity position="-5, ${@screen_height / 2}" rotation="0" name="LeftBox" size="10, @screen_height">
+        <AABBCollider/>
+    </entity>
+
     <include path="res/scene/entities/stick_player.xml" name="Player" />
+    <include path="res/scene/entities/ground.xml" name="Ground"/>
 </scene>

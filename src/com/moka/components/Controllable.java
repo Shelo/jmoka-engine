@@ -6,6 +6,7 @@ import com.moka.core.Timer;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.core.xml.XmlSupported;
 import com.moka.math.Vector2;
+import com.moka.physics.Collision;
 import org.lwjgl.glfw.GLFW;
 
 @XmlSupported
@@ -71,13 +72,13 @@ public class Controllable extends Component {
 		float vy = acceleration * ty;
 
 		if (Math.abs(vx) > topSpeed) {
-			tx = ltx;
 			vx = (vx < 0) ? 0 - topSpeed : topSpeed;
+			tx = ltx;
 		}
 
 		if (Math.abs(vy) > topSpeed) {
-			ty = lty;
 			vy = (vy < 0) ? 0 - topSpeed : topSpeed;
+			ty = lty;
 		}
 
 		vx *= Time.getDelta();
@@ -86,6 +87,15 @@ public class Controllable extends Component {
 
 		getTransform().move(vx, vy);
 
+	}
+
+	@Override
+	public void onCollide(Collision collision) {
+		if (Math.abs(tx) > Math.abs(ty))
+			tx = 0;
+
+		else
+			ty = 0;
 	}
 
 	@XmlAttribute("topSpeed")

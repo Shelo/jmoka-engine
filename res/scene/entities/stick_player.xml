@@ -4,7 +4,8 @@
     <Sprite texture="res/images/stick_player.png" />
     <AABBCollider />
     <Controllable topSpeed="200"
-                  acceleration="100"
+                  acceleration="300"
                   impulse="2" />
+    <Gravity/>
 
 </entity>
