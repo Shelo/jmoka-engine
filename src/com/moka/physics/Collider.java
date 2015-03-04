@@ -14,11 +14,20 @@ public abstract class Collider extends Component {
 	public abstract void response(Collision collision);
 
 	public static Collision sat(SATCollider box1, SATCollider box2) {
-		if (box1.getEntity().getTransform().hasChanged())
-			box1.updateData();
 
-		if (box2.getEntity().getTransform().hasChanged())
-			box2.updateData();
+
+
+		if (box1.getEntity().getTransform().hasRotated())
+			box1.updateAxes();
+
+		else if (box1.getEntity().getTransform().hasMoved())
+			box1.updateVertices();
+
+		if (box2.getEntity().getTransform().hasRotated())
+			box2.updateAxes();
+
+		else if (box2.getEntity().getTransform().hasMoved())
+			box2.updateVertices();
 
 		ArrayList<Vector2> axes = new ArrayList<>();
 

@@ -11,6 +11,8 @@
         <Sprite texture="res/images/box1.png" />
         <SATCollider />
 
+        <Rotator/>
+
         <Controllable
                 topSpeed="500"
                 acceleration="50" />

@@ -35,7 +35,7 @@ public class SATCollider extends Collider {
 		this.vertices = vertices;
 
 		initAxes();
-		updateData();
+		updateAxes();
 	}
 
 	public void initAxes() {
@@ -66,8 +66,12 @@ public class SATCollider extends Collider {
 		axes = new Vector2[npvi.size()];
 	}
 
-	public void updateData() {
+	public void updateVertices() {
 		tVertices = getEntity().transformVertices(vertices);
+	}
+
+	public void updateAxes() {
+		updateVertices();
 
 		int k = 0;
 		for (int i : npvi) {
