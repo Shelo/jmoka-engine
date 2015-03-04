@@ -238,8 +238,6 @@ public class XmlEntityReader {
 				float x = getTestedValue(float.class, params[0]);
 				float y = getTestedValue(float.class, params[1]);
 
-				System.out.println(layer);
-
 				entity.getTransform().setPosition(new Vector3(x, y, layer));
 			} catch(ParsingException e) {
 				JMokaException.raise("Entity: " + name + "'s position is malformed, must be Vector3.");
