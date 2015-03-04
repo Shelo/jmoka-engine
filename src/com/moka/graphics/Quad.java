@@ -35,10 +35,10 @@ public class Quad {
 
 		// generate vertices.
 		vertices = new Vertex[] {
-				new Vertex(-0.5f,  -0.5f, 0, 0, 0),
-				new Vertex(-0.5f, 	0.5f, 0, 0, yTexCoord),
-				new Vertex(0.5f, 	0.5f, 0, xTexCoord, yTexCoord),
-				new Vertex(0.5f,   -0.5f, 0, xTexCoord, 0)
+				new Vertex(-0.5f,  -0.5f, 0, 0, yTexCoord),
+				new Vertex(-0.5f, 	0.5f, 0, 0, 0),
+				new Vertex(0.5f, 	0.5f, 0, xTexCoord, 0),
+				new Vertex(0.5f,   -0.5f, 0, xTexCoord, yTexCoord)
 		};
 
 		// populate vertexBuffer.

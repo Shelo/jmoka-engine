@@ -3,7 +3,7 @@
         <Camera />
     </entity>
 
-    <entity position="${@screen_width / 2}, 240" layer="0" rotation="0" name="Sky" size="@screen_width, @screen_height">
+    <entity position="${@screen_width / 2}, ${@screen_height / 2}" layer="0" rotation="0" name="Sky" size="@screen_width, @screen_height">
         <Sprite texture="@image_sky"/>
     </entity>
 
