@@ -3,8 +3,12 @@
         <Camera />
     </entity>
 
-    <entity position="${@screen_width / 2}, ${@screen_height / 2}" layer="@layer_0" rotation="0" name="Sky" size="@screen_width, @screen_height">
+    <entity
+            layer="@layer_0" rotation="0" name="Sky" size="@screen_width, @screen_height"
+            position="${@screen_width / 2}, ${@screen_height / 2}">
+
         <Sprite texture="@image_sky"/>
+
     </entity>
 
     <entity position="180, 50" rotation="0" name="Player" size="50, 50">

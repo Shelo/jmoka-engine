@@ -119,6 +119,11 @@ public class Vector2 {
 		return x == other.x && y == other.y;
 	}
 
+	public static Vector2 normalized(float x, float y) {
+		float length = (float) Math.sqrt(x * x + y * y);
+		return new Vector2(x / length, y / length);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Vector2) {

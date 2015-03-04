@@ -2,6 +2,7 @@ package com.moka.core.xml;
 
 import com.moka.components.Component;
 import com.moka.core.Entity;
+import com.moka.core.Prefab;
 import com.moka.core.Resources;
 import com.moka.core.game.BaseGame;
 import com.moka.exceptions.JMokaException;
@@ -261,17 +262,12 @@ public class XmlEntityReader {
 	}
 
 	public void setTransformParams(Entity entity, Attributes attributes) {
-		String name = entity.getName();
-
 		if(attributes.getValue(VAL_POSITION) != null) {
 			String[] params = attributes.getValue(VAL_POSITION).split(" *, *");
-
 			float layer = attributes.getValue(VAL_LAYER) == null? 0 :
 					getTestedValue(int.class, attributes.getValue(VAL_LAYER));
-
 			float x = getTestedValue(float.class, params[0]);
 			float y = getTestedValue(float.class, params[1]);
-
 			entity.getTransform().setPosition(new Vector3(x, y, layer));
 		}
 
@@ -281,16 +277,10 @@ public class XmlEntityReader {
 		}
 
 		if(attributes.getValue(VAL_SIZE) != null) {
-			try {
-				String[] params = parametersParser.parse(attributes.getValue(VAL_SIZE));
-
-				float x = getTestedValue(float.class, params[0]);
-				float y = getTestedValue(float.class, params[1]);
-
-				entity.getTransform().setSize(new Vector2(x, y));
-			} catch(ParsingException e) {
-				JMokaException.raise("Entity: " + name + "'s size is malformed, must be Vector2.");
-			}
+			String[] params = attributes.getValue(VAL_SIZE).split(" *, *");
+			float x = getTestedValue(float.class, params[0]);
+			float y = getTestedValue(float.class, params[1]);
+			entity.getTransform().setSize(new Vector2(x, y));
 		}
 	}
 	
@@ -346,5 +336,10 @@ public class XmlEntityReader {
 
 	private boolean hasPackage(String componentClass) {
 		return componentClass.split("\\.").length != 1;
+	}
+
+	public Prefab newPrefab(String filePath) {
+		// TODO.
+		return null;
 	}
 }

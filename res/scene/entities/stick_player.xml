@@ -1,6 +1,7 @@
 <entity xmlns="http://www.moka-dev.com/entity"
         position="25, 25" rotation="0" size="50, 50">
 
-    <Sprite texture="@image_moka" />
-    <CircleCollider />
+    <Sprite texture="res/images/stick_player.png" />
+    <AABBCollider />
+
 </entity>
