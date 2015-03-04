@@ -1,7 +1,7 @@
 package com.moka.components;
 
 import com.moka.core.Input;
-import com.moka.core.Moka;
+import com.moka.core.Time;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.core.xml.XmlSupported;
 import org.lwjgl.glfw.GLFW;
@@ -53,16 +53,16 @@ public class Controllable extends Component {
 		*/
 
 		if(Input.getKey(GLFW.GLFW_KEY_D))
-			dx = (float) (Moka.getDelta() * 100);
+			dx = (float) (Time.getDelta() * 100);
 
 		if(Input.getKey(GLFW.GLFW_KEY_A))
-			dx = (float) (- Moka.getDelta() * 100);
+			dx = (float) (- Time.getDelta() * 100);
 
 		if(Input.getKey(GLFW.GLFW_KEY_W))
-			dy = (float) (Moka.getDelta() * 100);
+			dy = (float) (Time.getDelta() * 100);
 
 		if(Input.getKey(GLFW.GLFW_KEY_S))
-			dy = (float) (- Moka.getDelta() * 100);
+			dy = (float) (- Time.getDelta() * 100);
 
 		getTransform().move(dx, dy, 0);
 	}

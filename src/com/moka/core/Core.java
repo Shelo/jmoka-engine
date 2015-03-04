@@ -75,6 +75,7 @@ public class Core {
 				// we'll need to render only if we updated the scene... obviously.
 				render = true;
 
+				Time.update(delta);
 				game.updateAll();
 				game.onUpdate();
 				Moka.getPhysics().checkCollisions(game);
