@@ -21,7 +21,7 @@ public class Controllable extends Component {
 	private float speedY;
 
 	private float tx, ty;
-	private float multiplier = 2;
+	private float impulse = 2;
 
 	Timer timer;
 
@@ -36,10 +36,10 @@ public class Controllable extends Component {
 	@Override
 	public void onUpdate() {
 		if (Input.getKey(GLFW.GLFW_KEY_D))
-			tx += Time.getDelta() * multiplier;
+			tx += Time.getDelta() * impulse;
 
 		if (Input.getKey(GLFW.GLFW_KEY_A))
-			tx -= Time.getDelta() * multiplier;
+			tx -= Time.getDelta() * impulse;
 
 		if (!(Input.getKey(GLFW.GLFW_KEY_D) || Input.getKey(GLFW.GLFW_KEY_A))) {
 			if (tx > -TOLERANCE && tx < TOLERANCE)
@@ -50,10 +50,10 @@ public class Controllable extends Component {
 		}
 
 		if (Input.getKey(GLFW.GLFW_KEY_W))
-			ty += Time.getDelta() * multiplier;
+			ty += Time.getDelta() * impulse;
 
 		if (Input.getKey(GLFW.GLFW_KEY_S))
-			ty -= Time.getDelta() * multiplier;
+			ty -= Time.getDelta() * impulse;
 
 		if (!(Input.getKey(GLFW.GLFW_KEY_W) || Input.getKey(GLFW.GLFW_KEY_S))) {
 			if (ty > -TOLERANCE && ty < TOLERANCE)
@@ -97,5 +97,10 @@ public class Controllable extends Component {
 	@XmlAttribute("constrainY")
 	public void setConstrainY(boolean constrainY) {
 		this.constrainY = constrainY;
+	}
+
+	@XmlAttribute("impulse")
+	public void setImpulse(float impulse) {
+		this.impulse = impulse;
 	}
 }

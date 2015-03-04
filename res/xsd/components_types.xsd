@@ -21,9 +21,10 @@
     
     <!-- Controllable -->
     <xs:complexType name="ControllableType">
-        <xs:attribute name="topSpeed" type="xs:float" />
-        <xs:attribute name="acceleration" type="xs:float" />
-        <xs:attribute name="constrainX"   type="xs:boolean" />
+        <xs:attribute name="topSpeed"       type="xs:float" />
+        <xs:attribute name="acceleration"   type="xs:float" />
+        <xs:attribute name="constrainX"     type="xs:boolean" />
+        <xs:attribute name="impulse"        type="xs:float" />
         <xs:attribute name="constrainY"     type="xs:boolean" />
     </xs:complexType>
 
