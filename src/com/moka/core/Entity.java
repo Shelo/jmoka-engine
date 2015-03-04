@@ -3,6 +3,7 @@ package com.moka.core;
 import com.moka.components.Component;
 import com.moka.components.Sprite;
 import com.moka.graphics.Shader;
+import com.moka.physics.Collider;
 
 import java.util.ArrayList;
 
