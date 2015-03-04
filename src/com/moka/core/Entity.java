@@ -2,6 +2,7 @@ package com.moka.core;
 
 import com.moka.components.Component;
 import com.moka.components.Sprite;
+import com.moka.math.Matrix4;
 import com.moka.math.Vector2;
 import com.moka.physics.Collider;
 
@@ -19,7 +20,7 @@ public class Entity {
 		this.name = name;
 
 		components = new ArrayList<>();
-		transform = new Transform();
+		transform = new Transform(this);
 	}
 
 	public Entity addComponent(Component component) {
@@ -34,6 +35,9 @@ public class Entity {
 	}
 
 	public void create() {
+		if(hasSprite()) sprite.onCreate();
+		if(hasCollider()) collider.onCreate();
+
 		for(Component component : components)
 			component.onCreate();
 	}
@@ -54,12 +58,12 @@ public class Entity {
 		return transform;
 	}
 
-	public Sprite getSprite() {
-		return sprite;
-	}
-
 	public Collider getCollider() {
 		return collider;
+	}
+
+	public Sprite getSprite() {
+		return sprite;
 	}
 
 	public String getName() {
@@ -67,13 +71,19 @@ public class Entity {
 	}
 
 	public Vector2[] transformVertices(Vector2[] vertices) {
-		return vertices;
+		Vector2[] res = new Vector2[vertices.length];
+		Matrix4 model = getTransform().getModelMatrix();
+
+		for(int i = 0; i < vertices.length; i++)
+			res[i] = model.mul(vertices[i]);
+
+		return res;
 	}
 
 	public boolean hasSprite() {
 		return sprite != null;
 	}
-	
+
 	public boolean hasCollider() {
 		return collider != null;
 	}

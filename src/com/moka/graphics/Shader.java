@@ -46,7 +46,7 @@ public class Shader {
 	}
 
 	public void update(final Transform transform, final Sprite sprite) {
-		Matrix4 model = transform.getModelMatrix(sprite.getWidth(), sprite.getHeight());
+		Matrix4 model = transform.getModelMatrix();
 
 		setUniform("u_model", model);
 		setUniform("u_color", sprite.getTint());

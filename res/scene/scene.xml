@@ -1,13 +1,13 @@
 <scene xmlns="http://www.moka-dev.com/scene">
-    <entity name="MainCamera" position="0, 0, 0" rotation="0" scale="1, 1">
+    <entity name="MainCamera" position="0, 0, 0" rotation="0">
         <Camera />
     </entity>
 
-    <entity position="180, 240, 0" rotation="0" scale="1, 1" name="Sky">
+    <entity position="180, 240, 0" rotation="0" name="Sky">
         <Sprite texture="res/images/sky.png"/>
     </entity>
 
-    <entity position="180, 50, 1" rotation="180" scale="1, 1" name="Plane">
+    <entity position="180, 50, 1" rotation="180" name="Plane" size="50, 50">
         <Sprite texture="res/images/plane.png" />
 
         <Controllable
@@ -20,9 +20,4 @@
                 top="100"
                 bottom="0" />
     </entity>
-
-    <include path="res/scene/entities/ball.xml" position="0, 0, 0" name="Ball1" />
-    <include path="res/scene/entities/ball.xml" position="100, 100, 0" name="Ball2" />
-    <include path="res/scene/entities/ball.xml" position="300, 100, 0" name="Ball3" />
-    <include path="res/scene/entities/ball.xml" position="100, 300, 0" name="Ball4" />
 </scene>

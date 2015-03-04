@@ -34,6 +34,10 @@ public final class Moka {
 		return game;
 	}
 
+	public static double getDelta() {
+		return core.getDelta();
+	}
+
 	public static void start() {
 		core.start();
 	}

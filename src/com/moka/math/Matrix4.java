@@ -245,6 +245,11 @@ public class Matrix4 {
 		return res;
 	}
 
+	public Vector2 mul(Vector2 vector) {
+		return new Vector2(m[0][0] * vector.getX() + m[0][1] * vector.getY() + m[0][3],
+				m[1][0] * vector.getX() + m[1][1] * vector.getY() + m[1][3]);
+	}
+
 	public float[][] getM() {
 		float[][] res = new float[4][4];
 

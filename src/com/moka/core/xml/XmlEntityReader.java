@@ -26,6 +26,9 @@ public class XmlEntityReader {
 	private static final int STATE_INIT			= 0;
 	private static final int STATE_ENTITY		= 1;
 	private static final int STATE_CLOSED		= 2;
+	private static final String VAL_SIZE 		= "size";
+	private static final String VAL_POSITION 	= "position";
+	private static final String VAL_ROTATION 	= "rotation";
 
 	private ParametersParser parametersParser;
 	private String entityName;
@@ -207,9 +210,9 @@ public class XmlEntityReader {
 	public void setTransformParams(Entity entity, Attributes attributes) {
 		String name = entity.getName();
 
-		if(attributes.getValue("position") != null) {
+		if(attributes.getValue(VAL_POSITION) != null) {
 			try {
-				String[] params = parametersParser.parse(attributes.getValue("position"));
+				String[] params = parametersParser.parse(attributes.getValue(VAL_POSITION));
 
 				float x = Float.parseFloat(params[0]);
 				float y = Float.parseFloat(params[1]);
@@ -221,21 +224,21 @@ public class XmlEntityReader {
 			}
 		}
 
-		if(attributes.getValue("rotation") != null) {
-			float rotation = Float.parseFloat(attributes.getValue("rotation"));
+		if(attributes.getValue(VAL_ROTATION) != null) {
+			float rotation = Float.parseFloat(attributes.getValue(VAL_ROTATION));
 			entity.getTransform().setRotation(rotation);
 		}
 
-		if(attributes.getValue("scale") != null) {
+		if(attributes.getValue(VAL_SIZE) != null) {
 			try {
-				String[] params = parametersParser.parse(attributes.getValue("scale"));
+				String[] params = parametersParser.parse(attributes.getValue(VAL_SIZE));
 
 				float x = Float.parseFloat(params[0]);
 				float y = Float.parseFloat(params[1]);
 
-				entity.getTransform().setScale(new Vector2(x, y));
+				entity.getTransform().setSize(new Vector2(x, y));
 			} catch(ParsingException e) {
-				JMokaException.raise("Entity: " + name + "'s position is malformed, must be Vector3.");
+				JMokaException.raise("Entity: " + name + "'s size is malformed, must be Vector2.");
 			}
 		}
 	}

@@ -102,4 +102,17 @@ public class Vector2 {
 	public boolean equals(Vector2 other) {
 		return x == other.x && y == other.y;
 	}
+
+	@Override
+	public String toString() {
+		return "(" + x + ", " + y + ")";
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public void setY(float y) {
+		this.y = y;
+	}
 }

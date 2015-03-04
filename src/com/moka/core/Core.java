@@ -12,10 +12,11 @@ import static org.lwjgl.glfw.GLFW.glfwTerminate;
  */
 public class Core {
 	private static final String TAG = "CORE";
-	
+
 	private float frameTime;
 	private boolean daemon;
 	private BaseGame game;
+	private double delta;
 
 	/**
 	 * Creates a new instance of the engine.
@@ -45,7 +46,7 @@ public class Core {
 		double time = 0.0;
 
 		// fixed delta time.
-		final double delta = frameTime;
+		delta = frameTime;
 
 		// current time var and accumulator.
 		double currentTime = glfwGetTime();
@@ -104,6 +105,10 @@ public class Core {
 		}
 
 		stop();
+	}
+
+	public double getDelta() {
+		return delta;
 	}
 
 	public void stop() {

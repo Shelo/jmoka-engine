@@ -4,6 +4,7 @@ import com.moka.core.Entity;
 import com.moka.core.Moka;
 import com.moka.core.Transform;
 import com.moka.exceptions.JMokaException;
+import com.moka.physics.Collision;
 
 /**
  * Component class, establishes the common way a component should behave.
@@ -49,4 +50,15 @@ public abstract class Component {
 	 * @param delta the current delta time.
 	 */
 	public void onUpdate(final double delta) { }
+
+	/**
+	 * Called when the entity collided with another entity.
+	 * @param collision the collision information.
+	 */
+	public void onCollide(Collision collision) { }
+
+	/**
+	 * Called just after the physics system resolved every collision.
+	 */
+	public void onPostUpdate() { }
 }

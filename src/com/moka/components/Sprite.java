@@ -18,9 +18,8 @@ public class Sprite extends Component {
 	private Texture texture;
 	private Color tint;
 	private Quad quad;
-
-	private float height = 0;
-	private float width = 0;
+	
+	Vector2 size;
 	private float tintR = 1;
 	private float tintG = 1;
 	private float tintB = 1;
@@ -34,9 +33,7 @@ public class Sprite extends Component {
 		this.texture 	= texture;
 		this.tint 		= tint;
 
-		width 	= size.getX();
-		height 	= size.getY();
-
+		this.size.set(size.getX(), size.getY());
 		quad = new Quad(texture.getXTexCoord(), texture.getYTexCoord());
 	}
 
@@ -58,7 +55,7 @@ public class Sprite extends Component {
 
 	public void render(Shader shader) {
 		if(texture == null)
-			JMokaException.raise("Sprite: there no texture to draw.");
+			throw new JMokaException("Sprite: there no texture to draw.");
 
 		tint.set(tintR, tintG, tintB, tintA);
 
@@ -77,11 +74,11 @@ public class Sprite extends Component {
 	}
 
 	public float getWidth() {
-		return width == 0 ? texture.getWidth() : width;
+		return size == null ? texture.getWidth() : size.getX();
 	}
 
 	public float getHeight() {
-		return height == 0 ? texture.getHeight() : height;
+		return size == null ? texture.getHeight() : size.getY();
 	}
 
 	public Color getTint() {
@@ -120,11 +117,18 @@ public class Sprite extends Component {
 
 	@XmlAttribute("width")
 	public void setWidth(float value) {
-		width = value;
+		size.setX(value);
 	}
 
 	@XmlAttribute("height")
 	public void setSizeY(float value) {
-		height = value;
+		size.setY(value);
+	}
+
+	public Vector2 getSize() {
+		if(size == null) {
+			size = new Vector2(texture.getWidth(), texture.getHeight());
+		}
+		return size;
 	}
 }
