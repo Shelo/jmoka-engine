@@ -49,7 +49,7 @@ public abstract class Component {
 	 * Called every update frame.
 	 * @param delta the current delta time.
 	 */
-	public void onUpdate(final double delta) { }
+	public void onUpdate() { }
 
 	/**
 	 * Called when the entity collided with another entity.

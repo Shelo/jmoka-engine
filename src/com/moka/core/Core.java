@@ -37,7 +37,7 @@ public class Core {
 		if(daemon) return;
 		daemon = true;
 		game.onCreate();
-		game.onCreateAll();
+		game.createAll();
 		run();
 	}
 
@@ -75,8 +75,8 @@ public class Core {
 				// we'll need to render only if we updated the scene... obviously.
 				render = true;
 
-				game.onUpdateAll(delta);
-				game.onUpdate(delta);
+				game.updateAll();
+				game.onUpdate();
 				Moka.getPhysics().checkCollisions(game);
 				game.postUpdate();
 				Input.onUpdate();

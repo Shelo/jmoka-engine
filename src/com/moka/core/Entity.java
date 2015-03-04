@@ -43,10 +43,10 @@ public class Entity {
 			component.onCreate();
 	}
 
-	public void update(double delta) {
+	public void update() {
 		transform.update();
 		for(Component component : components)
-			component.onUpdate(delta);
+			component.onUpdate();
 	}
 
 	public void collide(Collision collision) {

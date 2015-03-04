@@ -40,7 +40,7 @@ public final class Renderer {
 
 		shader.setUniform("u_projectedView", camera.getProjectedViewMatrix());
 
-		game.onRenderAll(shader);
+		game.renderAll(shader);
 	}
 
 	public Camera getCamera() {

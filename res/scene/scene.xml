@@ -7,16 +7,20 @@
         <Sprite texture="@image_sky"/>
     </entity>
 
-    <entity position="180, 50, 1" rotation="0" name="Box1">
-        <Sprite texture="@image_green_box" />
-        <AABBCollider/>
+    <entity position="180, 50, 1" rotation="0" name="Player">
+        <Sprite texture="@image_moka" />
+        <CircleCollider />
 
         <Controllable
                 topSpeed="500"
                 acceleration="50" />
     </entity>
 
-    <include path="res/scene/entities/red_box.xml" name="Box2" position="280, 50, 0" />
-    <include path="res/scene/entities/red_box.xml" name="Box3" position="280, 100, 0" />
-    <include path="res/scene/entities/red_box.xml" name="Box4" position="280, 150, 0" />
+    <include path="res/scene/entities/moka_logo.xml" name="Moka1" position="400, 50, 0" />
+    <include path="res/scene/entities/moka_logo.xml" name="Moka2" position="375, 100, 0" />
+    <include path="res/scene/entities/moka_logo.xml" name="Moka3" position="350, 150, 0" />
+
+    <include path="res/scene/entities/red_box.xml" name="Box1" position="100, 50, 0" />
+    <include path="res/scene/entities/red_box.xml" name="Box2" position="75, 100, 0" />
+    <include path="res/scene/entities/red_box.xml" name="Box3" position="50, 150, 0" />
 </scene>

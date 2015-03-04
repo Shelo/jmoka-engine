@@ -27,17 +27,17 @@ public abstract class BaseGame {
 		entityReader = sceneReader.getEntityReader();
 	}
 
-	public final void onUpdateAll(double delta) {
+	public final void updateAll() {
 		for(Entity entity : entities)
-			entity.update(delta);
+			entity.update();
 	}
 
-	public final void onCreateAll() {
+	public final void createAll() {
 		for(Entity entity : entities)
 			entity.create();
 	}
 
-	public final void onRenderAll(Shader shader) {
+	public final void renderAll(Shader shader) {
 		for(Entity entity : entities)
 			if(entity.hasSprite())
 				entity.getSprite().render(shader);
@@ -121,9 +121,8 @@ public abstract class BaseGame {
 
 	/**
 	 * Called every update frame, is not necessary for most games do.
-	 * @param delta
 	 */
-	public void onUpdate(double delta) { }
+	public void onUpdate() { }
 	
 	/**
 	 * Creates the game context, this is intended to start everything the game needs.
