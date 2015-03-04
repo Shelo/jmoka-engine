@@ -25,12 +25,14 @@ public abstract class Collider extends Component {
 		Collections.addAll(axes, box1.getAxes());
 
 		for (Vector2 axis : box2.getAxes())
-			if (!axes.contains(axis))
+			if(!axes.contains(axis))
 				axes.add(axis);
 
 		float overlap = Float.POSITIVE_INFINITY;
 		Vector2 smallest = null;
 
+		System.out.println(axes.size());
+		
 		for (Vector2 axis : axes) {
 			Projection p1 = new Projection(box1.getTVertices(), axis);
 			Projection p2 = new Projection(box2.getTVertices(), axis);

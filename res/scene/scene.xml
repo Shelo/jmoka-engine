@@ -18,7 +18,16 @@
 
     <entity position="280, 50, 1" rotation="90" name="Box2">
         <SATCollider />
+        <Sprite texture="res/images/box2.png" />
+    </entity>
 
+    <entity position="280, 100, 1" rotation="90" name="Box3">
+        <SATCollider />
+        <Sprite texture="res/images/box2.png" />
+    </entity>
+
+    <entity position="280, 150, 1" rotation="90" name="Box4">
+        <SATCollider />
         <Sprite texture="res/images/box2.png" />
     </entity>
 </scene>

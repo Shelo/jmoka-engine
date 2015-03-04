@@ -120,6 +120,16 @@ public class Vector2 {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Vector2) {
+			Vector2 other = (Vector2) obj;
+			return x == other.x && y == other.y;
+		}
+		
+		return false;
+	}
+
+	@Override
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}

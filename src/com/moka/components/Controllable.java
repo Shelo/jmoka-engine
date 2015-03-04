@@ -52,16 +52,16 @@ public class Controllable extends Component {
 		*/
 
 		if(Input.getKey(GLFW.GLFW_KEY_D))
-			dx = (float) (delta * 250);
+			dx = (float) (delta * 100);
 
 		if(Input.getKey(GLFW.GLFW_KEY_A))
-			dx = (float) (- delta * 250);
+			dx = (float) (- delta * 100);
 		
 		if(Input.getKey(GLFW.GLFW_KEY_W))
-			dy = (float) (delta * 250);
+			dy = (float) (delta * 100);
 
 		if(Input.getKey(GLFW.GLFW_KEY_S))
-			dy = (float) (- delta * 250);
+			dy = (float) (- delta * 100);
 
 		getTransform().move(dx, dy, 0);
 	}
