@@ -5,6 +5,7 @@ import com.moka.components.Sprite;
 import com.moka.math.Matrix4;
 import com.moka.math.Vector2;
 import com.moka.physics.Collider;
+import com.moka.physics.Collision;
 
 import java.util.ArrayList;
 
@@ -46,6 +47,11 @@ public class Entity {
 		transform.update();
 		for(Component component : components)
 			component.onUpdate(delta);
+	}
+
+	public void collide(Collision collision) {
+		for(Component component : components)
+			component.onCollide(collision);
 	}
 
 	public void postUpdate() {

@@ -3,6 +3,7 @@
         <res name="image_red_box" value="res/images/box2.png" />
         <res name="image_sky" value="res/images/sky.png" />
         <res name="image_green_box" value="res/images/box1.png" />
+        <res name="image_moka" value="res/images/moka.png" />
     </string>
 
     <integer>

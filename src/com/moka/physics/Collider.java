@@ -82,6 +82,20 @@ public abstract class Collider extends Component {
 	}
 
 	public static Collision circle(CircleCollider circle1, CircleCollider circle2) {
+		Vector2 position1 = circle1.getEntity().getTransform().getPosition();
+		Vector2 position2 = circle2.getEntity().getTransform().getPosition();
+
+		Vector2 displace = position1.sub(position2);
+		float distanceSqrt = displace.length2();
+
+		float radiusSum = circle1.getRadius() + circle2.getRadius();
+		float radiusSqrt = radiusSum * radiusSum;
+
+		if(distanceSqrt <= radiusSqrt) {
+			float length = (float) (radiusSum - Math.sqrt(distanceSqrt));
+			return new Collision(circle2.getEntity(), displace.normalized(), length);
+		}
+
 		return null;
 	}
 
