@@ -7,8 +7,8 @@ in vec2 texCoord;
 
 void main() {
 	vec4 baseColor = texture2D(u_texture, texCoord);
-	if(baseColor == vec4(0, 0, 0, 0))
-		gl_FragColor = vec4(0, 0, 0, 0);
+	if(baseColor.a == 0)
+		discard;
 	else
 		gl_FragColor = baseColor * u_color;
 }

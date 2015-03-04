@@ -1,7 +1,9 @@
 package com.moka.test;
 
+import com.moka.components.CircleCollider;
 import com.moka.core.Moka;
 import com.moka.core.game.XmlGame;
+import com.moka.physics.Collider;
 
 /**
  * Main entrance of the engine. Write initialization here.

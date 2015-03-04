@@ -18,14 +18,16 @@ public class Entity {
 	public Entity(String name) {
 		this.name = name;
 
-		components 	= new ArrayList<>();
-		transform 	= new Transform();
+		components = new ArrayList<>();
+		transform = new Transform();
 	}
 
 	public Entity addComponent(Component component) {
 		component.setEntity(this);
 		if(component instanceof Sprite)
 			sprite = (Sprite) component;
+		else if(component instanceof Collider)
+			collider = (Collider) component;
 		else
 			components.add(component);
 		return this;
@@ -64,8 +66,8 @@ public class Entity {
 		return name;
 	}
 
-	public Vector2[] getVertexArray() {
-		return null;
+	public Vector2[] transformVertices(Vector2[] vertices) {
+		return vertices;
 	}
 
 	public boolean hasSprite() {

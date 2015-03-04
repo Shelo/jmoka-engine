@@ -5,10 +5,10 @@ import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector3;
 
 public class Bounded extends Component {
-	private float bottom	= 0;
-	private float right		= 0;
-	private float left		= 0;
-	private float top		= 0;
+	private float bottom = 0;
+	private float right	= 0;
+	private float left = 0;
+	private float top = 0;
 
 	private Transform transform;
 	private Sprite sprite;
@@ -16,7 +16,7 @@ public class Bounded extends Component {
 	@Override
 	public void onCreate() {
 		transform = getTransform();
-		sprite = getEntity().getComponent(Sprite.class);
+		sprite = getEntity().getSprite();
 	}
 
 	@Override
