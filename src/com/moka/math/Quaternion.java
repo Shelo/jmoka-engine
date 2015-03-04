@@ -236,4 +236,8 @@ public class Quaternion {
 	public boolean equals(Quaternion r) {
 		return x == r.getX() && y == r.getY() && z == r.getZ() && w == r.getW();
 	}
+
+	public Quaternion copy() {
+		return new Quaternion(x, y, z, w);
+	}
 }

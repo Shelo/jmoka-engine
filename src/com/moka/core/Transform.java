@@ -8,33 +8,31 @@ import com.moka.math.Vector3;
 
 public final class Transform {
 	private final Entity entity;
-	
-	private Quaternion rotation;
-	private Vector3 position;
-	private Vector2 size;
 
-	private boolean rotated;
+	private float x = 0;
+	private float y = 0;
+	private float z = 0;
+
+	private Quaternion prevRotation;
+	private Quaternion rotation;
+	private Vector2 size;
 
 	public Transform(Entity entity) {
 		this.entity = entity;
-
-		position = new Vector3(Vector3.ZERO);
 		rotation = new Quaternion(Quaternion.IDENTITY);
 	}
 
 	public Matrix4 getModelMatrix() {
-		Matrix4 translation = Matrix4.translate(position.getX(), position.getY(), position.getZ());
+		Matrix4 translation = Matrix4.translate((int) x, (int) y, (int) z);
 		Matrix4 scale = Matrix4.scale(getSize().getX(), getSize().getY(), 1);
 		Matrix4 rotate = rotation.toRotationMatrix();
 		return translation.mul(rotate.mul(scale));
 	}
 
 	public void move(float x, float y, float z) {
-		Vector3 _position = getPosition();
-		float _x = _position.getX();
-		float _y = _position.getY();
-		float _z = _position.getZ();
-		position = new Vector3(_x + x, _y + y, _z + z);
+		this.x += x;
+		this.y += y;
+		this.z += z;
 	}
 
 	public void move(float x, float y) {
@@ -43,10 +41,6 @@ public final class Transform {
 
 	public Quaternion getRotation() {
 		return rotation;
-	}
-
-	public Vector3 getPosition() {
-		return position;
 	}
 
 	public Vector2 getSize() {
@@ -71,15 +65,19 @@ public final class Transform {
 	}
 
 	public void setPosition(float x, float y) {
-		position.set(x, y, position.getZ());
+		this.x = x;
+		this.y = y;
 	}
 
 	public void setPosition(Vector2 position) {
-		this.position.set(position.getX(), position.getY(), this.position.getZ());
+		x = position.getX();
+		y = position.getY();
 	}
 
 	public void setPosition(Vector3 position) {
-		this.position.set(position);
+		x = position.getX();
+		y = position.getY();
+		z = position.getZ();
 	}
 
 	public void setSize(Vector2 size) {
@@ -87,17 +85,17 @@ public final class Transform {
 	}
 
 	public void setRotation(Quaternion rotation) {
+		prevRotation = this.rotation.copy();
 		this.rotation = rotation;
-		rotated = true;
 	}
 
 	public void setRotation(float rotation) {
+		prevRotation = this.rotation.copy();
 		this.rotation = new Quaternion(Vector3.AXIS_Z, (float) Math.toRadians(rotation));
-		rotated = true;
 	}
 
 	public boolean hasRotated() {
-		return rotated | (rotated = false);
+		return !prevRotation.equals(rotation);
 	}
 
 	public void setSize(int x, int y) {

@@ -7,17 +7,11 @@
         <Sprite texture="res/images/sky.png"/>
     </entity>
 
-    <entity position="180, 50, 1" rotation="180" name="Plane" size="50, 50">
-        <Sprite texture="res/images/plane.png" />
+    <entity position="180, 50, 1" rotation="0" name="Plane">
+        <Sprite texture="res/images/turret.png" />
 
         <Controllable
                 topSpeed="500"
                 acceleration="50" />
-
-        <Bounded
-                left="0"
-                right="360"
-                top="100"
-                bottom="0" />
     </entity>
 </scene>
