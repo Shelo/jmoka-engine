@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        targetNamespace="http://www.moka-dev.com/scene"
+        xmlns="http://www.moka-dev.com/scene"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified" >
+
+    <!-- Sprite. -->
+    <xs:complexType name="SpriteType">
+        <xs:attribute name="width"      type="xs:float"         use="optional" />
+        <xs:attribute name="height"     type="xs:float"         use="optional" />
+        <xs:attribute name="texture"    type="xs:string"        use="required" />
+        <xs:attribute name="tintR"     type="colorComponent"   use="optional" default="1" />
+        <xs:attribute name="tintG"     type="colorComponent"   use="optional" default="1" />
+        <xs:attribute name="tintB"     type="colorComponent"   use="optional" default="1" />
+        <xs:attribute name="tintA"     type="colorComponent"   use="optional" default="1" />
+    </xs:complexType>
+
+    <!-- Camera. -->
+    <xs:complexType name="CameraType">
+        <!-- Doesn't need values. -->
+    </xs:complexType>
+    
+    <!-- Controllable -->
+    <xs:complexType name="ControllableType">
+        <xs:attribute name="topSpeed" type="xs:float" />
+        <xs:attribute name="acceleration" type="xs:float" />
+        <xs:attribute name="constrainX"   type="xs:boolean" />
+        <xs:attribute name="constrainY"     type="xs:boolean" />
+    </xs:complexType>
+    
+
+    <xs:simpleType name="colorComponent">
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="1" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

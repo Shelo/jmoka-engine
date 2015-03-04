@@ -1,0 +1,9 @@
+<entity
+        xmlns="http://www.moka-dev.com/entity"
+        position="100, 100, 0" rotation="0" scale="1, 1">
+
+    <Sprite
+            texture="res/images/plane.png"
+            tintR="1" tintG="0" tintB="0" tintA="1" />
+
+</entity>
