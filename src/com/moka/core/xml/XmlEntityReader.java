@@ -30,6 +30,7 @@ public class XmlEntityReader {
 	private static final String VAL_SIZE 		= "size";
 	private static final String VAL_POSITION 	= "position";
 	private static final String VAL_ROTATION 	= "rotation";
+	private static final String VAL_LAYER 		= "layer";
 	private static final char CHAR_REFERENCE 	= '@';
 
 	private ParametersParser parametersParser;
@@ -231,11 +232,13 @@ public class XmlEntityReader {
 			try {
 				String[] params = parametersParser.parse(attributes.getValue(VAL_POSITION));
 
+				float layer = attributes.getValue(VAL_LAYER) == null? 0 :
+						getTestedValue(int.class, attributes.getValue(VAL_LAYER));
+				
 				float x = getTestedValue(float.class, params[0]);
 				float y = getTestedValue(float.class, params[1]);
-				float z = getTestedValue(float.class, params[2]);
 
-				entity.getTransform().setPosition(new Vector3(x, y, z));
+				entity.getTransform().setPosition(new Vector3(x, y, layer));
 			} catch(ParsingException e) {
 				JMokaException.raise("Entity: " + name + "'s position is malformed, must be Vector3.");
 			}

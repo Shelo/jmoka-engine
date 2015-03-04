@@ -9,8 +9,8 @@ import com.moka.math.Vector3;
 public final class Transform {
 	private final Entity entity;
 
-	private Vector2 prevPosition;
-	private Vector2 position;
+	private Vector3 prevPosition;
+	private Vector3 position;
 
 	private Quaternion prevRotation;
 	private Quaternion rotation;
@@ -22,7 +22,7 @@ public final class Transform {
 	public Transform(Entity entity) {
 		this.entity = entity;
 		rotation = Quaternion.IDENTITY.copy();
-		position = Vector2.ZERO.copy();
+		position = Vector3.ZERO.copy();
 	}
 
 	public void update() {
@@ -31,18 +31,14 @@ public final class Transform {
 	}
 
 	public Matrix4 getModelMatrix() {
-		Matrix4 translation = Matrix4.translate((int) position.getX(), (int) position.getY(), (int) 0);
+		Matrix4 translation = Matrix4.translate((int) position.getX(), (int) position.getY(), (int) position.getZ());
 		Matrix4 scale = Matrix4.scale(getSize().getX(), getSize().getY(), 1);
 		Matrix4 rotate = rotation.toRotationMatrix();
 		return translation.mul(rotate.mul(scale));
 	}
 
-	public void move(float x, float y, float z) {
-		position = position.add(x, y);
-	}
-
 	public void move(float x, float y) {
-		move(x, y, 0);
+		position = position.add(x, y, 0.0f);
 	}
 
 	public Quaternion getRotation() {
@@ -78,6 +74,10 @@ public final class Transform {
 		this.rotation = rotation;
 	}
 
+	public void setRotRadians(float rotation) {
+		this.rotation = new Quaternion(Vector3.AXIS_Z, rotation);
+	}
+
 	public void setRotation(float rotation) {
 		this.rotation = new Quaternion(Vector3.AXIS_Z, (float) Math.toRadians(rotation));
 	}
@@ -90,15 +90,15 @@ public final class Transform {
 	}
 
 	public void setPosition(float x, float y) {
-		position.set(x, y);
-	}
-
-	public void setPosition(Vector2 position) {
-		this.position.set(position);
+		position.set(x, y, position.getZ());
 	}
 
 	public void setPosition(Vector3 position) {
-		this.position.set(position.getX(), position.getY());
+		this.position.set(position);
+	}
+	
+	public void setPosition(Vector2 position) {
+		this.position.set(position);
 	}
 
 	public float getPositionX() {
@@ -126,10 +126,14 @@ public final class Transform {
 	}
 
 	public Vector2 getPosition() {
-		return position;
+		return position.getXY();
 	}
 
 	public void move(Vector2 movement) {
 		move(movement.getX(), movement.getY());
+	}
+
+	public int getLayer() {
+		return (int) position.getZ();
 	}
 }

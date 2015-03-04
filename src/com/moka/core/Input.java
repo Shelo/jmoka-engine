@@ -1,6 +1,7 @@
 package com.moka.core;
 
 import com.moka.exceptions.JMokaException;
+import com.moka.math.Vector2;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 
@@ -85,11 +86,15 @@ public final class Input {
 	public static int getCursorPosY() {
 		int y = (int) cursorPosY.get();
 		cursorPosY.rewind();
-		return y;
+		return Moka.getDisplay().getHeight() - y;
 	}
 
 	private static void validate() {
 		if(window == 0)
 			JMokaException.raise("Window not defined in input.");
+	}
+
+	public static Vector2 getCursorPos() {
+		return new Vector2(getCursorPosX(), getCursorPosY());
 	}
 }

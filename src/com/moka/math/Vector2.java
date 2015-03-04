@@ -133,4 +133,8 @@ public class Vector2 {
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}
+
+	public float angle() {
+		return (float) Math.atan2(y, x);
+	}
 }
