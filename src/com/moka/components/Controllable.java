@@ -2,12 +2,15 @@ package com.moka.components;
 
 import com.moka.core.Input;
 import com.moka.core.Time;
+import com.moka.core.Timer;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.core.xml.XmlSupported;
 import org.lwjgl.glfw.GLFW;
 
 @XmlSupported
 public class Controllable extends Component {
+	public static final float TOLERANCE = 0.03f;
+
 	// Xml Attributes.
 	private boolean constrainX	= false;
 	private boolean constrainY	= false;
@@ -17,54 +20,63 @@ public class Controllable extends Component {
 	private float speedX;
 	private float speedY;
 
+	private float tx, ty;
+	private float multiplier = 2;
+
+	Timer timer;
+
+
 	public Controllable() { }
 
 	@Override
+	public void onCreate() {
+		timer = Time.newTimer();
+	}
+
+	@Override
 	public void onUpdate() {
-		float dx = 0;
-		float dy = 0;
+		if (Input.getKey(GLFW.GLFW_KEY_D))
+			tx += Time.getDelta() * multiplier;
 
-		/*
-		if(!constrainX) {
-			if(Input.getKey(GLFW.GLFW_KEY_D)) {
-				speedX += acceleration;
-			} else if(Input.getKey(GLFW.GLFW_KEY_A)) {
-				speedX -= acceleration;
-			} else {
-				speedX = 0;
-			}
+		if (Input.getKey(GLFW.GLFW_KEY_A))
+			tx -= Time.getDelta() * multiplier;
 
-			speedX = MokaMath.clamp(speedX, - topSpeed, topSpeed);
-			dx = (float) (speedX * delta);
+		if (!(Input.getKey(GLFW.GLFW_KEY_D) || Input.getKey(GLFW.GLFW_KEY_A))) {
+			if (tx > -TOLERANCE && tx < TOLERANCE)
+				tx = 0;
+
+			else
+				tx += (tx < 0) ? Time.getDelta() : 0 - Time.getDelta();
 		}
 
-		if(!constrainY) {
-			if(Input.getKey(GLFW.GLFW_KEY_W)) {
-				speedY += acceleration;
-			} else if(Input.getKey(GLFW.GLFW_KEY_S)) {
-				speedY -= acceleration;
-			} else {
-				speedY = 0;
-			}
+		if (Input.getKey(GLFW.GLFW_KEY_W))
+			ty += Time.getDelta() * multiplier;
 
-			speedY = MokaMath.clamp(speedY, - topSpeed, topSpeed);
-			dy = (float) (speedY * delta);
+		if (Input.getKey(GLFW.GLFW_KEY_S))
+			ty -= Time.getDelta() * multiplier;
+
+		if (!(Input.getKey(GLFW.GLFW_KEY_W) || Input.getKey(GLFW.GLFW_KEY_S))) {
+			if (ty > -TOLERANCE && ty < TOLERANCE)
+				ty = 0;
+
+			else
+				ty += (ty < 0) ? Time.getDelta() : 0 - Time.getDelta();
 		}
-		*/
 
-		if(Input.getKey(GLFW.GLFW_KEY_D))
-			dx = (float) (Time.getDelta() * 100);
+		float vx = acceleration * tx;
+		float vy = acceleration * ty;
 
-		if(Input.getKey(GLFW.GLFW_KEY_A))
-			dx = (float) (- Time.getDelta() * 100);
+		if (Math.abs(vx) > topSpeed)
+			vx = (vx < 0) ? 0 - topSpeed : topSpeed;
 
-		if(Input.getKey(GLFW.GLFW_KEY_W))
-			dy = (float) (Time.getDelta() * 100);
+		if (Math.abs(vy) > topSpeed)
+			vy = (vy < 0) ? 0 - topSpeed : topSpeed;
 
-		if(Input.getKey(GLFW.GLFW_KEY_S))
-			dy = (float) (- Time.getDelta() * 100);
+		vx *= Time.getDelta();
+		vy *= Time.getDelta();
 
-		getTransform().move(dx, dy, 0);
+		getTransform().move(vx, vy);
+
 	}
 
 	@XmlAttribute("topSpeed")

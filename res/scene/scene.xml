@@ -13,7 +13,7 @@
 
         <Controllable
                 topSpeed="500"
-                acceleration="50" />
+                acceleration="300" />
     </entity>
 
     <include path="res/scene/entities/moka_logo.xml" name="Moka1" position="400, 50, 0" />
