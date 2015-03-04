@@ -19,7 +19,7 @@ public final class Transform {
 
 	public Transform(Entity entity) {
 		this.entity = entity;
-		rotation = new Quaternion(Quaternion.IDENTITY);
+		rotation = Quaternion.IDENTITY.copy();
 	}
 
 	public Matrix4 getModelMatrix() {
@@ -64,6 +64,27 @@ public final class Transform {
 		return rSize;
 	}
 
+	public void setSize(Vector2 size) {
+		this.size = size;
+	}
+
+	public void setRotation(Quaternion rotation) {
+		prevRotation = this.rotation.copy();
+		this.rotation = rotation;
+	}
+
+	public void setRotation(float rotation) {
+		prevRotation = this.rotation.copy();
+		this.rotation = new Quaternion(Vector3.AXIS_Z, (float) Math.toRadians(rotation));
+	}
+
+	public void setSize(int x, int y) {
+		if(size == null)
+			size = new Vector2(x, y);
+		else
+			size.set(x, y);
+	}
+
 	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
@@ -80,28 +101,31 @@ public final class Transform {
 		z = position.getZ();
 	}
 
-	public void setSize(Vector2 size) {
-		this.size = size;
+	public void setPositionX(float x) {
+		this.x = x;
 	}
 
-	public void setRotation(Quaternion rotation) {
-		prevRotation = this.rotation.copy();
-		this.rotation = rotation;
+	public void setPositionY(float y) {
+		this.y = y;
 	}
 
-	public void setRotation(float rotation) {
-		prevRotation = this.rotation.copy();
-		this.rotation = new Quaternion(Vector3.AXIS_Z, (float) Math.toRadians(rotation));
+	public void setPositionZ(float z) {
+		this.z = z;
+	}
+
+	public float getPositionX() {
+		return x;
+	}
+
+	public float getPositionY() {
+		return y;
+	}
+
+	public float getPositionZ() {
+		return z;
 	}
 
 	public boolean hasRotated() {
 		return !prevRotation.equals(rotation);
-	}
-
-	public void setSize(int x, int y) {
-		if(size == null)
-			size = new Vector2(x, y);
-		else
-			size.set(x, y);
 	}
 }

@@ -3,11 +3,11 @@
         <Camera />
     </entity>
 
-    <entity position="180, 240, 0" rotation="0" name="Sky">
+    <entity position="180, 240, 0" rotation="0" name="Sky" size="@ScreenSize">
         <Sprite texture="res/images/sky.png"/>
     </entity>
 
-    <entity position="180, 50, 1" rotation="0" name="Plane">
+    <entity position="180, 50, 1" rotation="90" name="Plane">
         <Sprite texture="res/images/turret.png" />
 
         <Controllable

@@ -6,7 +6,6 @@ import com.moka.core.xml.XmlSupported;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Matrix4;
 import com.moka.math.Quaternion;
-import com.moka.math.Vector3;
 
 @XmlSupported
 public class Camera extends Component {
@@ -41,12 +40,11 @@ public class Camera extends Component {
 		if(projection == null)
 			JMokaException.raise("Camera: " + getEntity().getName() + "'s projection is null.");
 
-		Transform transform = getTransform();
+		Transform t = getTransform();
 
-		Vector3 position 	= transform.getPosition().mul(-1);
-		Quaternion rotation = transform.getRotation().conjugate();
+		Quaternion rotation = t.getRotation().conjugate();
 
-		Matrix4 translation = Matrix4.translate(position.getX(), position.getY(), position.getZ());
+		Matrix4 translation = Matrix4.translate(t.getPositionX() * - 1, t.getPositionY() * - 1, t.getPositionZ() * - 1);
 		Matrix4 rotate 		= rotation.toRotationMatrix();
 
 		return projection.mul(rotate.mul(translation));

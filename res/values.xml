@@ -1,9 +1,9 @@
-<values xmlns="http://www.moka-dev.com">
+<values xmlns="http://www.mokadev.com/resources">
     <string>
         
     </string>
 
-    <numeric>
-        
-    </numeric>
+    <integer>
+        <res name="ScreenSize" value="1" />
+    </integer>
 </values>

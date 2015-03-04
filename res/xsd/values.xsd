@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema
-        targetNamespace="http://www.moka-dev.com/scene"
-        xmlns="http://www.moka-dev.com/scene"
+        targetNamespace="http://www.mokadev.com/resources"
+        xmlns="http://www.mokadev.com/resources"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         elementFormDefault="qualified" >
     
@@ -11,10 +11,10 @@
     <xs:element name="values">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="string">
+                <xs:element name="string" minOccurs="0" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                            <xs:element name="Item">
+                            <xs:element name="res">
                                 <xs:complexType>
                                     <xs:attribute name="name" type="ValueNameType" use="required" />
                                     <xs:attribute name="value" type="xs:string" use="required" />
@@ -24,13 +24,52 @@
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="numeric" type="xs:complexType">
+                <xs:element name="integer" minOccurs="0" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                            <xs:element name="Item">
+                            <xs:element name="res">
+                                <xs:complexType>
+                                    <xs:attribute name="name" type="ValueNameType" use="required" />
+                                    <xs:attribute name="value" type="xs:integer" use="required" />
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="float" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="res">
                                 <xs:complexType>
                                     <xs:attribute name="name" type="ValueNameType" use="required" />
                                     <xs:attribute name="value" type="xs:float" use="required" />
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="double" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="res">
+                                <xs:complexType>
+                                    <xs:attribute name="name" type="ValueNameType" use="required" />
+                                    <xs:attribute name="value" type="xs:double" use="required" />
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="boolean" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="res">
+                                <xs:complexType>
+                                    <xs:attribute name="name" type="ValueNameType" use="required" />
+                                    <xs:attribute name="value" type="xs:boolean" use="required" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
