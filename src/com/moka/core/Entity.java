@@ -2,6 +2,7 @@ package com.moka.core;
 
 import com.moka.components.Component;
 import com.moka.components.Sprite;
+import com.moka.math.Vector2;
 import com.moka.physics.Collider;
 
 import java.util.ArrayList;
@@ -61,6 +62,10 @@ public class Entity {
 
 	public String getName() {
 		return name;
+	}
+
+	public Vector2[] getVertexArray() {
+		return null;
 	}
 
 	public boolean hasSprite() {

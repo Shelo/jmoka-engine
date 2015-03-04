@@ -9,7 +9,7 @@ import com.moka.core.game.XmlGame;
 public class Game {
 	public static void main(String[] args) {
 		// initialize the engine giving it a particular game.
-		Moka.init(new XmlGame("render/scene/scene.xml"), 100);
+		Moka.init(new XmlGame("res/scene/scene.xml"), 100);
 
 		// create the display.
 		Moka.getDisplay().createDisplay(360, 480, "JMoka Engine");
