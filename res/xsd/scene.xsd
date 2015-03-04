@@ -29,9 +29,10 @@
     <xs:complexType name="IncludeType">
         <xs:attribute name="path"       use="required" />
         <xs:attribute name="name"       use="required" />
-        <xs:attribute name="position"   use="optional" type="Vector3" default="0, 0, 0" />
+        <xs:attribute name="position"   use="optional" type="Vector2" default="0, 0" />
         <xs:attribute name="rotation"   use="optional" type="xs:float" default="0, 0, 0" />
-        <xs:attribute name="size"      use="optional" type="Vector2" default="1, 1" />
+        <xs:attribute name="layer"      use="optional" type="xs:integer" default="0" />
+        <xs:attribute name="size"       use="optional" type="Vector2" default="1, 1" />
     </xs:complexType>
 
     <!-- Define Data types. -->

@@ -1,13 +1,13 @@
 <scene xmlns="http://www.moka-dev.com/scene">
-    <entity name="MainCamera" position="0, 0, 0" rotation="0">
+    <entity name="MainCamera" position="0, 0" rotation="0">
         <Camera />
     </entity>
 
-    <entity position="400, 240, 0" rotation="0" name="Sky" size="@screen_width, 480">
+    <entity position="${@screen_width / 2}, 240" layer="0" rotation="0" name="Sky" size="@screen_width, @screen_height">
         <Sprite texture="@image_sky"/>
     </entity>
 
-    <entity position="180, 50, 1" rotation="0" name="Player" size="50, 50">
+    <entity position="180, 50" rotation="0" name="Player" size="50, 50">
         <Sprite texture="res/images/turret.png" />
         <CircleCollider
                 radius="25" />
@@ -19,11 +19,11 @@
         <LookTowardsMouse />
     </entity>
 
-    <include path="res/scene/entities/moka_logo.xml" name="Moka1" position="400, 50, 0" />
-    <include path="res/scene/entities/moka_logo.xml" name="Moka2" position="375, 100, 0" />
-    <include path="res/scene/entities/moka_logo.xml" name="Moka3" position="350, 150, 0" />
+    <include path="res/scene/entities/moka_logo.xml" name="Moka1" position="400, 50" />
+    <include path="res/scene/entities/moka_logo.xml" name="Moka2" position="375, 100" />
+    <include path="res/scene/entities/moka_logo.xml" name="Moka3" position="350, 150" />
 
-    <include path="res/scene/entities/red_box.xml" name="Box1" position="100, 50, 0" />
-    <include path="res/scene/entities/red_box.xml" name="Box2" position="75, 100, 0" />
-    <include path="res/scene/entities/red_box.xml" name="Box3" position="50, 150, 0" />
+    <include path="res/scene/entities/red_box.xml" name="Box1" position="100, 50" />
+    <include path="res/scene/entities/red_box.xml" name="Box2" position="75, 100" />
+    <include path="res/scene/entities/red_box.xml" name="Box3" position="50, 150" />
 </scene>

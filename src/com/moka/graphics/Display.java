@@ -56,6 +56,11 @@ public final class Display {
 	public void createDisplay(String widthRes, String heightRes, String title) {
 		createDisplay(Resources.getInt(widthRes), Resources.getInt(heightRes), title);
 	}
+
+	@Deprecated
+	public void setIcon() {
+		// TODO: LWJGL doesn't support icons for now.
+	}
 	
 	public void onUpdate() {
 		glfwSwapBuffers(window);

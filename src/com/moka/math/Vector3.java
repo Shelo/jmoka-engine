@@ -81,6 +81,10 @@ public class Vector3 {
 		return new Vector3(x + r.x, y + r.y, z + r.z);
 	}
 
+	public Vector3 add(float x, float y, float z) {
+		return new Vector3(this.x + x, this.y + y, this.z + z);
+	}
+
 	public Vector3 add(float r) {
 		return new Vector3(x + r, y + r, z + r);
 	}
@@ -179,5 +183,10 @@ public class Vector3 {
 
 	public void setY(float y) {
 		this.y = y;
+	}
+
+	public void set(Vector2 position) {
+		x = position.getX();
+		y = position.getY();
 	}
 }

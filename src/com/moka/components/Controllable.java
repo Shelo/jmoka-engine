@@ -64,7 +64,7 @@ public class Controllable extends Component {
 		if(Input.getKey(GLFW.GLFW_KEY_S))
 			dy = (float) (- Time.getDelta() * 100);
 
-		getTransform().move(dx, dy, 0);
+		getTransform().move(dx, dy);
 	}
 
 	@XmlAttribute("topSpeed")
