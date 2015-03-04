@@ -1,5 +1,7 @@
 package com.moka.core;
 
+import com.moka.math.Vector2;
+
 public class Vertex {
 	public static final int SIZE = 5;
 
@@ -35,5 +37,9 @@ public class Vertex {
 
 	public float getT() {
 		return t;
+	}
+
+	public Vector2 asVector2() {
+		return new Vector2(x, y);
 	}
 }

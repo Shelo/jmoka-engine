@@ -43,8 +43,14 @@ public class Entity {
 	}
 
 	public void update(double delta) {
+		transform.update();
 		for(Component component : components)
 			component.onUpdate(delta);
+	}
+
+	public void postUpdate() {
+		for(Component component : components)
+			component.onPostUpdate();
 	}
 
 	public <T> T getComponent(Class<T> componentClass) {

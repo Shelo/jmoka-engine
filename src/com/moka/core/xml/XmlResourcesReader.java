@@ -1,10 +1,14 @@
 package com.moka.core.xml;
 
-import com.moka.core.Resources;
 import com.moka.exceptions.JMokaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.IOException;
 
 public class XmlResourcesReader {
 	private static final String TAG_BOOLEAN = "boolean";
@@ -16,6 +20,28 @@ public class XmlResourcesReader {
 	private static final String TAG_RES 	= "res";
 
 	private static enum STATE { NONE, VALUES, STRINGS, INTEGERS, FLOATS, DOUBLES, BOOLEANS }
+
+	private SAXParser parser;
+
+	public XmlResourcesReader() {
+		try {
+			parser = SAXParserFactory.newInstance().newSAXParser();
+		} catch(ParserConfigurationException e) {
+			throw new JMokaException("Unable to create SAXParser.");
+		} catch(SAXException e) {
+			throw new JMokaException("SAX Exception.");
+		}
+	}
+
+	public void read(String filePath) {
+		try {
+			parser.parse(filePath, new Helper());
+		} catch(SAXException e) {
+			throw new JMokaException("SAX Exception.");
+		} catch(IOException e) {
+			throw new JMokaException("IOException.");
+		}
+	}
 
 	private class Helper extends DefaultHandler {
 		private STATE state = STATE.NONE;
@@ -35,19 +61,73 @@ public class XmlResourcesReader {
 						throw new JMokaException("Malformed Values XML file.");
 					}
 					break;
+
 				case VALUES:
+					switch(qName) {
+						case TAG_STRING:
+							state = STATE.STRINGS;
+							break;
+						case TAG_INTEGER:
+							state = STATE.INTEGERS;
+							break;
+						case TAG_FLOAT:
+							state = STATE.FLOATS;
+							break;
+						case TAG_DOUBLE:
+							state = STATE.DOUBLES;
+							break;
+						case TAG_BOOLEAN:
+							state = STATE.BOOLEANS;
+							break;
+						default:
+							throw new JMokaException("Malformed Values XML file.");
+					}
 					break;
+				
 				case STRINGS:
+					if(qName.equals(TAG_RES)) {
+						handleValue(qName, attributes);
+					} else {
+						throw new JMokaException("Not a proper string resource.");
+					}
 					break;
+
 				case INTEGERS:
+					if(qName.equals(TAG_RES)) {
+						handleValue(qName, attributes);
+					} else {
+						throw new JMokaException("Not a proper integer resource.");
+					}
 					break;
+
 				case FLOATS:
+					if(qName.equals(TAG_RES)) {
+						handleValue(qName, attributes);
+					} else {
+						throw new JMokaException("Not a proper float resource.");
+					}
 					break;
+
 				case DOUBLES:
+					if(qName.equals(TAG_RES)) {
+						handleValue(qName, attributes);
+					} else {
+						throw new JMokaException("Not a proper double resource.");
+					}
 					break;
+
 				case BOOLEANS:
+					if(qName.equals(TAG_RES)) {
+						handleValue(qName, attributes);
+					} else {
+						throw new JMokaException("Not a proper boolean resource.");
+					}
 					break;
 			}
+		}
+
+		private void handleValue(String qName, Attributes attributes) {
+
 		}
 
 		@Override
@@ -59,9 +139,5 @@ public class XmlResourcesReader {
 		public void endDocument() throws SAXException {
 
 		}
-	}
-	
-	public XmlResourcesReader() {
-		
 	}
 }

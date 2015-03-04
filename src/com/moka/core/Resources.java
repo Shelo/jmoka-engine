@@ -5,13 +5,8 @@ import com.moka.core.xml.XmlResourcesReader;
 import java.util.HashMap;
 
 public class Resources {
-	private static XmlResourcesReader resourcesReader;
-	private static HashMap<String, Object> resources;
-
-	static {
-		resources = new HashMap<>();
-		resourcesReader = new XmlResourcesReader();
-	}
+	private static XmlResourcesReader resourcesReader = new XmlResourcesReader();
+	private static HashMap<String, Object> resources = new HashMap<>();
 
 	public static String getString(String name) {
 		return null;
@@ -35,5 +30,9 @@ public class Resources {
 	
 	public static void addResource(String name, Object value) {
 
+	}
+
+	public static void loadResources(String filePath) {
+		resourcesReader.read(filePath);
 	}
 }

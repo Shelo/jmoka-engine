@@ -5,17 +5,12 @@ import com.moka.physics.Collision;
 
 public class CircleCollider extends Collider {
 	@Override
-	public Collision collidesWith(CircleCollider circle) {
+	public Collision collidesWith(Collider other) {
 		return null;
 	}
 
 	@Override
-	public Collision collidesWith(AABBCollider rect) {
-		return null;
-	}
+	public void response(Collision collision) {
 
-	@Override
-	public Collision collidesWith(SATCollider sat) {
-		return null;
 	}
 }

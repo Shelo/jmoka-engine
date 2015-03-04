@@ -3,15 +3,22 @@
         <Camera />
     </entity>
 
-    <entity position="180, 240, 0" rotation="0" name="Sky" size="@ScreenSize">
+    <entity position="400, 240, 0" rotation="0" name="Sky" size="800, 480">
         <Sprite texture="res/images/sky.png"/>
     </entity>
 
-    <entity position="180, 50, 1" rotation="90" name="Plane">
-        <Sprite texture="res/images/turret.png" />
+    <entity position="180, 50, 1" rotation="90" name="Box1">
+        <Sprite texture="res/images/box1.png" />
+        <SATCollider />
 
         <Controllable
                 topSpeed="500"
                 acceleration="50" />
+    </entity>
+
+    <entity position="280, 50, 1" rotation="90" name="Box2">
+        <SATCollider />
+
+        <Sprite texture="res/images/box2.png" />
     </entity>
 </scene>

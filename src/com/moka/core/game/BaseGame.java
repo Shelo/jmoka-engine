@@ -114,6 +114,10 @@ public abstract class BaseGame {
 		return entity;
 	}
 
+	public ArrayList<Entity> getEntities() {
+		return entities;
+	}
+
 	/**
 	 * Called every update frame, is not necessary for most games do.
 	 * @param delta
@@ -129,4 +133,9 @@ public abstract class BaseGame {
 	 * Been capable to send an error code.
 	 */
 	public abstract void onStop();
+
+	public void postUpdate() {
+		for(Entity entity : entities)
+			entity.postUpdate();
+	}
 }

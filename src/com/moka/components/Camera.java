@@ -43,7 +43,6 @@ public class Camera extends Component {
 		Transform t = getTransform();
 
 		Quaternion rotation = t.getRotation().conjugate();
-
 		Matrix4 translation = Matrix4.translate(t.getPositionX() * - 1, t.getPositionY() * - 1, t.getPositionZ() * - 1);
 		Matrix4 rotate 		= rotation.toRotationMatrix();
 

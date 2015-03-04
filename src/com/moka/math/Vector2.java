@@ -24,6 +24,10 @@ public class Vector2 {
 		return new Vector2(x + other.x, y + other.y);
 	}
 
+	public Vector2 add(float x, float y) {
+		return new Vector2(this.x + x, this.y + y);
+	}
+
 	public Vector2 sub(final Vector2 other) {
 		return new Vector2(x - other.x, y - other.y);
 	}
@@ -73,7 +77,7 @@ public class Vector2 {
 		return new Vector2(x * cos - y * sin, x * sin + y * cos);
 	}
 
-	private void set(Vector2 one) {
+	public void set(Vector2 one) {
 		x = one.x;
 		y = one.y;
 	}
@@ -105,6 +109,10 @@ public class Vector2 {
 
 	public float getY() {
 		return y;
+	}
+
+	public Vector2 copy() {
+		return new Vector2(x, y);
 	}
 
 	public boolean equals(Vector2 other) {

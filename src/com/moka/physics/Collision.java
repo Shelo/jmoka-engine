@@ -13,4 +13,13 @@ public final class Collision {
         this.direction = direction;
         this.mag = mag;
     }
+	
+	public Vector2 getMovement() {
+		return direction.mul(mag);
+	}
+
+	@Override
+	public String toString() {
+		return String.format("direction: %s", direction.mul(mag).toString());
+	}
 }

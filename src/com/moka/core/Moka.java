@@ -3,19 +3,22 @@ package com.moka.core;
 import com.moka.core.game.BaseGame;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
+import com.moka.physics.Physics;
 
 public final class Moka {
 	private static Renderer renderer;
+	private static Physics physics;
 	private static Display display;
 	private static BaseGame game;
 	private static Core core;
 
 	public static void init(BaseGame game, float fc) {
-		Moka.game	= game;
+		Moka.game = game;
 
-		renderer 	= new Renderer();
-		display 	= new Display();
-		core 		= new Core(game, fc);
+		renderer = new Renderer();
+		display = new Display();
+		core = new Core(game, fc);
+		physics = new Physics();
 	}
 
 	public static Display getDisplay() {
@@ -44,5 +47,9 @@ public final class Moka {
 
 	public static void stop() {
 		core.stop();
+	}
+
+	public static Physics getPhysics() {
+		return physics;
 	}
 }

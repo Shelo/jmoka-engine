@@ -77,6 +77,8 @@ public class Core {
 
 				game.onUpdateAll(delta);
 				game.onUpdate(delta);
+				Moka.getPhysics().checkCollisions(game);
+				game.postUpdate();
 				Input.onUpdate();
 
 				// check if user closed the window.

@@ -36,7 +36,7 @@ public final class Renderer {
 		shader.bind();
 
 		if(camera == null)
-			JMokaException.raise("There's no camera attached to the renderer.");
+			throw new JMokaException("There's no camera attached to the renderer.");
 
 		shader.setUniform("u_projectedView", camera.getProjectedViewMatrix());
 

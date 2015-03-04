@@ -5,10 +5,8 @@ import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
-import com.moka.physics.Projection;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class SATCollider extends Collider {
@@ -17,15 +15,26 @@ public class SATCollider extends Collider {
 	private Vector2[] tVertices; // Transformed vertices
 	private Vector2[] axes;
 
-	public SATCollider() {}
+	public SATCollider() {
+		
+	}
+
+	@Override
+	public void onCreate() {
+		if(vertices == null)
+			setVertices(getEntity().getSprite().getMesh().getVerticesAsVector2());
+	}
 
 	public void setVertices(Vector2[] vertices) {
 		if (this.vertices != null)
-			throw new JMokaException("Vertices already set");
+			throw new JMokaException("Vertices already set.");
+
+		if (vertices == null)
+			throw new JMokaException("Vertices cannot be null.");
 
 		this.vertices = vertices;
-		initAxes();
 
+		initAxes();
 		updateData();
 	}
 
@@ -57,11 +66,7 @@ public class SATCollider extends Collider {
 		axes = new Vector2[npvi.size()];
 	}
 
-	@XmlAttribute("vertices")
-	public void setVertices(String path) {
-	}
-
-	private void updateData() {
+	public void updateData() {
 		tVertices = getEntity().transformVertices(vertices);
 
 		int k = 0;
@@ -81,17 +86,29 @@ public class SATCollider extends Collider {
 	}
 
 	@Override
+	public Collision collidesWith(Collider other) {
+		if(other instanceof SATCollider) {
+			return Collider.sat(this, (SATCollider) other);
+		}
+
+		return null;
+	}
+
+	@Override
+	public void response(Collision collision) {
+		getTransform().move(collision.getMovement());
+	}
+
 	public Collision collidesWith(CircleCollider circle) {
 		return null;
 	}
 
-	@Override
 	public Collision collidesWith(AABBCollider rect) {
 		return null;
 	}
 
-	@Override
 	public Collision collidesWith(SATCollider sat) {
+		/*
 		if (getEntity().getTransform().hasRotated())
 			updateData();
 
@@ -126,5 +143,20 @@ public class SATCollider extends Collider {
 		}
 
 		return (smallest != null) ? new Collision(sat.getEntity(), smallest, overlap) : null;
+		*/
+		return null;
+	}
+
+	public Vector2[] getAxes() {
+		return axes;
+	}
+
+	public Vector2[] getTVertices() {
+		return tVertices;
+	}
+
+	@XmlAttribute("vertices")
+	public void setVertices(String path) {
+		
 	}
 }

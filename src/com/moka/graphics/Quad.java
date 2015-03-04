@@ -2,6 +2,7 @@ package com.moka.graphics;
 
 import com.moka.core.Utils;
 import com.moka.core.Vertex;
+import com.moka.math.Vector2;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -18,6 +19,7 @@ public class Quad {
 
 	private FloatBuffer vertexBuffer;
 	private IntBuffer indexBuffer;
+	private Vertex[] vertices;
 	private int vbo;
 	private int vao;
 	private int ibo;
@@ -31,13 +33,16 @@ public class Quad {
 		vbo = glGenBuffers();
 		ibo = glGenBuffers();
 
-		// populate vertexBuffer.
-		vertexBuffer = Utils.genBuffer(new Vertex[] {
+		// generate vertices.
+		vertices = new Vertex[] {
 				new Vertex(-0.5f,  -0.5f, 0, 0, 0),
 				new Vertex(-0.5f, 	0.5f, 0, 0, yTexCoord),
 				new Vertex(0.5f, 	0.5f, 0, xTexCoord, yTexCoord),
 				new Vertex(0.5f,   -0.5f, 0, xTexCoord, 0)
-		});
+		};
+
+		// populate vertexBuffer.
+		vertexBuffer = Utils.genBuffer(vertices);
 
 		// populate indexBuffer.
 		indexBuffer = Utils.genBuffer(new int[] {
@@ -72,5 +77,19 @@ public class Quad {
 
 	public void dispose() {
 		glDeleteVertexArrays(vao);
+	}
+
+	public Vertex[] getVertices() {
+		return vertices;
+	}
+
+	public Vector2[] getVerticesAsVector2() {
+		// TODO: optimize vertices because they are all the same every time.
+		Vector2[] res = new Vector2[vertices.length];
+
+		for(int i = 0; i < res.length; i++)
+			res[i] = vertices[i].asVector2();
+
+		return res;
 	}
 }

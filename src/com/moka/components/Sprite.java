@@ -131,4 +131,8 @@ public class Sprite extends Component {
 		}
 		return size;
 	}
+
+	public Quad getMesh() {
+		return quad;
+	}
 }
