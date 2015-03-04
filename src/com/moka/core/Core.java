@@ -99,7 +99,13 @@ public class Core {
 				renderFrames++;
 				Moka.getRenderer().render(game);
 				Moka.getDisplay().onUpdate();
-			} // else if(lowCPU)
+			} else {
+				try {
+					Thread.sleep(1);
+				} catch(InterruptedException e) {
+					
+				}
+			}
 
 			if(accSeconds >= 1) {
 				JMokaLog.o(TAG, renderFrames + " fps, " + updateFrames + " ups.");

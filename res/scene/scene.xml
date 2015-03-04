@@ -7,13 +7,16 @@
         <Sprite texture="@image_sky"/>
     </entity>
 
-    <entity position="180, 50, 1" rotation="0" name="Player">
-        <Sprite texture="@image_moka" />
-        <CircleCollider />
+    <entity position="180, 50, 1" rotation="0" name="Player" size="50, 50">
+        <Sprite texture="res/images/turret.png" />
+        <CircleCollider
+                radius="25" />
 
         <Controllable
                 topSpeed="500"
                 acceleration="50" />
+
+        <LookTowardsMouse />
     </entity>
 
     <include path="res/scene/entities/moka_logo.xml" name="Moka1" position="400, 50, 0" />

@@ -78,6 +78,10 @@ public final class Transform {
 		this.rotation = rotation;
 	}
 
+	public void setRotRadians(float rotation) {
+		this.rotation = new Quaternion(Vector3.AXIS_Z, rotation);
+	}
+
 	public void setRotation(float rotation) {
 		this.rotation = new Quaternion(Vector3.AXIS_Z, (float) Math.toRadians(rotation));
 	}
