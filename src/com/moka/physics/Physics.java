@@ -18,6 +18,7 @@ public class Physics {
 		for(int i = 0; i < size; i++) {
 			Entity pivot = entities.get(i);
 
+			// TODO: optimize CircleCollider rotation.
 			if(pivot.hasCollider() && pivot.getTransform().hasChanged()) {
 				Collider pCollider = pivot.getCollider();
 
@@ -33,6 +34,8 @@ public class Physics {
 						if(collision != null) {
 							// collision.
 							pCollider.response(collision);
+							pivot.collide(collision);
+							test.collide(new Collision(pivot, collision.getDirection(), collision.getMagnitude()));
 						}
 					}
 				}

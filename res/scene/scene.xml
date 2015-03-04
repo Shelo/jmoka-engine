@@ -8,9 +8,8 @@
     </entity>
 
     <entity position="180, 50, 1" rotation="25" name="Box1">
-        <Sprite texture="@image_green_box" />
-        <SATCollider />
-
+        <Sprite texture="@image_moka" />
+        <CircleCollider />
         <Rotator />
 
         <Controllable

@@ -1,7 +1,8 @@
 <entity xmlns="http://www.moka-dev.com/entity"
         position="25, 25, 0" rotation="0" size="50, 50">
 
-    <Sprite texture="@image_red_box" />
-    <SATCollider />
+    <Sprite texture="@image_moka"
+            tintR="0.5" />
+    <CircleCollider />
 
 </entity>
