@@ -5,6 +5,7 @@ import com.moka.core.Time;
 import com.moka.core.Timer;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.core.xml.XmlSupported;
+import com.moka.math.Vector2;
 import org.lwjgl.glfw.GLFW;
 
 @XmlSupported
@@ -35,6 +36,9 @@ public class Controllable extends Component {
 
 	@Override
 	public void onUpdate() {
+		float ltx = tx;
+		float lty = ty;
+
 		if (Input.getKey(GLFW.GLFW_KEY_D))
 			tx += Time.getDelta() * impulse;
 
@@ -66,14 +70,19 @@ public class Controllable extends Component {
 		float vx = acceleration * tx;
 		float vy = acceleration * ty;
 
-		if (Math.abs(vx) > topSpeed)
+		if (Math.abs(vx) > topSpeed) {
+			tx = ltx;
 			vx = (vx < 0) ? 0 - topSpeed : topSpeed;
+		}
 
-		if (Math.abs(vy) > topSpeed)
+		if (Math.abs(vy) > topSpeed) {
+			ty = lty;
 			vy = (vy < 0) ? 0 - topSpeed : topSpeed;
+		}
 
 		vx *= Time.getDelta();
 		vy *= Time.getDelta();
+
 
 		getTransform().move(vx, vy);
 

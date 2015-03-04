@@ -10,8 +10,6 @@ public class LookTowardsMouse extends Component {
 	@Override
 	public void onCreate() {
 		transform = getTransform();
-		
-		findEntity("Sky").getTransform().getLayer();
 	}
 
 	@Override
