@@ -4,31 +4,11 @@
     </entity>
 
     <entity
-            layer="@layer_0" rotation="0" name="Sky" size="@screen_width, @screen_height"
+            layer="@layer_sky" rotation="0" name="Sky" size="@screen_width, @screen_height"
             position="${@screen_width / 2}, ${@screen_height / 2}">
 
         <Sprite texture="@image_sky"/>
-
     </entity>
 
-    <entity position="180, 50" rotation="0" name="Player" size="50, 50">
-        <Sprite texture="res/images/turret.png" />
-        <CircleCollider
-                radius="25" />
-
-        <Controllable
-                topSpeed="200"
-                acceleration="500"
-                impulse="2.5" />
-
-        <LookTowardsMouse />
-    </entity>
-
-    <include path="res/scene/entities/moka_logo.xml" name="Moka1" position="400, 50" />
-    <include path="res/scene/entities/moka_logo.xml" name="Moka2" position="375, 100" />
-    <include path="res/scene/entities/moka_logo.xml" name="Moka3" position="350, 150" />
-
-    <include path="res/scene/entities/red_box.xml" name="Box1" position="100, 50" />
-    <include path="res/scene/entities/red_box.xml" name="Box2" position="75, 100" />
-    <include path="res/scene/entities/red_box.xml" name="Box3" position="50, 150" />
+    <include path="res/scene/entities" name="Player" />
 </scene>
