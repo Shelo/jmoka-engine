@@ -8,11 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import static org.lwjgl.opengl.GL11.GL_NEAREST;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.*;
 
-// TODO
 public class Texture {
 	private org.newdawn.slick.opengl.Texture texture;
 	private String filePath;
@@ -21,9 +18,8 @@ public class Texture {
 		this.filePath = filePath;
 
 		String ext = Utils.getExtensionFrom(filePath);
-
 		try {
-			texture = TextureLoader.getTexture(ext, new FileInputStream(new File(filePath)), true, GL_NEAREST);
+			texture = TextureLoader.getTexture(ext, new FileInputStream(new File(filePath)), false, GL_LINEAR);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

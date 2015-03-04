@@ -7,6 +7,8 @@ import com.moka.core.game.BaseGame;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2;
 import com.moka.math.Vector3;
+import net.sourceforge.jeval.EvaluationException;
+import net.sourceforge.jeval.Evaluator;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -21,6 +23,7 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class XmlEntityReader {
 	private static final String TAG_ENTITY 		= "entity";
@@ -32,13 +35,27 @@ public class XmlEntityReader {
 	private static final String VAL_ROTATION 	= "rotation";
 	private static final String VAL_LAYER 		= "layer";
 	private static final char CHAR_REFERENCE 	= '@';
+	private static final char CHAR_EXPRESSION 	= '$';
+	private static ArrayList<Character> symbols = new ArrayList<>();
 
 	private ParametersParser parametersParser;
+	private Evaluator evaluator;
 	private String entityName;
 	private SAXParser parser;
 	private BaseGame game;
 	private Entity entity;
 	private int state;
+
+	static {
+		symbols.add('/');
+		symbols.add('+');
+		symbols.add('-');
+		symbols.add('*');
+		symbols.add(' ');
+		symbols.add('(');
+		symbols.add(')');
+		symbols.add('%');
+	}
 
 	private class Handler extends DefaultHandler {
 		@Override
@@ -75,6 +92,7 @@ public class XmlEntityReader {
 		state = STATE_CLOSED;
 
 		parametersParser = new ParametersParser();
+		evaluator = new Evaluator();
 
 		// create sax parser.
 		try {
@@ -187,6 +205,23 @@ public class XmlEntityReader {
 			else if(param == Entity.class)	result = game.findEntity(Resources.getString(resource));
 
 			return (T) result;
+		} else if(value.charAt(0) == CHAR_EXPRESSION) {
+			Object result = null;
+			String expression = replaceReferences(value.substring(2, value.length() - 1));
+			String expValue = null;
+
+			try {
+				expValue = evaluator.evaluate(expression);
+			} catch(EvaluationException e) {
+				throw new JMokaException("[JEval] " + e.toString());
+			}
+
+			if(param == int.class) 			result = Integer.parseInt(expValue);
+			else if(param == float.class) 	result = Float.parseFloat(expValue);
+			else if(param == double.class) 	result = Double.parseDouble(expValue);
+			else if(param == boolean.class)	result = Boolean.parseBoolean(expValue);
+
+			return (T) result;
 		} else {
 			Object result = null;
 
@@ -229,19 +264,15 @@ public class XmlEntityReader {
 		String name = entity.getName();
 
 		if(attributes.getValue(VAL_POSITION) != null) {
-			try {
-				String[] params = parametersParser.parse(attributes.getValue(VAL_POSITION));
+			String[] params = attributes.getValue(VAL_POSITION).split(" *, *");
 
-				float layer = attributes.getValue(VAL_LAYER) == null? 0 :
-						getTestedValue(int.class, attributes.getValue(VAL_LAYER));
-				
-				float x = getTestedValue(float.class, params[0]);
-				float y = getTestedValue(float.class, params[1]);
+			float layer = attributes.getValue(VAL_LAYER) == null? 0 :
+					getTestedValue(int.class, attributes.getValue(VAL_LAYER));
 
-				entity.getTransform().setPosition(new Vector3(x, y, layer));
-			} catch(ParsingException e) {
-				JMokaException.raise("Entity: " + name + "'s position is malformed, must be Vector3.");
-			}
+			float x = getTestedValue(float.class, params[0]);
+			float y = getTestedValue(float.class, params[1]);
+
+			entity.getTransform().setPosition(new Vector3(x, y, layer));
 		}
 
 		if(attributes.getValue(VAL_ROTATION) != null) {
@@ -261,6 +292,56 @@ public class XmlEntityReader {
 				JMokaException.raise("Entity: " + name + "'s size is malformed, must be Vector2.");
 			}
 		}
+	}
+	
+	private String replaceReferences(String expression) {
+		StringBuilder curReference = new StringBuilder();
+		HashSet<String> references = new HashSet<>();
+		boolean rRef = false;
+
+		for(int i = 0; i < expression.length(); i++) {
+			char c = expression.charAt(i);
+
+			if(rRef) {
+				
+				if(curReference.length() == 0) {
+					if(Character.isLetter(c)) {
+						curReference.append(c);
+					} else {
+						throw new JMokaException("Malformed math expression.");
+					}
+				} else {
+					if(symbols.contains(c)) {
+						rRef = false;
+						references.add(curReference.toString());
+						curReference.setLength(0);
+					} else {
+						curReference.append(c);
+					}
+				}
+				
+			} else {
+				if(c == CHAR_REFERENCE)
+					rRef = true;
+			}
+		}
+
+		StringBuilder result = new StringBuilder(expression);
+		for(String reference : references)
+			replaceAll(result, CHAR_REFERENCE + reference, Resources.get(reference).toString());
+
+		return result.toString();
+	}
+	
+	private StringBuilder replaceAll(StringBuilder builder, String from, String to) {
+		int index = builder.indexOf(from);
+		while (index != -1) {
+			builder.replace(index, index + from.length(), to);
+			index += to.length();
+			index = builder.indexOf(from, index);
+		}
+
+		return builder;
 	}
 
 	private boolean hasPackage(String componentClass) {

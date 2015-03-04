@@ -21,7 +21,7 @@ public class ParametersParser {
 			char c = m.charAt(i);
 
 			// TODO: take negative values!!!!.
-			
+
 			if(state == STATE_NONE) {
 				if(Character.isDigit(c)) {
 					// detected a number.
