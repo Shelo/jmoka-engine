@@ -6,9 +6,9 @@ import com.moka.components.Component;
 import com.moka.components.SATCollider;
 
 public abstract class Collider extends Component {
-	public abstract boolean collidesWith(CircleCollider circle);
-	public abstract boolean collidesWith(AABBCollider rect);
-	public abstract boolean collidesWith(SATCollider sat);
+	public abstract Collision collidesWith(CircleCollider circle);
+	public abstract Collision collidesWith(AABBCollider rect);
+	public abstract Collision collidesWith(SATCollider sat);
 
 	public static Collision sat(SATCollider box1, SATCollider box2) {
 		return null;

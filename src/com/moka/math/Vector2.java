@@ -20,19 +20,14 @@ public class Vector2 {
 		set(one);
 	}
 
-	private void set(Vector2 one) {
-		x = one.x;
-		y = one.y;
-	}
-
 	public Vector2 add(final Vector2 other) {
 		return new Vector2(x + other.x, y + other.y);
 	}
-	
+
 	public Vector2 sub(final Vector2 other) {
 		return new Vector2(x - other.x, y - other.y);
 	}
-	
+
 	public Vector2 mul(final Vector2 other) {
 		return new Vector2(x * other.x, y * other.y);
 	}
@@ -40,7 +35,7 @@ public class Vector2 {
 	public Vector2 mul(float s) {
 		return new Vector2(x * s, y * s);
 	}
-	
+
 	public Vector2 div(final Vector2 other) {
 		return new Vector2(x / other.x, y / other.y);
 	}
@@ -52,7 +47,7 @@ public class Vector2 {
 	public float length() {
 		return (float) Math.sqrt(x * x + y * y);
 	}
-	
+
 	public float length2() {
 		return x * x + y * y;
 	}
@@ -78,6 +73,11 @@ public class Vector2 {
 		return new Vector2(x * cos - y * sin, x * sin + y * cos);
 	}
 
+	private void set(Vector2 one) {
+		x = one.x;
+		y = one.y;
+	}
+
 	/**
 	 * THe only method capable of modifying the values of the Vector2.
 	 * @param x	x value.
@@ -88,6 +88,14 @@ public class Vector2 {
 		this.x = x;
 		this.y = y;
 		return this;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public void setY(float y) {
+		this.y = y;
 	}
 
 	// Getters.
@@ -106,13 +114,5 @@ public class Vector2 {
 	@Override
 	public String toString() {
 		return "(" + x + ", " + y + ")";
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public void setY(float y) {
-		this.y = y;
 	}
 }
