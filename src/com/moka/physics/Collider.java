@@ -14,9 +14,6 @@ public abstract class Collider extends Component {
 	public abstract void response(Collision collision);
 
 	public static Collision sat(SATCollider box1, SATCollider box2) {
-
-
-
 		if (box1.getEntity().getTransform().hasRotated())
 			box1.updateAxes();
 
@@ -40,8 +37,6 @@ public abstract class Collider extends Component {
 		float overlap = Float.POSITIVE_INFINITY;
 		Vector2 smallest = null;
 
-		System.out.println(axes.size());
-		
 		for (Vector2 axis : axes) {
 			Projection p1 = new Projection(box1.getTVertices(), axis);
 			Projection p2 = new Projection(box2.getTVertices(), axis);

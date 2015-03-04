@@ -7,9 +7,7 @@
 
     <!-- Sprite. -->
     <xs:complexType name="SpriteType">
-        <xs:attribute name="width"      type="xs:float"         use="optional" />
-        <xs:attribute name="height"     type="xs:float"         use="optional" />
-        <xs:attribute name="texture"    type="xs:string"        use="required" />
+        <xs:attribute name="texture"   type="xs:string"        use="required" />
         <xs:attribute name="tintR"     type="colorComponent"   use="optional" default="1" />
         <xs:attribute name="tintG"     type="colorComponent"   use="optional" default="1" />
         <xs:attribute name="tintB"     type="colorComponent"   use="optional" default="1" />
@@ -28,7 +26,24 @@
         <xs:attribute name="constrainX"   type="xs:boolean" />
         <xs:attribute name="constrainY"     type="xs:boolean" />
     </xs:complexType>
-    
+
+    <!-- SATCollider -->
+    <xs:complexType name="SATColliderType">
+        <xs:attribute name="vertices" type="xs:string" />
+    </xs:complexType>
+
+    <!-- CircleCollider -->
+    <xs:complexType name="CircleColliderType">
+        <xs:attribute name="radius" type="xs:float" />
+    </xs:complexType>
+
+    <!-- AABBCollider -->
+    <xs:complexType name="AABBColliderType">
+        <xs:attribute name="width" type="xs:float" />
+        <xs:attribute name="height" type="xs:float" />
+        <xs:attribute name="offsetX" type="xs:float" />
+        <xs:attribute name="offsetY" type="xs:float" />
+    </xs:complexType>
 
     <xs:simpleType name="colorComponent">
         <xs:restriction base="xs:float">

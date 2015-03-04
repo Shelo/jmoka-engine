@@ -1,8 +1,9 @@
 package com.moka.core.xml;
 
 import com.moka.components.Component;
-import com.moka.core.game.BaseGame;
 import com.moka.core.Entity;
+import com.moka.core.Resources;
+import com.moka.core.game.BaseGame;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2;
 import com.moka.math.Vector3;
@@ -29,6 +30,7 @@ public class XmlEntityReader {
 	private static final String VAL_SIZE 		= "size";
 	private static final String VAL_POSITION 	= "position";
 	private static final String VAL_ROTATION 	= "rotation";
+	private static final char CHAR_REFERENCE 	= '@';
 
 	private ParametersParser parametersParser;
 	private String entityName;
@@ -170,17 +172,32 @@ public class XmlEntityReader {
 
 	// test the value to match the param class, also if the param type is a Entity, this will find that
 	// entity for you. If the value is a reference to a resource value, that value will be searched and delivered.
-	private Object getTestedValue(Class<?> param, String value) {
-		Object result = null;
+	@SuppressWarnings("unchecked")
+	private <T> T getTestedValue(Class<T> param, String value) {
+		if(value.charAt(0) == CHAR_REFERENCE) {
+			String resource = value.substring(1);
+			Object result = null;
 
-		if(param == int.class) 			result = Integer.parseInt(value);
-		else if(param == float.class) 	result = Float.parseFloat(value);
-		else if(param == double.class) 	result = Double.parseDouble(value);
-		else if(param == boolean.class)	result = Boolean.parseBoolean(value);
-		else if(param == String.class)	result = value;
-		else if(param == Entity.class)	result = game.findEntity(value);
+			if(param == int.class) 			result = ((Number) Resources.get(resource)).intValue();
+			else if(param == float.class) 	result = ((Number) Resources.get(resource)).floatValue();
+			else if(param == double.class) 	result = ((Number) Resources.get(resource)).doubleValue();
+			else if(param == boolean.class)	result = Resources.getBoolean(resource);
+			else if(param == String.class)	result = Resources.getString(resource);
+			else if(param == Entity.class)	result = game.findEntity(Resources.getString(resource));
 
-		return result;
+			return (T) result;
+		} else {
+			Object result = null;
+
+			if(param == int.class) 			result = Integer.parseInt(value);
+			else if(param == float.class) 	result = Float.parseFloat(value);
+			else if(param == double.class) 	result = Double.parseDouble(value);
+			else if(param == boolean.class)	result = Boolean.parseBoolean(value);
+			else if(param == String.class)	result = value;
+			else if(param == Entity.class)	result = game.findEntity(value);
+
+			return (T) result;
+		}
 	}
 
 	private Class<?> getParamFor(Method method) {
@@ -214,9 +231,9 @@ public class XmlEntityReader {
 			try {
 				String[] params = parametersParser.parse(attributes.getValue(VAL_POSITION));
 
-				float x = Float.parseFloat(params[0]);
-				float y = Float.parseFloat(params[1]);
-				float z = Float.parseFloat(params[2]);
+				float x = getTestedValue(float.class, params[0]);
+				float y = getTestedValue(float.class, params[1]);
+				float z = getTestedValue(float.class, params[2]);
 
 				entity.getTransform().setPosition(new Vector3(x, y, z));
 			} catch(ParsingException e) {
@@ -225,7 +242,7 @@ public class XmlEntityReader {
 		}
 
 		if(attributes.getValue(VAL_ROTATION) != null) {
-			float rotation = Float.parseFloat(attributes.getValue(VAL_ROTATION));
+			float rotation = getTestedValue(float.class, attributes.getValue(VAL_ROTATION));
 			entity.getTransform().setRotation(rotation);
 		}
 
@@ -233,8 +250,8 @@ public class XmlEntityReader {
 			try {
 				String[] params = parametersParser.parse(attributes.getValue(VAL_SIZE));
 
-				float x = Float.parseFloat(params[0]);
-				float y = Float.parseFloat(params[1]);
+				float x = getTestedValue(float.class, params[0]);
+				float y = getTestedValue(float.class, params[1]);
 
 				entity.getTransform().setSize(new Vector2(x, y));
 			} catch(ParsingException e) {
@@ -242,7 +259,7 @@ public class XmlEntityReader {
 			}
 		}
 	}
-	
+
 	private boolean hasPackage(String componentClass) {
 		return componentClass.split("\\.").length != 1;
 	}

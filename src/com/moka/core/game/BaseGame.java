@@ -3,6 +3,7 @@ package com.moka.core.game;
 import com.moka.components.Camera;
 import com.moka.core.Entity;
 import com.moka.core.Moka;
+import com.moka.core.Resources;
 import com.moka.core.xml.XmlEntityReader;
 import com.moka.core.xml.XmlSceneReader;
 import com.moka.exceptions.JMokaException;
@@ -99,7 +100,7 @@ public abstract class BaseGame {
 	 * @param filePath resource file path.
 	 */
 	public void define(String filePath) {
-		
+		Resources.loadResources(filePath);
 	}
 
 	/**

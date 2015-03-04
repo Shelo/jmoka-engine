@@ -1,9 +1,12 @@
 <values xmlns="http://www.mokadev.com/resources">
     <string>
-        
+        <res name="image_red_box" value="res/images/box2.png" />
+        <res name="image_sky" value="res/images/sky.png" />
+        <res name="image_green_box" value="res/images/box1.png" />
     </string>
 
     <integer>
-        <res name="ScreenSize" value="1" />
+        <res name="screen_width" value="800" />
+        <res name="screen_height" value="480" />
     </integer>
 </values>

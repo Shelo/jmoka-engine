@@ -11,9 +11,12 @@
     <!-- Define Entity's Type. -->
     <xs:complexType name="EntityType">
         <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="Sprite" type="SpriteType"             minOccurs="0" maxOccurs="1" />
-            <xs:element name="Camera" type="CameraType"             minOccurs="0" maxOccurs="1" />
-            <xs:element name="Controllable" type="ControllableType" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Sprite" type="SpriteType"                 minOccurs="0" maxOccurs="1" />
+            <xs:element name="Camera" type="CameraType"                 minOccurs="0" maxOccurs="1" />
+            <xs:element name="Controllable" type="ControllableType"     minOccurs="0" maxOccurs="1" />
+            <xs:element name="SATCollider" type="SATColliderType"       minOccurs="0" maxOccurs="1" />
+            <xs:element name="CircleCollider" type="CircleColliderType" minOccurs="0" maxOccurs="1" />
+            <xs:element name="AABBCollider" type="AABBColliderType"     minOccurs="0" maxOccurs="1" />
             <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
 

@@ -34,7 +34,7 @@ public class Sprite extends Component {
 		this.tint 		= tint;
 
 		this.size.set(size.getX(), size.getY());
-		quad = new Quad(texture.getXTexCoord(), texture.getYTexCoord());
+		quad = new Quad(texture.getTexCoordX(), texture.getTexCoordY());
 	}
 
 	public Sprite(Texture texture, Color tint) {
@@ -87,12 +87,12 @@ public class Sprite extends Component {
 
 	public void setTexture(Texture texture) {
 		this.texture = texture;
-		quad = new Quad(texture.getXTexCoord(), texture.getYTexCoord());
+		quad = new Quad(texture.getTexCoordX(), texture.getTexCoordY());
 	}
 
 	@XmlAttribute(value = "texture", required = true)
-	public void setTexture(String texture) {
-		setTexture(new Texture(texture));
+	public void setTexture(String path) {
+		setTexture(Texture.newTexture(path));
 	}
 
 	@XmlAttribute("tintR")

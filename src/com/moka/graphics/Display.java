@@ -3,6 +3,7 @@ package com.moka.graphics;
 import com.moka.core.Input;
 import com.moka.core.JMokaLog;
 import com.moka.core.Moka;
+import com.moka.core.Resources;
 import com.moka.exceptions.JMokaException;
 import org.lwjgl.glfw.GLFWvidmode;
 import org.lwjgl.opengl.GLContext;
@@ -50,6 +51,10 @@ public final class Display {
 		// init other instances.
 		Moka.getRenderer().onCreate(width, height);
 		Input.onCreate(window);
+	}
+
+	public void createDisplay(String widthRes, String heightRes, String title) {
+		createDisplay(Resources.getInt(widthRes), Resources.getInt(heightRes), title);
 	}
 	
 	public void onUpdate() {

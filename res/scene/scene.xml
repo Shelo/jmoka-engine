@@ -3,33 +3,22 @@
         <Camera />
     </entity>
 
-    <entity position="400, 240, 0" rotation="0" name="Sky" size="800, 480">
-        <Sprite texture="res/images/sky.png"/>
+    <entity position="400, 240, 0" rotation="0" name="Sky" size="@screen_width, 480">
+        <Sprite texture="@image_sky"/>
     </entity>
 
-    <entity position="180, 50, 1" rotation="90" name="Box1">
-        <Sprite texture="res/images/box1.png" />
+    <entity position="180, 50, 1" rotation="25" name="Box1">
+        <Sprite texture="@image_green_box" />
         <SATCollider />
 
-        <Rotator/>
+        <Rotator />
 
         <Controllable
                 topSpeed="500"
                 acceleration="50" />
     </entity>
 
-    <entity position="280, 50, 1" rotation="90" name="Box2">
-        <SATCollider />
-        <Sprite texture="res/images/box2.png" />
-    </entity>
-
-    <entity position="280, 100, 1" rotation="90" name="Box3">
-        <SATCollider />
-        <Sprite texture="res/images/box2.png" />
-    </entity>
-
-    <entity position="280, 150, 1" rotation="90" name="Box4">
-        <SATCollider />
-        <Sprite texture="res/images/box2.png" />
-    </entity>
+    <include path="res/scene/entities/red_box.xml" name="Box2" position="280, 50, 0" />
+    <include path="res/scene/entities/red_box.xml" name="Box3" position="280, 100, 0" />
+    <include path="res/scene/entities/red_box.xml" name="Box4" position="280, 150, 0" />
 </scene>

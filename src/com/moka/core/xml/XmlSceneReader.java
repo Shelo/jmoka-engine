@@ -19,6 +19,8 @@ public class XmlSceneReader {
 	private static final String TAG_INCLUDE = "include";
 	private static final String TAG_ENTITY 	= "entity";
 	private static final String TAG_ROOT 	= "scene";
+	private static final String KEY_NAME 	= "name";
+	private static final String KEY_PATH 	= "path";
 
 	private XmlEntityReader entityReader;
 	private String currentFilePath;
@@ -34,7 +36,7 @@ public class XmlSceneReader {
 				// if that is not the case, then the XML is malformed.
 				if(qName.equals(TAG_ENTITY)) {
 					// get and set the name for that entity.
-					String name = attributes.getValue("name");
+					String name = attributes.getValue(KEY_NAME);
 					currentEntity = game.newEntity(name);
 
 					// set transform position, rotation and scale.
@@ -43,8 +45,8 @@ public class XmlSceneReader {
 				} else if(qName.equals(TAG_INCLUDE)) {
 					// with a include tag we should create an entity, put the name that it should have and
 					// override possible transform properties.
-					String path = attributes.getValue("path");
-					String name = attributes.getValue("name");
+					String path = attributes.getValue(KEY_PATH);
+					String name = attributes.getValue(KEY_NAME);
 
 					Entity entity = entityReader.read(path, name);
 					entityReader.setTransformParams(entity, attributes);

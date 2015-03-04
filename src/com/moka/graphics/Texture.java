@@ -1,5 +1,6 @@
 package com.moka.graphics;
 
+import com.moka.core.Resources;
 import com.moka.core.Utils;
 import org.newdawn.slick.opengl.TextureLoader;
 
@@ -49,11 +50,19 @@ public class Texture {
 		return texture.getImageHeight();
 	}
 
-	public float getXTexCoord() {
+	public float getTexCoordX() {
 		return texture.getWidth();
 	}
 
-	public float getYTexCoord() {
+	public float getTexCoordY() {
 		return texture.getHeight();
+	}
+
+	public static Texture newTexture(String path) {
+		if(Resources.getTextures(path) == null) {
+			return Resources.addTexture(path, new Texture(path));
+		} else {
+			return Resources.getTextures(path);
+		}
 	}
 }

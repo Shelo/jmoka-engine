@@ -3,30 +3,25 @@ package com.moka.core.game;
 import com.moka.exceptions.JMokaException;
 
 public class XmlGame extends BaseGame {
-	private String xml;
+	private final String xml;
 	
-	public XmlGame(String xml) {
+	public XmlGame(String xml, String resPath) {
 		if(xml == null)
 			throw new JMokaException("Xml file path cannot be null.");
+
 		this.xml = xml;
+
+		if(resPath != null)
+			define(resPath);
 	}
 	
 	@Override
 	public final void onCreate() {
-		String[] resources = getResources();
-		if(resources != null)
-			for(String resource : resources)
-				define(resource);
-
 		populate(xml);
 	}
 
 	@Override
 	public final void onStop() {
 
-	}
-
-	public String[] getResources() {
-		return null;
 	}
 }
