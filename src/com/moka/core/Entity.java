@@ -2,7 +2,6 @@ package com.moka.core;
 
 import com.moka.components.Component;
 import com.moka.components.Sprite;
-import com.moka.graphics.Shader;
 import com.moka.physics.Collider;
 
 import java.util.ArrayList;
@@ -24,18 +23,16 @@ public class Entity {
 
 	public Entity addComponent(Component component) {
 		component.setEntity(this);
-		components.add(component);
+		if(component instanceof Sprite)
+			sprite = (Sprite) component;
+		else
+			components.add(component);
 		return this;
 	}
 
-	public void onCreate() {
+	public void create() {
 		for(Component component : components)
 			component.onCreate();
-	}
-
-	public void render(Shader shader) {
-		for(Component component : components)
-			component.onRender(shader);
 	}
 
 	public void update(double delta) {
@@ -43,18 +40,34 @@ public class Entity {
 			component.onUpdate(delta);
 	}
 
-	public Transform getTransform() {
-		return transform;
-	}
-
-	public String getName() {
-		return name;
-	}
-	
 	public <T> T getComponent(Class<T> componentClass) {
 		for(Component component : components)
 			if(componentClass.isInstance(component))
 				return componentClass.cast(component);
 		return null;
+	}
+
+	public Transform getTransform() {
+		return transform;
+	}
+
+	public Sprite getSprite() {
+		return sprite;
+	}
+
+	public Collider getCollider() {
+		return collider;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public boolean hasSprite() {
+		return sprite != null;
+	}
+	
+	public boolean hasCollider() {
+		return collider != null;
 	}
 }

@@ -4,7 +4,6 @@ import com.moka.core.Entity;
 import com.moka.core.Moka;
 import com.moka.core.Transform;
 import com.moka.exceptions.JMokaException;
-import com.moka.graphics.Shader;
 
 /**
  * Component class, establishes the common way a component should behave.
@@ -36,6 +35,10 @@ public abstract class Component {
 		return Moka.getGame().findEntity(tag);
 	}
 
+	public final <T> T getComponent(Class<T> componentClass) {
+		return entity.getComponent(componentClass);
+	}
+
 	/**
 	 * Called at the creation time.
 	 */
@@ -46,10 +49,4 @@ public abstract class Component {
 	 * @param delta the current delta time.
 	 */
 	public void onUpdate(final double delta) { }
-
-	/**
-	 * Called every render frame.
-	 * @param shader shader to render with.
-	 */
-	public void onRender(Shader shader) { }
 }

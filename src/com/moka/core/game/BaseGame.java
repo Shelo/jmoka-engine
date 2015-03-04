@@ -33,12 +33,13 @@ public abstract class BaseGame {
 
 	public final void onCreateAll() {
 		for(Entity entity : entities)
-			entity.onCreate();
+			entity.create();
 	}
 
 	public final void onRenderAll(Shader shader) {
 		for(Entity entity : entities)
-			entity.render(shader);
+			if(entity.hasSprite())
+				entity.getSprite().render(shader);
 	}
 
 	public final Entity addEntity(Entity entity) {

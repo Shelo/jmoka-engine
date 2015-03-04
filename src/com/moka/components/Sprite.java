@@ -19,12 +19,12 @@ public class Sprite extends Component {
 	private Color tint;
 	private Quad quad;
 
-	private float height 	= 0;
-	private float width 	= 0;
-	private float tintR 	= 1;
-	private float tintG 	= 1;
-	private float tintB 	= 1;
-	private float tintA 	= 1;
+	private float height = 0;
+	private float width = 0;
+	private float tintR = 1;
+	private float tintG = 1;
+	private float tintB = 1;
+	private float tintA = 1;
 
 	public Sprite() {
 		tint = new Color(1, 1, 1, 1);
@@ -56,21 +56,7 @@ public class Sprite extends Component {
 		this(new Texture(filePath));
 	}
 
-	public void setTexture(Texture texture) {
-		this.texture = texture;
-		quad = new Quad(texture.getXTexCoord(), texture.getYTexCoord());
-	}
-
-	public Texture getTexture() {
-		return texture;
-	}
-
-	public Quad getQuad() {
-		return quad;
-	}
-
-	@Override
-	public void onRender(Shader shader) {
+	public void render(Shader shader) {
 		if(texture == null)
 			JMokaException.raise("Sprite: there no texture to draw.");
 
@@ -82,12 +68,29 @@ public class Sprite extends Component {
 		quad.draw();
 	}
 
+	public Texture getTexture() {
+		return texture;
+	}
+
+	public Quad getQuad() {
+		return quad;
+	}
+
 	public float getWidth() {
 		return width == 0 ? texture.getWidth() : width;
 	}
 
 	public float getHeight() {
 		return height == 0 ? texture.getHeight() : height;
+	}
+
+	public Color getTint() {
+		return tint;
+	}
+
+	public void setTexture(Texture texture) {
+		this.texture = texture;
+		quad = new Quad(texture.getXTexCoord(), texture.getYTexCoord());
 	}
 
 	@XmlAttribute(value = "texture", required = true)
@@ -123,9 +126,5 @@ public class Sprite extends Component {
 	@XmlAttribute("height")
 	public void setSizeY(float value) {
 		height = value;
-	}
-
-	public Color getTint() {
-		return tint;
 	}
 }
