@@ -34,6 +34,7 @@ public class Quad {
 		ibo = glGenBuffers();
 
 		// generate vertices.
+		// texture is drawn flipped on porpoise.
 		vertices = new Vertex[] {
 				new Vertex(-0.5f,  -0.5f, 0, 0, yTexCoord),
 				new Vertex(-0.5f, 	0.5f, 0, 0, 0),

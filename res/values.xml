@@ -9,5 +9,6 @@
     <integer>
         <res name="screen_width" value="800" />
         <res name="screen_height" value="480" />
+        <res name="layer_0" value="0" />
     </integer>
 </values>

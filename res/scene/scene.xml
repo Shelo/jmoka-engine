@@ -3,7 +3,7 @@
         <Camera />
     </entity>
 
-    <entity position="${@screen_width / 2}, ${@screen_height / 2}" layer="0" rotation="0" name="Sky" size="@screen_width, @screen_height">
+    <entity position="${@screen_width / 2}, ${@screen_height / 2}" layer="@layer_0" rotation="0" name="Sky" size="@screen_width, @screen_height">
         <Sprite texture="@image_sky"/>
     </entity>
 
@@ -13,8 +13,9 @@
                 radius="25" />
 
         <Controllable
-                topSpeed="500"
-                acceleration="50" />
+                topSpeed="200"
+                acceleration="500"
+                impulse="2.5" />
 
         <LookTowardsMouse />
     </entity>
