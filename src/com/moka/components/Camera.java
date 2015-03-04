@@ -28,7 +28,7 @@ public class Camera extends Component {
 	}
 
 	@Override
-	public void onUpdate(double delta) {
+	public void onUpdate() {
 
 	}
 

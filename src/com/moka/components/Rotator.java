@@ -6,7 +6,7 @@ public class Rotator extends Component {
 	private float angle;
 
 	@Override
-	public void onUpdate(double delta) {
+	public void onUpdate() {
 		getTransform().setRotation(angle += (float) (Moka.getDelta() * 90));
 	}
 }

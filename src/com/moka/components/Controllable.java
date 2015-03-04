@@ -1,6 +1,7 @@
 package com.moka.components;
 
 import com.moka.core.Input;
+import com.moka.core.Moka;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.core.xml.XmlSupported;
 import org.lwjgl.glfw.GLFW;
@@ -19,7 +20,7 @@ public class Controllable extends Component {
 	public Controllable() { }
 
 	@Override
-	public void onUpdate(final double delta) {
+	public void onUpdate() {
 		float dx = 0;
 		float dy = 0;
 
@@ -52,16 +53,16 @@ public class Controllable extends Component {
 		*/
 
 		if(Input.getKey(GLFW.GLFW_KEY_D))
-			dx = (float) (delta * 100);
+			dx = (float) (Moka.getDelta() * 100);
 
 		if(Input.getKey(GLFW.GLFW_KEY_A))
-			dx = (float) (- delta * 100);
-		
+			dx = (float) (- Moka.getDelta() * 100);
+
 		if(Input.getKey(GLFW.GLFW_KEY_W))
-			dy = (float) (delta * 100);
+			dy = (float) (Moka.getDelta() * 100);
 
 		if(Input.getKey(GLFW.GLFW_KEY_S))
-			dy = (float) (- delta * 100);
+			dy = (float) (- Moka.getDelta() * 100);
 
 		getTransform().move(dx, dy, 0);
 	}
