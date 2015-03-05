@@ -39,7 +39,7 @@ public abstract class BaseGame {
 
 	public final void renderAll(Shader shader) {
 		for(Entity entity : entities)
-			if(entity.hasSprite())
+			if(entity.hasSprite() && entity.getSprite().isEnabled())
 				entity.getSprite().render(shader);
 	}
 

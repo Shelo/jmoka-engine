@@ -12,14 +12,11 @@ import com.moka.physics.Collision;
  * @author Shelo
  */
 public abstract class Component {
+	private boolean enabled = true;
 	private Entity entity;
 
-	public Component() {
-		
-	}
-
 	public final void setEntity(final Entity entity) {
-		if(this.entity != null)
+		if (this.entity != null)
 			throw new JMokaException("This component already has an entity.");
 		this.entity = entity;
 	}
@@ -38,6 +35,14 @@ public abstract class Component {
 
 	public final <T> T getComponent(Class<T> componentClass) {
 		return entity.getComponent(componentClass);
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 	/**

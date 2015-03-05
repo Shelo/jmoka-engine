@@ -19,14 +19,14 @@ public class Physics {
 			Entity pivot = entities.get(i);
 
 			// TODO: optimize CircleCollider rotation.
-			if(pivot.hasCollider() && pivot.getTransform().hasChanged()) {
+			if(pivot.hasCollider() && pivot.getCollider().isEnabled() && pivot.getTransform().hasChanged()) {
 				Collider pCollider = pivot.getCollider();
 
 				for(int j = 0; j < size; j++) {
 					if(i == j) continue;
 					Entity test = entities.get(j);
 
-					if(test.hasCollider()) {
+					if(test.hasCollider() && test.getCollider().isEnabled()) {
 						Collider tCollider = test.getCollider();
 
 						Collision collision = pCollider.collidesWith(tCollider);

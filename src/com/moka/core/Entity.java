@@ -36,27 +36,34 @@ public class Entity {
 	}
 
 	public void create() {
-		if(hasSprite()) sprite.onCreate();
-		if(hasCollider()) collider.onCreate();
+		if (hasSprite())
+			sprite.onCreate();
 
-		for(Component component : components)
-			component.onCreate();
+		if (hasCollider()) 
+			collider.onCreate();
+
+		for (Component component : components)
+			if (component.isEnabled())
+				component.onCreate();
 	}
 
 	public void update() {
 		transform.update();
-		for(Component component : components)
-			component.onUpdate();
+		for (Component component : components)
+			if (component.isEnabled())
+				component.onUpdate();
 	}
 
 	public void collide(Collision collision) {
-		for(Component component : components)
-			component.onCollide(collision);
+		for (Component component : components)
+			if (component.isEnabled())
+				component.onCollide(collision);
 	}
 
 	public void postUpdate() {
-		for(Component component : components)
-			component.onPostUpdate();
+		for (Component component : components)
+			if (component.isEnabled())
+				component.onPostUpdate();
 	}
 
 	public <T> T getComponent(Class<T> componentClass) {
