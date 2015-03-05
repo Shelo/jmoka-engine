@@ -20,7 +20,7 @@ public abstract class Component {
 
 	public final void setEntity(final Entity entity) {
 		if(this.entity != null)
-			JMokaException.raise("This component already has an entity.");
+			throw new JMokaException("This component already has an entity.");
 		this.entity = entity;
 	}
 

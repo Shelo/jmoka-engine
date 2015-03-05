@@ -62,7 +62,7 @@ public class XmlEntityReader {
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			// if the parser is currently closed, throw exception.
-			if(state == STATE_CLOSED) JMokaException.raise("Parser is currently closed.");
+			if(state == STATE_CLOSED) throw new JMokaException("Parser is currently closed.");
 
 			// the parser needs to be in the init state to be able to read the entity tag.
 			if(state == STATE_INIT && qName.equals(TAG_ENTITY)) {
@@ -71,7 +71,7 @@ public class XmlEntityReader {
 				setTransformParams(entity, attributes);
 			} else {
 				// if the state is not equals to entity state then we know there's is an error with the XML file.
-				if(state != STATE_ENTITY) JMokaException.raise("XML File corrupted.");
+				if(state != STATE_ENTITY) throw new JMokaException("XML File corrupted.");
 
 				// if we are in entity state then we can read components.
 				Component component = readComponent(qName, attributes);
@@ -99,7 +99,7 @@ public class XmlEntityReader {
 		try {
 			parser = SAXParserFactory.newInstance().newSAXParser();
 		} catch(ParserConfigurationException | SAXException e) {
-			JMokaException.raise("Error with SAXParser.");
+			throw new JMokaException("Error with SAXParser.");
 		}
 	}
 
@@ -110,23 +110,24 @@ public class XmlEntityReader {
 	 * @return the created entity.
 	 */
 	public Entity read(String filePath, String name) {
-		if(state != STATE_CLOSED) JMokaException.raise("XmlEntityReader's state is not init.");
+		if(state != STATE_CLOSED)
+			throw new JMokaException("XmlEntityReader's state is not init.");
 
 		// first state is init.
-		state 		= STATE_INIT;
-		entity 		= null;
-		entityName 	= name;
+		state = STATE_INIT;
+		entity = null;
+		entityName = name;
 
 		try {
 			// parse XML document.
 			InputStream stream = new FileInputStream(filePath);
 			parser.parse(stream, new Handler());
 		} catch(FileNotFoundException e) {
-			JMokaException.raise("File not found: " + filePath);
+			throw new JMokaException("File not found: " + filePath);
 		} catch(SAXException e) {
-			JMokaException.raise("File " + filePath + " is corrupted.");
+			throw new JMokaException("File " + filePath + " is corrupted.");
 		} catch(IOException e) {
-			JMokaException.raise("IOException while reading " + filePath);
+			throw new JMokaException("IOException while reading " + filePath);
 		}
 
 		return entity;

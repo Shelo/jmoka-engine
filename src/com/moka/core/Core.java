@@ -3,9 +3,7 @@ package com.moka.core;
 import com.moka.core.game.BaseGame;
 import com.moka.exceptions.JMokaException;
 
-import static org.lwjgl.glfw.GLFW.glfwGetTime;
-import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Core of the engine, takes care of the game loop and triggers.
@@ -28,7 +26,7 @@ public class Core {
 
 		frameTime = 1 / fc;
 		if(glfwInit() == 0)
-			JMokaException.raise("Error initializing GLFW.");
+			throw new JMokaException("Error initializing GLFW.");
 		else
 			JMokaLog.o(TAG, "GLFW initialized.");
 	}
@@ -56,6 +54,9 @@ public class Core {
 		int updateFrames = 0;
 		int renderFrames = 0;
 		double accSeconds = 0;
+
+		// DEBUG.
+		double deltaAcc = 0;
 
 		while(daemon) {
 			// indicates if we should render or not.
@@ -90,6 +91,7 @@ public class Core {
 				accumulator -= delta;
 				accSeconds 	+= delta;
 				time 		+= delta;
+				deltaAcc 	+= delta;
 
 				updateFrames++;
 			}
@@ -121,6 +123,7 @@ public class Core {
 	}
 
 	public void stop() {
+		JMokaLog.o(TAG, "Stopping JMoka Engine.");
 		daemon = false;
 		glfwTerminate();
 	}

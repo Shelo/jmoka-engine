@@ -50,12 +50,10 @@ public class Utils {
 			reader.close();
 			return builder.toString();
 		} catch(FileNotFoundException e) {
-			JMokaException.raise("File " + filePath + " not found.");
+			throw new JMokaException("File " + filePath + " not found.");
 		} catch(IOException e) {
-			JMokaException.raise("IOException when reading file " + filePath + ".");
+			throw new JMokaException("IOException when reading file " + filePath + ".");
 		}
-
-		return null;
 	}
 
 	public static FloatBuffer genBuffer(Matrix4 matrix) {

@@ -123,12 +123,12 @@ public abstract class BaseGame {
 	 * Called every update frame, is not necessary for most games do.
 	 */
 	public void onUpdate() { }
-	
+
 	/**
 	 * Creates the game context, this is intended to start everything the game needs.
 	 */
 	public abstract void onCreate();
-	
+
 	/**
 	 * Been capable to send an error code.
 	 */

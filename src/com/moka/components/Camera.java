@@ -38,7 +38,7 @@ public class Camera extends Component {
 
 	public Matrix4 getProjectedViewMatrix() {
 		if(projection == null)
-			JMokaException.raise("Camera: " + getEntity().getName() + "'s projection is null.");
+			throw new JMokaException("Camera: " + getEntity().getName() + "'s projection is null.");
 
 		Transform t = getTransform();
 

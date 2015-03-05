@@ -49,7 +49,7 @@ public final class Renderer {
 
 	public void setCamera(@NotNull Camera camera) {
 		if(camera == null)
-			JMokaException.raise("Renderer.setCurrentCamera: the given camera cannot be null.");
+			throw new JMokaException("Renderer.setCurrentCamera: the given camera cannot be null.");
 		this.camera = camera;
 	}
 

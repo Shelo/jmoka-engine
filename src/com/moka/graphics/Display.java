@@ -38,7 +38,7 @@ public final class Display {
 		glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2, (GLFWvidmode.height(vidMode) - height) / 2);
 
 		if(window == 0)
-			JMokaException.raise("Window could not be created.");
+			throw new JMokaException("Window could not be created.");
 		else 
 			JMokaLog.o(TAG, "Window created.");
 

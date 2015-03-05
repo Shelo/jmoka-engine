@@ -33,12 +33,12 @@ public class Shader {
 		// Link and check errors.
 		glLinkProgram(program);
 		if(glGetProgrami(program, GL_LINK_STATUS) == 0)
-			JMokaException.raise(glGetShaderInfoLog(program, 1024));
+			throw new JMokaException(glGetShaderInfoLog(program, 1024));
 
 		// Validate and check errors.
 		glValidateProgram(program);
 		if(glGetProgrami(program, GL_VALIDATE_STATUS) == 0)
-			JMokaException.raise(glGetShaderInfoLog(program, 1024));
+			throw new JMokaException(glGetShaderInfoLog(program, 1024));
 
 		uniformLocations = new HashMap<>();
 
@@ -62,13 +62,13 @@ public class Shader {
 		int shader = glCreateShader(type);
 
 		if(shader == 0)
-			JMokaException.raise("Shader creation failed for file " + filePath);
+			throw new JMokaException("Shader creation failed for file " + filePath);
 
 		glShaderSource(shader, code);
 		glCompileShader(shader);
 
 		if(glGetShaderi(shader, GL_COMPILE_STATUS) == 0)
-			JMokaException.raise("Shader compile error for file " + filePath + ": " + glGetShaderInfoLog(shader, 1024));
+			throw new JMokaException("Shader compile error for file " + filePath + ": " + glGetShaderInfoLog(shader, 1024));
 
 		glAttachShader(program, shader);
 		return shader;
@@ -82,7 +82,7 @@ public class Shader {
 		// if not, we ask openGL for the uniform location, store it and return it.
 		int location = glGetUniformLocation(program, uniform);
 		if(location == -1)
-			JMokaException.raise("No uniform with name " + uniform);
+			throw new JMokaException("No uniform with name " + uniform);
 		else
 			uniformLocations.put(uniform, location);
 

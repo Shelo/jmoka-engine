@@ -91,7 +91,7 @@ public final class Input {
 
 	private static void validate() {
 		if(window == 0)
-			JMokaException.raise("Window not defined in input.");
+			throw new JMokaException("Window not defined in input.");
 	}
 
 	public static Vector2 getCursorPos() {

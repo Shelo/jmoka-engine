@@ -6,6 +6,7 @@ package com.moka.core;
  */
 public final class JMokaLog {
 	private static String sharedTag = "JMokaClient";
+	private static boolean active = true;
 
 	/**
 	 * Logs a message with a given tag.
@@ -13,6 +14,7 @@ public final class JMokaLog {
 	 * @param m		the log message.
 	 */
 	public static void o(String tag, String m) {
+		if(!active) return;
 		System.out.println("[" + tag + "] " + m);
 	}
 
@@ -23,17 +25,13 @@ public final class JMokaLog {
 	public static String getSharedTag() {
 		return sharedTag;
 	}
-	
+
 	public static void saveLogFile() {
 
 	}
 
-	/**
-	 * Logs a message using the shared tag.
-	 * @param m		the log message.
-	 */
 	public static void o(String m) {
-		System.out.println("[" + sharedTag + "] " + m);
+		o(sharedTag, m);
 	}
 
 	public static void o(int id) {
@@ -46,5 +44,13 @@ public final class JMokaLog {
 	
 	public static void o(double id) {
 		o(Double.toString(id));
+	}
+
+	public static void enable() {
+		JMokaLog.active = true;
+	}
+
+	public static void disable() {
+		JMokaLog.active = false;
 	}
 }
