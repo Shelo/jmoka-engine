@@ -1,6 +1,7 @@
 package com.moka.core;
 
 import com.moka.core.xml.XmlResourcesReader;
+import com.moka.exceptions.JMokaException;
 import com.moka.graphics.Texture;
 
 import java.util.HashMap;
@@ -15,19 +16,26 @@ public class Resources {
 	}
 
 	public static int getInt(String name) {
-		return (int) resources.get(name);
+		return (int) get(name);
 	}
 
 	public static float getFloat(String name) {
-		return (float) resources.get(name);
+		return (float) get(name);
 	}
 
 	public static double getDouble(String name) {
-		return (double) resources.get(name);
+		return (double) get(name);
 	}
 
 	public static boolean getBoolean(String name) {
-		return (boolean) resources.get(name);
+		return (boolean) get(name);
+	}
+
+	public static Object get(String name) {
+		if (!resources.containsKey(name))
+			throw new JMokaException("Resource with name" + name + " doesn't exists.");
+
+		return resources.get(name);
 	}
 
 	public static Texture getTextures(String path) {
@@ -46,9 +54,5 @@ public class Resources {
 
 	public static void loadResources(String filePath) {
 		resourcesReader.read(filePath);
-	}
-
-	public static Object get(String name) {
-		return resources.get(name);
 	}
 }

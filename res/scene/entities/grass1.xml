@@ -1,0 +1,7 @@
+<entity xmlns="http://www.moka-dev.com/entity"
+        position="0, 0" rotation="0" size="64, 64">
+
+    <Sprite texture="@image_grass1" />
+    <AABBCollider />
+
+</entity>

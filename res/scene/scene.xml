@@ -3,17 +3,15 @@
         <Camera />
     </entity>
 
-    <entity
-            layer="@layer_sky" rotation="0" name="Sky" size="@screen_width, @screen_height"
-            position="${@screen_width / 2}, ${@screen_height / 2}">
-
-        <Sprite texture="@image_sky"/>
-    </entity>
-
+    <!--
     <entity position="-5, ${@screen_height / 2}" rotation="0" name="LeftBox" size="10, @screen_height">
         <AABBCollider/>
     </entity>
+    -->
 
-    <include path="res/scene/entities/stick_player.xml" name="Player" />
-    <include path="res/scene/entities/ground.xml" name="Ground"/>
+    <include path="res/scene/entities/grass1.xml" name="Grass1_1" position="32, 32" />
+    <include path="res/scene/entities/grass1.xml" name="Grass1_2" position="${32 + 64 * 1}, 32" />
+    <include path="res/scene/entities/grass1.xml" name="Grass1_3" position="${32 + 64 * 2}, 32" />
+    <include path="res/scene/entities/grass1.xml" name="Grass1_4" position="${32 + 64 * 3}, 32" />
+    <include path="res/scene/entities/grass1.xml" name="Grass1_5" position="${32 + 64 * 4}, 32" />
 </scene>

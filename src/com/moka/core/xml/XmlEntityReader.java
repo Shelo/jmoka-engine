@@ -187,7 +187,7 @@ public class XmlEntityReader {
 			throw new JMokaException(String.format("Method %s for component %s is inaccessible",method.getName(),
 					componentName));
 		} catch(InvocationTargetException e) {
-			throw new JMokaException("Invocation target exception!.");
+			throw new JMokaException(componentName + " Invocation target exception!.");
 		}
 	}
 
