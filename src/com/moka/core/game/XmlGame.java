@@ -1,8 +1,7 @@
 package com.moka.core.game;
 
+import com.moka.core.BaseGame;
 import com.moka.exceptions.JMokaException;
-
-import java.io.IOException;
 
 public class XmlGame extends BaseGame {
 	private final String xml;

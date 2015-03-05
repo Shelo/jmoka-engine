@@ -1,7 +1,7 @@
 package com.moka.graphics;
 
 import com.moka.components.Camera;
-import com.moka.core.game.BaseGame;
+import com.moka.core.BaseGame;
 import com.moka.exceptions.JMokaException;
 import com.sun.istack.internal.NotNull;
 

@@ -1,6 +1,5 @@
 package com.moka.core;
 
-import com.moka.core.game.BaseGame;
 import com.moka.exceptions.JMokaException;
 
 import static org.lwjgl.glfw.GLFW.*;

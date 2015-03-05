@@ -1,9 +1,6 @@
-package com.moka.core.game;
+package com.moka.core;
 
 import com.moka.components.Camera;
-import com.moka.core.Entity;
-import com.moka.core.Moka;
-import com.moka.core.Resources;
 import com.moka.core.xml.XmlEntityReader;
 import com.moka.core.xml.XmlSceneReader;
 import com.moka.exceptions.JMokaException;
@@ -28,18 +25,18 @@ public abstract class BaseGame {
 	}
 
 	public final void updateAll() {
-		for(Entity entity : entities)
+		for (Entity entity : entities)
 			entity.update();
 	}
 
 	public final void createAll() {
-		for(Entity entity : entities)
+		for (Entity entity : entities)
 			entity.create();
 	}
 
 	public final void renderAll(Shader shader) {
-		for(Entity entity : entities)
-			if(entity.hasSprite() && entity.getSprite().isEnabled())
+		for (Entity entity : entities)
+			if (entity.hasSprite() && entity.getSprite().isEnabled())
 				entity.getSprite().render(shader);
 	}
 

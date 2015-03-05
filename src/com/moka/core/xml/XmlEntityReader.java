@@ -4,7 +4,7 @@ import com.moka.components.Component;
 import com.moka.core.Entity;
 import com.moka.core.Prefab;
 import com.moka.core.Resources;
-import com.moka.core.game.BaseGame;
+import com.moka.core.BaseGame;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2;
 import com.moka.math.Vector3;
@@ -26,80 +26,83 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+// TODO: clean this code a little bit.
 public class XmlEntityReader {
-	private static final String TAG_ENTITY 		= "entity";
-	private static final int STATE_INIT			= 0;
-	private static final int STATE_ENTITY		= 1;
-	private static final int STATE_CLOSED		= 2;
-	private static final String VAL_SIZE 		= "size";
-	private static final String VAL_POSITION 	= "position";
-	private static final String VAL_ROTATION 	= "rotation";
-	private static final String VAL_LAYER 		= "layer";
-	private static final char CHAR_REFERENCE 	= '@';
-	private static final char CHAR_EXPRESSION 	= '$';
-	private static ArrayList<Character> symbols = new ArrayList<>();
+	private static final String TAG_ENTITY 				= "entity";
+	private static final int STATE_INIT					= 0;
+	private static final int STATE_ENTITY				= 1;
+	private static final int STATE_CLOSED				= 2;
+	private static final String VAL_SIZE 				= "size";
+	private static final String VAL_POSITION 			= "position";
+	private static final String VAL_ROTATION 			= "rotation";
+	private static final String VAL_LAYER 				= "layer";
+	private static final char CHAR_REFERENCE 			= '@';
+	private static final char CHAR_EXPRESSION 			= '$';
+	private static final ArrayList<Character> SYMBOLS 	= new ArrayList<>();
 
-	private ParametersParser parametersParser;
 	private Evaluator evaluator;
 	private String entityName;
+	private BaseGame baseGame;
 	private SAXParser parser;
-	private BaseGame game;
 	private Entity entity;
 	private int state;
 
 	static {
-		symbols.add('/');
-		symbols.add('+');
-		symbols.add('-');
-		symbols.add('*');
-		symbols.add(' ');
-		symbols.add('(');
-		symbols.add(')');
-		symbols.add('%');
+		// fill the symbols table.
+		SYMBOLS.add('/');
+		SYMBOLS.add('+');
+		SYMBOLS.add('-');
+		SYMBOLS.add('*');
+		SYMBOLS.add(' ');
+		SYMBOLS.add('(');
+		SYMBOLS.add(')');
+		SYMBOLS.add('%');
 	}
 
 	private class Handler extends DefaultHandler {
 		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		public void startElement(String uri, String localName, String qName, Attributes attributes)
+				throws SAXException {
 			// if the parser is currently closed, throw exception.
-			if(state == STATE_CLOSED) throw new JMokaException("Parser is currently closed.");
+			if (state == STATE_CLOSED)
+				throw new JMokaException("Parser is currently closed.");
 
 			// the parser needs to be in the init state to be able to read the entity tag.
-			if(state == STATE_INIT && qName.equals(TAG_ENTITY)) {
+			if (state == STATE_INIT && qName.equals(TAG_ENTITY)) {
 				state = STATE_ENTITY;
-				entity = game.newEntity(entityName);
+				entity = baseGame.newEntity(entityName);
 				setTransformParams(entity, attributes);
 			} else {
 				// if the state is not equals to entity state then we know there's is an error with the XML file.
-				if(state != STATE_ENTITY) throw new JMokaException("XML File corrupted.");
+				if (state != STATE_ENTITY)
+					throw new JMokaException("XML File corrupted.");
 
 				// if we are in entity state then we can read components.
-				Component component = readComponent(qName, attributes);
-				entity.addComponent(component);
+				entity.addComponent(readComponent(qName, attributes));
 			}
 		}
 
 		@Override
 		public void endElement(String uri, String localName, String qName) throws SAXException {
-			if(qName.equals(TAG_ENTITY))
+			if (qName.equals(TAG_ENTITY))
 				state = STATE_CLOSED;
 		}
 	}
 
-	public XmlEntityReader(BaseGame game) {
-		this.game = game;
+	public XmlEntityReader(BaseGame baseGame) {
+		this.baseGame = baseGame;
 
 		// the parser needs to be closed in order to read a new file.
 		state = STATE_CLOSED;
 
-		parametersParser = new ParametersParser();
+		// create the JEval evaluator.
 		evaluator = new Evaluator();
 
-		// create sax parser.
+		// create SAX parser.
 		try {
 			parser = SAXParserFactory.newInstance().newSAXParser();
 		} catch(ParserConfigurationException | SAXException e) {
-			throw new JMokaException("Error with SAXParser.");
+			throw new JMokaException("Error SAXParser: " + e.toString());
 		}
 	}
 
@@ -110,7 +113,7 @@ public class XmlEntityReader {
 	 * @return the created entity.
 	 */
 	public Entity read(String filePath, String name) {
-		if(state != STATE_CLOSED)
+		if (state != STATE_CLOSED)
 			throw new JMokaException("XmlEntityReader's state is not init.");
 
 		// first state is init.
@@ -137,7 +140,7 @@ public class XmlEntityReader {
 		String componentName = hasPackage(name) ? name : "com.moka.components." + name;
 
 		Component component = null;
-		
+
 		try {
 			// create a new instance of the component.
 			Class<?> componentClass = Class.forName(componentName);
@@ -148,7 +151,7 @@ public class XmlEntityReader {
 			ArrayList<Method> methods = getQualifiedMethods(componentClass);
 
 			// run through all the qualified method an set attributes if they're present.
-			for(Method method : methods)
+			for (Method method : methods)
 				handleAttribute(component, method, name, attributes);
 
 		} catch(ClassNotFoundException e) {
@@ -168,8 +171,8 @@ public class XmlEntityReader {
 
 		// if the value is not present we can either ignore it or, if the XmlAttribute
 		// specifies that is required, throw an exception.
-		if(value == null) {
-			if(attribute.required())
+		if (value == null) {
+			if (attribute.required())
 				throw new JMokaException("Component " + componentName + " requires the attribute " + attribute.value());
 			return;
 		}
@@ -184,7 +187,7 @@ public class XmlEntityReader {
 		try {
 			method.invoke(component, casted);
 		} catch(IllegalAccessException e) {
-			throw new JMokaException(String.format("Method %s for component %s is inaccessible",method.getName(),
+			throw new JMokaException(String.format("Method %s for component %s is inaccessible", method.getName(),
 					componentName));
 		} catch(InvocationTargetException e) {
 			throw new JMokaException(componentName + " Invocation target exception!.");
@@ -195,16 +198,22 @@ public class XmlEntityReader {
 	// entity for you. If the value is a reference to a resource value, that value will be searched and delivered.
 	@SuppressWarnings("unchecked")
 	private <T> T getTestedValue(Class<T> param, String value) {
-		if(value.charAt(0) == CHAR_REFERENCE) {
+		if (value.charAt(0) == CHAR_REFERENCE) {
 			String resource = value.substring(1);
 			Object result = null;
 
-			if(param == int.class) 			result = ((Number) Resources.get(resource)).intValue();
-			else if(param == float.class) 	result = ((Number) Resources.get(resource)).floatValue();
-			else if(param == double.class) 	result = ((Number) Resources.get(resource)).doubleValue();
-			else if(param == boolean.class)	result = Resources.getBoolean(resource);
-			else if(param == String.class)	result = Resources.getString(resource);
-			else if(param == Entity.class)	result = game.findEntity(Resources.getString(resource));
+			if (param == int.class)
+				result = ((Number) Resources.get(resource)).intValue();
+			else if (param == float.class)
+				result = ((Number) Resources.get(resource)).floatValue();
+			else if (param == double.class)
+				result = ((Number) Resources.get(resource)).doubleValue();
+			else if (param == boolean.class)
+				result = Resources.getBoolean(resource);
+			else if (param == String.class)
+				result = Resources.getString(resource);
+			else if (param == Entity.class)
+				result = baseGame.findEntity(Resources.getString(resource));
 
 			return (T) result;
 		} else if(value.charAt(0) == CHAR_EXPRESSION) {
@@ -218,21 +227,31 @@ public class XmlEntityReader {
 				throw new JMokaException("[JEval] " + e.toString());
 			}
 
-			if(param == int.class) 			result = Integer.parseInt(expValue);
-			else if(param == float.class) 	result = Float.parseFloat(expValue);
-			else if(param == double.class) 	result = Double.parseDouble(expValue);
-			else if(param == boolean.class)	result = Boolean.parseBoolean(expValue);
+			if (param == int.class)
+				result = Integer.parseInt(expValue);
+			else if (param == float.class)
+				result = Float.parseFloat(expValue);
+			else if (param == double.class)
+				result = Double.parseDouble(expValue);
+			else if (param == boolean.class)
+				result = Boolean.parseBoolean(expValue);
 
 			return (T) result;
 		} else {
 			Object result = null;
 
-			if(param == int.class) 			result = Integer.parseInt(value);
-			else if(param == float.class) 	result = Float.parseFloat(value);
-			else if(param == double.class) 	result = Double.parseDouble(value);
-			else if(param == boolean.class)	result = Boolean.parseBoolean(value);
-			else if(param == String.class)	result = value;
-			else if(param == Entity.class)	result = game.findEntity(value);
+			if (param == int.class)
+				result = Integer.parseInt(value);
+			else if (param == float.class)
+				result = Float.parseFloat(value);
+			else if (param == double.class)
+				result = Double.parseDouble(value);
+			else if (param == boolean.class)
+				result = Boolean.parseBoolean(value);
+			else if (param == String.class)
+				result = value;
+			else if (param == Entity.class)
+				result = baseGame.findEntity(value);
 
 			return (T) result;
 		}
@@ -242,7 +261,7 @@ public class XmlEntityReader {
 		Class<?>[] params = method.getParameterTypes();
 
 		// so, if the quantity of parameters is not equal to one, there's an error in the definition of the method.
-		if(params.length != 1)
+		if (params.length != 1)
 			throw new JMokaException(String.format("Method %s for component %s has more or less than one parameter," +
 					"this is not allowed.", method.getName(), method.getDeclaringClass().getName()));
 
@@ -251,36 +270,42 @@ public class XmlEntityReader {
 
 	private ArrayList<Method> getQualifiedMethods(Class<?> componentClass) {
 		ArrayList<Method> qualified = new ArrayList<>();
+
 		Method[] methods = componentClass.getDeclaredMethods();
-		for(Method method : methods) {
+		for (Method method : methods) {
 			XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
 
 			// if the attribute annotation is not null, then the method is Xml Qualified,
 			// so it can be added to the resulting list.
-			if(attribute != null) qualified.add(method);
+			if (attribute != null)
+				qualified.add(method);
 		}
+
 		return qualified;
 	}
 
 	public void setTransformParams(Entity entity, Attributes attributes) {
-		if(attributes.getValue(VAL_POSITION) != null) {
+		if (attributes.getValue(VAL_POSITION) != null) {
 			String[] params = attributes.getValue(VAL_POSITION).split(" *, *");
-			float layer = attributes.getValue(VAL_LAYER) == null? 0 :
-					getTestedValue(int.class, attributes.getValue(VAL_LAYER));
 			float x = getTestedValue(float.class, params[0]);
 			float y = getTestedValue(float.class, params[1]);
+			float layer = attributes.getValue(VAL_LAYER) == null? 0 :
+					getTestedValue(int.class, attributes.getValue(VAL_LAYER));
+
 			entity.getTransform().setPosition(new Vector3(x, y, layer));
 		}
 
-		if(attributes.getValue(VAL_ROTATION) != null) {
+		if (attributes.getValue(VAL_ROTATION) != null) {
 			float rotation = getTestedValue(float.class, attributes.getValue(VAL_ROTATION));
+
 			entity.getTransform().setRotation(rotation);
 		}
 
-		if(attributes.getValue(VAL_SIZE) != null) {
+		if (attributes.getValue(VAL_SIZE) != null) {
 			String[] params = attributes.getValue(VAL_SIZE).split(" *, *");
 			float x = getTestedValue(float.class, params[0]);
 			float y = getTestedValue(float.class, params[1]);
+
 			entity.getTransform().setSize(new Vector2(x, y));
 		}
 	}
@@ -290,19 +315,18 @@ public class XmlEntityReader {
 		HashSet<String> references = new HashSet<>();
 		boolean rRef = false;
 
-		for(int i = 0; i < expression.length(); i++) {
+		for (int i = 0; i < expression.length(); i++) {
 			char c = expression.charAt(i);
 
-			if(rRef) {
-				
-				if(curReference.length() == 0) {
-					if(Character.isLetter(c)) {
+			if (rRef) {
+				if (curReference.length() == 0) {
+					if (Character.isLetter(c)) {
 						curReference.append(c);
 					} else {
 						throw new JMokaException("Malformed math expression.");
 					}
 				} else {
-					if(symbols.contains(c)) {
+					if (SYMBOLS.contains(c)) {
 						rRef = false;
 						references.add(curReference.toString());
 						curReference.setLength(0);
@@ -310,20 +334,19 @@ public class XmlEntityReader {
 						curReference.append(c);
 					}
 				}
-				
 			} else {
-				if(c == CHAR_REFERENCE)
+				if (c == CHAR_REFERENCE)
 					rRef = true;
 			}
 		}
 
 		StringBuilder result = new StringBuilder(expression);
-		for(String reference : references)
+		for (String reference : references)
 			replaceAll(result, CHAR_REFERENCE + reference, Resources.get(reference).toString());
 
 		return result.toString();
 	}
-	
+
 	private StringBuilder replaceAll(StringBuilder builder, String from, String to) {
 		int index = builder.indexOf(from);
 		while (index != -1) {

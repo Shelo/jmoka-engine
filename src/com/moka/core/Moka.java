@@ -1,6 +1,5 @@
 package com.moka.core;
 
-import com.moka.core.game.BaseGame;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
 import com.moka.physics.Physics;
