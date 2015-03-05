@@ -19,7 +19,7 @@ public class Texture {
 
 		String ext = Utils.getExtensionFrom(filePath);
 		try {
-			texture = TextureLoader.getTexture(ext, new FileInputStream(new File(filePath)), false, GL_LINEAR);
+			texture = TextureLoader.getTexture(ext, new FileInputStream(new File(filePath)), false, GL_NEAREST);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
