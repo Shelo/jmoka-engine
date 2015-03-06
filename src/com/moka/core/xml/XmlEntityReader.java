@@ -71,7 +71,7 @@ public class XmlEntityReader {
 			if (state == STATE_INIT && qName.equals(TAG_ENTITY)) {
 				state = STATE_ENTITY;
 				entity = baseGame.newEntity(entityName);
-				setTransformParams(entity, attributes);
+				setTransformValues(entity, attributes);
 			} else {
 				// if the state is not equals to entity state then we know there's is an error with the XML file.
 				if (state != STATE_ENTITY)
@@ -194,8 +194,19 @@ public class XmlEntityReader {
 		}
 	}
 
-	// test the value to match the param class, also if the param type is a Entity, this will find that
-	// entity for you. If the value is a reference to a resource value, that value will be searched and delivered.
+	/**
+	 * Test the value to match the param class, also if the param type is a Entity, this will find
+	 * that entity for you. If the value is a reference to a resource value, that value will be
+	 * searched and delivered, and finally, if the value is an expression, this will attempt to
+	 * resolve it.
+	 * 
+	 * TODO: catch components with EntityName.ComponentClass.
+	 *
+	 * @param param	the parameter class
+	 * @param value	the value that will be tested.
+	 * @param <T>	the generic type of the parameter.
+	 * @return 		the resulting value, one of: int, float, double, boolean, String or Entity.
+	 */
 	@SuppressWarnings("unchecked")
 	private <T> T getTestedValue(Class<T> param, String value) {
 		if (value.charAt(0) == CHAR_REFERENCE) {
@@ -257,34 +268,14 @@ public class XmlEntityReader {
 		}
 	}
 
-	private Class<?> getParamFor(Method method) {
-		Class<?>[] params = method.getParameterTypes();
-
-		// so, if the quantity of parameters is not equal to one, there's an error in the definition of the method.
-		if (params.length != 1)
-			throw new JMokaException(String.format("Method %s for component %s has more or less than one parameter," +
-					"this is not allowed.", method.getName(), method.getDeclaringClass().getName()));
-
-		return params[0];
-	}
-
-	private ArrayList<Method> getQualifiedMethods(Class<?> componentClass) {
-		ArrayList<Method> qualified = new ArrayList<>();
-
-		Method[] methods = componentClass.getDeclaredMethods();
-		for (Method method : methods) {
-			XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
-
-			// if the attribute annotation is not null, then the method is Xml Qualified,
-			// so it can be added to the resulting list.
-			if (attribute != null)
-				qualified.add(method);
-		}
-
-		return qualified;
-	}
-
-	public void setTransformParams(Entity entity, Attributes attributes) {
+	/**
+	 * Set the transform values of the given {@link com.moka.core.Entity}, casting them from
+	 * Strings, evaluating expressions and resolving references, in any case, this is mostly
+	 * used by this class internally when reading the XML.
+	 * @param entity		the entity with the transform.
+	 * @param attributes	the attributes that will be applied, all of them Strings.
+	 */
+	public void setTransformValues(Entity entity, Attributes attributes) {
 		if (attributes.getValue(VAL_POSITION) != null) {
 			String[] params = attributes.getValue(VAL_POSITION).split(" *, *");
 			float x = getTestedValue(float.class, params[0]);
@@ -309,7 +300,65 @@ public class XmlEntityReader {
 			entity.getTransform().setSize(new Vector2(x, y));
 		}
 	}
-	
+
+	/**
+	 * Obtains the parameter class for a given method, since the engine only allows to receive
+	 * one parameter in an qualified method, if the method has more than one parameter, the program
+	 * will crash so the client can fix this.
+	 *
+	 * @param method	the method.
+	 * @return			the parameter's class.
+	 */
+	private Class<?> getParamFor(Method method) {
+		Class<?>[] params = method.getParameterTypes();
+
+		// so, if the quantity of parameters is not equal to one, there's an error in the definition
+		// of the method.
+		if (params.length != 1)
+			throw new JMokaException(String.format("Method %s for component %s has more or less" +
+					"than one parameter, this is not allowed.", method.getName(),
+					method.getDeclaringClass().getName()));
+
+		return params[0];
+	}
+
+	/**
+	 * Returns a prefab object given a XML file path. The XML definition must follow the rules
+	 * specified in <i>http://www.mokadev.com/entity</i>. If the XML file is malformed this will
+	 * fail with an JMokaException, causing the program to crash, this is intended so the client
+	 * can easily clear bugs with the information given from the exceptions.
+	 *
+	 * @param filePath path to the XML file.
+	 * @return the prefab object.
+	 */
+	public Prefab newPrefab(String filePath) {
+		// TODO.
+		return null;
+	}
+
+	/**
+	 * Gets the qualified methods of a given class, meaning, all methods that have an
+	 * {@link XmlAttribute} annotation in it.
+	 * @param componentClass	the component class.
+	 * @return					the list of qualified methods only.
+	 */
+	private ArrayList<Method> getQualifiedMethods(Class<?> componentClass) {
+		ArrayList<Method> qualified = new ArrayList<>();
+
+		// obtain all methods declared by the component and any super class.
+		Method[] methods = componentClass.getMethods();
+		for (Method method : methods) {
+			XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
+
+			// if the attribute annotation is not null, then the method is Xml Qualified,
+			// so it can be added to the resulting list.
+			if (attribute != null)
+				qualified.add(method);
+		}
+
+		return qualified;
+	}
+
 	private String replaceReferences(String expression) {
 		StringBuilder curReference = new StringBuilder();
 		HashSet<String> references = new HashSet<>();
@@ -358,12 +407,10 @@ public class XmlEntityReader {
 		return builder;
 	}
 
+	/**
+	 * Checks if for a given component class is there any specified package route declared.
+	 */
 	private boolean hasPackage(String componentClass) {
 		return componentClass.split("\\.").length != 1;
-	}
-
-	public Prefab newPrefab(String filePath) {
-		// TODO.
-		return null;
 	}
 }

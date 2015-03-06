@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema
-        targetNamespace="http://www.moka-dev.com/entity"
-        xmlns="http://www.moka-dev.com/entity"
+        targetNamespace="http://www.mokadev.com/entity"
+        xmlns="http://www.mokadev.com/entity"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         elementFormDefault="qualified" >
 
