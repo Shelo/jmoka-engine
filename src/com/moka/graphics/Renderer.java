@@ -6,7 +6,7 @@ import com.moka.exceptions.JMokaException;
 import com.sun.istack.internal.NotNull;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL32.*;
+import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
 
 public final class Renderer {
 	public static final String SHADERS_PATH = "res/shaders/";

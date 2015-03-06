@@ -2,11 +2,7 @@ package com.moka.test;
 
 import com.moka.core.Moka;
 import com.moka.core.game.XmlGame;
-import com.moka.exceptions.JMokaException;
 
-/**
- * Main entrance of the engine. Write initialization here.
- */
 public class Game {
 	public static void main(String[] args) {
 		// initialize the engine giving it a particular game.

@@ -1,7 +1,7 @@
 package com.moka.physics;
 
-import com.moka.core.Entity;
 import com.moka.core.BaseGame;
+import com.moka.core.Entity;
 
 import java.util.ArrayList;
 

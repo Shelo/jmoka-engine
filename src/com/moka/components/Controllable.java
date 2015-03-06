@@ -5,7 +5,6 @@ import com.moka.core.Time;
 import com.moka.core.Timer;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.core.xml.XmlSupported;
-import com.moka.math.Vector2;
 import com.moka.physics.Collision;
 import org.lwjgl.glfw.GLFW;
 

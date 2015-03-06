@@ -13,13 +13,14 @@ import java.util.HashMap;
  * Base class of a game, takes care of internal core usage.
  */
 public abstract class BaseGame {
-	private HashMap<String, Entity> nameRelations 	= new HashMap<>();
-	private ArrayList<Entity> entities 				= new ArrayList<>();
-
+	private HashMap<String, Entity> nameRelations;
 	private XmlEntityReader entityReader;
+	private ArrayList<Entity> entities;
 	private XmlSceneReader sceneReader;
 
 	public BaseGame() {
+		nameRelations = new HashMap<>();
+		entities = new ArrayList<>();
 		sceneReader = new XmlSceneReader(this);
 		entityReader = sceneReader.getEntityReader();
 	}
@@ -38,6 +39,11 @@ public abstract class BaseGame {
 		for (Entity entity : entities)
 			if (entity.hasSprite() && entity.getSprite().isEnabled())
 				entity.getSprite().render(shader);
+	}
+
+	public void postUpdate() {
+		for(Entity entity : entities)
+			entity.postUpdate();
 	}
 
 	public final Entity addEntity(Entity entity) {
@@ -130,9 +136,4 @@ public abstract class BaseGame {
 	 * Been capable to send an error code.
 	 */
 	public abstract void onStop();
-
-	public void postUpdate() {
-		for(Entity entity : entities)
-			entity.postUpdate();
-	}
 }

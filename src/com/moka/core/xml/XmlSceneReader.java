@@ -1,8 +1,8 @@
 package com.moka.core.xml;
 
 import com.moka.components.Component;
-import com.moka.core.Entity;
 import com.moka.core.BaseGame;
+import com.moka.core.Entity;
 import com.moka.exceptions.JMokaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

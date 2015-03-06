@@ -1,10 +1,10 @@
 package com.moka.core.xml;
 
 import com.moka.components.Component;
+import com.moka.core.BaseGame;
 import com.moka.core.Entity;
 import com.moka.core.Prefab;
 import com.moka.core.Resources;
-import com.moka.core.BaseGame;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2;
 import com.moka.math.Vector3;
@@ -73,7 +73,8 @@ public class XmlEntityReader {
 				entity = baseGame.newEntity(entityName);
 				setTransformValues(entity, attributes);
 			} else {
-				// if the state is not equals to entity state then we know there's is an error with the XML file.
+				// if the state is not equals to entity state then we know there's is an error with
+				// the XML file.
 				if (state != STATE_ENTITY)
 					throw new JMokaException("XML File corrupted.");
 
@@ -157,15 +158,17 @@ public class XmlEntityReader {
 		} catch(ClassNotFoundException e) {
 			throw new JMokaException("Component class " + name + " not found.");
 		} catch(InstantiationException e) {
-			throw new JMokaException("Component class " + name + " probably doesn't have a non-args constructor.");
+			throw new JMokaException("Component class " + name + " probably doesn't have a" +
+					"non-args constructor.");
 		} catch(IllegalAccessException e) {
 			throw new JMokaException("Component class " + name + " is not accessible.");
 		}
-		
+
 		return component;
 	}
 
-	private void handleAttribute(Component component, Method method, String componentName, Attributes attributes) {
+	private void handleAttribute(Component component, Method method, String componentName,
+			Attributes attributes) {
 		XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
 		String value = attributes.getValue(attribute.value());
 
@@ -173,12 +176,14 @@ public class XmlEntityReader {
 		// specifies that is required, throw an exception.
 		if (value == null) {
 			if (attribute.required())
-				throw new JMokaException("Component " + componentName + " requires the attribute " + attribute.value());
+				throw new JMokaException("Component " + componentName + " requires the attribute "
+						+ attribute.value());
 			return;
 		}
 
 		// here the value is always something.
-		// we should always take the first parameter type because these methods are supposed to have only one.
+		// we should always take the first parameter type because these methods are supposed to
+		// have only one.
 		Class<?> param = getParamFor(method);
 
 		// test the value and cast it to the parameter's class.
@@ -187,8 +192,8 @@ public class XmlEntityReader {
 		try {
 			method.invoke(component, casted);
 		} catch(IllegalAccessException e) {
-			throw new JMokaException(String.format("Method %s for component %s is inaccessible", method.getName(),
-					componentName));
+			throw new JMokaException(String.format("Method %s for component %s is inaccessible",
+					method.getName(), componentName));
 		} catch(InvocationTargetException e) {
 			throw new JMokaException(componentName + " Invocation target exception!.");
 		}
@@ -312,8 +317,8 @@ public class XmlEntityReader {
 	private Class<?> getParamFor(Method method) {
 		Class<?>[] params = method.getParameterTypes();
 
-		// so, if the quantity of parameters is not equal to one, there's an error in the definition
-		// of the method.
+		// so, if the quantity of parameters is not equal to one, there's an error in the
+		// definition of the method.
 		if (params.length != 1)
 			throw new JMokaException(String.format("Method %s for component %s has more or less" +
 					"than one parameter, this is not allowed.", method.getName(),

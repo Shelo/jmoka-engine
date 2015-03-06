@@ -1,6 +1,5 @@
 package com.moka.physics;
 
-import com.moka.core.JMokaLog;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2;
 
