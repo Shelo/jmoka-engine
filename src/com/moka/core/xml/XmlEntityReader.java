@@ -3,8 +3,8 @@ package com.moka.core.xml;
 import com.moka.components.Component;
 import com.moka.core.BaseGame;
 import com.moka.core.Entity;
-import com.moka.core.Prefab;
 import com.moka.core.Resources;
+import com.moka.core.Transform;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2;
 import com.moka.math.Vector3;
@@ -28,17 +28,18 @@ import java.util.HashSet;
 
 // TODO: clean this code a little bit.
 public class XmlEntityReader {
-	private static final String TAG_ENTITY 				= "entity";
-	private static final int STATE_INIT					= 0;
-	private static final int STATE_ENTITY				= 1;
-	private static final int STATE_CLOSED				= 2;
-	private static final String VAL_SIZE 				= "size";
-	private static final String VAL_POSITION 			= "position";
-	private static final String VAL_ROTATION 			= "rotation";
-	private static final String VAL_LAYER 				= "layer";
-	private static final char CHAR_REFERENCE 			= '@';
-	private static final char CHAR_EXPRESSION 			= '$';
-	private static final ArrayList<Character> SYMBOLS 	= new ArrayList<>();
+	public static final String TAG_ENTITY 				= "entity";
+	public static final int STATE_INIT					= 0;
+	public static final int STATE_ENTITY				= 1;
+	public static final int STATE_CLOSED				= 2;
+	public static final String VAL_SIZE 				= "size";
+	public static final String VAL_POSITION 			= "position";
+	public static final String VAL_ROTATION 			= "rotation";
+	public static final String VAL_LAYER 				= "layer";
+	public static final char CHAR_REFERENCE 			= '@';
+	public static final char CHAR_EXPRESSION 			= '$';
+	public static final ArrayList<Character> SYMBOLS 	= new ArrayList<>();
+	public static final String DEFAULT_PACKAGE 			= "com.moka.components.";
 
 	private Evaluator evaluator;
 	private String entityName;
@@ -59,6 +60,9 @@ public class XmlEntityReader {
 		SYMBOLS.add('%');
 	}
 
+	/**
+	 * Reads an entity XML File.
+	 */
 	private class Handler extends DefaultHandler {
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes)
@@ -71,7 +75,7 @@ public class XmlEntityReader {
 			if (state == STATE_INIT && qName.equals(TAG_ENTITY)) {
 				state = STATE_ENTITY;
 				entity = baseGame.newEntity(entityName);
-				setTransformValues(entity, attributes);
+				setTransformValues(entity.getTransform(), attributes);
 			} else {
 				// if the state is not equals to entity state then we know there's is an error with
 				// the XML file.
@@ -138,13 +142,11 @@ public class XmlEntityReader {
 	}
 
 	public Component readComponent(String name, Attributes attributes) {
-		String componentName = hasPackage(name) ? name : "com.moka.components." + name;
-
 		Component component = null;
 
 		try {
 			// create a new instance of the component.
-			Class<?> componentClass = Class.forName(componentName);
+			Class<?> componentClass = forComponent(name);
 			component = (Component) componentClass.newInstance();
 
 			// get component methods in order to search for attribute qualified ones.
@@ -155,8 +157,6 @@ public class XmlEntityReader {
 			for (Method method : methods)
 				handleAttribute(component, method, name, attributes);
 
-		} catch(ClassNotFoundException e) {
-			throw new JMokaException("Component class " + name + " not found.");
 		} catch(InstantiationException e) {
 			throw new JMokaException("Component class " + name + " probably doesn't have a" +
 					"non-args constructor.");
@@ -165,6 +165,16 @@ public class XmlEntityReader {
 		}
 
 		return component;
+	}
+
+	public Class<?> forComponent(String componentName) {
+		String name = hasPackage(componentName) ? componentName : DEFAULT_PACKAGE + componentName;
+		try {
+			Class<?> result = Class.forName(name);
+			return result;
+		} catch(ClassNotFoundException e) {
+			throw new JMokaException("Component class " + name + " not found.");
+		}
 	}
 
 	private void handleAttribute(Component component, Method method, String componentName,
@@ -199,6 +209,10 @@ public class XmlEntityReader {
 		}
 	}
 
+	public SAXParser getParser() {
+		return parser;
+	}
+
 	/**
 	 * Test the value to match the param class, also if the param type is a Entity, this will find
 	 * that entity for you. If the value is a reference to a resource value, that value will be
@@ -213,7 +227,7 @@ public class XmlEntityReader {
 	 * @return 		the resulting value, one of: int, float, double, boolean, String or Entity.
 	 */
 	@SuppressWarnings("unchecked")
-	private <T> T getTestedValue(Class<T> param, String value) {
+	public <T> T getTestedValue(Class<T> param, String value) {
 		if (value.charAt(0) == CHAR_REFERENCE) {
 			String resource = value.substring(1);
 			Object result = null;
@@ -277,35 +291,53 @@ public class XmlEntityReader {
 	 * Set the transform values of the given {@link com.moka.core.Entity}, casting them from
 	 * Strings, evaluating expressions and resolving references, in any case, this is mostly
 	 * used by this class internally when reading the XML.
-	 * @param entity		the entity with the transform.
+	 * @param transform		the transform.
 	 * @param attributes	the attributes that will be applied, all of them Strings.
 	 */
-	public void setTransformValues(Entity entity, Attributes attributes) {
+	public void setTransformValues(Transform transform, Attributes attributes) {
 		if (attributes.getValue(VAL_POSITION) != null) {
-			String[] params = attributes.getValue(VAL_POSITION).split(" *, *");
-			float x = getTestedValue(float.class, params[0]);
-			float y = getTestedValue(float.class, params[1]);
-			float layer = attributes.getValue(VAL_LAYER) == null? 0 :
-					getTestedValue(int.class, attributes.getValue(VAL_LAYER));
-
-			entity.getTransform().setPosition(new Vector3(x, y, layer));
+			Vector2 position = readPositionValues(attributes);
+			int layer = readLayer(attributes);
+			transform.setPosition(new Vector3(position.getX(), position.getY(), layer));
 		}
 
 		if (attributes.getValue(VAL_ROTATION) != null) {
-			float rotation = getTestedValue(float.class, attributes.getValue(VAL_ROTATION));
-
-			entity.getTransform().setRotation(rotation);
+			float rotation = readRotation(attributes);
+			transform.setRotation(rotation);
 		}
 
 		if (attributes.getValue(VAL_SIZE) != null) {
-			String[] params = attributes.getValue(VAL_SIZE).split(" *, *");
-			float x = getTestedValue(float.class, params[0]);
-			float y = getTestedValue(float.class, params[1]);
-
-			entity.getTransform().setSize(new Vector2(x, y));
+			Vector2 size = readSizeValues(attributes);
+			transform.setSize(size);
 		}
 	}
 
+	public Vector2 readPositionValues(Attributes attributes) {
+		String[] params = attributes.getValue(VAL_POSITION).split(" *, *");
+		float x = getTestedValue(float.class, params[0]);
+		float y = getTestedValue(float.class, params[1]);
+		
+		return new Vector2(x, y);
+	}
+
+	public int readLayer(Attributes attributes) {
+		int layer = attributes.getValue(VAL_LAYER) == null? 0 :
+				getTestedValue(int.class, attributes.getValue(VAL_LAYER));
+		return layer;
+	}
+	
+	public float readRotation(Attributes attributes) {
+		float rotation = getTestedValue(float.class, attributes.getValue(VAL_ROTATION));
+		return rotation;
+	}
+	
+	public Vector2 readSizeValues(Attributes attributes) {
+		String[] params = attributes.getValue(VAL_SIZE).split(" *, *");
+		float x = getTestedValue(float.class, params[0]);
+		float y = getTestedValue(float.class, params[1]);
+		return new Vector2(x, y);
+	}
+	
 	/**
 	 * Obtains the parameter class for a given method, since the engine only allows to receive
 	 * one parameter in an qualified method, if the method has more than one parameter, the program
@@ -314,7 +346,7 @@ public class XmlEntityReader {
 	 * @param method	the method.
 	 * @return			the parameter's class.
 	 */
-	private Class<?> getParamFor(Method method) {
+	Class<?> getParamFor(Method method) {
 		Class<?>[] params = method.getParameterTypes();
 
 		// so, if the quantity of parameters is not equal to one, there's an error in the
@@ -328,26 +360,12 @@ public class XmlEntityReader {
 	}
 
 	/**
-	 * Returns a prefab object given a XML file path. The XML definition must follow the rules
-	 * specified in <i>http://www.mokadev.com/entity</i>. If the XML file is malformed this will
-	 * fail with an JMokaException, causing the program to crash, this is intended so the client
-	 * can easily clear bugs with the information given from the exceptions.
-	 *
-	 * @param filePath path to the XML file.
-	 * @return the prefab object.
-	 */
-	public Prefab newPrefab(String filePath) {
-		// TODO.
-		return null;
-	}
-
-	/**
 	 * Gets the qualified methods of a given class, meaning, all methods that have an
 	 * {@link XmlAttribute} annotation in it.
 	 * @param componentClass	the component class.
 	 * @return					the list of qualified methods only.
 	 */
-	private ArrayList<Method> getQualifiedMethods(Class<?> componentClass) {
+	public ArrayList<Method> getQualifiedMethods(Class<?> componentClass) {
 		ArrayList<Method> qualified = new ArrayList<>();
 
 		// obtain all methods declared by the component and any super class.

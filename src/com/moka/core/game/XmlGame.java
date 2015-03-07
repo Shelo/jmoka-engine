@@ -1,6 +1,7 @@
 package com.moka.core.game;
 
 import com.moka.core.BaseGame;
+import com.moka.core.Prefab;
 import com.moka.exceptions.JMokaException;
 
 public class XmlGame extends BaseGame {

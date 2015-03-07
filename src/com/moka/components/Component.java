@@ -2,6 +2,7 @@ package com.moka.components;
 
 import com.moka.core.Entity;
 import com.moka.core.Moka;
+import com.moka.core.Prefab;
 import com.moka.core.Transform;
 import com.moka.exceptions.JMokaException;
 import com.moka.physics.Collision;
@@ -43,6 +44,10 @@ public abstract class Component {
 
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	public Prefab newPrefab(String filePath) {
+		return Moka.getGame().newPrefab(filePath);
 	}
 
 	/**

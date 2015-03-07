@@ -2,6 +2,7 @@ package com.moka.core;
 
 import com.moka.components.Camera;
 import com.moka.core.xml.XmlEntityReader;
+import com.moka.core.xml.XmlPrefabReader;
 import com.moka.core.xml.XmlSceneReader;
 import com.moka.exceptions.JMokaException;
 import com.moka.graphics.Shader;
@@ -17,12 +18,14 @@ public abstract class BaseGame {
 	private XmlEntityReader entityReader;
 	private ArrayList<Entity> entities;
 	private XmlSceneReader sceneReader;
+	private XmlPrefabReader prefabReader;
 
 	public BaseGame() {
 		nameRelations = new HashMap<>();
 		entities = new ArrayList<>();
 		sceneReader = new XmlSceneReader(this);
 		entityReader = sceneReader.getEntityReader();
+		prefabReader = new XmlPrefabReader(entityReader, this);
 	}
 
 	public final void updateAll() {
@@ -91,8 +94,18 @@ public abstract class BaseGame {
 	}
 
 	/**
+	 * Creates a new prefab using the XmlPrefabReader defined in this context.
+	 * @param filePath the path for the XML Entity file.
+	 * @return the prefab.
+	 */
+	public Prefab newPrefab(String filePath) {
+		return prefabReader.newPrefab(filePath);
+	}
+
+	/**
 	 * Loads an Entity definition XML file into the game.
 	 * @param xmlFilePath xml file path.
+	 * @deprecated use newPrefab to create a prefab object to create new entities.
 	 */
 	public final void readEntity(String xmlFilePath, String name) {
 		entityReader.read(xmlFilePath, name);

@@ -40,7 +40,7 @@ public class XmlSceneReader {
 					currentEntity = game.newEntity(name);
 
 					// set transform position, rotation and scale.
-					entityReader.setTransformValues(currentEntity, attributes);
+					entityReader.setTransformValues(currentEntity.getTransform(), attributes);
 
 				} else if(qName.equals(TAG_INCLUDE)) {
 					// with a include tag we should create an entity, put the name that it should have and
@@ -49,7 +49,7 @@ public class XmlSceneReader {
 					String name = attributes.getValue(KEY_NAME);
 
 					Entity entity = entityReader.read(path, name);
-					entityReader.setTransformValues(entity, attributes);
+					entityReader.setTransformValues(entity.getTransform(), attributes);
 				} else if(!qName.equals(TAG_ROOT)) {
 					throw new JMokaException("XML: " + currentFilePath + " is malformed.");
 				}
