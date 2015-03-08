@@ -47,6 +47,14 @@ public class Entity {
 				component.onCreate();
 	}
 
+	public void destroy() {
+		for (Component component : components)
+			if (component.isEnabled())
+				component.onDestroy();
+
+		Moka.getGame().removeEnity(this);
+	}
+
 	public void update() {
 		transform.update();
 		for (Component component : components)

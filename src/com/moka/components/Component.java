@@ -79,4 +79,10 @@ public abstract class Component {
 	 * Called just after the physics system resolved every collision.
 	 */
 	public void onPostUpdate() { }
+
+	/**
+	 * Called just before wrapping entity is removed
+	 * from entities collection
+	 */
+	public void onDestroy() {}
 }

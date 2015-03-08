@@ -17,12 +17,14 @@ public abstract class BaseGame {
 	private HashMap<String, Entity> nameRelations;
 	private XmlEntityReader entityReader;
 	private ArrayList<Entity> entities;
+	private ArrayList<Entity> remSchedule;
 	private XmlSceneReader sceneReader;
 	private XmlPrefabReader prefabReader;
 
 	public BaseGame() {
 		nameRelations = new HashMap<>();
 		entities = new ArrayList<>();
+		remSchedule = new ArrayList<>();
 		sceneReader = new XmlSceneReader(this);
 		entityReader = sceneReader.getEntityReader();
 		prefabReader = new XmlPrefabReader(entityReader, this);
@@ -52,6 +54,15 @@ public abstract class BaseGame {
 	public final Entity addEntity(Entity entity) {
 		entities.add(entity);
 		return entity;
+	}
+
+	public final void removeEnity(Entity entity) {
+		remSchedule.add(entity);
+	}
+
+	public final void removeScheduled() {
+		entities.removeAll(remSchedule);
+		remSchedule.clear();
 	}
 
 	/**

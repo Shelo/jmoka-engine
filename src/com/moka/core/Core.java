@@ -81,6 +81,7 @@ public class Core {
 				Moka.getPhysics().checkCollisions(game);
 				game.postUpdate();
 				Input.onUpdate();
+				Moka.getGame().removeScheduled();
 
 				// check if user closed the window.
 				if(Moka.getDisplay().isCloseRequested())

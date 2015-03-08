@@ -7,6 +7,7 @@ public final class Collision {
     public final Entity entity;
     public final Vector2 direction;
     public final float magnitude;
+	private final boolean guilty;
 
 	/**
 	 * Creates a new collision information wrapper.
@@ -15,15 +16,21 @@ public final class Collision {
 	 * @param magnitude		the magnitude collision.
 	 */
     public Collision(Entity entity, Vector2 norDirection, float magnitude) {
-        this.entity = entity;
-        this.direction = norDirection;
-        this.magnitude = magnitude;
+		this.entity = entity;
+		this.direction = norDirection;
+		this.magnitude = magnitude;
+		this.guilty = true;
     }
 
 	public Collision(Entity entity, Collision collision) {
 		this.entity = entity;
 		this.direction = collision.direction.copy();
 		this.magnitude = collision.magnitude;
+		this.guilty = false;
+	}
+
+	public boolean isGuilty() {
+		return guilty;
 	}
 
 	public Vector2 getMovement() {
