@@ -29,13 +29,13 @@ public abstract class BaseGame {
 	}
 
 	public final void updateAll() {
-		for (Entity entity : entities)
-			entity.update();
+		for (int i = entities.size() - 1; i >= 0; i--)
+			entities.get(i).update();
 	}
 
 	public final void createAll() {
-		for (Entity entity : entities)
-			entity.create();
+		for (int i = entities.size() - 1; i >= 0; i--)
+			entities.get(i).create();
 	}
 
 	public final void renderAll(Shader shader) {
@@ -78,8 +78,8 @@ public abstract class BaseGame {
 	 */
 	public Entity newCamera(String name, boolean current) {
 		Entity entity = newEntity(name);
-		Camera camera = new Camera(0, Moka.getDisplay().getWidth(), 0, Moka.getDisplay().getHeight(), Camera.Z_NEAR,
-				Camera.Z_FAR);
+		Camera camera = new Camera(0, Moka.getDisplay().getWidth(), 0,
+				Moka.getDisplay().getHeight(), Camera.Z_NEAR, Camera.Z_FAR);
 		entity.addComponent(camera);
 		if(current) camera.setAsCurrent();
 		return entity;

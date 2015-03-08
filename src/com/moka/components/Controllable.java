@@ -15,7 +15,7 @@ public class Controllable extends Component {
 	// Xml Attributes.
 	private boolean constrainX	= false;
 	private boolean constrainY	= false;
-	private int acceleration	= 100;
+	private int acceleration	= 600;
 	private int topSpeed		= 500;
 
 	private float speedX;

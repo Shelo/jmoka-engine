@@ -1,6 +1,13 @@
-<scene xmlns="http://www.moka-dev.com/scene">
+<scene xmlns="http://www.mokadev.com/scene">
     <entity name="MainCamera" position="0, 0" rotation="0">
         <Camera />
+    </entity>
+
+    <entity position="200, 200" layer="1" rotation="0" name="Player">
+        <Sprite texture="res/images/player.png" />
+        <Controllable />
+        <LookTowardsMouse />
+        <MyShooter />
     </entity>
 
     <!--

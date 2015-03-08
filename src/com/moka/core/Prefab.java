@@ -52,7 +52,7 @@ public class Prefab {
 	/**
 	 * Sets the rotation of new entities from now on, in degrees.
 	 * 
-	 * @param rotation
+	 * @param rotation angle.
 	 */
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
@@ -111,6 +111,9 @@ public class Prefab {
 
 			entity.addComponent(component);
 		}
+
+		// after this we should call the onCreate method on the components.
+		entity.create();
 
 		return entity;
 	}

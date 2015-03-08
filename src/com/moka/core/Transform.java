@@ -96,7 +96,7 @@ public final class Transform {
 	public void setPosition(Vector3 position) {
 		this.position.set(position);
 	}
-	
+
 	public void setPosition(Vector2 position) {
 		this.position.set(position);
 	}
@@ -114,11 +114,12 @@ public final class Transform {
 	}
 
 	public boolean hasRotated() {
-		return !prevRotation.equals(rotation);
+		return prevRotation == null || !prevRotation.equals(rotation);
+
 	}
 
 	public boolean hasMoved() {
-		return !prevPosition.equals(position);
+		return prevPosition == null || !prevPosition.equals(position);
 	}
 
 	public boolean hasChanged() {

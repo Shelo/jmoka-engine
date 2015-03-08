@@ -1,0 +1,8 @@
+<entity xmlns="http://www.mokadev.com/entity"
+        position="300, 300" rotation="90" size="20, 20">
+
+    <Sprite texture="res/images/moka.png" />
+    <Bullet />
+    <AABBCollider />
+
+</entity>
