@@ -20,6 +20,12 @@ public final class Collision {
         this.magnitude = magnitude;
     }
 
+	public Collision(Entity entity, Collision collision) {
+		this.entity = entity;
+		this.direction = collision.direction.copy();
+		this.magnitude = collision.magnitude;
+	}
+
 	public Vector2 getMovement() {
 		return direction.mul(magnitude);
 	}

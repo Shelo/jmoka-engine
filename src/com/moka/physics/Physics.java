@@ -33,9 +33,11 @@ public class Physics {
 
 						if(collision != null) {
 							// collision.
-							pCollider.response(collision);
+							if (!pCollider.isTrigger())
+								pCollider.response(collision);
+
 							pivot.collide(collision);
-							test.collide(new Collision(pivot, collision.getDirection(), collision.getMagnitude()));
+							test.collide(new Collision(pivot, collision));
 						}
 					}
 				}

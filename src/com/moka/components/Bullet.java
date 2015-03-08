@@ -3,6 +3,7 @@ package com.moka.components;
 import com.moka.core.Time;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2;
+import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 
 public class Bullet extends Component {
@@ -26,7 +27,6 @@ public class Bullet extends Component {
 
 	@Override
 	public void onCollide(Collision collision) {
-
 	}
 
 	@XmlAttribute("speed")

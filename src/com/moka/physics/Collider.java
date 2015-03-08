@@ -4,12 +4,15 @@ import com.moka.components.AABBCollider;
 import com.moka.components.CircleCollider;
 import com.moka.components.Component;
 import com.moka.components.SATCollider;
+import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public abstract class Collider extends Component {
+	private boolean trigger = false;
+
 	public abstract Collision collidesWith(Collider other);
 	public abstract void response(Collision collision);
 
@@ -124,5 +127,14 @@ public abstract class Collider extends Component {
 
 	public static Collision aabbCircle(CircleCollider circle, AABBCollider aabb) {
 		return aabbCircle(aabb, circle);
+	}
+
+	@XmlAttribute("trigger")
+	public void setTrigger(boolean trigger) {
+		this.trigger = trigger;
+	}
+
+	public boolean isTrigger() {
+		return trigger;
 	}
 }

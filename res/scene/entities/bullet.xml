@@ -3,6 +3,6 @@
 
     <Sprite texture="res/images/moka.png" />
     <Bullet />
-    <AABBCollider />
+    <AABBCollider trigger="true"/>
 
 </entity>

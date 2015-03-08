@@ -5,6 +5,7 @@ import com.moka.core.Moka;
 import com.moka.core.Prefab;
 import com.moka.core.Transform;
 import com.moka.exceptions.JMokaException;
+import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 
 /**
@@ -48,6 +49,14 @@ public abstract class Component {
 
 	public Prefab newPrefab(String filePath) {
 		return Moka.getGame().newPrefab(filePath);
+	}
+
+	public boolean hasCollider() {
+		return entity.hasCollider();
+	}
+
+	public Collider getCollider() {
+		return entity.getCollider();
 	}
 
 	/**
