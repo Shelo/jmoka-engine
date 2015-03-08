@@ -50,7 +50,7 @@ public class SATCollider extends Collider {
 			edges[i] = vertices[i].sub(vertices[(i == vertices.length - 1) ? 0 : i + 1]);
 
 		for (int i = 0; i < edges.length; i++) {
-			float slope = Math.abs(edges[i].getY() / edges[i].getX());
+			float slope = Math.abs(edges[i].y / edges[i].x);
 
 			if (!slopes.contains(slope))
 				npvi.add(i);
@@ -80,9 +80,9 @@ public class SATCollider extends Collider {
 			Vector2 edge = v1.sub(v2);
 
 			// Perpendicular
-			float y = edge.getY();
-			edge.setY(0 - edge.getX());
-			edge.setX(y);
+			float y = edge.y;
+			edge.y = 0 - edge.x;
+			edge.x = y;
 
 			axes[k] = edge.normalized();
 			k++;

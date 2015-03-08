@@ -298,7 +298,7 @@ public class XmlEntityReader {
 		if (attributes.getValue(VAL_POSITION) != null) {
 			Vector2 position = readPositionValues(attributes);
 			int layer = readLayer(attributes);
-			transform.setPosition(new Vector3(position.getX(), position.getY(), layer));
+			transform.setPosition(new Vector3(position.x, position.y, layer));
 		}
 
 		if (attributes.getValue(VAL_ROTATION) != null) {

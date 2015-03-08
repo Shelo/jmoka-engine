@@ -109,11 +109,11 @@ public class Shader {
 	}
 
 	public void setUniform(String uniform, Vector3 v) {
-		setUniform(uniform, v.getX(), v.getY(), v.getZ());
+		setUniform(uniform, v.x, v.y, v.z);
 	}
 
 	public void setUniform(String uniform, Vector2 v) {
-		setUniform(uniform, v.getX(), v.getY());
+		setUniform(uniform, v.x, v.y);
 	}
 
 	private void setUniform(String uniform, Color color) {

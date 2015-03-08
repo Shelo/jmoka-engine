@@ -17,10 +17,10 @@ public class AABBCollider extends Collider {
 	@Override
 	public void onCreate() {
 		if (shouldInitWidth)
-			width = getTransform().getSize().getX();
+			width = getTransform().getSize().x;
 
 		if (shouldInitHeight)
-			height = getTransform().getSize().getY();
+			height = getTransform().getSize().y;
 	}
 
 	@XmlAttribute("offsetX")

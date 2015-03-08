@@ -206,17 +206,17 @@ public class Matrix4 {
 		Vector3 r = right;
 		Vector3 u = up;
 
-		m[0][0] = r.getX();
-		m[0][1] = r.getY();
-		m[0][2] = r.getZ();
+		m[0][0] = r.x;
+		m[0][1] = r.y;
+		m[0][2] = r.z;
 		m[0][3] = 0;
-		m[1][0] = u.getX();
-		m[1][1] = u.getY();
-		m[1][2] = u.getZ();
+		m[1][0] = u.x;
+		m[1][1] = u.y;
+		m[1][2] = u.z;
 		m[1][3] = 0;
-		m[2][0] = f.getX();
-		m[2][1] = f.getY();
-		m[2][2] = f.getZ();
+		m[2][0] = f.x;
+		m[2][1] = f.y;
+		m[2][2] = f.z;
 		m[2][3] = 0;
 		m[3][0] = 0;
 		m[3][1] = 0;
@@ -228,9 +228,9 @@ public class Matrix4 {
 
 	public Vector3 transform(Vector3 r) {
 		return new Vector3(
-				m[0][0] * r.getX() + m[0][1] * r.getY() + m[0][2] * r.getZ() + m[0][3],
-				m[1][0] * r.getX() + m[1][1] * r.getY() + m[1][2] * r.getZ() + m[1][3],
-				m[2][0] * r.getX() + m[2][1] * r.getY() + m[2][2] * r.getZ() + m[2][3]
+				m[0][0] * r.x + m[0][1] * r.y + m[0][2] * r.z + m[0][3],
+				m[1][0] * r.x + m[1][1] * r.y + m[1][2] * r.z + m[1][3],
+				m[2][0] * r.x + m[2][1] * r.y + m[2][2] * r.z + m[2][3]
 		);
 	}
 
@@ -246,8 +246,8 @@ public class Matrix4 {
 	}
 
 	public Vector2 mul(Vector2 vector) {
-		return new Vector2(m[0][0] * vector.getX() + m[0][1] * vector.getY() + m[0][3],
-				m[1][0] * vector.getX() + m[1][1] * vector.getY() + m[1][3]);
+		return new Vector2(m[0][0] * vector.x + m[0][1] * vector.y + m[0][3],
+				m[1][0] * vector.x + m[1][1] * vector.y + m[1][3]);
 	}
 
 	public float[][] getM() {

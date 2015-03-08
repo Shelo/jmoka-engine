@@ -3,7 +3,6 @@ package com.moka.components;
 import com.moka.core.Time;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2;
-import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 
 public class Bullet extends Component {
@@ -42,11 +41,11 @@ public class Bullet extends Component {
 	}
 
 	public void setDirectionX(float d) {
-		direction.setX(d);
+		direction.x = d;
 	}
 
 	public void setDirectionY(float d) {
-		direction.setY(d);
+		direction.y = d;
 	}
 
 	public void setDirection(Vector2 direction) {

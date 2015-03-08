@@ -7,9 +7,9 @@ public class Vector3 {
 	public static final Vector3 ZERO 	= new Vector3(0, 0, 0);
 	public static final Vector3 ONE 	= new Vector3(1, 1, 1);
 
-	private float x;
-	private float y;
-	private float z;
+	public float x;
+	public float y;
+	public float z;
 
 	public Vector3(float x, float y, float z) {
 		this.x = x;
@@ -148,25 +148,25 @@ public class Vector3 {
 		return this;
 	}
 
-	public Vector3 copy() {
-		return new Vector3(x, y, z);
-	}
-
 	public Vector3 set(Vector3 r) {
 		set(r.x, r.y, r.z);
 		return this;
 	}
 
-	public float getX() {
-		return x;
+	public Vector3 set(float x, float y) {
+		this.x = x;
+		this.y = y;
+		return this;
 	}
 
-	public float getY() {
-		return y;
+	public Vector3 set(Vector2 position) {
+		x = position.x;
+		y = position.y;
+		return this;
 	}
 
-	public float getZ() {
-		return z;
+	public Vector3 copy() {
+		return new Vector3(x, y, z);
 	}
 
 	public String toString() {
@@ -177,16 +177,4 @@ public class Vector3 {
 		return x == r.x && y == r.y && z == r.z;
 	}
 
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public void set(Vector2 position) {
-		x = position.getX();
-		y = position.getY();
-	}
 }

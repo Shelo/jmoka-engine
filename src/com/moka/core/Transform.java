@@ -31,8 +31,9 @@ public final class Transform {
 	}
 
 	public Matrix4 getModelMatrix() {
-		Matrix4 translation = Matrix4.translate((int) position.getX(), (int) position.getY(), (int) position.getZ());
-		Matrix4 scale = Matrix4.scale(getSize().getX(), getSize().getY(), 1);
+		Matrix4 translation = Matrix4.translate((int) position.x, (int) position.y,
+				(int) position.z);
+		Matrix4 scale = Matrix4.scale(getSize().x, getSize().y, 1);
 		Matrix4 rotate = rotation.toRotationMatrix();
 		return translation.mul(rotate.mul(scale));
 	}
@@ -90,7 +91,7 @@ public final class Transform {
 	}
 
 	public void setPosition(float x, float y) {
-		position.set(x, y, position.getZ());
+		position.set(x, y, position.z);
 	}
 
 	public void setPosition(Vector3 position) {
@@ -102,11 +103,11 @@ public final class Transform {
 	}
 
 	public float getPositionX() {
-		return position.getX();
+		return position.x;
 	}
 
 	public float getPositionY() {
-		return position.getY();
+		return position.y;
 	}
 
 	public float getPositionZ() {
@@ -131,10 +132,10 @@ public final class Transform {
 	}
 
 	public void move(Vector2 movement) {
-		move(movement.getX(), movement.getY());
+		move(movement.x, movement.y);
 	}
 
 	public int getLayer() {
-		return (int) position.getZ();
+		return (int) position.z;
 	}
 }

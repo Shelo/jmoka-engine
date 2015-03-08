@@ -8,8 +8,8 @@ public class Vector2 {
 	public static final Vector2 ZERO 	= new Vector2(0, 0);
 	public static final Vector2 ONE 	= new Vector2(1, 1);
 
-	private float x;
-	private float y;
+	public float x;
+	public float y;
 
 	public Vector2() {
 		
@@ -96,23 +96,6 @@ public class Vector2 {
 		this.x = x;
 		this.y = y;
 		return this;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	// Getters.
-	public float getX() {
-		return x;
-	}
-
-	public float getY() {
-		return y;
 	}
 
 	public Vector2 copy() {

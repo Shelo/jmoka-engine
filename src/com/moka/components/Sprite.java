@@ -33,7 +33,7 @@ public class Sprite extends Component {
 		this.texture 	= texture;
 		this.tint 		= tint;
 
-		this.size.set(size.getX(), size.getY());
+		this.size.set(size.x, size.y);
 		quad = new Quad(texture.getTexCoordX(), texture.getTexCoordY());
 	}
 
@@ -74,11 +74,11 @@ public class Sprite extends Component {
 	}
 
 	public float getWidth() {
-		return size == null ? texture.getWidth() : size.getX();
+		return size == null ? texture.getWidth() : size.x;
 	}
 
 	public float getHeight() {
-		return size == null ? texture.getHeight() : size.getY();
+		return size == null ? texture.getHeight() : size.y;
 	}
 
 	public Color getTint() {
@@ -117,12 +117,12 @@ public class Sprite extends Component {
 
 	@XmlAttribute("width")
 	public void setWidth(float value) {
-		size.setX(value);
+		size.x = value;
 	}
 
 	@XmlAttribute("height")
 	public void setSizeY(float value) {
-		size.setY(value);
+		size.y = value;
 	}
 
 	public Vector2 getSize() {
