@@ -8,10 +8,10 @@ public final class Moka {
 	private static Renderer renderer;
 	private static Physics physics;
 	private static Display display;
-	private static BaseGame game;
+	private static Context game;
 	private static Core core;
 
-	public static void init(BaseGame game, float fc) {
+	public static void init(Context game, float fc) {
 		Moka.game = game;
 
 		renderer = new Renderer();
@@ -32,7 +32,7 @@ public final class Moka {
 		return renderer;
 	}
 
-	public static BaseGame getGame() {
+	public static Context getGame() {
 		return game;
 	}
 

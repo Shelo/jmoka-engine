@@ -1,6 +1,6 @@
 package com.moka.physics;
 
-import com.moka.core.BaseGame;
+import com.moka.core.Context;
 import com.moka.core.Entity;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public class Physics {
 		
 	}
 
-	public void checkCollisions(BaseGame game) {
+	public void checkCollisions(Context game) {
 		ArrayList<Entity> entities = game.getEntities();
 		
 		int size = entities.size();

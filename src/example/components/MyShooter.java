@@ -1,5 +1,7 @@
-package com.moka.components;
+package example.components;
 
+import com.moka.components.Bullet;
+import com.moka.components.Component;
 import com.moka.core.Entity;
 import com.moka.core.Input;
 import com.moka.core.Prefab;

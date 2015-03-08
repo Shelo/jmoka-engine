@@ -1,4 +1,4 @@
-package com.moka.test;
+package example;
 
 import com.moka.core.Moka;
 import com.moka.core.game.XmlGame;

@@ -1,7 +1,7 @@
 package com.moka.graphics;
 
 import com.moka.components.Camera;
-import com.moka.core.BaseGame;
+import com.moka.core.Context;
 import com.moka.exceptions.JMokaException;
 import com.sun.istack.internal.NotNull;
 
@@ -31,7 +31,7 @@ public final class Renderer {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	public void render(BaseGame game) {
+	public void render(Context game) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shader.bind();
 

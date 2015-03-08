@@ -1,10 +1,9 @@
 package com.moka.core.game;
 
-import com.moka.core.BaseGame;
-import com.moka.core.Prefab;
+import com.moka.core.Context;
 import com.moka.exceptions.JMokaException;
 
-public class XmlGame extends BaseGame {
+public class XmlGame extends Context {
 	private final String xml;
 
 	public XmlGame(String xml, String resPath) {

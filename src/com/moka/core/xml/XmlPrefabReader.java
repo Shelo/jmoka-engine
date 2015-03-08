@@ -1,6 +1,6 @@
 package com.moka.core.xml;
 
-import com.moka.core.BaseGame;
+import com.moka.core.Context;
 import com.moka.core.Prefab;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class XmlPrefabReader {
 	private XmlEntityReader entityReader;
-	private BaseGame baseGame;
+	private Context context;
 
 	private class Handler extends DefaultHandler {
 		private static final String TAG_ENTITY = "entity";
@@ -83,9 +83,9 @@ public class XmlPrefabReader {
 		}
 	}
 
-	public XmlPrefabReader(XmlEntityReader entityReader, BaseGame baseGame) {
+	public XmlPrefabReader(XmlEntityReader entityReader, Context context) {
 		this.entityReader = entityReader;
-		this.baseGame = baseGame;
+		this.context = context;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class XmlPrefabReader {
 	 */
 	public Prefab newPrefab(String filePath) {
 		Prefab.PreComponents componentAttrs = new Prefab.PreComponents();
-		Prefab prefab = new Prefab(baseGame, componentAttrs);
+		Prefab prefab = new Prefab(context, componentAttrs);
 		Handler handler = new Handler(prefab, componentAttrs);
 
 		try {

@@ -7,7 +7,8 @@
         <Sprite texture="res/images/player.png" />
         <Controllable />
         <LookTowardsMouse />
-        <MyShooter />
+        <!-- example using custom components -->
+        <example.components.MyShooter />
     </entity>
 
     <!--

@@ -14,6 +14,7 @@ public class Entity {
 	private final Transform transform;
 	private final String name;
 
+	private boolean destroyed;
 	private Collider collider;
 	private Sprite sprite;
 
@@ -26,9 +27,9 @@ public class Entity {
 
 	public Entity addComponent(Component component) {
 		component.setEntity(this);
-		if(component instanceof Sprite)
+		if (component instanceof Sprite)
 			sprite = (Sprite) component;
-		else if(component instanceof Collider)
+		else if (component instanceof Collider)
 			collider = (Collider) component;
 		else
 			components.add(component);
@@ -45,14 +46,6 @@ public class Entity {
 		for (Component component : components)
 			if (component.isEnabled())
 				component.onCreate();
-	}
-
-	public void destroy() {
-		for (Component component : components)
-			if (component.isEnabled())
-				component.onDestroy();
-
-		Moka.getGame().removeEnity(this);
 	}
 
 	public void update() {
@@ -74,9 +67,17 @@ public class Entity {
 				component.onPostUpdate();
 	}
 
+	public void destroy() {
+		destroyed = true;
+
+		for (Component component : components)
+			if (component.isEnabled())
+				component.onDestroy();
+	}
+
 	public <T> T getComponent(Class<T> componentClass) {
-		for(Component component : components)
-			if(componentClass.isInstance(component))
+		for (Component component : components)
+			if (componentClass.isInstance(component))
 				return componentClass.cast(component);
 		return null;
 	}
@@ -101,7 +102,7 @@ public class Entity {
 		Vector2[] res = new Vector2[vertices.length];
 		Matrix4 model = getTransform().getModelMatrix();
 
-		for(int i = 0; i < vertices.length; i++)
+		for (int i = 0; i < vertices.length; i++)
 			res[i] = model.mul(vertices[i]);
 
 		return res;
@@ -113,5 +114,9 @@ public class Entity {
 
 	public boolean hasCollider() {
 		return collider != null;
+	}
+
+	public boolean isDestroyed() {
+		return destroyed;
 	}
 }

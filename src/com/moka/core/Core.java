@@ -12,26 +12,25 @@ public class Core {
 
 	private float frameTime;
 	private boolean daemon;
-	private BaseGame game;
-	private double delta;
+	private Context game;
 
 	/**
 	 * Creates a new instance of the engine.
 	 * @param fc		frame cap of the cycle.
 	 * @param game		a certain game to be run.
 	 */
-	public Core(BaseGame game, float fc) {
+	public Core(Context game, float fc) {
 		this.game 	= game;
 
 		frameTime = 1 / fc;
-		if(glfwInit() == 0)
+		if (glfwInit() == 0)
 			throw new JMokaException("Error initializing GLFW.");
 		else
 			JMokaLog.o(TAG, "GLFW initialized.");
 	}
 
 	public void start() {
-		if(daemon) return;
+		if (daemon) return;
 		daemon = true;
 		game.onCreate();
 		game.createAll();
@@ -43,7 +42,7 @@ public class Core {
 		double time = 0.0;
 
 		// fixed delta time.
-		delta = frameTime;
+		double delta = frameTime;
 
 		// current time var and accumulator.
 		double currentTime = glfwGetTime();
@@ -54,10 +53,7 @@ public class Core {
 		int renderFrames = 0;
 		double accSeconds = 0;
 
-		// DEBUG.
-		double deltaAcc = 0;
-
-		while(daemon) {
+		while (daemon) {
 			// indicates if we should render or not.
 			boolean render = false;
 
@@ -71,7 +67,7 @@ public class Core {
 
 			// "spend" the accumulator time until is lower than the delta time.
 			// while we have time accumulated left, we onUpdate the scene.
-			while(accumulator > delta) {
+			while (accumulator > delta) {
 				// we'll need to render only if we updated the scene... obviously.
 				render = true;
 
@@ -80,8 +76,8 @@ public class Core {
 				game.onUpdate();
 				Moka.getPhysics().checkCollisions(game);
 				game.postUpdate();
-				Input.onUpdate();
-				game.removeScheduled();
+				game.clean();
+				Input.update();
 
 				// check if user closed the window.
 				if(Moka.getDisplay().isCloseRequested())
@@ -91,21 +87,20 @@ public class Core {
 				accumulator -= delta;
 				accSeconds 	+= delta;
 				time 		+= delta;
-				deltaAcc 	+= delta;
 
 				updateFrames++;
 			}
 
 			// when the accumulator is over, render and onUpdateAll the display.
-			if(render) {
+			if (render) {
 				renderFrames++;
 				Moka.getRenderer().render(game);
 				Moka.getDisplay().onUpdate();
 			} else {
 				try {
 					Thread.sleep(1);
-				} catch(InterruptedException e) {
-					
+				} catch (InterruptedException e) {
+					System.err.println("Cannot use optimization.");
 				}
 			}
 
@@ -116,10 +111,6 @@ public class Core {
 		}
 
 		stop();
-	}
-
-	public double getDelta() {
-		return delta;
 	}
 
 	public void stop() {

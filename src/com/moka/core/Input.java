@@ -33,7 +33,7 @@ public final class Input {
 		cursorPosY = BufferUtils.createDoubleBuffer(1);
 	}
 
-	public static void onUpdate() {
+	public static void update() {
 		for(int i = 0; i < KEY_COUNT; i++)
 			activeKeys[i] = getKey(i);
 

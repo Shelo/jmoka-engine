@@ -1,7 +1,7 @@
 package com.moka.core.xml;
 
 import com.moka.components.Component;
-import com.moka.core.BaseGame;
+import com.moka.core.Context;
 import com.moka.core.Entity;
 import com.moka.core.Resources;
 import com.moka.core.Transform;
@@ -43,7 +43,7 @@ public class XmlEntityReader {
 
 	private Evaluator evaluator;
 	private String entityName;
-	private BaseGame baseGame;
+	private Context context;
 	private SAXParser parser;
 	private Entity entity;
 	private int state;
@@ -74,7 +74,7 @@ public class XmlEntityReader {
 			// the parser needs to be in the init state to be able to read the entity tag.
 			if (state == STATE_INIT && qName.equals(TAG_ENTITY)) {
 				state = STATE_ENTITY;
-				entity = baseGame.newEntity(entityName);
+				entity = context.newEntity(entityName);
 				setTransformValues(entity.getTransform(), attributes);
 			} else {
 				// if the state is not equals to entity state then we know there's is an error with
@@ -94,8 +94,8 @@ public class XmlEntityReader {
 		}
 	}
 
-	public XmlEntityReader(BaseGame baseGame) {
-		this.baseGame = baseGame;
+	public XmlEntityReader(Context context) {
+		this.context = context;
 
 		// the parser needs to be closed in order to read a new file.
 		state = STATE_CLOSED;
@@ -243,7 +243,7 @@ public class XmlEntityReader {
 			else if (param == String.class)
 				result = Resources.getString(resource);
 			else if (param == Entity.class)
-				result = baseGame.findEntity(Resources.getString(resource));
+				result = context.findEntity(Resources.getString(resource));
 
 			return (T) result;
 		} else if(value.charAt(0) == CHAR_EXPRESSION) {
@@ -281,7 +281,7 @@ public class XmlEntityReader {
 			else if (param == String.class)
 				result = value;
 			else if (param == Entity.class)
-				result = baseGame.findEntity(value);
+				result = context.findEntity(value);
 
 			return (T) result;
 		}

@@ -19,15 +19,15 @@ import java.util.Set;
  */
 public class Prefab {
 	private PreComponents components = new PreComponents();
-	private BaseGame baseGame;
+	private Context context;
 	private Vector2 position = Vector2.ZERO.copy();
 	private float rotation;
 	private Vector2 size;
 	private int layer;
 
-	public Prefab(BaseGame baseGame, PreComponents components) {
+	public Prefab(Context context, PreComponents components) {
 		this.components = components;
-		this.baseGame = baseGame;
+		this.context = context;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class Prefab {
 	 * @return the entity.
 	 */
 	public Entity newEntity(String name) {
-		Entity entity = baseGame.newEntity(name);
+		Entity entity = context.newEntity(name);
 
 		// set transform values for this entity.
 		Transform transform = entity.getTransform();

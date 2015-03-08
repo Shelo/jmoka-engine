@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: com.moka.test.Game
+Main-Class: example.Game
 

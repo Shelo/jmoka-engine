@@ -1,7 +1,7 @@
 package com.moka.core.xml;
 
 import com.moka.components.Component;
-import com.moka.core.BaseGame;
+import com.moka.core.Context;
 import com.moka.core.Entity;
 import com.moka.exceptions.JMokaException;
 import org.xml.sax.Attributes;
@@ -26,7 +26,7 @@ public class XmlSceneReader {
 	private String currentFilePath;
 	private Entity currentEntity;
 	private SAXParser parser;
-	private BaseGame game;
+	private Context game;
 
 	private class Handler extends DefaultHandler {
 		@Override
@@ -73,7 +73,7 @@ public class XmlSceneReader {
 		}
 	}
 
-	public XmlSceneReader(BaseGame game) {
+	public XmlSceneReader(Context game) {
 		this.game = game;
 
 		entityReader = new XmlEntityReader(game);

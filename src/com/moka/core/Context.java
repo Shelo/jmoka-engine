@@ -13,18 +13,16 @@ import java.util.HashMap;
 /**
  * Base class of a game, takes care of internal core usage.
  */
-public abstract class BaseGame {
+public abstract class Context {
 	private HashMap<String, Entity> nameRelations;
 	private XmlEntityReader entityReader;
-	private ArrayList<Entity> entities;
-	private ArrayList<Entity> remSchedule;
-	private XmlSceneReader sceneReader;
 	private XmlPrefabReader prefabReader;
+	private ArrayList<Entity> entities;
+	private XmlSceneReader sceneReader;
 
-	public BaseGame() {
+	public Context() {
 		nameRelations = new HashMap<>();
 		entities = new ArrayList<>();
-		remSchedule = new ArrayList<>();
 		sceneReader = new XmlSceneReader(this);
 		entityReader = sceneReader.getEntityReader();
 		prefabReader = new XmlPrefabReader(entityReader, this);
@@ -47,22 +45,20 @@ public abstract class BaseGame {
 	}
 
 	public void postUpdate() {
-		for(Entity entity : entities)
+		for (Entity entity : entities)
 			entity.postUpdate();
+	}
+
+	public void clean() {
+		for (int i = entities.size(); i >= 0; i--) {
+			if (entities.get(i).isDestroyed())
+				entities.remove(i);
+		}
 	}
 
 	public final Entity addEntity(Entity entity) {
 		entities.add(entity);
 		return entity;
-	}
-
-	public final void removeEnity(Entity entity) {
-		remSchedule.add(entity);
-	}
-
-	public final void removeScheduled() {
-		entities.removeAll(remSchedule);
-		remSchedule.clear();
 	}
 
 	/**
@@ -92,7 +88,8 @@ public abstract class BaseGame {
 		Camera camera = new Camera(0, Moka.getDisplay().getWidth(), 0,
 				Moka.getDisplay().getHeight(), Camera.Z_NEAR, Camera.Z_FAR);
 		entity.addComponent(camera);
-		if(current) camera.setAsCurrent();
+		if (current)
+			camera.setAsCurrent();
 		return entity;
 	}
 
@@ -137,7 +134,7 @@ public abstract class BaseGame {
 	 */
 	public final Entity findEntity(String name) {
 		Entity entity = nameRelations.get(name);
-		if(entity == null)
+		if (entity == null)
 			throw new JMokaException("There's no entity with name " + name + ".");
 		return entity;
 	}
