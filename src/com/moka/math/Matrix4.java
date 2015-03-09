@@ -28,7 +28,7 @@ public class Matrix4 {
 		return this;
 	}
 
-	private Matrix4 initTranslation(float x, float y, float z) {
+	public Matrix4 initTranslation(float x, float y, float z) {
 		m[0][0] = 1;
 		m[0][1] = 0;
 		m[0][2] = 0;
@@ -237,6 +237,15 @@ public class Matrix4 {
 	public Matrix4 mul(Matrix4 r) {
 		Matrix4 res = new Matrix4();
 
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				res.set(i, j,
+						m[i][0] * r.get(0, j) + m[i][1] * r.get(1, j) + m[i][2] * r.get(2, j) + m[i][3] * r.get(3, j));
+
+		return res;
+	}
+
+	public Matrix4 mul(Matrix4 r, Matrix4 res) {
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 4; j++)
 				res.set(i, j,

@@ -16,11 +16,11 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class Shader {
 	public static final String TAG = "SHADER";
-	
+
 	private HashMap<String, Integer> uniformLocations;
+	private int fragment;
 	private int program;
 	private int vertex;
-	private int fragment;
 
 	public Shader(String vertexFilePath, String fragmentFilePath) {
 		program 	= glCreateProgram();

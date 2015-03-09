@@ -1,6 +1,0 @@
-<entity xmlns="http://www.moka-dev.com/entity"
-        position="${@screen_width / 2}, 25" rotation="0" size="@screen_width, 50">
-
-    <Sprite texture="@image_ground" />
-    <AABBCollider/>
-</entity>

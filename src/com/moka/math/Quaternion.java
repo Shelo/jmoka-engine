@@ -116,12 +116,12 @@ public class Quaternion {
 				+ r.getW());
 	}
 
-	public Matrix4 toRotationMatrix() {
+	public Matrix4 toRotationMatrix(Matrix4 buffer) {
 		Vector3 forward = new Vector3(2.0f * (x * z - w * y), 2.0f * (y * z + w * x), 1.0f - 2.0f * (x * x + y * y));
 		Vector3 right 	= new Vector3(1.0f - 2.0f * (y * y + z * z), 2.0f * (x * y - w * z), 2.0f * (x * z + w * y));
 		Vector3 up 		= new Vector3(2.0f * (x * y + w * z), 1.0f - 2.0f * (x * x + z * z), 2.0f * (y * z - w * x));
 
-		return new Matrix4().initRotation(forward, up, right);
+		return buffer.initRotation(forward, up, right);
 	}
 
 	public float dot(Quaternion r) {

@@ -72,8 +72,12 @@ public abstract class Context {
 
 		// create and add the entity to the game.
 		Entity entity = new Entity(name);
-		nameRelations.put(name, entity);
 		addEntity(entity);
+
+		// register the name only if it has a name.
+		if(name != null)
+			nameRelations.put(name, entity);
+
 		return entity;
 	}
 

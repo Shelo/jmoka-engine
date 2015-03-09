@@ -13,6 +13,9 @@ public class Camera extends Component {
 	public static final float Z_FAR 	=  10;
 
 	private Matrix4 projection;
+	private Matrix4 translationMat = new Matrix4();
+	private Matrix4 rotationMat = new Matrix4();
+	private Matrix4 mulBuffer = new Matrix4();
 
 	/**
 	 * Constructor without parameters to work with XML initialization.
@@ -43,10 +46,11 @@ public class Camera extends Component {
 		Transform t = getTransform();
 
 		Quaternion rotation = t.getRotation().conjugate();
-		Matrix4 translation = Matrix4.translate(t.getPositionX() * - 1, t.getPositionY() * - 1, t.getPositionZ() * - 1);
-		Matrix4 rotate 		= rotation.toRotationMatrix();
-
-		return projection.mul(rotate.mul(translation));
+		Matrix4 translation = translationMat.initTranslation(t.getPositionX() * - 1,
+				t.getPositionY() * - 1, t.getPositionZ() * - 1);
+		Matrix4 rotate = rotation.toRotationMatrix(rotationMat);
+		rotate.mul(translation, mulBuffer);
+		return projection.mul(mulBuffer, mulBuffer);
 	}
 
 	public Matrix4 getProjectionMatrix() {

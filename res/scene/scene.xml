@@ -7,19 +7,11 @@
         <Sprite texture="res/images/player.png" />
         <Controllable />
         <LookTowardsMouse />
-        <!-- example using custom components -->
+
         <example.components.MyShooter />
     </entity>
 
-    <!--
-    <entity position="-5, ${@screen_height / 2}" rotation="0" name="LeftBox" size="10, @screen_height">
-        <AABBCollider/>
+    <entity name="Manager" position="0, 0" rotation="0" layer="0">
+        <example.components.Background />
     </entity>
-    -->
-
-    <include path="res/scene/entities/grass1.xml" name="Grass1_1" position="${32 + 64 * 0}, ${32 + 64 * 0}" />
-    <include path="res/scene/entities/grass1.xml" name="Grass1_2" position="${32 + 64 * 1}, ${32 + 64 * 0}" />
-    <include path="res/scene/entities/grass1.xml" name="Grass1_3" position="${32 + 64 * 2}, ${32 + 64 * 0}" />
-    <include path="res/scene/entities/grass1.xml" name="Grass1_4" position="${32 + 64 * 3}, ${32 + 64 * 0}" />
-    <include path="res/scene/entities/grass1.xml" name="Grass1_5" position="${32 + 64 * 4}, ${32 + 64 * 0}" />
 </scene>

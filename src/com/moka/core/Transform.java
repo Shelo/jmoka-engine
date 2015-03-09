@@ -14,6 +14,11 @@ public final class Transform {
 
 	private Quaternion prevRotation;
 	private Quaternion rotation;
+	
+	private Matrix4 translationMat = new Matrix4();
+	private Matrix4 rotationMat = new Matrix4();
+	private Matrix4 scaleMat = new Matrix4();
+	private Matrix4 mulBuffer = new Matrix4();
 
 	// TODO: this.
 	private Vector2 prevSize;
@@ -31,11 +36,11 @@ public final class Transform {
 	}
 
 	public Matrix4 getModelMatrix() {
-		Matrix4 translation = Matrix4.translate((int) position.x, (int) position.y,
-				(int) position.z);
-		Matrix4 scale = Matrix4.scale(getSize().x, getSize().y, 1);
-		Matrix4 rotate = rotation.toRotationMatrix();
-		return translation.mul(rotate.mul(scale));
+		Matrix4 translation = translationMat.initTranslation((int) position.x, (int) position.y, (int) position.z);
+		Matrix4 scale = scaleMat.initScale(getSize().x, getSize().y, 1);
+		Matrix4 rotate = rotation.toRotationMatrix(rotationMat);
+		rotate.mul(scale, mulBuffer);
+		return translation.mul(mulBuffer, mulBuffer);
 	}
 
 	public void move(float x, float y) {

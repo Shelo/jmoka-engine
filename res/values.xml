@@ -6,8 +6,8 @@
     </string>
 
     <integer>
-        <res name="screen_width" value="800" />
-        <res name="screen_height" value="480" />
+        <res name="screen_width" value="1024" />
+        <res name="screen_height" value="760" />
         <res name="layer_sky" value="-1" />
     </integer>
 </values>
