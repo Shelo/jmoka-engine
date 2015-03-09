@@ -6,6 +6,7 @@ import com.moka.physics.Collision;
 
 public class CircleCollider extends Collider {
 	private float radius;
+	private AABBCollider boundingBox;
 
 	@Override
 	public void onCreate() {
@@ -22,6 +23,9 @@ public class CircleCollider extends Collider {
 			return circle(this, (CircleCollider) other);
 		}
 
+		else if (other instanceof AABBCollider)
+			return aabbCircle(this, (AABBCollider) other);
+
 		return null;
 	}
 
@@ -37,5 +41,16 @@ public class CircleCollider extends Collider {
 
 	public float getRadius() {
 		return radius;
+	}
+
+	public AABBCollider getBoundingBox() {
+		if (boundingBox == null) {
+			boundingBox = new AABBCollider();
+			boundingBox.setEntity(getEntity());
+			boundingBox.setWith(radius * 2);
+			boundingBox.setHeight(radius * 2);
+		}
+
+		return boundingBox;
 	}
 }

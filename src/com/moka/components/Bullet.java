@@ -26,13 +26,13 @@ public class Bullet extends Component {
 
 	@Override
 	public void onCollide(Collision collision) {
-		if (collision.isGuilty()) {
+		/*if (collision.isGuilty()) {
 			collision.entity.destroy();
 
 			if (collision.entity.getName().startsWith("Bullet")) {
 				getEntity().destroy();
 			}
-		}
+		}*/
 	}
 
 	@XmlAttribute("speed")

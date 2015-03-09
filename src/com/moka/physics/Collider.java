@@ -122,7 +122,18 @@ public abstract class Collider extends Component {
 
 	// AABB-Circle
 	public static Collision aabbCircle(AABBCollider aabb, CircleCollider circle) {
-		return null;
+		Vector2 circleCenter = circle.getEntity().getTransform().getPosition();
+
+		/* if in corner */
+		if
+				(circleCenter.x > aabb.getRight() && circleCenter.y > aabb.getTop() ||
+				 circleCenter.x < aabb.getLeft() && circleCenter.y > aabb.getTop() ||
+				 circleCenter.x > aabb.getRight() && circleCenter.y < aabb.getBot() ||
+				 circleCenter.x < aabb.getLeft() && circleCenter.y < aabb.getBot()) {
+			return circle(circle, aabb.getBoundingCircle());
+		} else {
+			return aabb(circle.getBoundingBox(), aabb);
+		}
 	}
 
 	public static Collision aabbCircle(CircleCollider circle, AABBCollider aabb) {

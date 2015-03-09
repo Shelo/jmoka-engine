@@ -14,6 +14,8 @@ public class AABBCollider extends Collider {
 	private boolean shouldInitWidth = true;
 	private boolean shouldInitHeight = true;
 
+	private CircleCollider boundingCircle;
+
 	@Override
 	public void onCreate() {
 		if (shouldInitWidth)
@@ -41,7 +43,7 @@ public class AABBCollider extends Collider {
 
 	@XmlAttribute("height")
 	public void setHeight(float height) {
-		shouldInitHeight = true;
+		shouldInitHeight = false;
 		this.height = height;
 	}
 
@@ -66,6 +68,9 @@ public class AABBCollider extends Collider {
 		if (other instanceof AABBCollider)
 			return Collider.aabb(this, (AABBCollider) other);
 
+		else if (other instanceof CircleCollider)
+			return Collider.aabbCircle(this, (CircleCollider) other);
+
 		return null;
 	}
 
@@ -73,5 +78,15 @@ public class AABBCollider extends Collider {
 	public void response(Collision collision) {
 		Vector2 newPos = getTransform().getPosition().add(collision.getMovement());
 		getTransform().setPosition(newPos);
+	}
+
+	public CircleCollider getBoundingCircle() {
+		if (boundingCircle == null) {
+			boundingCircle = new CircleCollider();
+			boundingCircle.setEntity(getEntity());
+			boundingCircle.setRadius((float) Math.sqrt(width * width + height * height) / 2);
+		}
+
+		return boundingCircle;
 	}
 }
