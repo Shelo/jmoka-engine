@@ -9,5 +9,7 @@
         <res name="screen_width" value="1024" />
         <res name="screen_height" value="760" />
         <res name="layer_sky" value="-1" />
+        <res name="some_value" value="45" />
+        <res name="position_x" value="200" />
     </integer>
 </values>

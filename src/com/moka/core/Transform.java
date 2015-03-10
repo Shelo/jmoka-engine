@@ -1,60 +1,65 @@
 package com.moka.core;
 
 import com.moka.exceptions.JMokaException;
-import com.moka.math.Matrix4;
-import com.moka.math.Quaternion;
-import com.moka.math.Vector2;
-import com.moka.math.Vector3;
+import com.moka.math.*;
 
 public final class Transform {
 	private final Entity entity;
 
-	private Vector3 prevPosition;
-	private Vector3 position;
+	private Vector2f prevPosition;
+	private Vector2f position;
+	private int layer;
+
+	private Vector2f prevSize;
+	private Vector2f size;
 
 	private Quaternion prevRotation;
 	private Quaternion rotation;
-	
+
 	private Matrix4 translationMat = new Matrix4();
 	private Matrix4 rotationMat = new Matrix4();
 	private Matrix4 scaleMat = new Matrix4();
 	private Matrix4 mulBuffer = new Matrix4();
 
-	// TODO: this.
-	private Vector2 prevSize;
-	private Vector2 size;
+	private boolean useOwnSize = false;
 
 	public Transform(Entity entity) {
 		this.entity = entity;
-		rotation = Quaternion.IDENTITY.copy();
-		position = Vector3.ZERO.copy();
+
+		prevRotation = Quaternion.IDENTITY.cpy();
+		rotation = Quaternion.IDENTITY.cpy();
+		prevPosition = new Vector2f();
+		position = new Vector2f();
+		prevSize = new Vector2f();
+		size = new Vector2f();
 	}
 
 	public void update() {
-		prevPosition = position.copy();
-		prevRotation = rotation.copy();
+		prevPosition.set(position);
+		prevRotation.set(rotation);
+		prevSize.set(getSize());
 	}
 
 	public Matrix4 getModelMatrix() {
-		Matrix4 translation = translationMat.initTranslation((int) position.x, (int) position.y, (int) position.z);
-		Matrix4 scale = scaleMat.initScale(getSize().x, getSize().y, 1);
+		Matrix4 translation = translationMat.toTranslation((int) position.x, (int) position.y, layer);
+		Matrix4 scale = scaleMat.toScale(getSize().x, getSize().y, 1);
 		Matrix4 rotate = rotation.toRotationMatrix(rotationMat);
 		rotate.mul(scale, mulBuffer);
 		return translation.mul(mulBuffer, mulBuffer);
 	}
 
 	public void move(float x, float y) {
-		position = position.add(x, y, 0.0f);
+		position.add(x, y);
 	}
 
 	public Quaternion getRotation() {
 		return rotation;
 	}
 
-	public Vector2 getSize() {
-		Vector2 rSize;
+	public Vector2f getSize() {
+		Vector2f rSize;
 
-		if(size == null) {
+		if(!useOwnSize) {
 			if(entity.hasSprite()) {
 				rSize = entity.getSprite().getSize();
 
@@ -63,7 +68,7 @@ public final class Transform {
 				}
 
 			} else {
-				throw new JMokaException("Entity has no dimensions!");
+				rSize = size;
 			}
 		} else {
 			rSize = size;
@@ -72,38 +77,32 @@ public final class Transform {
 		return rSize;
 	}
 
-	public void setSize(Vector2 size) {
-		this.size = size;
-	}
-
 	public void setRotation(Quaternion rotation) {
 		this.rotation = rotation;
 	}
 
-	public void setRotRadians(float rotation) {
-		this.rotation = new Quaternion(Vector3.AXIS_Z, rotation);
+	public void setRotation(float radians) {
+		this.rotation = new Quaternion(Vector3f.AXIS_Z, radians);
 	}
 
-	public void setRotation(float rotation) {
-		this.rotation = new Quaternion(Vector3.AXIS_Z, (float) Math.toRadians(rotation));
+	public void setRotationDeg(float rotation) {
+		this.rotation = new Quaternion(Vector3f.AXIS_Z, (float) Math.toRadians(rotation));
 	}
 
-	public void setSize(int x, int y) {
-		if(size == null)
-			size = new Vector2(x, y);
-		else
-			size.set(x, y);
+	public void setSize(float x, float y) {
+		useOwnSize = true;
+		size.set(x, y);
+	}
+
+	public void setSize(Vector2f size) {
+		setSize(size.x, size.y);
 	}
 
 	public void setPosition(float x, float y) {
-		position.set(x, y, position.z);
+		position.set(x, y);
 	}
 
-	public void setPosition(Vector3 position) {
-		this.position.set(position);
-	}
-
-	public void setPosition(Vector2 position) {
+	public void setPosition(Vector2f position) {
 		this.position.set(position);
 	}
 
@@ -120,27 +119,30 @@ public final class Transform {
 	}
 
 	public boolean hasRotated() {
-		return prevRotation == null || !prevRotation.equals(rotation);
-
+		return !prevRotation.equals(rotation);
 	}
 
 	public boolean hasMoved() {
-		return prevPosition == null || !prevPosition.equals(position);
+		return !prevPosition.equals(position);
 	}
 
 	public boolean hasChanged() {
 		return hasRotated() || hasMoved();
 	}
 
-	public Vector2 getPosition() {
-		return position.getXY();
+	public Vector2f getPosition() {
+		return position;
 	}
 
-	public void move(Vector2 movement) {
+	public void move(Vector2f movement) {
 		move(movement.x, movement.y);
 	}
 
 	public int getLayer() {
-		return (int) position.z;
+		return layer;
+	}
+
+	public void setLayer(int layer) {
+		this.layer = layer;
 	}
 }

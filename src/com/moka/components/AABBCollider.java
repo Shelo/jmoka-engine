@@ -1,7 +1,6 @@
 package com.moka.components;
 
 import com.moka.core.xml.XmlAttribute;
-import com.moka.math.Vector2;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 
@@ -76,8 +75,7 @@ public class AABBCollider extends Collider {
 
 	@Override
 	public void response(Collision collision) {
-		Vector2 newPos = getTransform().getPosition().add(collision.getMovement());
-		getTransform().setPosition(newPos);
+		getTransform().move(collision.getMovement());
 	}
 
 	public CircleCollider getBoundingCircle() {

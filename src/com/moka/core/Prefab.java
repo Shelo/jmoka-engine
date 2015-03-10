@@ -3,7 +3,7 @@ package com.moka.core;
 import com.moka.components.Component;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.exceptions.JMokaException;
-import com.moka.math.Vector2;
+import com.moka.math.Vector2f;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,10 +19,10 @@ import java.util.Set;
  */
 public class Prefab {
 	private PreComponents components = new PreComponents();
+	private Vector2f position = new Vector2f();
+	private Vector2f size = new Vector2f();
 	private Context context;
-	private Vector2 position = Vector2.ZERO.copy();
 	private float rotation;
-	private Vector2 size;
 	private int layer;
 
 	public Prefab(Context context, PreComponents components) {
@@ -35,8 +35,8 @@ public class Prefab {
 	 *
 	 * @param position position vector.
 	 */
-	public void setPosition(Vector2 position) {
-		this.position = position;
+	public void setPosition(Vector2f position) {
+		this.position.set(position);
 	}
 
 	/**
@@ -45,8 +45,8 @@ public class Prefab {
 	 * 
 	 * @param size size vector.
 	 */
-	public void setSize(Vector2 size) {
-		this.size = size;
+	public void setSize(Vector2f size) {
+		this.size.set(size);
 	}
 
 	/**
@@ -78,9 +78,9 @@ public class Prefab {
 
 		// set transform values for this entity.
 		Transform transform = entity.getTransform();
-		transform.setPosition(position.copy());
-		transform.setSize(size.copy());
-		transform.setRotation(rotation);
+		transform.setPosition(position.cpy());
+		transform.setSize(size.cpy());
+		transform.setRotationDeg(rotation);
 
 		// creates every component and adds it to the entity.
 		for (Class<?> cClass : components.keySet()) {

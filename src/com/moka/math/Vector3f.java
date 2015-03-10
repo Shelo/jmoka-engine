@@ -1,6 +1,7 @@
 package com.moka.math;
 
 public class Vector3f {
+	public static final Vector3f AXIS_Z = new Vector3f(0, 0, 1);
 	public float x;
 	public float y;
 	public float z;
@@ -19,6 +20,13 @@ public class Vector3f {
 		this.x += o.x;
 		this.y += o.y;
 		this.z += o.z;
+		return this;
+	}
+
+	public Vector3f add(float x, float y, float z) {
+		this.x += x;
+		this.y += y;
+		this.z += z;
 		return this;
 	}
 	
@@ -72,5 +80,11 @@ public class Vector3f {
 	
 	public Vector3f cpy() {
 		return new Vector3f(x, y, z);
+	}
+
+	public void set(Vector3f o) {
+		this.x = o.x;
+		this.y = o.y;
+		this.z = o.z;
 	}
 }

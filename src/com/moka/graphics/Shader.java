@@ -6,8 +6,8 @@ import com.moka.core.Transform;
 import com.moka.core.Utils;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Matrix4;
-import com.moka.math.Vector2;
-import com.moka.math.Vector3;
+import com.moka.math.Vector2f;
+import com.moka.math.Vector3f;
 
 import java.nio.FloatBuffer;
 import java.util.HashMap;
@@ -108,11 +108,11 @@ public class Shader {
 		glUniform2f(getUniformLocation(uniform), x, y);
 	}
 
-	public void setUniform(String uniform, Vector3 v) {
+	public void setUniform(String uniform, Vector3f v) {
 		setUniform(uniform, v.x, v.y, v.z);
 	}
 
-	public void setUniform(String uniform, Vector2 v) {
+	public void setUniform(String uniform, Vector2f v) {
 		setUniform(uniform, v.x, v.y);
 	}
 

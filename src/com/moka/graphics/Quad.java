@@ -2,7 +2,7 @@ package com.moka.graphics;
 
 import com.moka.core.Utils;
 import com.moka.core.Vertex;
-import com.moka.math.Vector2;
+import com.moka.math.Vector2f;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -84,9 +84,9 @@ public class Quad {
 		return vertices;
 	}
 
-	public Vector2[] getVerticesAsVector2() {
+	public Vector2f[] getVerticesAsVector2() {
 		// TODO: optimize vertices because they are all the same every time.
-		Vector2[] res = new Vector2[vertices.length];
+		Vector2f[] res = new Vector2f[vertices.length];
 
 		for(int i = 0; i < res.length; i++)
 			res[i] = vertices[i].asVector2();

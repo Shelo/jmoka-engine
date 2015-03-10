@@ -3,7 +3,7 @@ package com.moka.core;
 import com.moka.components.Component;
 import com.moka.components.Sprite;
 import com.moka.math.Matrix4;
-import com.moka.math.Vector2;
+import com.moka.math.Vector2f;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 
@@ -98,8 +98,8 @@ public class Entity {
 		return name;
 	}
 
-	public Vector2[] transformVertices(Vector2[] vertices) {
-		Vector2[] res = new Vector2[vertices.length];
+	public Vector2f[] transformVertices(final Vector2f[] vertices) {
+		Vector2f[] res = new Vector2f[vertices.length];
 		Matrix4 model = getTransform().getModelMatrix();
 
 		for (int i = 0; i < vertices.length; i++)

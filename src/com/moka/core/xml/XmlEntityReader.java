@@ -6,8 +6,7 @@ import com.moka.core.Entity;
 import com.moka.core.Resources;
 import com.moka.core.Transform;
 import com.moka.exceptions.JMokaException;
-import com.moka.math.Vector2;
-import com.moka.math.Vector3;
+import com.moka.math.Vector2f;
 import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;
 import org.xml.sax.Attributes;
@@ -296,28 +295,31 @@ public class XmlEntityReader {
 	 */
 	public void setTransformValues(Transform transform, Attributes attributes) {
 		if (attributes.getValue(VAL_POSITION) != null) {
-			Vector2 position = readPositionValues(attributes);
+			Vector2f position = readPositionValues(attributes);
+			transform.setPosition(new Vector2f(position.x, position.y));
+		}
+
+		if (attributes.getValue(VAL_LAYER) != null) {
 			int layer = readLayer(attributes);
-			transform.setPosition(new Vector3(position.x, position.y, layer));
+			transform.setLayer(layer);
 		}
 
 		if (attributes.getValue(VAL_ROTATION) != null) {
 			float rotation = readRotation(attributes);
-			transform.setRotation(rotation);
+			transform.setRotationDeg(rotation);
 		}
 
 		if (attributes.getValue(VAL_SIZE) != null) {
-			Vector2 size = readSizeValues(attributes);
+			Vector2f size = readSizeValues(attributes);
 			transform.setSize(size);
 		}
 	}
 
-	public Vector2 readPositionValues(Attributes attributes) {
+	public Vector2f readPositionValues(Attributes attributes) {
 		String[] params = attributes.getValue(VAL_POSITION).split(" *, *");
 		float x = getTestedValue(float.class, params[0]);
 		float y = getTestedValue(float.class, params[1]);
-		
-		return new Vector2(x, y);
+		return new Vector2f(x, y);
 	}
 
 	public int readLayer(Attributes attributes) {
@@ -330,12 +332,12 @@ public class XmlEntityReader {
 		float rotation = getTestedValue(float.class, attributes.getValue(VAL_ROTATION));
 		return rotation;
 	}
-	
-	public Vector2 readSizeValues(Attributes attributes) {
+
+	public Vector2f readSizeValues(Attributes attributes) {
 		String[] params = attributes.getValue(VAL_SIZE).split(" *, *");
 		float x = getTestedValue(float.class, params[0]);
 		float y = getTestedValue(float.class, params[1]);
-		return new Vector2(x, y);
+		return new Vector2f(x, y);
 	}
 	
 	/**

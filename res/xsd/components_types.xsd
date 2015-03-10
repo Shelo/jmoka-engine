@@ -30,16 +30,19 @@
 
     <!-- SATCollider -->
     <xs:complexType name="SATColliderType">
+        <xs:attribute name="trigger" type="xs:boolean" />
         <xs:attribute name="vertices" type="xs:string" />
     </xs:complexType>
 
     <!-- CircleCollider -->
     <xs:complexType name="CircleColliderType">
+        <xs:attribute name="trigger" type="xs:boolean" />
         <xs:attribute name="radius" type="xs:float" />
     </xs:complexType>
 
     <!-- AABBCollider -->
     <xs:complexType name="AABBColliderType">
+        <xs:attribute name="trigger" type="xs:boolean" />
         <xs:attribute name="width" type="xs:float" />
         <xs:attribute name="height" type="xs:float" />
         <xs:attribute name="offsetX" type="xs:float" />

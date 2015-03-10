@@ -1,7 +1,7 @@
 package com.moka.core;
 
 import com.moka.exceptions.JMokaException;
-import com.moka.math.Vector2;
+import com.moka.math.Vector2f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 
@@ -17,6 +17,7 @@ public final class Input {
 	private static final int MOUSE_COUNT 	= 5;
 	private static final int KEY_COUNT		= 348;
 
+	private static Vector2f cursorPosition;
 	private static DoubleBuffer cursorPosX;
 	private static DoubleBuffer cursorPosY;
 	private static boolean[] activeMouse;
@@ -31,6 +32,8 @@ public final class Input {
 
 		cursorPosX = BufferUtils.createDoubleBuffer(1);
 		cursorPosY = BufferUtils.createDoubleBuffer(1);
+
+		cursorPosition = new Vector2f();
 	}
 
 	public static void update() {
@@ -94,7 +97,7 @@ public final class Input {
 			throw new JMokaException("Window not defined in input.");
 	}
 
-	public static Vector2 getCursorPos() {
-		return new Vector2(getCursorPosX(), getCursorPosY());
+	public static Vector2f getCursorPos() {
+		return cursorPosition.set(getCursorPosX(), getCursorPosY());
 	}
 }

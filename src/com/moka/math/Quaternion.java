@@ -14,7 +14,7 @@ public class Quaternion {
 		this.w = w;
 	}
 
-	public Quaternion(final Vector3 axis, float radians) {
+	public Quaternion(final Vector3f axis, float radians) {
 		float sinHalfAngle = (float) Math.sin(radians / 2);
 		float cosHalfAngle = (float) Math.cos(radians / 2);
 
@@ -97,7 +97,7 @@ public class Quaternion {
 		return new Quaternion(x_, y_, z_, w_);
 	}
 
-	public Quaternion mul(final Vector3 r) {
+	public Quaternion mul(final Vector3f r) {
 		float w_ = - x * r.x - y * r.y - z * r.z;
 		float x_ =   w * r.x + y * r.z - z * r.y;
 		float y_ =   w * r.y + z * r.x - x * r.z;
@@ -117,9 +117,10 @@ public class Quaternion {
 	}
 
 	public Matrix4 toRotationMatrix(Matrix4 buffer) {
-		Vector3 forward = new Vector3(2.0f * (x * z - w * y), 2.0f * (y * z + w * x), 1.0f - 2.0f * (x * x + y * y));
-		Vector3 right 	= new Vector3(1.0f - 2.0f * (y * y + z * z), 2.0f * (x * y - w * z), 2.0f * (x * z + w * y));
-		Vector3 up 		= new Vector3(2.0f * (x * y + w * z), 1.0f - 2.0f * (x * x + z * z), 2.0f * (y * z - w * x));
+		// TODO: optimize this.
+		Vector3f forward = new Vector3f(2.0f * (x * z - w * y), 2.0f * (y * z + w * x), 1.0f - 2.0f * (x * x + y * y));
+		Vector3f right = new Vector3f(1.0f - 2.0f * (y * y + z * z), 2.0f * (x * y - w * z), 2.0f * (x * z + w * y));
+		Vector3f up = new Vector3f(2.0f * (x * y + w * z), 1.0f - 2.0f * (x * x + z * z), 2.0f * (y * z - w * x));
 
 		return buffer.initRotation(forward, up, right);
 	}
@@ -162,30 +163,6 @@ public class Quaternion {
 		float destFactor = (float) Math.sin((lerpFactor) * angle) * invSin;
 
 		return this.mul(srcFactor).add(correctedDest.mul(destFactor));
-	}
-
-	public Vector3 getForward() {
-		return new Vector3(0, 0, 1).rotate(this);
-	}
-
-	public Vector3 getBack() {
-		return new Vector3(0, 0, -1).rotate(this);
-	}
-
-	public Vector3 getUp() {
-		return new Vector3(0, 1, 0).rotate(this);
-	}
-
-	public Vector3 getDown() {
-		return new Vector3(0, -1, 0).rotate(this);
-	}
-
-	public Vector3 getRight() {
-		return new Vector3(1, 0, 0).rotate(this);
-	}
-
-	public Vector3 getLeft() {
-		return new Vector3(-1, 0, 0).rotate(this);
 	}
 
 	public Quaternion set(float x, float y, float z, float w) {
@@ -237,7 +214,7 @@ public class Quaternion {
 		return x == r.getX() && y == r.getY() && z == r.getZ() && w == r.getW();
 	}
 
-	public Quaternion copy() {
+	public Quaternion cpy() {
 		return new Quaternion(x, y, z, w);
 	}
 }

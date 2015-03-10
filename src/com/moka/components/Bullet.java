@@ -2,11 +2,14 @@ package com.moka.components;
 
 import com.moka.core.Time;
 import com.moka.core.xml.XmlAttribute;
-import com.moka.math.Vector2;
+import com.moka.math.Vector2f;
 import com.moka.physics.Collision;
 
 public class Bullet extends Component {
-	private Vector2 direction = new Vector2(1, 0);
+	private Vector2f direction = new Vector2f(1, 0);
+	private Vector2f prevDir = new Vector2f();
+	private Vector2f bufVector1 = new Vector2f();
+	private Vector2f bufVector2 = new Vector2f();
 	private float speed = 300;
 
 	public Bullet() {
@@ -15,13 +18,19 @@ public class Bullet extends Component {
 
 	@Override
 	public void onCreate() {
-		direction = direction.normalized();
+		direction.nor();
 	}
 
 	@Override
 	public void onUpdate() {
-		getTransform().setPosition(getTransform().getPosition().add(
-				direction.mul((float) (speed * Time.getDelta()))));
+		if(!direction.equals(prevDir))
+			getTransform().setRotation(direction.angle());
+
+		bufVector1.set(getTransform().getPosition());
+		bufVector2.set(direction).mul((float) (speed * Time.getDelta()));
+		getTransform().setPosition(bufVector1.add(bufVector2));
+
+		prevDir.set(direction);
 	}
 
 	@Override
@@ -48,7 +57,7 @@ public class Bullet extends Component {
 		direction.y = d;
 	}
 
-	public void setDirection(Vector2 direction) {
-		this.direction = direction;
+	public void setDirection(Vector2f direction) {
+		this.direction.set(direction);
 	}
 }

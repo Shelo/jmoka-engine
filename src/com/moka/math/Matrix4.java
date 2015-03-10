@@ -28,7 +28,7 @@ public class Matrix4 {
 		return this;
 	}
 
-	public Matrix4 initTranslation(float x, float y, float z) {
+	public Matrix4 toTranslation(float x, float y, float z) {
 		m[0][0] = 1;
 		m[0][1] = 0;
 		m[0][2] = 0;
@@ -117,7 +117,7 @@ public class Matrix4 {
 		return this;
 	}
 
-	public Matrix4 initScale(float x, float y, float z) {
+	public Matrix4 toScale(float x, float y, float z) {
 		m[0][0] = x;
 		m[0][1] = 0;
 		m[0][2] = 0;
@@ -193,41 +193,28 @@ public class Matrix4 {
 		return this;
 	}
 
-	public Matrix4 initRotation(Vector3 forward, Vector3 up) {
-		Vector3 f = forward.normalized();
-		Vector3 r = up.normalized();
-		r = r.cross(f);
-		Vector3 u = f.cross(r);
-		return initRotation(f, u, r);
-	}
-
-	public Matrix4 initRotation(Vector3 forward, Vector3 up, Vector3 right) {
-		Vector3 f = forward;
-		Vector3 r = right;
-		Vector3 u = up;
-
-		m[0][0] = r.x;
-		m[0][1] = r.y;
-		m[0][2] = r.z;
+	public Matrix4 initRotation(Vector3f forward, Vector3f up, Vector3f right) {
+		m[0][0] = right.x;
+		m[0][1] = right.y;
+		m[0][2] = right.z;
 		m[0][3] = 0;
-		m[1][0] = u.x;
-		m[1][1] = u.y;
-		m[1][2] = u.z;
+		m[1][0] = up.x;
+		m[1][1] = up.y;
+		m[1][2] = up.z;
 		m[1][3] = 0;
-		m[2][0] = f.x;
-		m[2][1] = f.y;
-		m[2][2] = f.z;
+		m[2][0] = forward.x;
+		m[2][1] = forward.y;
+		m[2][2] = forward.z;
 		m[2][3] = 0;
 		m[3][0] = 0;
 		m[3][1] = 0;
 		m[3][2] = 0;
 		m[3][3] = 1;
-
 		return this;
 	}
 
-	public Vector3 transform(Vector3 r) {
-		return new Vector3(
+	public Vector3f transform(Vector3f r) {
+		return new Vector3f(
 				m[0][0] * r.x + m[0][1] * r.y + m[0][2] * r.z + m[0][3],
 				m[1][0] * r.x + m[1][1] * r.y + m[1][2] * r.z + m[1][3],
 				m[2][0] * r.x + m[2][1] * r.y + m[2][2] * r.z + m[2][3]
@@ -254,8 +241,8 @@ public class Matrix4 {
 		return res;
 	}
 
-	public Vector2 mul(Vector2 vector) {
-		return new Vector2(m[0][0] * vector.x + m[0][1] * vector.y + m[0][3],
+	public Vector2f mul(Vector2f vector) {
+		return new Vector2f(m[0][0] * vector.x + m[0][1] * vector.y + m[0][3],
 				m[1][0] * vector.x + m[1][1] * vector.y + m[1][3]);
 	}
 
@@ -295,7 +282,7 @@ public class Matrix4 {
 	}
 
 	public static Matrix4 scale(float x, float y, float z) {
-		return new Matrix4().initScale(x, y, z);
+		return new Matrix4().toScale(x, y, z);
 	}
 	
 	public static Matrix4 orthographic(float left, float right, float bottom, float top, float zNear, float zFar) {
@@ -303,6 +290,6 @@ public class Matrix4 {
 	}
 	
 	public static Matrix4 translate(float x, float y, float z) {
-		return new Matrix4().initTranslation(x, y, z);
+		return new Matrix4().toTranslation(x, y, z);
 	}
 }

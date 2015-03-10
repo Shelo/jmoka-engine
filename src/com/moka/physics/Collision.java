@@ -1,13 +1,13 @@
 package com.moka.physics;
 
 import com.moka.core.Entity;
-import com.moka.math.Vector2;
+import com.moka.math.Vector2f;
 
 public final class Collision {
-    public final Entity entity;
-    public final Vector2 direction;
-    public final float magnitude;
+	private final Vector2f direction;
+	private final float magnitude;
 	private final boolean guilty;
+	private final Entity entity;
 
 	/**
 	 * Creates a new collision information wrapper.
@@ -15,7 +15,7 @@ public final class Collision {
 	 * @param norDirection	the normalized direction of the collision.
 	 * @param magnitude		the magnitude collision.
 	 */
-    public Collision(Entity entity, Vector2 norDirection, float magnitude) {
+    public Collision(Entity entity, Vector2f norDirection, float magnitude) {
 		this.entity = entity;
 		this.direction = norDirection;
 		this.magnitude = magnitude;
@@ -24,7 +24,7 @@ public final class Collision {
 
 	public Collision(Entity entity, Collision collision) {
 		this.entity = entity;
-		this.direction = collision.direction.copy();
+		this.direction = collision.direction.cpy();
 		this.magnitude = collision.magnitude;
 		this.guilty = false;
 	}
@@ -33,7 +33,7 @@ public final class Collision {
 		return guilty;
 	}
 
-	public Vector2 getMovement() {
+	public Vector2f getMovement() {
 		return direction.mul(magnitude);
 	}
 
@@ -46,7 +46,7 @@ public final class Collision {
 		return entity;
 	}
 
-	public Vector2 getDirection() {
+	public Vector2f getDirection() {
 		return direction;
 	}
 

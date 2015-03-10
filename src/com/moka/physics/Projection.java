@@ -1,7 +1,7 @@
 package com.moka.physics;
 
 import com.moka.exceptions.JMokaException;
-import com.moka.math.Vector2;
+import com.moka.math.Vector2f;
 
 public class Projection {
     public final float min;
@@ -12,7 +12,7 @@ public class Projection {
         this.max = max;
     }
 
-    public Projection(Vector2[] vertices, Vector2 axis) {
+    public Projection(Vector2f[] vertices, Vector2f axis) {
         if (vertices.length == 0)
             throw new JMokaException("Empty vertices");
 

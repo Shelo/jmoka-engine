@@ -7,7 +7,7 @@ import com.moka.graphics.Color;
 import com.moka.graphics.Quad;
 import com.moka.graphics.Shader;
 import com.moka.graphics.Texture;
-import com.moka.math.Vector2;
+import com.moka.math.Vector2f;
 
 /**
  * Sprite class, this draws a Texture on a Quad given the transform specifications.
@@ -16,10 +16,9 @@ import com.moka.math.Vector2;
 @XmlSupported
 public class Sprite extends Component {
 	private Texture texture;
+	private Vector2f size;
 	private Color tint;
 	private Quad quad;
-	
-	Vector2 size;
 	private float tintR = 1;
 	private float tintG = 1;
 	private float tintB = 1;
@@ -29,11 +28,11 @@ public class Sprite extends Component {
 		tint = new Color(1, 1, 1, 1);
 	}
 
-	public Sprite(Texture texture, Vector2 size, Color tint) {
+	public Sprite(Texture texture, Vector2f size, Color tint) {
 		this.texture 	= texture;
 		this.tint 		= tint;
 
-		this.size.set(size.x, size.y);
+		this.size.set(size);
 		quad = new Quad(texture.getTexCoordX(), texture.getTexCoordY());
 	}
 
@@ -41,7 +40,7 @@ public class Sprite extends Component {
 		this(texture, null, tint);
 	}
 
-	public Sprite(Texture texture, Vector2 size) {
+	public Sprite(Texture texture, Vector2f size) {
 		this(texture, size, Color.WHITE);
 	}
 
@@ -121,13 +120,13 @@ public class Sprite extends Component {
 	}
 
 	@XmlAttribute("height")
-	public void setSizeY(float value) {
+	public void setHeight(float value) {
 		size.y = value;
 	}
 
-	public Vector2 getSize() {
+	public Vector2f getSize() {
 		if(size == null) {
-			size = new Vector2(texture.getWidth(), texture.getHeight());
+			size = new Vector2f(texture.getWidth(), texture.getHeight());
 		}
 		return size;
 	}

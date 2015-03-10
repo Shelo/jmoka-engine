@@ -8,14 +8,16 @@ package com.moka.math;
  * @author Shelo
  */
 public class Vector2f {
+	public static final Vector2f ZERO = new Vector2f(0, 0);
+
 	public float x;
 	public float y;
-
+	
 	/**
 	 * Creates a new vector with (0, 0) values.
 	 */
 	public Vector2f() {
-		
+
 	}
 
 	/**
@@ -33,6 +35,12 @@ public class Vector2f {
 		this.y += o.y;
 		return this;
 	}
+
+	public Vector2f add(float x, float y) {
+		this.x += x;
+		this.y += y;
+		return this;
+	}
 	
 	public Vector2f sub(Vector2f o) {
 		this.x -= o.x;
@@ -43,6 +51,12 @@ public class Vector2f {
 	public Vector2f mul(Vector2f o) {
 		this.x *= o.x;
 		this.y *= o.y;
+		return this;
+	}
+
+	public Vector2f mul(float o) {
+		this.x *= o;
+		this.y *= o;
 		return this;
 	}
 
@@ -101,5 +115,18 @@ public class Vector2f {
 		this.x = o.x;
 		this.y = o.y;
 		return this;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Vector2f r = null;
+		if(obj instanceof Vector2f) r = (Vector2f) obj;
+		return r != null && this.x == r.x && this.y == r.y;
+
+	}
+
+	@Override
+	public String toString() {
+		return "(" + x + ", " + y + ")";
 	}
 }

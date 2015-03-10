@@ -1,19 +1,17 @@
 package com.moka.core;
 
-import com.moka.math.Vector2;
+import com.moka.math.Vector2f;
 
 public class Vertex {
 	public static final int SIZE = 5;
 
-	private float x;
-	private float y;
+	private final Vector2f xy;
 	private float z;
 	private float s;
 	private float t;
 
 	public Vertex(float x, float y, float z, float s, float t) {
-		this.x = x;
-		this.y = y;
+		xy = new Vector2f(x, y);
 		this.z = z;
 		this.s = s;
 		this.t = t;
@@ -24,11 +22,11 @@ public class Vertex {
 	}
 
 	public float getY() {
-		return y;
+		return xy.y;
 	}
 
 	public float getX() {
-		return x;
+		return xy.x;
 	}
 
 	public float getS() {
@@ -39,7 +37,7 @@ public class Vertex {
 		return t;
 	}
 
-	public Vector2 asVector2() {
-		return new Vector2(x, y);
+	public Vector2f asVector2() {
+		return xy;
 	}
 }
