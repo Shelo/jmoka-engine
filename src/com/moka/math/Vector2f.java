@@ -12,7 +12,7 @@ public class Vector2f {
 
 	public float x;
 	public float y;
-	
+
 	/**
 	 * Creates a new vector with (0, 0) values.
 	 */

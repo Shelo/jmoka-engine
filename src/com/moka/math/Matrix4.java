@@ -227,7 +227,8 @@ public class Matrix4 {
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 4; j++)
 				res.set(i, j,
-						m[i][0] * r.get(0, j) + m[i][1] * r.get(1, j) + m[i][2] * r.get(2, j) + m[i][3] * r.get(3, j));
+						m[i][0] * r.get(0, j) + m[i][1] * r.get(1, j) + m[i][2] * r.get(2, j)
+								+ m[i][3] * r.get(3, j));
 
 		return res;
 	}
@@ -235,9 +236,8 @@ public class Matrix4 {
 	public Matrix4 mul(Matrix4 r, Matrix4 res) {
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 4; j++)
-				res.set(i, j,
-						m[i][0] * r.get(0, j) + m[i][1] * r.get(1, j) + m[i][2] * r.get(2, j) + m[i][3] * r.get(3, j));
-
+				res.set(i, j, m[i][0] * r.get(0, j) + m[i][1] * r.get(1, j) + m[i][2] * r.get(2, j)
+						+ m[i][3] * r.get(3, j));
 		return res;
 	}
 

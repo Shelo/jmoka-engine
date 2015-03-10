@@ -6,22 +6,20 @@ import com.moka.math.*;
 public final class Transform {
 	private final Entity entity;
 
+	private boolean useOwnSize = false;
+	private Quaternion prevRotation;
 	private Vector2f prevPosition;
+	private Quaternion rotation;
 	private Vector2f position;
-	private int layer;
-
 	private Vector2f prevSize;
 	private Vector2f size;
+	private int layer;
 
-	private Quaternion prevRotation;
-	private Quaternion rotation;
-
-	private Matrix4 translationMat = new Matrix4();
-	private Matrix4 rotationMat = new Matrix4();
-	private Matrix4 scaleMat = new Matrix4();
-	private Matrix4 mulBuffer = new Matrix4();
-
-	private boolean useOwnSize = false;
+	// use these matrices as buffers for multiplications.
+	private final Matrix4 translationMat = new Matrix4();
+	private final Matrix4 rotationMat = new Matrix4();
+	private final Matrix4 scaleMat = new Matrix4();
+	private final Matrix4 mulBuffer = new Matrix4();
 
 	public Transform(Entity entity) {
 		this.entity = entity;
@@ -44,8 +42,7 @@ public final class Transform {
 		Matrix4 translation = translationMat.toTranslation((int) position.x, (int) position.y, layer);
 		Matrix4 scale = scaleMat.toScale(getSize().x, getSize().y, 1);
 		Matrix4 rotate = rotation.toRotationMatrix(rotationMat);
-		rotate.mul(scale, mulBuffer);
-		return translation.mul(mulBuffer, mulBuffer);
+		return translation.mul(rotate.mul(scale, mulBuffer), mulBuffer);
 	}
 
 	public void move(float x, float y) {

@@ -17,7 +17,7 @@ import java.util.Set;
  * 
  * @author Shelo
  */
-public class Prefab {
+public final class Prefab {
 	private PreComponents components = new PreComponents();
 	private Vector2f position = new Vector2f();
 	private Vector2f size = new Vector2f();
