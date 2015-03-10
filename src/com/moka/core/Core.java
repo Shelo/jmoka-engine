@@ -80,7 +80,7 @@ public class Core {
 				Input.update();
 
 				// check if user closed the window.
-				if(Moka.getDisplay().isCloseRequested())
+				if (Moka.getDisplay().isCloseRequested())
 					daemon = false;
 
 				// subtract used delta time and add it to the game time.
