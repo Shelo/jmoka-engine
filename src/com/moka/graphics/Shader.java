@@ -1,6 +1,7 @@
 package com.moka.graphics;
 
 import com.moka.components.Sprite;
+import com.moka.core.CoreUtils;
 import com.moka.core.JMokaLog;
 import com.moka.core.Transform;
 import com.moka.core.Utils;
@@ -46,7 +47,7 @@ public class Shader {
 	}
 
 	public void update(final Transform transform, final Sprite sprite) {
-		Matrix4 model = transform.getModelMatrix();
+		Matrix4 model = CoreUtils.getModelMatrix(transform);
 
 		setUniform("u_model", model);
 		setUniform("u_color", sprite.getTint());

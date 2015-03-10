@@ -7,27 +7,6 @@ public class Matrix4 {
 		m = new float[4][4];
 	}
 
-	public Matrix4 initIdentity() {
-		m[0][0] = 1;
-		m[0][1] = 0;
-		m[0][2] = 0;
-		m[0][3] = 0;
-		m[1][0] = 0;
-		m[1][1] = 1;
-		m[1][2] = 0;
-		m[1][3] = 0;
-		m[2][0] = 0;
-		m[2][1] = 0;
-		m[2][2] = 1;
-		m[2][3] = 0;
-		m[3][0] = 0;
-		m[3][1] = 0;
-		m[3][2] = 0;
-		m[3][3] = 1;
-
-		return this;
-	}
-
 	public Matrix4 toTranslation(float x, float y, float z) {
 		m[0][0] = 1;
 		m[0][1] = 0;
@@ -52,71 +31,6 @@ public class Matrix4 {
 		return this;
 	}
 
-	public Matrix4 initRotation(float x, float y, float z) {
-		Matrix4 rx = new Matrix4();
-		Matrix4 ry = new Matrix4();
-		Matrix4 rz = new Matrix4();
-
-		x = (float) Math.toRadians(x);
-		y = (float) Math.toRadians(y);
-		z = (float) Math.toRadians(z);
-
-		rz.m[0][0] = (float) Math.cos(z);
-		rz.m[0][1] = -(float) Math.sin(z);
-		rz.m[0][2] = 0;
-		rz.m[0][3] = 0;
-		rz.m[1][0] = (float) Math.sin(z);
-		rz.m[1][1] = (float) Math.cos(z);
-		rz.m[1][2] = 0;
-		rz.m[1][3] = 0;
-		rz.m[2][0] = 0;
-		rz.m[2][1] = 0;
-		rz.m[2][2] = 1;
-		rz.m[2][3] = 0;
-		rz.m[3][0] = 0;
-		rz.m[3][1] = 0;
-		rz.m[3][2] = 0;
-		rz.m[3][3] = 1;
-
-		rx.m[0][0] = 1;
-		rx.m[0][1] = 0;
-		rx.m[0][2] = 0;
-		rx.m[0][3] = 0;
-		rx.m[1][0] = 0;
-		rx.m[1][1] = (float) Math.cos(x);
-		rx.m[1][2] = -(float) Math.sin(x);
-		rx.m[1][3] = 0;
-		rx.m[2][0] = 0;
-		rx.m[2][1] = (float) Math.sin(x);
-		rx.m[2][2] = (float) Math.cos(x);
-		rx.m[2][3] = 0;
-		rx.m[3][0] = 0;
-		rx.m[3][1] = 0;
-		rx.m[3][2] = 0;
-		rx.m[3][3] = 1;
-
-		ry.m[0][0] = (float) Math.cos(y);
-		ry.m[0][1] = 0;
-		ry.m[0][2] = -(float) Math.sin(y);
-		ry.m[0][3] = 0;
-		ry.m[1][0] = 0;
-		ry.m[1][1] = 1;
-		ry.m[1][2] = 0;
-		ry.m[1][3] = 0;
-		ry.m[2][0] = (float) Math.sin(y);
-		ry.m[2][1] = 0;
-		ry.m[2][2] = (float) Math.cos(y);
-		ry.m[2][3] = 0;
-		ry.m[3][0] = 0;
-		ry.m[3][1] = 0;
-		ry.m[3][2] = 0;
-		ry.m[3][3] = 1;
-
-		m = rz.mul(ry.mul(rx)).getM();
-
-		return this;
-	}
-
 	public Matrix4 toScale(float x, float y, float z) {
 		m[0][0] = x;
 		m[0][1] = 0;
@@ -134,33 +48,6 @@ public class Matrix4 {
 		m[3][1] = 0;
 		m[3][2] = 0;
 		m[3][3] = 1;
-
-		return this;
-	}
-
-	public Matrix4 initPerspective(float fov, float aspectRatio, float zNear, float zFar) {
-		float tanHalfFOV = (float) Math.tan(fov / 2);
-		float zRange = zNear - zFar;
-
-		m[0][0] = 1.0f / (tanHalfFOV * aspectRatio);
-		m[0][1] = 0;
-		m[0][2] = 0;
-		m[0][3] = 0;
-
-		m[1][0] = 0;
-		m[1][1] = 1.0f / tanHalfFOV;
-		m[1][2] = 0;
-		m[1][3] = 0;
-
-		m[2][0] = 0;
-		m[2][1] = 0;
-		m[2][2] = (- zNear - zFar) / zRange;
-		m[2][3] = 2 * zFar * zNear / zRange;
-
-		m[3][0] = 0;
-		m[3][1] = 0;
-		m[3][2] = 1;
-		m[3][3] = 0;
 
 		return this;
 	}
@@ -260,12 +147,12 @@ public class Matrix4 {
 		return m[x][y];
 	}
 
-	public void setM(float[][] m) {
-		this.m = m;
-	}
-
 	public void set(int x, int y, float value) {
 		m[x][y] = value;
+	}
+
+	public static Matrix4 orthographic(float left, float right, float bottom, float top, float zNear, float zFar) {
+		return new Matrix4().initOrthographic(left, right, bottom, top, zNear, zFar);
 	}
 
 	@Override
@@ -279,17 +166,5 @@ public class Matrix4 {
 		}
 
 		return builder.toString();
-	}
-
-	public static Matrix4 scale(float x, float y, float z) {
-		return new Matrix4().toScale(x, y, z);
-	}
-	
-	public static Matrix4 orthographic(float left, float right, float bottom, float top, float zNear, float zFar) {
-		return new Matrix4().initOrthographic(left, right, bottom, top, zNear, zFar);
-	}
-	
-	public static Matrix4 translate(float x, float y, float z) {
-		return new Matrix4().toTranslation(x, y, z);
 	}
 }

@@ -2,7 +2,6 @@ package com.moka.components;
 
 import com.moka.core.xml.XmlAttribute;
 import com.moka.exceptions.JMokaException;
-import com.moka.math.Vector2;
 import com.moka.math.Vector2f;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
@@ -22,8 +21,9 @@ public class SATCollider extends Collider {
 
 	@Override
 	public void onCreate() {
-		if(vertices == null)
+		if (vertices == null) {
 			setVertices(getEntity().getSprite().getMesh().getVerticesAsVector2());
+		}
 	}
 
 	public void setVertices(Vector2f[] vertices) {
@@ -65,6 +65,9 @@ public class SATCollider extends Collider {
 			this.npvi[i] = npvi.get(i);
 
 		axes = new Vector2f[npvi.size()];
+
+		for (int i = 0; i < axes.length; i++)
+			axes[i] = new Vector2f();
 	}
 
 	public void updateVertices() {
@@ -92,7 +95,7 @@ public class SATCollider extends Collider {
 
 	@Override
 	public Collision collidesWith(Collider other) {
-		if(other instanceof SATCollider) {
+		if (other instanceof SATCollider) {
 			return Collider.sat(this, (SATCollider) other);
 		}
 

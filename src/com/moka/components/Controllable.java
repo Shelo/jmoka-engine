@@ -2,7 +2,6 @@ package com.moka.components;
 
 import com.moka.core.Input;
 import com.moka.core.Time;
-import com.moka.core.Timer;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.core.xml.XmlSupported;
 import com.moka.physics.Collision;
@@ -24,14 +23,13 @@ public class Controllable extends Component {
 	private float tx, ty;
 	private float impulse = 2;
 
-	Timer timer;
+	public Controllable() {
 
-
-	public Controllable() { }
+	}
 
 	@Override
 	public void onCreate() {
-		timer = Time.newTimer();
+		
 	}
 
 	@Override
@@ -83,16 +81,13 @@ public class Controllable extends Component {
 		vx *= Time.getDelta();
 		vy *= Time.getDelta();
 
-
 		getTransform().move(vx, vy);
-
 	}
 
 	@Override
 	public void onCollide(Collision collision) {
 		if (Math.abs(tx) > Math.abs(ty))
 			tx = 0;
-
 		else
 			ty = 0;
 	}

@@ -3,14 +3,16 @@
         <Camera />
     </entity>
 
-    <entity position="100, 100" layer="1" rotation="0" name="Player">
+    <entity position="${@screen_width / 2}, ${@screen_height / 2}" rotation="0" name="Player">
         <Sprite texture="res/images/player.png" />
-        <Controllable />
-        <LookTowardsMouse />
+        <SATCollider />
+        
         <example.components.MyShooter />
+        <Controllable topSpeed="500" acceleration="600" />
     </entity>
 
-    <entity name="Manager" position="0, 0" rotation="0" layer="0">
-        <example.components.Background />
+    <entity position="200, 200" rotation="45" name="Cubito">
+        <Sprite texture="res/images/grass1.png" />
+        <SATCollider />
     </entity>
 </scene>

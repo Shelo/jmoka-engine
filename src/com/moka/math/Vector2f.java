@@ -41,13 +41,13 @@ public class Vector2f {
 		this.y += y;
 		return this;
 	}
-	
+
 	public Vector2f sub(Vector2f o) {
 		this.x -= o.x;
 		this.y -= o.y;
 		return this;
 	}
-	
+
 	public Vector2f mul(Vector2f o) {
 		this.x *= o.x;
 		this.y *= o.y;
@@ -104,16 +104,15 @@ public class Vector2f {
 		return (float) Math.atan2(y, x);
 	}
 
+	public Vector2f set(Vector2f o) {
+		this.x = o.x;
+		this.y = o.y;
+		return this;
+	}
 
 	public Vector2f set(float x, float y) {
 		this.x = x;
 		this.y = y;
-		return this;
-	}
-
-	public Vector2f set(Vector2f o) {
-		this.x = o.x;
-		this.y = o.y;
 		return this;
 	}
 

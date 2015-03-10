@@ -15,12 +15,6 @@ public final class Transform {
 	private Vector2f size;
 	private int layer;
 
-	// use these matrices as buffers for multiplications.
-	private final Matrix4 translationMat = new Matrix4();
-	private final Matrix4 rotationMat = new Matrix4();
-	private final Matrix4 scaleMat = new Matrix4();
-	private final Matrix4 mulBuffer = new Matrix4();
-
 	public Transform(Entity entity) {
 		this.entity = entity;
 
@@ -38,13 +32,6 @@ public final class Transform {
 		prevSize.set(getSize());
 	}
 
-	public Matrix4 getModelMatrix() {
-		Matrix4 translation = translationMat.toTranslation((int) position.x, (int) position.y, layer);
-		Matrix4 scale = scaleMat.toScale(getSize().x, getSize().y, 1);
-		Matrix4 rotate = rotation.toRotationMatrix(rotationMat);
-		return translation.mul(rotate.mul(scale, mulBuffer), mulBuffer);
-	}
-
 	public void move(float x, float y) {
 		position.add(x, y);
 	}
@@ -56,11 +43,11 @@ public final class Transform {
 	public Vector2f getSize() {
 		Vector2f rSize;
 
-		if(!useOwnSize) {
-			if(entity.hasSprite()) {
+		if (!useOwnSize) {
+			if (entity.hasSprite()) {
 				rSize = entity.getSprite().getSize();
 
-				if(rSize == null) {
+				if (rSize == null) {
 					throw new JMokaException("Entity has no dimensions!");
 				}
 
@@ -83,7 +70,7 @@ public final class Transform {
 	}
 
 	public void setRotationDeg(float rotation) {
-		this.rotation = new Quaternion(Vector3f.AXIS_Z, (float) Math.toRadians(rotation));
+		this.rotation.set(new Quaternion(Vector3f.AXIS_Z, (float) Math.toRadians(rotation)));
 	}
 
 	public void setSize(float x, float y) {

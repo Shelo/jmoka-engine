@@ -100,7 +100,7 @@ public class Entity {
 
 	public Vector2f[] transformVertices(final Vector2f[] vertices) {
 		Vector2f[] res = new Vector2f[vertices.length];
-		Matrix4 model = getTransform().getModelMatrix();
+		Matrix4 model = CoreUtils.getModelMatrix(getTransform());
 
 		for (int i = 0; i < vertices.length; i++)
 			res[i] = model.mul(vertices[i]);
