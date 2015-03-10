@@ -6,7 +6,7 @@
     <entity position="${@screen_width / 2}, ${@screen_height / 2}" rotation="0" name="Player">
         <Sprite texture="res/images/player.png" />
         <SATCollider />
-        
+
         <example.components.MyShooter />
         <Controllable topSpeed="500" acceleration="600" />
     </entity>
