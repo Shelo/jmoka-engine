@@ -1,7 +1,6 @@
 package com.moka.math;
 
 public class Quaternion {
-	public static final Quaternion IDENTITY = new Quaternion(0, 0, 0, 1);
 	private float x;
 	private float y;
 	private float z;
@@ -16,6 +15,16 @@ public class Quaternion {
 		this.y = y;
 		this.z = z;
 		this.w = w;
+	}
+
+	/**
+	 * Creates the identity quaternion (0, 0, 0, 1).
+	 */
+	public Quaternion() {
+		this.x = 0;
+		this.y = 0;
+		this.z = 0;
+		this.w = 1;
 	}
 
 	public Quaternion(final Vector3f axis, float radians) {
@@ -34,7 +43,6 @@ public class Quaternion {
 
 	public Quaternion normalized() {
 		float length = length();
-
 		return new Quaternion(x / length, y / length, z / length, w / length);
 	}
 

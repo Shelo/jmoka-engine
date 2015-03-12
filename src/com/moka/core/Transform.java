@@ -17,8 +17,8 @@ public final class Transform {
 	public Transform(Entity entity) {
 		this.entity = entity;
 
-		prevRotation = Quaternion.IDENTITY.cpy();
-		rotation = Quaternion.IDENTITY.cpy();
+		prevRotation = new Quaternion();
+		rotation = new Quaternion();
 		prevPosition = new Vector2f();
 		position = new Vector2f();
 		prevSize = new Vector2f();

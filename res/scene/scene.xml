@@ -8,5 +8,6 @@
         <Sprite texture="res/images/player.png" />
         <example.components.MyShooter />
         <Controllable topSpeed="500" acceleration="600" />
+        <LookTowardsMouse />
     </entity>
 </scene>
