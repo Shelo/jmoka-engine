@@ -6,7 +6,6 @@ import com.moka.exceptions.JMokaException;
 import com.sun.istack.internal.NotNull;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
 
 public final class Renderer {
 	public static final String SHADERS_PATH = "res/shaders/";
@@ -21,13 +20,15 @@ public final class Renderer {
 
 		// initialize OpenGL stuff.
 		glClearColor(0, 0, 0, 1);
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_DEPTH_CLAMP);
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_BLEND);
+
 		glFrontFace(GL_CW);
+		
+		// enable culling for better performance.
+		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
-		glDepthFunc(GL_LEQUAL);
+		
+		// enable blending.
+		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 

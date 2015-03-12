@@ -37,7 +37,7 @@ public class XmlSceneReader {
 				if(qName.equals(TAG_ENTITY)) {
 					// get and set the name for that entity.
 					String name = attributes.getValue(KEY_NAME);
-					currentEntity = game.newEntity(name);
+					currentEntity = game.newEntity(name, entityReader.readLayer(attributes));
 
 					// set transform position, rotation and scale.
 					entityReader.setTransformValues(currentEntity.getTransform(), attributes);

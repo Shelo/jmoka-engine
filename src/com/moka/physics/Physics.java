@@ -11,8 +11,8 @@ public class Physics {
 	}
 
 	public void checkCollisions(Context game) {
-		ArrayList<Entity> entities = game.getEntities();
-		
+		ArrayList<Entity> entities = game.getLayers();
+
 		int size = entities.size();
 
 		for(int i = 0; i < size; i++) {

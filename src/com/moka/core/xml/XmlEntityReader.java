@@ -73,7 +73,7 @@ public class XmlEntityReader {
 			// the parser needs to be in the init state to be able to read the entity tag.
 			if (state == STATE_INIT && qName.equals(TAG_ENTITY)) {
 				state = STATE_ENTITY;
-				entity = context.newEntity(entityName);
+				entity = context.newEntity(entityName, readLayer(attributes));
 				setTransformValues(entity.getTransform(), attributes);
 			} else {
 				// if the state is not equals to entity state then we know there's is an error with
@@ -299,11 +299,6 @@ public class XmlEntityReader {
 			transform.setPosition(new Vector2f(position.x, position.y));
 		}
 
-		if (attributes.getValue(VAL_LAYER) != null) {
-			int layer = readLayer(attributes);
-			transform.setLayer(layer);
-		}
-
 		if (attributes.getValue(VAL_ROTATION) != null) {
 			float rotation = readRotation(attributes);
 			transform.setRotationDeg(rotation);
@@ -327,7 +322,7 @@ public class XmlEntityReader {
 				getTestedValue(int.class, attributes.getValue(VAL_LAYER));
 		return layer;
 	}
-	
+
 	public float readRotation(Attributes attributes) {
 		float rotation = getTestedValue(float.class, attributes.getValue(VAL_ROTATION));
 		return rotation;

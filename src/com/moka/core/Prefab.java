@@ -74,7 +74,7 @@ public final class Prefab {
 	 * @return the entity.
 	 */
 	public Entity newEntity(String name) {
-		Entity entity = context.newEntity(name);
+		Entity entity = context.newEntity(name, layer);
 
 		// set transform values for this entity.
 		Transform transform = entity.getTransform();
@@ -85,7 +85,7 @@ public final class Prefab {
 		// creates every component and adds it to the entity.
 		for (Class<?> cClass : components.keySet()) {
 			ComponentAttrs componentAttrs = components.get(cClass);
-			Component component = null;
+			Component component;
 
 			try {
 				component = (Component) cClass.newInstance();

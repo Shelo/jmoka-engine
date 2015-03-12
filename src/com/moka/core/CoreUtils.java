@@ -16,9 +16,7 @@ public class CoreUtils {
 	 */
 	public static Matrix4 getModelMatrix(Transform transform) {
 		Vector2f position = transform.getPosition();
-		int layer = transform.getLayer();
-
-		Matrix4 translation = TRANSLATION_MAT.toTranslation((int) position.x, (int) position.y, layer);
+		Matrix4 translation = TRANSLATION_MAT.toTranslation((int) position.x, (int) position.y, 0);
 		Matrix4 scale = SCALE_MAT.toScale(transform.getSize().x, transform.getSize().y, 1);
 		Matrix4 rotate = transform.getRotation().toRotationMatrix(ROTATION_MAT);
 		return translation.mul(rotate.mul(scale, MUL_BUFFER), MUL_BUFFER);

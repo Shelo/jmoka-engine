@@ -13,7 +13,6 @@ public final class Transform {
 	private Vector2f position;
 	private Vector2f prevSize;
 	private Vector2f size;
-	private int layer;
 
 	public Transform(Entity entity) {
 		this.entity = entity;
@@ -120,13 +119,5 @@ public final class Transform {
 
 	public void move(Vector2f movement) {
 		move(movement.x, movement.y);
-	}
-
-	public int getLayer() {
-		return layer;
-	}
-
-	public void setLayer(int layer) {
-		this.layer = layer;
 	}
 }
