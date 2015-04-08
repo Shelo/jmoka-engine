@@ -46,8 +46,6 @@ public final class Input {
 		cursorPosX.rewind();
 		cursorPosY.rewind();
 		glfwGetCursorPos(window, cursorPosX, cursorPosY);
-		
-		
 	}
 	
 	public static boolean getKey(int keyCode) {

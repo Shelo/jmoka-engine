@@ -38,9 +38,6 @@ public class Core {
 	}
 
 	public void run() {
-		// total time accumulated in the game.
-		double time = 0.0;
-
 		// fixed delta time.
 		double delta = frameTime;
 
@@ -86,7 +83,6 @@ public class Core {
 				// subtract used delta time and add it to the game time.
 				accumulator -= delta;
 				accSeconds 	+= delta;
-				time 		+= delta;
 
 				updateFrames++;
 			}

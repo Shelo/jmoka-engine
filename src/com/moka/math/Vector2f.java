@@ -8,8 +8,6 @@ package com.moka.math;
  * @author Shelo
  */
 public class Vector2f {
-	public static final Vector2f ZERO = new Vector2f(0, 0);
-
 	public float x;
 	public float y;
 

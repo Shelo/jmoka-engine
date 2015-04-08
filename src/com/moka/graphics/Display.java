@@ -35,7 +35,8 @@ public final class Display {
 
 		// center window.
 		ByteBuffer vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-		glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2, (GLFWvidmode.height(vidMode) - height) / 2);
+		glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2,
+				(GLFWvidmode.height(vidMode) - height) / 2);
 
 		if(window == 0)
 			throw new JMokaException("Window could not be created.");
@@ -49,7 +50,7 @@ public final class Display {
 		GLContext.createFromCurrent();
 
 		// init other instances.
-		Moka.getRenderer().onCreate(width, height);
+		Moka.getRenderer().create(width, height);
 		Input.onCreate(window);
 	}
 

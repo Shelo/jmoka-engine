@@ -13,7 +13,7 @@ public final class Renderer {
 	private Camera camera;
 	private Shader shader;
 
-	public void onCreate(int width, int height) {
+	public void create(int width, int height) {
 		// create shader.
 		shader = new Shader(SHADERS_PATH + "pass_through_vertex.glsl",
 				SHADERS_PATH + "pass_through_fragment.glsl");
