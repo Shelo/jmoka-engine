@@ -3,41 +3,53 @@ package com.moka.physics;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2f;
 
-public class Projection {
+public class Projection
+{
     public final float min;
     public final float max;
 
-    public Projection(float min, float max) {
+    public Projection(float min, float max)
+    {
         this.min = min;
         this.max = max;
     }
 
-    public Projection(Vector2f[] vertices, Vector2f axis) {
+    public Projection(Vector2f[] vertices, Vector2f axis)
+    {
         if (vertices.length == 0)
+        {
             throw new JMokaException("Empty vertices");
+        }
 
         float min = axis.dot(vertices[0]);
         float max = min;
 
-        for (int i = 1; i < vertices.length; i++) {
+        for (int i = 1; i < vertices.length; i++)
+        {
             float cur = axis.dot(vertices[i]);
 
             if (cur < min)
+            {
                 min = cur;
+            }
 
             else if (cur > max)
+            {
                 max = cur;
+            }
         }
 
         this.min = min;
         this.max = max;
     }
 
-    public boolean overlaps(Projection other) {
+    public boolean overlaps(Projection other)
+    {
         return !(min >= other.max || other.min >= max);
     }
 
-    public float getOverlap(Projection other) {
+    public float getOverlap(Projection other)
+    {
         return (max < other.max) ? other.min - max : other.max - min;
     }
 }

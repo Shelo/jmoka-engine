@@ -1,12 +1,12 @@
 package com.moka.components;
 
-import com.moka.core.Time;
-
-public class Rotator extends Component {
+public class Rotator extends Component
+{
 	private float angle;
 
 	@Override
-	public void onUpdate() {
-		getTransform().setRotationDeg(angle += (float) (Time.getDelta() * 90));
+	public void onUpdate()
+	{
+		getTransform().setRotationDeg(angle += (float) (getTime().getDelta() * 90));
 	}
 }

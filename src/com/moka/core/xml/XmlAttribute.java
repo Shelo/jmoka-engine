@@ -7,7 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface XmlAttribute {
+public @interface XmlAttribute
+{
 	boolean required() default false;
 	String value();
 }

@@ -1,60 +1,73 @@
 package com.moka.graphics;
 
 import com.moka.components.Camera;
-import com.moka.core.Context;
+import com.moka.core.SubEngine;
+import com.moka.core.subengines.Context;
 import com.moka.exceptions.JMokaException;
 import com.sun.istack.internal.NotNull;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public final class Renderer {
-	public static final String SHADERS_PATH = "res/shaders/";
-	
-	private Camera camera;
-	private Shader shader;
+public final class Renderer extends SubEngine
+{
+    public static final String SHADERS_PATH = "res/shaders/";
+    public static final String VERTEX_SHADER = "pass_through_vertex.glsl";
+    public static final String FRAGMENT_SHADER = "pass_through_fragment.glsl";
 
-	public void create(int width, int height) {
-		// create shader.
-		shader = new Shader(SHADERS_PATH + "pass_through_vertex.glsl",
-				SHADERS_PATH + "pass_through_fragment.glsl");
+    private Camera camera;
+    private Shader shader;
 
-		// initialize OpenGL stuff.
-		glClearColor(0, 0, 0, 1);
+    public void create()
+    {
+        // create shader.
+        shader = new Shader(SHADERS_PATH + VERTEX_SHADER, SHADERS_PATH + FRAGMENT_SHADER);
 
-		glFrontFace(GL_CW);
-		
-		// enable culling for better performance.
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-		
-		// enable blending.
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
+        // initialize OpenGL stuff.
+        glClearColor(0, 0, 0, 1);
 
-	public void render(Context game) {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		shader.bind();
+        glFrontFace(GL_CW);
 
-		if(camera == null)
-			throw new JMokaException("There's no camera attached to the renderer.");
+        // enable culling for better performance.
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
 
-		shader.setUniform("u_projectedView", camera.getProjectedViewMatrix());
+        // enable blending.
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
 
-		game.renderAll(shader);
-	}
+    public void render()
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        shader.bind();
 
-	public Camera getCamera() {
-		return camera;
-	}
+        if (camera == null)
+        {
+            throw new JMokaException("There's no camera attached to the renderer.");
+        }
 
-	public void setCamera(@NotNull Camera camera) {
-		if(camera == null)
-			throw new JMokaException("Renderer.setCurrentCamera: the given camera cannot be null.");
-		this.camera = camera;
-	}
+        shader.setUniform("u_projectedView", camera.getProjectedViewMatrix());
 
-	public Shader getShader() {
-		return shader;
-	}
+        getContext().renderAll(shader);
+    }
+
+    public Camera getCamera()
+    {
+        return camera;
+    }
+
+    public void setCamera(@NotNull Camera camera)
+    {
+        if (camera == null)
+        {
+            throw new JMokaException("Renderer.setCurrentCamera: the given camera cannot be null.");
+        }
+
+        this.camera = camera;
+    }
+
+    public Shader getShader()
+    {
+        return shader;
+    }
 }

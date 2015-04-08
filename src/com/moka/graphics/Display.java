@@ -1,9 +1,7 @@
 package com.moka.graphics;
 
-import com.moka.core.Input;
-import com.moka.core.JMokaLog;
-import com.moka.core.Moka;
-import com.moka.core.Resources;
+import com.moka.core.*;
+import com.moka.core.subengines.Resources;
 import com.moka.exceptions.JMokaException;
 import org.lwjgl.glfw.GLFWvidmode;
 import org.lwjgl.opengl.GLContext;
@@ -13,74 +11,95 @@ import java.nio.ByteBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public final class Display {
-	private static final String TAG = "DISPLAY";
-	
-	private String title;
-	private long window;
-	private int height;
-	private int width;
+public final class Display extends SubEngine
+{
+    private static final String TAG = "DISPLAY";
 
-	public void createDisplay(int width, int height, String title) {
-		this.height = height;
-		this.width 	= width;
-		this.title 	= title;
+    private String title;
+    private long window;
+    private int height;
+    private int width;
 
-		glfwWindowHint(GLFW_SAMPLES, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    public void createDisplay(int width, int height, String title)
+    {
+        this.height = height;
+        this.width = width;
+        this.title = title;
 
-		window = glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
+        glfwWindowHint(GLFW_SAMPLES, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		// center window.
-		ByteBuffer vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-		glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2,
-				(GLFWvidmode.height(vidMode) - height) / 2);
+        window = glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
 
-		if(window == 0)
-			throw new JMokaException("Window could not be created.");
-		else 
-			JMokaLog.o(TAG, "Window created.");
+        // center window.
+        ByteBuffer vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2,
+                (GLFWvidmode.height(vidMode) - height) / 2);
 
-		glfwMakeContextCurrent(window);
-		glfwShowWindow(window);
+        if (window == 0)
+        {
+            throw new JMokaException("Window could not be created.");
+        }
+        else
+        {
+            JMokaLog.o(TAG, "Window created.");
+        }
 
-		// this is a critical line!!
-		GLContext.createFromCurrent();
+        glfwMakeContextCurrent(window);
+        glfwShowWindow(window);
 
-		// init other instances.
-		Moka.getRenderer().create(width, height);
-		Input.onCreate(window);
-	}
+        // this is a critical line!!
+        GLContext.createFromCurrent();
 
-	public void createDisplay(String widthRes, String heightRes, String title) {
-		createDisplay(Resources.getInt(widthRes), Resources.getInt(heightRes), title);
-	}
+        // init other instances.
+        getRenderer().create();
+    }
 
-	@Deprecated
-	public void setIcon() {
-		// TODO: LWJGL doesn't support icons for now.
-	}
-	
-	public void onUpdate() {
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
+    public void createDisplay(String widthRes, String heightRes, String title)
+    {
+        // get width and height from resources.
+        int width = getResources().getInt(widthRes);
+        int height = getResources().getInt(heightRes);
 
-	public boolean isCloseRequested() {
-		return glfwWindowShouldClose(window) != 0;
-	}
+        createDisplay(width, height, title);
+    }
 
-	public int getWidth() {
-		return width;
-	}
+    @Deprecated
+    public void setIcon()
+    {
+        // TODO: LWJGL doesn't support icons for now.
+    }
 
-	public int getHeight() {
-		return height;
-	}
+    public void onUpdate()
+    {
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public boolean isCloseRequested()
+    {
+        return glfwWindowShouldClose(window) != 0;
+    }
+
+    public long getWindow()
+    {
+        return window;
+    }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
 }

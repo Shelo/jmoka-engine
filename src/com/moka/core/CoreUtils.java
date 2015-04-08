@@ -3,7 +3,8 @@ package com.moka.core;
 import com.moka.math.Matrix4;
 import com.moka.math.Vector2f;
 
-public class CoreUtils {
+public class CoreUtils
+{
 	private static final Matrix4 TRANSLATION_MAT = new Matrix4();
 	private static final Matrix4 ROTATION_MAT = new Matrix4();
 	private static final Matrix4 MUL_BUFFER = new Matrix4();
@@ -14,7 +15,8 @@ public class CoreUtils {
 	 * @param transform the transform.
 	 * @return the model matrix.
 	 */
-	public static Matrix4 getModelMatrix(Transform transform) {
+	public static Matrix4 getModelMatrix(Transform transform)
+	{
 		Vector2f position = transform.getPosition();
 		Matrix4 translation = TRANSLATION_MAT.toTranslation((int) position.x, (int) position.y, 0);
 		Matrix4 scale = SCALE_MAT.toScale(transform.getSize().x, transform.getSize().y, 1);

@@ -1,21 +1,26 @@
 package com.moka.core;
 
-public class Timer {
+public class Timer
+{
 	private double elapsed;
 	
-	public Timer() {
+	public Timer()
+	{
 		
 	}
 
-	public void update(double delta) {
+	public void update(double delta)
+	{
 		elapsed += delta;
 	}
 
-	public double getElapsed() {
+	public double getElapsed()
+	{
 		return elapsed;
 	}
 
-	public void reset() {
+	public void reset()
+	{
 		elapsed = 0;
 	}
 }

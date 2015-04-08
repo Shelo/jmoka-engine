@@ -1,7 +1,7 @@
 package com.moka.core.xml;
 
 import com.moka.components.Component;
-import com.moka.core.Context;
+import com.moka.core.subengines.Context;
 import com.moka.core.Entity;
 import com.moka.exceptions.JMokaException;
 import org.xml.sax.Attributes;
@@ -28,21 +28,40 @@ public class XmlSceneReader {
 	private SAXParser parser;
 	private Context game;
 
-	private class Handler extends DefaultHandler {
+	public void read(String filePath)
+	{
+		try
+		{
+			InputStream stream = new FileInputStream(filePath);
+			currentFilePath = filePath;
+			parser.parse(stream, new Handler());
+		}
+		catch(SAXException | IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	private class Handler extends DefaultHandler
+	{
 		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if(currentEntity == null) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
+		{
+			if(currentEntity == null)
+			{
 				// if the currentEntity is null then we should read "Entity" next,
 				// if that is not the case, then the XML is malformed.
-				if(qName.equals(TAG_ENTITY)) {
+				if(qName.equals(TAG_ENTITY))
+				{
 					// get and set the name for that entity.
 					String name = attributes.getValue(KEY_NAME);
 					currentEntity = game.newEntity(name, entityReader.readLayer(attributes));
 
 					// set transform position, rotation and scale.
 					entityReader.setTransformValues(currentEntity.getTransform(), attributes);
-
-				} else if(qName.equals(TAG_INCLUDE)) {
+				}
+				else if(qName.equals(TAG_INCLUDE))
+				{
 					// with a include tag we should create an entity, put the name that it should have and
 					// override possible transform properties.
 					String path = attributes.getValue(KEY_PATH);
@@ -50,54 +69,50 @@ public class XmlSceneReader {
 
 					Entity entity = entityReader.read(path, name);
 					entityReader.setTransformValues(entity.getTransform(), attributes);
-				} else if(!qName.equals(TAG_ROOT)) {
+				}
+				else if(!qName.equals(TAG_ROOT))
+				{
 					throw new JMokaException("XML: " + currentFilePath + " is malformed.");
 				}
 			} else {
-				Component component = entityReader.readComponent(qName, attributes);
-				currentEntity.addComponent(component);
+				entityReader.readComponent(currentEntity, qName, attributes);
 			}
 		}
 
 		@Override
-		public void endElement(String uri, String localName, String qName) throws SAXException {
+		public void endElement(String uri, String localName, String qName) throws SAXException
+		{
 			if(qName.equals(TAG_ENTITY))
 				currentEntity = null;
 		}
 
 		@Override
-		public void endDocument() throws SAXException {
+		public void endDocument() throws SAXException
+		{
 			currentEntity = null;
 			currentFilePath = null;
 			game = null;
 		}
 	}
 
-	public XmlSceneReader(Context game) {
+	public XmlSceneReader(Context game)
+	{
 		this.game = game;
 
 		entityReader = new XmlEntityReader(game);
 
-		try {
+		try
+		{
 			parser = SAXParserFactory.newInstance().newSAXParser();
-		} catch(ParserConfigurationException | SAXException e) {
+		}
+		catch(ParserConfigurationException | SAXException e)
+		{
 			throw new JMokaException("SAXParser creation error.");
 		}
 	}
 
-	public void read(String filePath) {
-		try {
-
-			InputStream stream = new FileInputStream(filePath);
-			currentFilePath = filePath;
-			parser.parse(stream, new Handler());
-
-		} catch(SAXException | IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public XmlEntityReader getEntityReader() {
+	public XmlEntityReader getEntityReader()
+	{
 		return entityReader;
 	}
 }

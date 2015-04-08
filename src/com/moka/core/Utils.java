@@ -11,63 +11,83 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-public class Utils {
-	public static FloatBuffer genBuffer(Vertex[] vertices) {
-		FloatBuffer buffer = BufferUtils.createFloatBuffer(vertices.length * Vertex.SIZE);
+public class Utils
+{
+    public static FloatBuffer genBuffer(Vertex[] vertices)
+    {
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(vertices.length * Vertex.SIZE);
 
-		for(Vertex vertex : vertices) {
-			buffer.put(vertex.getX());
-			buffer.put(vertex.getY());
-			buffer.put(vertex.getZ());
-			buffer.put(vertex.getS());
-			buffer.put(vertex.getT());
-		}
+        for (Vertex vertex : vertices)
+        {
+            buffer.put(vertex.getX());
+            buffer.put(vertex.getY());
+            buffer.put(vertex.getZ());
+            buffer.put(vertex.getS());
+            buffer.put(vertex.getT());
+        }
 
-		return (FloatBuffer) buffer.flip();
-	}
+        return (FloatBuffer) buffer.flip();
+    }
 
-	public static IntBuffer genBuffer(int[] indices) {
-		IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
+    public static IntBuffer genBuffer(int[] indices)
+    {
+        IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
 
-		for(int index : indices)
-			buffer.put(index);
+        for (int index : indices)
+        {
+            buffer.put(index);
+        }
 
-		return (IntBuffer) buffer.flip();
-	}
-	
-	public static String readFile(String filePath) {
-		BufferedReader reader;
-		StringBuilder builder;
-		
-		try {
-			reader = new BufferedReader(new FileReader(filePath));
-			builder = new StringBuilder();
+        return (IntBuffer) buffer.flip();
+    }
 
-			String line;
-			while((line = reader.readLine()) != null)
-				builder.append(line).append("\n");
+    public static String readFile(String filePath)
+    {
+        BufferedReader reader;
+        StringBuilder builder;
 
-			reader.close();
-			return builder.toString();
-		} catch(FileNotFoundException e) {
-			throw new JMokaException("File " + filePath + " not found.");
-		} catch(IOException e) {
-			throw new JMokaException("IOException when reading file " + filePath + ".");
-		}
-	}
+        try
+        {
+            reader = new BufferedReader(new FileReader(filePath));
+            builder = new StringBuilder();
 
-	public static FloatBuffer genBuffer(Matrix4 matrix) {
-		FloatBuffer buffer = BufferUtils.createFloatBuffer(4 * 4);
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                builder.append(line).append("\n");
+            }
 
-		for(int i = 0; i < 4; i++)
-			for(int j = 0; j < 4; j++)
-				buffer.put(matrix.get(j, i));
+            reader.close();
+            return builder.toString();
+        }
+        catch (FileNotFoundException e)
+        {
+            throw new JMokaException("File " + filePath + " not found.");
+        }
+        catch (IOException e)
+        {
+            throw new JMokaException("IOException when reading file " + filePath + ".");
+        }
+    }
 
-		return (FloatBuffer) buffer.flip();
-	}
+    public static FloatBuffer genBuffer(Matrix4 matrix)
+    {
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(4 * 4);
 
-	public static String getExtensionFrom(String filePath) {
-		String[] s = filePath.split("\\.(?=[^\\.]+$)");
-		return s[s.length - 1];
-	}
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                buffer.put(matrix.get(j, i));
+            }
+        }
+
+        return (FloatBuffer) buffer.flip();
+    }
+
+    public static String getExtensionFrom(String filePath)
+    {
+        String[] s = filePath.split("\\.(?=[^\\.]+$)");
+        return s[s.length - 1];
+    }
 }

@@ -1,6 +1,6 @@
 package com.moka.core.xml;
 
-import com.moka.core.Resources;
+import com.moka.core.subengines.Resources;
 import com.moka.exceptions.JMokaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -11,33 +11,58 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 
-public class XmlResourcesReader {
-
-	private static enum STATE { NONE, VALUES, STRINGS, INTEGERS, FLOATS, DOUBLES, BOOLEANS }
+public class XmlResourcesReader
+{
+	private enum STATE
+	{
+		NONE,
+		VALUES,
+		STRINGS,
+		INTEGERS,
+		FLOATS,
+		DOUBLES,
+		BOOLEANS
+	}
 
 	private SAXParser parser;
+	private Resources resources;
 
-	public XmlResourcesReader() {
-		try {
+	public XmlResourcesReader(Resources resources)
+	{
+		this.resources = resources;
+
+		try
+		{
 			parser = SAXParserFactory.newInstance().newSAXParser();
-		} catch(ParserConfigurationException e) {
+		}
+		catch(ParserConfigurationException e)
+		{
 			throw new JMokaException("Unable to create SAXParser.");
-		} catch(SAXException e) {
+		}
+		catch(SAXException e)
+		{
 			throw new JMokaException("SAX Exception.");
 		}
 	}
 
-	public void read(String filePath) {
-		try {
+	public void read(String filePath)
+	{
+		try
+		{
 			parser.parse(filePath, new Helper());
-		} catch(SAXException e) {
+		}
+		catch(SAXException e)
+		{
 			throw new JMokaException("SAX Exception.");
-		} catch(IOException e) {
+		}
+		catch(IOException e)
+		{
 			throw new JMokaException("IOException.");
 		}
 	}
 
-	private class Helper extends DefaultHandler {
+	private class Helper extends DefaultHandler
+	{
 		private static final String TAG_BOOLEAN = "boolean";
 		private static final String TAG_INTEGER = "integer";
 		private static final String TAG_VALUES 	= "values";
@@ -51,18 +76,24 @@ public class XmlResourcesReader {
 		private STATE state = STATE.NONE;
 
 		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			switch(state) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
+		{
+			switch(state)
+			{
 				case NONE:
-					if(qName.equals(TAG_VALUES)) {
+					if(qName.equals(TAG_VALUES))
+					{
 						state = STATE.VALUES;
-					} else {
+					}
+					else
+					{
 						throw new JMokaException("Malformed Values XML file.");
 					}
 					break;
 
 				case VALUES:
-					switch(qName) {
+					switch(qName)
+					{
 						case TAG_STRING:
 							state = STATE.STRINGS;
 							break;
@@ -84,93 +115,120 @@ public class XmlResourcesReader {
 					break;
 
 				case STRINGS:
-					if(qName.equals(TAG_RES)) {
+					if(qName.equals(TAG_RES))
+					{
 						handleString(attributes);
-					} else {
+					}
+					else
+					{
 						throw new JMokaException("Not a proper string resource.");
 					}
 					break;
 
 				case INTEGERS:
-					if(qName.equals(TAG_RES)) {
+					if(qName.equals(TAG_RES))
+					{
 						handleInteger(attributes);
-					} else {
+					}
+					else
+					{
 						throw new JMokaException("Not a proper integer resource.");
 					}
 					break;
 
 				case FLOATS:
-					if(qName.equals(TAG_RES)) {
+					if(qName.equals(TAG_RES))
+					{
 						handleFloat(attributes);
-					} else {
+					}
+					else
+					{
 						throw new JMokaException("Not a proper float resource.");
 					}
 					break;
 
 				case DOUBLES:
-					if(qName.equals(TAG_RES)) {
+					if(qName.equals(TAG_RES))
+					{
 						handleDouble(attributes);
-					} else {
+					}
+					else
+					{
 						throw new JMokaException("Not a proper double resource.");
 					}
 					break;
 
 				case BOOLEANS:
-					if(qName.equals(TAG_RES)) {
+					if(qName.equals(TAG_RES))
+					{
 						handleBoolean(attributes);
-					} else {
+					}
+					else
+					{
 						throw new JMokaException("Not a proper boolean resource.");
 					}
 					break;
 			}
 		}
 
-		private void handleString(Attributes attributes) {
+		private void handleString(Attributes attributes)
+		{
 			String name = attributes.getValue(KEY_NAME);
 			String value = attributes.getValue(KEY_VALUE);
 			checkError(name, value, TAG_STRING);
-			Resources.addResource(name, value);
+			resources.addResource(name, value);
 		}
 
-		private void handleBoolean(Attributes attributes) {
+		private void handleBoolean(Attributes attributes)
+		{
 			String name = attributes.getValue(KEY_NAME);
 			String value = attributes.getValue(KEY_VALUE);
 			checkError(name, value, TAG_STRING);
-			Resources.addResource(name, Boolean.parseBoolean(value));
+			resources.addResource(name, Boolean.parseBoolean(value));
 		}
 
-		private void handleDouble(Attributes attributes) {
+		private void handleDouble(Attributes attributes)
+		{
 			String name = attributes.getValue(KEY_NAME);
 			String value = attributes.getValue(KEY_VALUE);
 			checkError(name, value, TAG_STRING);
-			Resources.addResource(name, Double.parseDouble(value));
+			resources.addResource(name, Double.parseDouble(value));
 		}
 
-		private void handleFloat(Attributes attributes) {
+		private void handleFloat(Attributes attributes)
+		{
 			String name = attributes.getValue(KEY_NAME);
 			String value = attributes.getValue(KEY_VALUE);
 			checkError(name, value, TAG_STRING);
-			Resources.addResource(name, Float.parseFloat(value));
+			resources.addResource(name, Float.parseFloat(value));
 		}
 
-		private void handleInteger(Attributes attributes) {
+		private void handleInteger(Attributes attributes)
+		{
 			String name = attributes.getValue(KEY_NAME);
 			String value = attributes.getValue(KEY_VALUE);
 			checkError(name, value, TAG_STRING);
-			Resources.addResource(name, Integer.parseInt(value));
+			resources.addResource(name, Integer.parseInt(value));
 		}
 
-		public void checkError(String name, String value, String resType) {
+		public void checkError(String name, String value, String resType)
+		{
 			if(name == null || value == null)
+			{
 				throw new JMokaException("Bad definition for some " + resType + " resource.");
+			}
 		}
 
 		@Override
-		public void endElement(String uri, String localName, String qName) throws SAXException {
+		public void endElement(String uri, String localName, String qName) throws SAXException
+		{
 			if(qName.equals(TAG_RES))
+			{
 				return;
+			}
 
-			switch(state) {
+			switch(state)
+			{
 				case NONE:
 					break;
 				case VALUES:
@@ -191,11 +249,6 @@ public class XmlResourcesReader {
 					state = STATE.VALUES;
 					break;
 			}
-		}
-
-		@Override
-		public void endDocument() throws SAXException {
-
 		}
 	}
 }

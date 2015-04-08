@@ -4,7 +4,8 @@ import com.moka.core.xml.XmlAttribute;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 
-public class AABBCollider extends Collider {
+public class AABBCollider extends Collider
+{
 	private float offx;
 	private float offy;
 	private float width;
@@ -16,70 +17,90 @@ public class AABBCollider extends Collider {
 	private CircleCollider boundingCircle;
 
 	@Override
-	public void onCreate() {
+	public void onCreate()
+	{
 		if (shouldInitWidth)
+		{
 			width = getTransform().getSize().x;
+		}
 
 		if (shouldInitHeight)
+		{
 			height = getTransform().getSize().y;
+		}
 	}
 
 	@XmlAttribute("offsetX")
-	public void setOffsetX(float offx) {
+	public void setOffsetX(float offx)
+	{
 		this.offx = offx;
 	}
 
 	@XmlAttribute("offsetY")
-	public void setOffsetY(float offy) {
+	public void setOffsetY(float offy)
+	{
 		this.offy = offy;
 	}
 
 	@XmlAttribute("width")
-	public void setWith(float width) {
+	public void setWith(float width)
+	{
 		shouldInitWidth = false;
 		this.width = width;
 	}
 
 	@XmlAttribute("height")
-	public void setHeight(float height) {
+	public void setHeight(float height)
+	{
 		shouldInitHeight = false;
 		this.height = height;
 	}
 
-	public float getTop() {
+	public float getTop()
+	{
 		return getTransform().getPositionY() + height / 2;
 	}
 
-	public float getBot() {
+	public float getBot()
+	{
 		return getTransform().getPositionY() + offy - height / 2;
 	}
 
-	public float getLeft() {
+	public float getLeft()
+	{
 		return getTransform().getPositionX() + offx - width / 2;
 	}
 
-	public float getRight() {
+	public float getRight()
+	{
 		return getTransform().getPositionX() + width / 2;
 	}
 
 	@Override
-	public Collision collidesWith(Collider other) {
+	public Collision collidesWith(Collider other)
+	{
 		if (other instanceof AABBCollider)
+		{
 			return Collider.aabb(this, (AABBCollider) other);
-
+		}
 		else if (other instanceof CircleCollider)
+		{
 			return Collider.aabbCircle(this, (CircleCollider) other);
+		}
 
 		return null;
 	}
 
 	@Override
-	public void response(Collision collision) {
+	public void response(Collision collision)
+	{
 		getTransform().move(collision.getMovement());
 	}
 
-	public CircleCollider getBoundingCircle() {
-		if (boundingCircle == null) {
+	public CircleCollider getBoundingCircle()
+	{
+		if (boundingCircle == null)
+		{
 			boundingCircle = new CircleCollider();
 			boundingCircle.setEntity(getEntity());
 			boundingCircle.setRadius((float) Math.sqrt(width * width + height * height) / 2);

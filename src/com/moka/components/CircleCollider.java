@@ -4,13 +4,16 @@ import com.moka.core.xml.XmlAttribute;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 
-public class CircleCollider extends Collider {
+public class CircleCollider extends Collider
+{
 	private float radius;
 	private AABBCollider boundingBox;
 
 	@Override
-	public void onCreate() {
-		if(radius == 0) {
+	public void onCreate()
+	{
+		if(radius == 0)
+		{
 			float width  = getEntity().getSprite().getWidth();
 			float height = getEntity().getSprite().getHeight();
 			radius = (width + height) / 4;
@@ -18,33 +21,41 @@ public class CircleCollider extends Collider {
 	}
 
 	@Override
-	public Collision collidesWith(Collider other) {
-		if(other instanceof CircleCollider) {
+	public Collision collidesWith(Collider other)
+	{
+		if(other instanceof CircleCollider)
+		{
 			return circle(this, (CircleCollider) other);
 		}
-
 		else if (other instanceof AABBCollider)
+		{
 			return aabbCircle(this, (AABBCollider) other);
+		}
 
 		return null;
 	}
 
 	@Override
-	public void response(Collision collision) {
+	public void response(Collision collision)
+	{
 		getTransform().move(collision.getMovement());
 	}
 
 	@XmlAttribute("radius")
-	public void setRadius(float radius) {
+	public void setRadius(float radius)
+	{
 		this.radius = radius;
 	}
 
-	public float getRadius() {
+	public float getRadius()
+	{
 		return radius;
 	}
 
-	public AABBCollider getBoundingBox() {
-		if (boundingBox == null) {
+	public AABBCollider getBoundingBox()
+	{
+		if (boundingBox == null)
+		{
 			boundingBox = new AABBCollider();
 			boundingBox.setEntity(getEntity());
 			boundingBox.setWith(radius * 2);

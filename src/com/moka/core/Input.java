@@ -13,20 +13,19 @@ import static org.lwjgl.glfw.GLFW.*;
  * Input manager of the engine, this manager is intended to be used as a static method class.
  * @author Shelo
  */
-public final class Input {
+public final class Input extends SubEngine
+{
 	private static final int MOUSE_COUNT 	= 5;
 	private static final int KEY_COUNT		= 348;
 
-	private static Vector2f cursorPosition;
-	private static DoubleBuffer cursorPosX;
-	private static DoubleBuffer cursorPosY;
-	private static boolean[] activeMouse;
-	private static boolean[] activeKeys;
-	private static long window;
+	private Vector2f cursorPosition;
+	private DoubleBuffer cursorPosX;
+	private DoubleBuffer cursorPosY;
+	private boolean[] activeMouse;
+	private boolean[] activeKeys;
 
-	public static void onCreate(long window) {
-		Input.window = window;
-
+	public void create()
+	{
 		activeMouse = new boolean[MOUSE_COUNT];
 		activeKeys	= new boolean[KEY_COUNT];
 
@@ -36,66 +35,88 @@ public final class Input {
 		cursorPosition = new Vector2f();
 	}
 
-	public static void update() {
+	public void update()
+	{
 		for(int i = 0; i < KEY_COUNT; i++)
+		{
 			activeKeys[i] = getKey(i);
+		}
 
 		for(int i = 0; i < MOUSE_COUNT; i++)
+		{
 			activeMouse[i] = getMouse(i);
+		}
 
 		cursorPosX.rewind();
 		cursorPosY.rewind();
-		glfwGetCursorPos(window, cursorPosX, cursorPosY);
+		glfwGetCursorPos(getWindow(), cursorPosX, cursorPosY);
 	}
 	
-	public static boolean getKey(int keyCode) {
+	public boolean getKey(int keyCode)
+	{
 		validate();
-		return glfwGetKey(window, keyCode) == GLFW.GLFW_PRESS;
+		return glfwGetKey(getWindow(), keyCode) == GLFW.GLFW_PRESS;
 	}
 	
-	public static boolean getKeyDown(int keyCode) {
+	public boolean getKeyDown(int keyCode)
+	{
 		validate();
 		return getKey(keyCode) && !activeKeys[keyCode];
 	}
 
-	public static boolean getKeyUp(int keyCode) {
+	public boolean getKeyUp(int keyCode)
+	{
 		validate();
 		return !getKey(keyCode) && activeKeys[keyCode];
 	}
 	
-	public static boolean getMouse(int button) {
+	public boolean getMouse(int button)
+	{
 		validate();
-		return glfwGetMouseButton(window, button) == GLFW.GLFW_PRESS;
+		return glfwGetMouseButton(getWindow(), button) == GLFW.GLFW_PRESS;
 	}
 
-	public static boolean getMouseDown(int buttonCode) {
+	public boolean getMouseDown(int buttonCode)
+	{
 		validate();
 		return getMouse(buttonCode) && !activeMouse[buttonCode];
 	}
 
-	public static boolean getMouseUp(int buttonCode) {
+	public boolean getMouseUp(int buttonCode)
+	{
 		validate();
 		return !getMouse(buttonCode) && activeMouse[buttonCode];
 	}
 
-	public static int getCursorPosX() {
+	public int getCursorPosX()
+	{
 		int x = (int) cursorPosX.get();
 		cursorPosX.rewind();
 		return x;
 	}
 
-	public static int getCursorPosY() {
+	public int getCursorPosY()
+	{
 		int y = (int) cursorPosY.get();
 		cursorPosY.rewind();
-		return Moka.getDisplay().getHeight() - y;
+		return getDisplay().getHeight() - y;
 	}
 
-	private static void validate() {
-		if(window == 0)
+	private void validate()
+	{
+		if(getWindow() == 0)
+		{
 			throw new JMokaException("Window not defined in input.");
+		}
 	}
 
-	public static Vector2f getCursorPos() {
+	private long getWindow()
+	{
+		return getDisplay().getWindow();
+	}
+
+	public Vector2f getCursorPos()
+	{
 		return cursorPosition.set(getCursorPosX(), getCursorPosY());
 	}
 }

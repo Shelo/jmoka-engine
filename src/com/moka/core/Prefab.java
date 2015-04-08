@@ -1,6 +1,7 @@
 package com.moka.core;
 
 import com.moka.components.Component;
+import com.moka.core.subengines.Context;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2f;
@@ -17,7 +18,8 @@ import java.util.Set;
  * 
  * @author Shelo
  */
-public final class Prefab {
+public final class Prefab
+{
 	private PreComponents components = new PreComponents();
 	private Vector2f position = new Vector2f();
 	private Vector2f size = new Vector2f();
@@ -25,7 +27,8 @@ public final class Prefab {
 	private float rotation;
 	private int layer;
 
-	public Prefab(Context context, PreComponents components) {
+	public Prefab(Context context, PreComponents components)
+	{
 		this.components = components;
 		this.context = context;
 	}
@@ -35,7 +38,8 @@ public final class Prefab {
 	 *
 	 * @param position position vector.
 	 */
-	public void setPosition(Vector2f position) {
+	public void setPosition(Vector2f position)
+	{
 		this.position.set(position);
 	}
 
@@ -45,7 +49,8 @@ public final class Prefab {
 	 * 
 	 * @param size size vector.
 	 */
-	public void setSize(Vector2f size) {
+	public void setSize(Vector2f size)
+	{
 		this.size.set(size);
 	}
 
@@ -54,7 +59,8 @@ public final class Prefab {
 	 * 
 	 * @param rotation angle.
 	 */
-	public void setRotation(float rotation) {
+	public void setRotation(float rotation)
+	{
 		this.rotation = rotation;
 	}
 
@@ -62,7 +68,8 @@ public final class Prefab {
 	 * Sets the layer of new entities from now on.
 	 * @param layer layer integer number.
 	 */
-	public void setLayer(int layer) {
+	public void setLayer(int layer)
+	{
 		this.layer = layer;
 	}
 
@@ -73,7 +80,8 @@ public final class Prefab {
 	 * @param name unique name for the new instance.
 	 * @return the entity.
 	 */
-	public Entity newEntity(String name) {
+	public Entity newEntity(String name)
+	{
 		Entity entity = context.newEntity(name, layer);
 
 		// set transform values for this entity.
@@ -83,33 +91,42 @@ public final class Prefab {
 		transform.setRotationDeg(rotation);
 
 		// creates every component and adds it to the entity.
-		for (Class<?> cClass : components.keySet()) {
+		for (Class<?> cClass : components.keySet())
+		{
 			ComponentAttrs componentAttrs = components.get(cClass);
 			Component component;
 
-			try {
+			try
+			{
 				component = (Component) cClass.newInstance();
+				entity.addComponent(component);
 
 				// iterate over the methods and attributes of the component.
-				for(Method method : componentAttrs.getKeySet()) {
+				for(Method method : componentAttrs.getKeySet())
+				{
 					Object attr = componentAttrs.getValue(method);
 
-					try {
+					try
+					{
 						method.invoke(component, attr);
-					} catch(InvocationTargetException e) {
+					}
+					catch(InvocationTargetException e)
+					{
 						throw new JMokaException("Cannot set the attribute "
 								+ method.getAnnotation(XmlAttribute.class).value());
 					}
 				}
 
-			} catch(InstantiationException e) {
+			}
+			catch(InstantiationException e)
+			{
 				throw new JMokaException("Cannot instantiate the component " + cClass.getName()
 						+ ", maybe there's no non-args constructor.");
-			} catch(IllegalAccessException e) {
+			}
+			catch(IllegalAccessException e)
+			{
 				throw new JMokaException("Cannot access the component " + cClass.getName() + ".");
 			}
-
-			entity.addComponent(component);
 		}
 
 		// after this we should call the onCreate method on the components.
@@ -121,25 +138,30 @@ public final class Prefab {
 	/**
 	 * This is just a hack so I don't have to write that big HashMap every time.
 	 */
-	public static class PreComponents extends HashMap<Class<?>, ComponentAttrs> {
+	public static class PreComponents extends HashMap<Class<?>, ComponentAttrs>
+	{
 
 	}
 
 	/**
 	 * Wrapper and helper class to the prefab.
 	 */
-	public static class ComponentAttrs {
+	public static class ComponentAttrs
+	{
 		private HashMap<Method, Object> methodValues = new HashMap<>();
 
-		public void addMethodValue(Method method, Object value) {
+		public void addMethodValue(Method method, Object value)
+		{
 			methodValues.put(method, value);
 		}
 
-		public Object getValue(Method name) {
+		public Object getValue(Method name)
+		{
 			return methodValues.get(name);
 		}
 
-		public Set<Method> getKeySet() {
+		public Set<Method> getKeySet()
+		{
 			return methodValues.keySet();
 		}
 	}

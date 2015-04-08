@@ -15,109 +15,140 @@ import java.util.HashMap;
 
 import static org.lwjgl.opengl.GL20.*;
 
-public class Shader {
-	public static final String TAG = "SHADER";
+public class Shader
+{
+    public static final String TAG = "SHADER";
 
-	private HashMap<String, Integer> uniformLocations;
-	private int fragment;
-	private int program;
-	private int vertex;
+    private HashMap<String, Integer> uniformLocations;
+    private int fragment;
+    private int program;
+    private int vertex;
 
-	public Shader(String vertexFilePath, String fragmentFilePath) {
-		program 	= glCreateProgram();
-		vertex 		= createShader(vertexFilePath, GL_VERTEX_SHADER);
-		fragment 	= createShader(fragmentFilePath, GL_FRAGMENT_SHADER);
+    public Shader(String vertexFilePath, String fragmentFilePath)
+    {
+        program = glCreateProgram();
+        vertex = createShader(vertexFilePath, GL_VERTEX_SHADER);
+        fragment = createShader(fragmentFilePath, GL_FRAGMENT_SHADER);
 
-		glBindAttribLocation(program, 0, "a_position");
-		glBindAttribLocation(program, 1, "a_texCoord");
+        glBindAttribLocation(program, 0, "a_position");
+        glBindAttribLocation(program, 1, "a_texCoord");
 
-		// Link and check errors.
-		glLinkProgram(program);
-		if(glGetProgrami(program, GL_LINK_STATUS) == 0)
-			throw new JMokaException(glGetShaderInfoLog(program, 1024));
+        // Link and check errors.
+        glLinkProgram(program);
 
-		// Validate and check errors.
-		glValidateProgram(program);
-		if(glGetProgrami(program, GL_VALIDATE_STATUS) == 0)
-			throw new JMokaException(glGetShaderInfoLog(program, 1024));
+        if (glGetProgrami(program, GL_LINK_STATUS) == 0)
+        {
+            throw new JMokaException(glGetShaderInfoLog(program, 1024));
+        }
 
-		uniformLocations = new HashMap<>();
+        // Validate and check errors.
+        glValidateProgram(program);
 
-		JMokaLog.o(TAG, "Shader correctly created.");
-	}
+        if (glGetProgrami(program, GL_VALIDATE_STATUS) == 0)
+        {
+            throw new JMokaException(glGetShaderInfoLog(program, 1024));
+        }
 
-	public void update(final Transform transform, final Sprite sprite) {
-		Matrix4 model = CoreUtils.getModelMatrix(transform);
+        uniformLocations = new HashMap<>();
 
-		setUniform("u_model", model);
-		setUniform("u_color", sprite.getTint());
-	}
+        JMokaLog.o(TAG, "Shader correctly created.");
+    }
 
-	public void bind() {
-		glUseProgram(program);
-	}
+    public void update(final Transform transform, final Sprite sprite)
+    {
+        Matrix4 model = CoreUtils.getModelMatrix(transform);
 
-	private int createShader(String filePath, int type) {
-		String code = Utils.readFile(filePath);
+        setUniform("u_model", model);
+        setUniform("u_color", sprite.getTint());
+    }
 
-		int shader = glCreateShader(type);
+    public void bind()
+    {
+        glUseProgram(program);
+    }
 
-		if(shader == 0)
-			throw new JMokaException("Shader creation failed for file " + filePath);
+    private int createShader(String filePath, int type)
+    {
+        String code = Utils.readFile(filePath);
 
-		glShaderSource(shader, code);
-		glCompileShader(shader);
+        int shader = glCreateShader(type);
 
-		if(glGetShaderi(shader, GL_COMPILE_STATUS) == 0)
-			throw new JMokaException("Shader compile error for file " + filePath + ": " + glGetShaderInfoLog(shader, 1024));
+        if (shader == 0)
+        {
+            throw new JMokaException("Shader creation failed for file " + filePath);
+        }
 
-		glAttachShader(program, shader);
-		return shader;
-	}
+        glShaderSource(shader, code);
+        glCompileShader(shader);
 
-	public int getUniformLocation(String uniform) {
-		// if location is contained, return it.
-		if(uniformLocations.containsKey(uniform))
-			return uniformLocations.get(uniform);
+        if (glGetShaderi(shader, GL_COMPILE_STATUS) == 0)
+        {
+            throw new JMokaException(
+                    "Shader compile error for file " + filePath + ": " + glGetShaderInfoLog(shader, 1024));
+        }
 
-		// if not, we ask openGL for the uniform location, store it and return it.
-		int location = glGetUniformLocation(program, uniform);
-		if(location == -1)
-			throw new JMokaException("No uniform with name " + uniform);
-		else
-			uniformLocations.put(uniform, location);
+        glAttachShader(program, shader);
+        return shader;
+    }
 
-		JMokaLog.o(TAG, "New uniform: " + uniform + ", at location " + location);
-		return location;
-	}
+    public int getUniformLocation(String uniform)
+    {
+        // if location is contained, return it.
+        if (uniformLocations.containsKey(uniform))
+        {
+            return uniformLocations.get(uniform);
+        }
 
-	/* setUniform's */
-	public void setUniform(String uniform, Matrix4 matrix) {
-		FloatBuffer buffer = Utils.genBuffer(matrix);
-		glUniformMatrix4(getUniformLocation(uniform), false, buffer);
-	}
+        // if not, we ask openGL for the uniform location, store it and return it.
+        int location = glGetUniformLocation(program, uniform);
 
-	public void setUniform(String uniform, float x, float y, float z) {
-		glUniform3f(getUniformLocation(uniform), x, y, z);
-	}
+        if (location == -1)
+        {
+            throw new JMokaException("No uniform with name " + uniform);
+        }
+        else
+        {
+            uniformLocations.put(uniform, location);
+        }
 
-	public void setUniform(String uniform, float v) {
-		glUniform1f(getUniformLocation(uniform), v);
-	}
+        JMokaLog.o(TAG, "New uniform: " + uniform + ", at location " + location);
+        return location;
+    }
 
-	public void setUniform(String uniform, float x, float y) {
-		glUniform2f(getUniformLocation(uniform), x, y);
-	}
+    /* setUniform's */
+    public void setUniform(String uniform, Matrix4 matrix)
+    {
+        FloatBuffer buffer = Utils.genBuffer(matrix);
+        glUniformMatrix4(getUniformLocation(uniform), false, buffer);
+    }
 
-	public void setUniform(String uniform, Vector3f v) {
-		setUniform(uniform, v.x, v.y, v.z);
-	}
+    public void setUniform(String uniform, float x, float y, float z)
+    {
+        glUniform3f(getUniformLocation(uniform), x, y, z);
+    }
 
-	public void setUniform(String uniform, Vector2f v) {
-		setUniform(uniform, v.x, v.y);
-	}
+    public void setUniform(String uniform, float v)
+    {
+        glUniform1f(getUniformLocation(uniform), v);
+    }
 
-	private void setUniform(String uniform, Color color) {
-		glUniform4f(getUniformLocation(uniform), color.getR(), color.getG(), color.getB(), color.getA());
-	}
+    public void setUniform(String uniform, float x, float y)
+    {
+        glUniform2f(getUniformLocation(uniform), x, y);
+    }
+
+    public void setUniform(String uniform, Vector3f v)
+    {
+        setUniform(uniform, v.x, v.y, v.z);
+    }
+
+    public void setUniform(String uniform, Vector2f v)
+    {
+        setUniform(uniform, v.x, v.y);
+    }
+
+    private void setUniform(String uniform, Color color)
+    {
+        glUniform4f(getUniformLocation(uniform), color.r, color.g, color.b, color.a);
+    }
 }
