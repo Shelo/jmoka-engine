@@ -77,3 +77,10 @@ more. (There's a complete Java API if you don't really like the XML way too).
 
 This little project of mine will grow of course, but before I have to really think in a way of optimizing memory.
 A first approach is to give a build option that will optimize the XML code into Java Code. But more on that latter :).
+
+#### TODOs
+
+- Create a JavaContext.
+- Separate the context into JavaContext and XmlContext.
+- Optimize matrix calculations.
+- Optimize Quaternions.
