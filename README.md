@@ -53,15 +53,16 @@ A game will always use this lines to start off:
 
 ```java
 public static void main(String[] args)
-    {
-        Application application = new Application();
+{
+    Application application = new Application();
 
-        application.setContext(new XmlGame("res/scene/scene.xml", "res/values.xml"));
+    application.setContext(new XmlGame("res/scene/scene.xml", "res/values.xml"));
 
-        application.getDisplay().createDisplay("screen_width", "screen_height", "JMoka Engine");
+    // set the display size. The display supports resources names as dimensions.
+    application.getDisplay().createDisplay("screen_width", "screen_height", "JMoka Engine");
 
-        application.create().start(60);
-    }
+    application.create().start(60);
+}
 ```
 
 This creates the application wrapper (Application), sets the context (the game context), and then
