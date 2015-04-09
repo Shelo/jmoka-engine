@@ -1,7 +1,7 @@
-package com.moka.core.game;
+package com.moka.core.contexts;
 
-import com.moka.core.subengines.Context;
-import com.moka.exceptions.JMokaException;
+import com.moka.core.Context;
+import com.moka.utils.JMokaException;
 
 public class XmlContext extends Context {
 	private final String resPath;

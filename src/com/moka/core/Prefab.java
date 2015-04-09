@@ -1,9 +1,8 @@
 package com.moka.core;
 
 import com.moka.components.Component;
-import com.moka.core.subengines.Context;
 import com.moka.core.xml.XmlAttribute;
-import com.moka.exceptions.JMokaException;
+import com.moka.utils.JMokaException;
 import com.moka.math.Vector2f;
 
 import java.lang.reflect.InvocationTargetException;

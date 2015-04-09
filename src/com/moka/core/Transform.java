@@ -1,6 +1,6 @@
 package com.moka.core;
 
-import com.moka.exceptions.JMokaException;
+import com.moka.utils.JMokaException;
 import com.moka.math.*;
 
 public final class Transform

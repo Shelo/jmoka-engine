@@ -1,11 +1,11 @@
 package com.moka.graphics;
 
 import com.moka.components.Sprite;
-import com.moka.core.CoreUtils;
-import com.moka.core.JMokaLog;
+import com.moka.utils.CoreUtils;
+import com.moka.utils.JMokaLog;
 import com.moka.core.Transform;
-import com.moka.core.Utils;
-import com.moka.exceptions.JMokaException;
+import com.moka.utils.Utils;
+import com.moka.utils.JMokaException;
 import com.moka.math.Matrix4;
 import com.moka.math.Vector2f;
 import com.moka.math.Vector3f;

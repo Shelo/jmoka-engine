@@ -1,10 +1,10 @@
 package com.moka.core.xml;
 
 import com.moka.components.Component;
-import com.moka.core.subengines.Context;
+import com.moka.core.Context;
 import com.moka.core.Entity;
 import com.moka.core.Transform;
-import com.moka.exceptions.JMokaException;
+import com.moka.utils.JMokaException;
 import com.moka.math.Vector2f;
 import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;

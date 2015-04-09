@@ -1,9 +1,5 @@
 package com.moka.core;
 
-import com.moka.core.subengines.Context;
-import com.moka.core.subengines.Core;
-import com.moka.core.subengines.Resources;
-import com.moka.core.subengines.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
 import com.moka.physics.Physics;

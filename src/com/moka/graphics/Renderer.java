@@ -2,8 +2,7 @@ package com.moka.graphics;
 
 import com.moka.components.Camera;
 import com.moka.core.SubEngine;
-import com.moka.exceptions.JMokaException;
-import com.sun.istack.internal.NotNull;
+import com.moka.utils.JMokaException;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -96,7 +95,7 @@ public final class Renderer extends SubEngine
      *
      * @param camera the new main camera, null will crash the engine.
      */
-    public void setCamera(@NotNull Camera camera)
+    public void setCamera(Camera camera)
     {
         if (camera == null)
         {

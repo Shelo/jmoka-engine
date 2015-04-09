@@ -1,7 +1,7 @@
 package com.moka.components;
 
 import com.moka.core.xml.XmlAttribute;
-import com.moka.exceptions.JMokaException;
+import com.moka.utils.JMokaException;
 import com.moka.math.Vector2f;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;

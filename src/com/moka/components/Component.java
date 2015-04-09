@@ -1,9 +1,9 @@
 package com.moka.components;
 
 import com.moka.core.*;
-import com.moka.core.subengines.Resources;
-import com.moka.core.subengines.Time;
-import com.moka.exceptions.JMokaException;
+import com.moka.core.Resources;
+import com.moka.core.Time;
+import com.moka.utils.JMokaException;
 import com.moka.graphics.Display;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;

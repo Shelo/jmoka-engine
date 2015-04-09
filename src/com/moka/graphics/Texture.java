@@ -1,7 +1,7 @@
 package com.moka.graphics;
 
-import com.moka.core.subengines.Resources;
-import com.moka.core.Utils;
+import com.moka.core.Resources;
+import com.moka.utils.Utils;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import java.io.File;

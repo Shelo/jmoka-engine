@@ -1,7 +1,7 @@
 package com.moka.core.xml;
 
-import com.moka.core.subengines.Resources;
-import com.moka.exceptions.JMokaException;
+import com.moka.core.Resources;
+import com.moka.utils.JMokaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;

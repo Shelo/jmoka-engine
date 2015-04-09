@@ -1,9 +1,8 @@
 package com.moka.components;
 
-import com.moka.core.subengines.Resources;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.core.xml.XmlSupported;
-import com.moka.exceptions.JMokaException;
+import com.moka.utils.JMokaException;
 import com.moka.graphics.Color;
 import com.moka.graphics.Quad;
 import com.moka.graphics.Shader;

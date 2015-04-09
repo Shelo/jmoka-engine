@@ -2,7 +2,7 @@ package com.moka.components;
 
 import com.moka.core.Transform;
 import com.moka.core.xml.XmlSupported;
-import com.moka.exceptions.JMokaException;
+import com.moka.utils.JMokaException;
 import com.moka.math.Matrix4;
 import com.moka.math.Quaternion;
 

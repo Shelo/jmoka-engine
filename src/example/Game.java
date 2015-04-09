@@ -1,7 +1,7 @@
 package example;
 
 import com.moka.core.Application;
-import com.moka.core.game.XmlContext;
+import com.moka.core.contexts.XmlContext;
 
 public class Game
 {

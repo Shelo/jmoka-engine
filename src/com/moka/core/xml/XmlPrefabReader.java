@@ -1,8 +1,8 @@
 package com.moka.core.xml;
 
-import com.moka.core.subengines.Context;
+import com.moka.core.Context;
 import com.moka.core.Prefab;
-import com.moka.exceptions.JMokaException;
+import com.moka.utils.JMokaException;
 import com.moka.math.Vector2f;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

@@ -1,8 +1,8 @@
 package com.moka.graphics;
 
 import com.moka.core.*;
-import com.moka.core.subengines.Resources;
-import com.moka.exceptions.JMokaException;
+import com.moka.utils.JMokaException;
+import com.moka.utils.JMokaLog;
 import org.lwjgl.glfw.GLFWvidmode;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.system.MemoryUtil;
