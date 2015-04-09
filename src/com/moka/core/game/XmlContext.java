@@ -22,7 +22,9 @@ public class XmlContext extends Context {
 	public void onPreLoad()
 	{
 		if(resPath != null)
+		{
 			define(resPath);
+		}
 	}
 
 	@Override
