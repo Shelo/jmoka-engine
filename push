@@ -2,7 +2,7 @@
 
 git add --all
 
-echo "Enter a message: \c"
+echo -e "Enter a message: \c"
 read message
 
 git commit -a -m "$message"
