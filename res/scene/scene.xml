@@ -4,7 +4,7 @@
         <example.components.Background />
     </entity>
 
-    <entity position="${@screen_width / 2}, ${@screen_height / 2}" rotation="0" name="Player" layer="2">
+    <entity position="${@screen_width}, ${@screen_height / 2}" rotation="0" name="Player" layer="2">
         <Sprite texture="res/images/player.png" />
         <example.components.MyShooter />
         <Controllable topSpeed="500" acceleration="600" />

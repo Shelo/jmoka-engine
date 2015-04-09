@@ -25,547 +25,620 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-// TODO: clean this code a little bit.
 public class XmlEntityReader
 {
-	public static final String TAG_ENTITY 				= "entity";
-	public static final int STATE_INIT					= 0;
-	public static final int STATE_ENTITY				= 1;
-	public static final int STATE_CLOSED				= 2;
-	public static final String VAL_SIZE 				= "size";
-	public static final String VAL_POSITION 			= "position";
-	public static final String VAL_ROTATION 			= "rotation";
-	public static final String VAL_LAYER 				= "layer";
-	public static final char CHAR_REFERENCE 			= '@';
-	public static final char CHAR_EXPRESSION 			= '$';
-	public static final ArrayList<Character> SYMBOLS 	= new ArrayList<>();
-	public static final String DEFAULT_PACKAGE 			= "com.moka.components.";
+    public static final String TAG_ENTITY = "entity";
+    public static final int STATE_INIT = 0;
+    public static final int STATE_ENTITY = 1;
+    public static final int STATE_CLOSED = 2;
+    public static final String VAL_SIZE = "size";
+    public static final String VAL_POSITION = "position";
+    public static final String VAL_ROTATION = "rotation";
+    public static final String VAL_LAYER = "layer";
+    public static final char CHAR_REFERENCE = '@';
+    public static final char CHAR_EXPRESSION = '$';
+    public static final ArrayList<Character> SYMBOLS = new ArrayList<>();
+    public static final String DEFAULT_PACKAGE = "com.moka.components.";
 
-	private Evaluator evaluator;
-	private String entityName;
-	private Context context;
-	private SAXParser parser;
-	private Entity entity;
-	private int state;
+    private Evaluator evaluator;
+    private String entityName;
+    private Context context;
+    private SAXParser parser;
+    private Entity entity;
+    private int state;
 
-	static
-	{
-		// fill the symbols table.
-		SYMBOLS.add('/');
-		SYMBOLS.add('+');
-		SYMBOLS.add('-');
-		SYMBOLS.add('*');
-		SYMBOLS.add(' ');
-		SYMBOLS.add('(');
-		SYMBOLS.add(')');
-		SYMBOLS.add('%');
-	}
+    /**
+     * Defines special symbols.
+     */
+    static
+    {
+        // fill the symbols table.
+        SYMBOLS.add('/');
+        SYMBOLS.add('+');
+        SYMBOLS.add('-');
+        SYMBOLS.add('*');
+        SYMBOLS.add(' ');
+        SYMBOLS.add('(');
+        SYMBOLS.add(')');
+        SYMBOLS.add('%');
+    }
 
-	/**
-	 * Reads an entity XML File.
-	 */
-	private class Handler extends DefaultHandler
-	{
-		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes)
-				throws SAXException
-		{
-			// if the parser is currently closed, throw exception.
-			if (state == STATE_CLOSED)
-			{
-				throw new JMokaException("Parser is currently closed.");
-			}
+    /**
+     * Reads an entity XML File.
+     */
+    private class Handler extends DefaultHandler
+    {
+        @Override
+        public void startElement(String uri, String localName, String qName, Attributes attributes)
+                throws SAXException
+        {
+            // if the parser is currently closed, throw exception.
+            if (state == STATE_CLOSED)
+            {
+                throw new JMokaException("Parser is currently closed.");
+            }
 
-			// the parser needs to be in the init state to be able to read the entity tag.
-			if (state == STATE_INIT && qName.equals(TAG_ENTITY))
-			{
-				state = STATE_ENTITY;
-				entity = context.newEntity(entityName, readLayer(attributes));
-				setTransformValues(entity.getTransform(), attributes);
-			}
-			else
-			{
-				// if the state is not equals to entity state then we know there's is an error with
-				// the XML file.
-				if (state != STATE_ENTITY)
-				{
-					throw new JMokaException("XML File corrupted.");
-				}
+            // the parser needs to be in the init state to be able to read the entity tag.
+            if (state == STATE_INIT && qName.equals(TAG_ENTITY))
+            {
+                state = STATE_ENTITY;
+                entity = context.newEntity(entityName, readLayer(attributes));
+                setTransformValues(entity.getTransform(), attributes);
+            }
+            else
+            {
+                // if the state is not equals to entity state then we know there's is an error with
+                // the XML file.
+                if (state != STATE_ENTITY)
+                {
+                    throw new JMokaException("XML File corrupted.");
+                }
 
-				// if we are in entity state then we can read components.
-				readComponent(entity, qName, attributes);
-			}
-		}
+                // if we are in entity state then we can read components.
+                readComponent(entity, qName, attributes);
+            }
+        }
 
-		@Override
-		public void endElement(String uri, String localName, String qName) throws SAXException
-		{
-			if (qName.equals(TAG_ENTITY))
-			{
-				state = STATE_CLOSED;
-			}
-		}
-	}
+        @Override
+        public void endElement(String uri, String localName, String qName) throws SAXException
+        {
+            if (qName.equals(TAG_ENTITY))
+            {
+                state = STATE_CLOSED;
+            }
+        }
+    }
 
-	public XmlEntityReader(Context context)
-	{
-		this.context = context;
+    /**
+     * Creates a new reader for a given context.
+     *
+     * @param context the context that will receive new entities.
+     */
+    public XmlEntityReader(Context context)
+    {
+        this.context = context;
 
-		// the parser needs to be closed in order to read a new file.
-		state = STATE_CLOSED;
+        // the parser needs to be closed in order to read a new file.
+        state = STATE_CLOSED;
 
-		// create the JEval evaluator.
-		evaluator = new Evaluator();
+        // create the JEval evaluator.
+        evaluator = new Evaluator();
 
-		// create SAX parser.
-		try
-		{
-			parser = SAXParserFactory.newInstance().newSAXParser();
-		}
-		catch(ParserConfigurationException | SAXException e)
-		{
-			throw new JMokaException("Error SAXParser: " + e.toString());
-		}
-	}
+        // create SAX parser.
+        try
+        {
+            parser = SAXParserFactory.newInstance().newSAXParser();
+        }
+        catch (ParserConfigurationException | SAXException e)
+        {
+            throw new JMokaException("Error SAXParser: " + e.toString());
+        }
+    }
 
-	/**
-	 * Read and load an entity XML file.
-	 * @param filePath	path to the XML file.
-	 * @param name		name for the new entity.
-	 * @return the created entity.
-	 */
-	public Entity read(String filePath, String name)
-	{
-		if (state != STATE_CLOSED)
-		{
-			throw new JMokaException("XmlEntityReader's state is not init.");
-		}
+    /**
+     * Read and load an entity XML file.
+     *
+     * @param filePath  path to the XML file.
+     * @param name      name for the new entity.
+     * @return          the created entity.
+     */
+    public Entity read(String filePath, String name)
+    {
+        if (state != STATE_CLOSED)
+        {
+            throw new JMokaException("XmlEntityReader's state is not init.");
+        }
 
-		// first state is init.
-		state = STATE_INIT;
-		entity = null;
-		entityName = name;
+        // first state is init.
+        state = STATE_INIT;
+        entity = null;
+        entityName = name;
 
-		try
-		{
-			// parse XML document.
-			InputStream stream = new FileInputStream(filePath);
-			parser.parse(stream, new Handler());
-		}
-		catch(FileNotFoundException e)
-		{
-			throw new JMokaException("File not found: " + filePath);
-		}
-		catch(SAXException e)
-		{
-			throw new JMokaException("File " + filePath + " is corrupted.");
-		}
-		catch(IOException e)
-		{
-			throw new JMokaException("IOException while reading " + filePath);
-		}
+        try
+        {
+            // parse XML document.
+            InputStream stream = new FileInputStream(filePath);
+            parser.parse(stream, new Handler());
+        }
+        catch (FileNotFoundException e)
+        {
+            throw new JMokaException("File not found: " + filePath);
+        }
+        catch (SAXException e)
+        {
+            throw new JMokaException("File " + filePath + " is corrupted.");
+        }
+        catch (IOException e)
+        {
+            throw new JMokaException("IOException while reading " + filePath);
+        }
 
-		return entity;
-	}
+        return entity;
+    }
 
-	/**
-	 * Reads a component and adds it to a given entity.
-	 * @param entity 		the entity that will have the component.
-	 * @param name			the name of the component.
-	 * @param attributes	XML attributes for the component.
-	 */
-	public void readComponent(Entity entity, String name, Attributes attributes)
-	{
-		Component component = null;
+    /**
+     * Reads a component and adds it to a given entity.
+     *
+     * @param entity     the entity that will have the component.
+     * @param name       the name of the component.
+     * @param attributes XML attributes for the component.
+     */
+    public void readComponent(Entity entity, String name, Attributes attributes)
+    {
+        Component component = null;
 
-		try
-		{
-			// create a new instance of the component.
-			Class<?> componentClass = forComponent(name);
-			component = (Component) componentClass.newInstance();
-			entity.addComponent(component);
+        try
+        {
+            // create a new instance of the component.
+            Class<?> componentClass = forComponent(name);
+            component = (Component) componentClass.newInstance();
+            entity.addComponent(component);
 
-			// get component methods in order to search for attribute qualified ones.
-			// meaning that the have the XmlAttribute annotation.
-			ArrayList<Method> methods = getQualifiedMethods(componentClass);
+            // get component methods in order to search for attribute qualified ones.
+            // meaning that the have the XmlAttribute annotation.
+            ArrayList<Method> methods = getQualifiedMethods(componentClass);
 
-			// run through all the qualified method an set attributes if they're present.
-			for (Method method : methods)
-			{
-				handleAttribute(component, method, name, attributes);
-			}
+            // run through all the qualified method an set attributes if they're present.
+            for (Method method : methods)
+            {
+                handleAttribute(component, method, attributes);
+            }
 
-		}
-		catch(InstantiationException e)
-		{
-			throw new JMokaException("Component class " + name + " probably doesn't have a" +
-					"non-args constructor.");
-		}
-		catch(IllegalAccessException e)
-		{
-			throw new JMokaException("Component class " + name + " is not accessible.");
-		}
-	}
+        }
+        catch (InstantiationException e)
+        {
+            throw new JMokaException("Component class " + name + " probably doesn't have a" +
+                    "non-args constructor.");
+        }
+        catch (IllegalAccessException e)
+        {
+            throw new JMokaException("Component class " + name + " is not accessible.");
+        }
+    }
 
-	public Class<?> forComponent(String componentName)
-	{
-		String name = hasPackage(componentName) ? componentName : DEFAULT_PACKAGE + componentName;
+    /**
+     * For a component name, return the full path. This allows xml to just write "Sprite" instead of
+     * com.moka.components.Sprite.
+     *
+     * @param componentName the component name.
+     * @return              the component class.
+     */
+    public Class<?> forComponent(String componentName)
+    {
+        String name = hasPackage(componentName) ? componentName : DEFAULT_PACKAGE + componentName;
 
-		try
-		{
-			Class<?> result = Class.forName(name);
-			return result;
-		}
-		catch(ClassNotFoundException e)
-		{
-			throw new JMokaException("Component class " + name + " not found.");
-		}
-	}
+        try
+        {
+            return Class.forName(name);
+        }
+        catch (ClassNotFoundException e)
+        {
+            throw new JMokaException("Component class " + name + " not found.");
+        }
+    }
 
-	private void handleAttribute(Component component, Method method, String componentName,
-			Attributes attributes)
-	{
-		XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
-		String value = attributes.getValue(attribute.value());
+    /**
+     * Handles an attribute of a component. As for example: the Sprite component receives
+     * a texture string. This method will get that attribute and call the method on the
+     * given component in order to set the texture properly.
+     *
+     * @param component     the target component.
+     * @param method        the method that will be called.
+     * @param attributes    the attribute object of the component, specified on the XML file.
+     */
+    private void handleAttribute(Component component, Method method, Attributes attributes)
+    {
+        XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
+        String value = attributes.getValue(attribute.value());
 
-		// if the value is not present we can either ignore it or, if the XmlAttribute
-		// specifies that is required, throw an exception.
-		if (value == null)
-		{
-			if (attribute.required())
-			{
-				throw new JMokaException("Component " + componentName + " requires the attribute "
-						+ attribute.value());
-			}
-			return;
-		}
+        // save the component name for errors.
+        String componentName = component.getClass().getSimpleName();
 
-		// here the value is always something.
-		// we should always take the first parameter type because these methods are supposed to
-		// have only one.
-		Class<?> param = getParamFor(method);
+        // if the value is not present we can either ignore it or, if the XmlAttribute
+        // specifies that is required, throw an exception.
+        if (value == null)
+        {
+            if (attribute.required())
+            {
+                throw new JMokaException("Component " + componentName + " requires the attribute "
+                        + attribute.value());
+            }
+            return;
+        }
 
-		// test the value and cast it to the parameter's class.
-		Object casted = getTestedValue(param, value);
+        // here the value is always something.
+        // we should always take the first parameter type because these methods are supposed to
+        // have only one.
+        Class<?> param = getParamFor(method);
 
-		try
-		{
-			method.invoke(component, casted);
-		}
-		catch(IllegalAccessException e)
-		{
-			throw new JMokaException(String.format("Method %s for component %s is inaccessible",
-					method.getName(), componentName));
-		}
-		catch(InvocationTargetException e)
-		{
-			e.printStackTrace();
-		}
-	}
+        // test the value and cast it to the parameter's class.
+        Object casted = getTestedValue(param, value);
 
-	public SAXParser getParser()
-	{
-		return parser;
-	}
+        try
+        {
+            method.invoke(component, casted);
+        }
+        catch (IllegalAccessException e)
+        {
+            throw new JMokaException(String.format("Method %s for component %s is inaccessible",
+                    method.getName(), componentName));
+        }
+        catch (InvocationTargetException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * Test the value to match the param class, also if the param type is a Entity, this will find
-	 * that entity for you. If the value is a reference to a resource value, that value will be
-	 * searched and delivered, and finally, if the value is an expression, this will attempt to
-	 * resolve it.
-	 * 
-	 * TODO: catch components with EntityName.ComponentClass.
-	 *
-	 * @param param	the parameter class
-	 * @param value	the value that will be tested.
-	 * @param <T>	the generic type of the parameter.
-	 * @return 		the resulting value, one of: int, float, double, boolean, String or Entity.
-	 */
-	@SuppressWarnings("unchecked")
-	public <T> T getTestedValue(Class<T> param, String value)
-	{
-		if (value.charAt(0) == CHAR_REFERENCE)
-		{
-			String resource = value.substring(1);
-			Object result = null;
+    /**
+     * Returns the parser used by this reader. This prevent the creation of additional parsers.
+     *
+     * @return this reader's parser.
+     */
+    public SAXParser getParser()
+    {
+        return parser;
+    }
 
-			if (param == int.class)
-			{
-				result = ((Number) context.getResources().get(resource)).intValue();
-			}
-			else if (param == float.class)
-			{
-				result = ((Number) context.getResources().get(resource)).floatValue();
-			}
-			else if (param == double.class)
-			{
-				result = ((Number) context.getResources().get(resource)).doubleValue();
-			}
-			else if (param == boolean.class)
-			{
-				result = context.getResources().getBoolean(resource);
-			}
-			else if (param == String.class)
-			{
-				result = context.getResources().getString(resource);
-			}
-			else if (param == Entity.class)
-			{
-				result = context.findEntity(context.getResources().getString(resource));
-			}
+    /**
+     * Test the value to match the param class, also if the param type is a Entity, this will find
+     * that entity for you. If the value is a reference to a resource value, that value will be
+     * searched and delivered, and finally, if the value is an expression, this will attempt to
+     * resolve it.
+     *
+     * TODO: catch components with EntityName.ComponentClass.
+     *
+     * @param param the parameter class
+     * @param value the value that will be tested.
+     * @param <T>   the generic type of the parameter.
+     * @return      the resulting value, one of: int, float, double, boolean, String or Entity.
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T getTestedValue(Class<T> param, String value)
+    {
+        if (value.charAt(0) == CHAR_REFERENCE)
+        {
+            String resource = value.substring(1);
+            Object result = null;
 
-			return (T) result;
-		}
-		else if(value.charAt(0) == CHAR_EXPRESSION)
-		{
-			Object result = null;
-			String expression = replaceReferences(value.substring(2, value.length() - 1));
-			String expValue = null;
+            if (param == int.class)
+            {
+                result = ((Number) context.getResources().get(resource)).intValue();
+            }
+            else if (param == float.class)
+            {
+                result = ((Number) context.getResources().get(resource)).floatValue();
+            }
+            else if (param == double.class)
+            {
+                result = ((Number) context.getResources().get(resource)).doubleValue();
+            }
+            else if (param == boolean.class)
+            {
+                result = context.getResources().getBoolean(resource);
+            }
+            else if (param == String.class)
+            {
+                result = context.getResources().getString(resource);
+            }
+            else if (param == Entity.class)
+            {
+                result = context.findEntity(context.getResources().getString(resource));
+            }
 
-			try
-			{
-				expValue = evaluator.evaluate(expression);
-			}
-			catch(EvaluationException e)
-			{
-				throw new JMokaException("[JEval] " + e.toString());
-			}
+            return (T) result;
+        }
+        else if (value.charAt(0) == CHAR_EXPRESSION)
+        {
+            Object result = null;
+            String expression = replaceReferences(value.substring(2, value.length() - 1));
+            String expValue = null;
 
-			if (param == int.class)
-			{
-				result = Integer.parseInt(expValue);
-			}
-			else if (param == float.class)
-			{
-				result = Float.parseFloat(expValue);
-			}
-			else if (param == double.class)
-			{
-				result = Double.parseDouble(expValue);
-			}
-			else if (param == boolean.class)
-			{
-				result = Boolean.parseBoolean(expValue);
-			}
+            try
+            {
+                expValue = evaluator.evaluate(expression);
+            }
+            catch (EvaluationException e)
+            {
+                throw new JMokaException("[JEval] " + e.toString());
+            }
 
-			return (T) result;
-		}
-		else
-		{
-			Object result = null;
+            if (param == int.class)
+            {
+                result = Integer.parseInt(expValue);
+            }
+            else if (param == float.class)
+            {
+                result = Float.parseFloat(expValue);
+            }
+            else if (param == double.class)
+            {
+                result = Double.parseDouble(expValue);
+            }
+            else if (param == boolean.class)
+            {
+                result = Boolean.parseBoolean(expValue);
+            }
 
-			if (param == int.class)
-			{
-				result = Integer.parseInt(value);
-			}
-			else if (param == float.class)
-			{
-				result = Float.parseFloat(value);
-			}
-			else if (param == double.class)
-			{
-				result = Double.parseDouble(value);
-			}
-			else if (param == boolean.class)
-			{
-				result = Boolean.parseBoolean(value);
-			}
-			else if (param == String.class)
-			{
-				result = value;
-			}
-			else if (param == Entity.class)
-			{
-				result = context.findEntity(value);
-			}
+            return (T) result;
+        }
+        else
+        {
+            Object result = null;
 
-			return (T) result;
-		}
-	}
+            if (param == int.class)
+            {
+                result = Integer.parseInt(value);
+            }
+            else if (param == float.class)
+            {
+                result = Float.parseFloat(value);
+            }
+            else if (param == double.class)
+            {
+                result = Double.parseDouble(value);
+            }
+            else if (param == boolean.class)
+            {
+                result = Boolean.parseBoolean(value);
+            }
+            else if (param == String.class)
+            {
+                result = value;
+            }
+            else if (param == Entity.class)
+            {
+                result = context.findEntity(value);
+            }
 
-	/**
-	 * Set the transform values of the given {@link com.moka.core.Entity}, casting them from
-	 * Strings, evaluating expressions and resolving references, in any case, this is mostly
-	 * used by this class internally when reading the XML.
-	 * @param transform		the transform.
-	 * @param attributes	the attributes that will be applied, all of them Strings.
-	 */
-	public void setTransformValues(Transform transform, Attributes attributes)
-	{
-		if (attributes.getValue(VAL_POSITION) != null)
-		{
-			Vector2f position = readPositionValues(attributes);
-			transform.setPosition(new Vector2f(position.x, position.y));
-		}
+            return (T) result;
+        }
+    }
 
-		if (attributes.getValue(VAL_ROTATION) != null)
-		{
-			float rotation = readRotation(attributes);
-			transform.setRotationDeg(rotation);
-		}
+    /**
+     * Set the transform values of the given {@link com.moka.core.Entity}, casting them from
+     * Strings, evaluating expressions and resolving references, in any case, this is mostly
+     * used by this class internally when reading the XML.
+     *
+     * @param transform  the transform.
+     * @param attributes the attributes that will be applied, all of them Strings.
+     */
+    public void setTransformValues(Transform transform, Attributes attributes)
+    {
+        if (attributes.getValue(VAL_POSITION) != null)
+        {
+            Vector2f position = readPositionValues(attributes);
+            transform.setPosition(new Vector2f(position.x, position.y));
+        }
 
-		if (attributes.getValue(VAL_SIZE) != null)
-		{
-			Vector2f size = readSizeValues(attributes);
-			transform.setSize(size);
-		}
-	}
+        if (attributes.getValue(VAL_ROTATION) != null)
+        {
+            float rotation = readRotation(attributes);
+            transform.setRotationDeg(rotation);
+        }
 
-	public Vector2f readPositionValues(Attributes attributes)
-	{
-		String[] params = attributes.getValue(VAL_POSITION).split(" *, *");
-		float x = getTestedValue(float.class, params[0]);
-		float y = getTestedValue(float.class, params[1]);
-		return new Vector2f(x, y);
-	}
+        if (attributes.getValue(VAL_SIZE) != null)
+        {
+            Vector2f size = readSizeValues(attributes);
+            transform.setSize(size);
+        }
+    }
 
-	public int readLayer(Attributes attributes)
-	{
-		int layer = attributes.getValue(VAL_LAYER) == null? 0 :
-				getTestedValue(int.class, attributes.getValue(VAL_LAYER));
-		return layer;
-	}
+    /**
+     * Reads the position given an attributes object.
+     *
+     * @param attributes    the attributes objects of an entity.
+     * @return              the position as a 2D vector.
+     */
+    public Vector2f readPositionValues(Attributes attributes)
+    {
+        String[] params = attributes.getValue(VAL_POSITION).split(" *, *");
+        float x = getTestedValue(float.class, params[0]);
+        float y = getTestedValue(float.class, params[1]);
+        return new Vector2f(x, y);
+    }
 
-	public float readRotation(Attributes attributes)
-	{
-		float rotation = getTestedValue(float.class, attributes.getValue(VAL_ROTATION));
-		return rotation;
-	}
+    /**
+     * Reads the layer attribute of an entity.
+     *
+     * @param attributes    the attributes object of the entity.
+     * @return              the layer value.
+     */
+    public int readLayer(Attributes attributes)
+    {
+        String value = attributes.getValue(VAL_LAYER);
+        return value == null ? 0 : getTestedValue(int.class, value);
+    }
 
-	public Vector2f readSizeValues(Attributes attributes)
-	{
-		String[] params = attributes.getValue(VAL_SIZE).split(" *, *");
-		float x = getTestedValue(float.class, params[0]);
-		float y = getTestedValue(float.class, params[1]);
-		return new Vector2f(x, y);
-	}
-	
-	/**
-	 * Obtains the parameter class for a given method, since the engine only allows to receive
-	 * one parameter in an qualified method, if the method has more than one parameter, the program
-	 * will crash so the client can fix this.
-	 *
-	 * @param method	the method.
-	 * @return			the parameter's class.
-	 */
-	Class<?> getParamFor(Method method)
-	{
-		Class<?>[] params = method.getParameterTypes();
+    /**
+     * Reads the rotation attribute of an entity.
+     *
+     * @param attributes    the attribute object.
+     * @return              the rotation float value.
+     */
+    public float readRotation(Attributes attributes)
+    {
+        return getTestedValue(float.class, attributes.getValue(VAL_ROTATION));
+    }
 
-		// so, if the quantity of parameters is not equal to one, there's an error in the
-		// definition of the method.
-		if (params.length != 1)
-		{
-			throw new JMokaException(String.format("Method %s for component %s has more or less" +
-							"than one parameter, this is not allowed.", method.getName(),
-					method.getDeclaringClass().getName()));
-		}
+    /**
+     * Reads the size of an entity.
+     *
+     * @param attributes    the attributes object of that entity.
+     * @return              the size as a 2D vector.
+     */
+    public Vector2f readSizeValues(Attributes attributes)
+    {
+        String[] params = attributes.getValue(VAL_SIZE).split(" *, *");
+        float x = getTestedValue(float.class, params[0]);
+        float y = getTestedValue(float.class, params[1]);
+        return new Vector2f(x, y);
+    }
 
-		return params[0];
-	}
+    /**
+     * Obtains the parameter class for a given method, since the engine only allows to receive
+     * one parameter in an qualified method, if the method has more than one parameter, the program
+     * will crash so the client can fix this.
+     *
+     * @param method    the method.
+     * @return          the parameter's class.
+     */
+    Class<?> getParamFor(Method method)
+    {
+        Class<?>[] params = method.getParameterTypes();
 
-	/**
-	 * Gets the qualified methods of a given class, meaning, all methods that have an
-	 * {@link XmlAttribute} annotation in it.
-	 * @param componentClass	the component class.
-	 * @return					the list of qualified methods only.
-	 */
-	public ArrayList<Method> getQualifiedMethods(Class<?> componentClass)
-	{
-		ArrayList<Method> qualified = new ArrayList<>();
+        // so, if the quantity of parameters is not equal to one, there's an error in the
+        // definition of the method.
+        if (params.length != 1)
+        {
+            throw new JMokaException(String.format("Method %s for component %s has more or less" +
+                            "than one parameter, this is not allowed.", method.getName(),
+                    method.getDeclaringClass().getName()));
+        }
 
-		// obtain all methods declared by the component and any super class.
-		Method[] methods = componentClass.getMethods();
-		for (Method method : methods)
-		{
-			XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
+        return params[0];
+    }
 
-			// if the attribute annotation is not null, then the method is Xml Qualified,
-			// so it can be added to the resulting list.
-			if (attribute != null)
-			{
-				qualified.add(method);
-			}
-		}
+    /**
+     * Gets the qualified methods of a given class, meaning, all methods that have an
+     * {@link XmlAttribute} annotation in it.
+     *
+     * @param componentClass    the component class.
+     * @return                  the list of qualified methods only.
+     */
+    public ArrayList<Method> getQualifiedMethods(Class<?> componentClass)
+    {
+        ArrayList<Method> qualified = new ArrayList<>();
 
-		return qualified;
-	}
+        // obtain all methods declared by the component and any super class.
+        Method[] methods = componentClass.getMethods();
+        for (Method method : methods)
+        {
+            XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
 
-	private String replaceReferences(String expression)
-	{
-		StringBuilder curReference = new StringBuilder();
-		HashSet<String> references = new HashSet<>();
-		boolean rRef = false;
+            // if the attribute annotation is not null, then the method is Xml Qualified,
+            // so it can be added to the resulting list.
+            if (attribute != null)
+            {
+                qualified.add(method);
+            }
+        }
 
-		for (int i = 0; i < expression.length(); i++)
-		{
-			char c = expression.charAt(i);
+        return qualified;
+    }
 
-			if (rRef)
-			{
-				if (curReference.length() == 0)
-				{
-					if (Character.isLetter(c))
-					{
-						curReference.append(c);
-					}
-					else
-					{
-						throw new JMokaException("Malformed reference.");
-					}
-				}
-				else
-				{
-					if (SYMBOLS.contains(c))
-					{
-						rRef = false;
-						references.add(curReference.toString());
-						curReference.setLength(0);
-					}
-					else
-					{
-						curReference.append(c);
-					}
-				}
-			}
-			else
-			{
-				if (c == CHAR_REFERENCE)
-				{
-					rRef = true;
-				}
-			}
-		}
+    /**
+     * Replaces all reference with string values in an expression in order to evaluate it latter.
+     *
+     * @param expression    the expression to be fixed.
+     * @return              the replaced expression.
+     */
+    private String replaceReferences(String expression)
+    {
+        StringBuilder curReference = new StringBuilder();
+        HashSet<String> references = new HashSet<>();
+        boolean rRef = false;
 
-		// TODO: fix in the case rRef is still true.
+        for (int i = 0; i < expression.length(); i++)
+        {
+            char c = expression.charAt(i);
 
-		StringBuilder result = new StringBuilder(expression);
-		for (String reference : references)
-		{
-			replaceAll(result, CHAR_REFERENCE + reference, context.getResources().get(reference).toString());
-		}
+            if (rRef)
+            {
+                if (curReference.length() == 0)
+                {
+                    if (Character.isLetter(c))
+                    {
+                        curReference.append(c);
+                    }
+                    else
+                    {
+                        throw new JMokaException("Malformed reference.");
+                    }
+                }
+                else
+                {
+                    if (SYMBOLS.contains(c))
+                    {
+                        rRef = false;
+                        references.add(curReference.toString());
+                        curReference.setLength(0);
+                    }
+                    else
+                    {
+                        curReference.append(c);
+                    }
+                }
+            }
+            else
+            {
+                if (c == CHAR_REFERENCE)
+                {
+                    rRef = true;
+                }
+            }
+        }
 
-		return result.toString();
-	}
+        // if a reference was the last thing of the expression then append it to the reference list.
+        if (rRef)
+        {
+            references.add(curReference.toString());
+        }
 
-	private StringBuilder replaceAll(StringBuilder builder, String from, String to)
-	{
-		int index = builder.indexOf(from);
-		while (index != -1)
-		{
-			builder.replace(index, index + from.length(), to);
-			index += to.length();
-			index = builder.indexOf(from, index);
-		}
+        StringBuilder result = new StringBuilder(expression);
+        for (String reference : references)
+        {
+            replaceAll(result, CHAR_REFERENCE + reference, context.getResources().get(reference).toString());
+        }
 
-		return builder;
-	}
+        return result.toString();
+    }
 
-	/**
-	 * Checks if for a given component class is there any specified package route declared.
-	 */
-	private boolean hasPackage(String componentClass)
-	{
-		return componentClass.split("\\.").length != 1;
-	}
+    /**
+     * Simply replaces all occurrences in a string builder. Just a helper method.
+     *
+     * @param builder   the string builder.
+     * @param from      the string that will be searched.
+     * @param to        the string that will replace the searched one.
+     * @return          the new string builder object.
+     */
+    private StringBuilder replaceAll(StringBuilder builder, String from, String to)
+    {
+        int index = builder.indexOf(from);
+        while (index != -1)
+        {
+            builder.replace(index, index + from.length(), to);
+            index += to.length();
+            index = builder.indexOf(from, index);
+        }
+
+        return builder;
+    }
+
+    /**
+     * Checks if for a given component class is there any specified package route declared.
+     */
+    private boolean hasPackage(String componentClass)
+    {
+        return componentClass.split("\\.").length != 1;
+    }
 }

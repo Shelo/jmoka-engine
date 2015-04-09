@@ -15,104 +15,109 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class XmlSceneReader {
-	private static final String TAG_INCLUDE = "include";
-	private static final String TAG_ENTITY 	= "entity";
-	private static final String TAG_ROOT 	= "scene";
-	private static final String KEY_NAME 	= "name";
-	private static final String KEY_PATH 	= "path";
+public class XmlSceneReader
+{
+    private static final String TAG_INCLUDE = "include";
+    private static final String TAG_ENTITY = "entity";
+    private static final String TAG_ROOT = "scene";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_PATH = "path";
 
-	private XmlEntityReader entityReader;
-	private String currentFilePath;
-	private Entity currentEntity;
-	private SAXParser parser;
-	private Context game;
+    private XmlEntityReader entityReader;
+    private String currentFilePath;
+    private Entity currentEntity;
+    private SAXParser parser;
+    private Context game;
 
-	public void read(String filePath)
-	{
-		try
-		{
-			InputStream stream = new FileInputStream(filePath);
-			currentFilePath = filePath;
-			parser.parse(stream, new Handler());
-		}
-		catch(SAXException | IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+    public void read(String filePath)
+    {
+        try
+        {
+            InputStream stream = new FileInputStream(filePath);
+            currentFilePath = filePath;
+            parser.parse(stream, new Handler());
+        }
+        catch (SAXException | IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-	private class Handler extends DefaultHandler
-	{
-		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
-		{
-			if(currentEntity == null)
-			{
-				// if the currentEntity is null then we should read "Entity" next,
-				// if that is not the case, then the XML is malformed.
-				if(qName.equals(TAG_ENTITY))
-				{
-					// get and set the name for that entity.
-					String name = attributes.getValue(KEY_NAME);
-					currentEntity = game.newEntity(name, entityReader.readLayer(attributes));
+    private class Handler extends DefaultHandler
+    {
+        @Override
+        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
+        {
+            if (currentEntity == null)
+            {
+                // if the currentEntity is null then we should read "Entity" next,
+                // if that is not the case, then the XML is malformed.
+                if (qName.equals(TAG_ENTITY))
+                {
+                    // get and set the name for that entity.
+                    String name = attributes.getValue(KEY_NAME);
+                    currentEntity = game.newEntity(name, entityReader.readLayer(attributes));
 
-					// set transform position, rotation and scale.
-					entityReader.setTransformValues(currentEntity.getTransform(), attributes);
-				}
-				else if(qName.equals(TAG_INCLUDE))
-				{
-					// with a include tag we should create an entity, put the name that it should have and
-					// override possible transform properties.
-					String path = attributes.getValue(KEY_PATH);
-					String name = attributes.getValue(KEY_NAME);
+                    // set transform position, rotation and scale.
+                    entityReader.setTransformValues(currentEntity.getTransform(), attributes);
+                }
+                else if (qName.equals(TAG_INCLUDE))
+                {
+                    // with a include tag we should create an entity, put the name that it should have and
+                    // override possible transform properties.
+                    String path = attributes.getValue(KEY_PATH);
+                    String name = attributes.getValue(KEY_NAME);
 
-					Entity entity = entityReader.read(path, name);
-					entityReader.setTransformValues(entity.getTransform(), attributes);
-				}
-				else if(!qName.equals(TAG_ROOT))
-				{
-					throw new JMokaException("XML: " + currentFilePath + " is malformed.");
-				}
-			} else {
-				entityReader.readComponent(currentEntity, qName, attributes);
-			}
-		}
+                    Entity entity = entityReader.read(path, name);
+                    entityReader.setTransformValues(entity.getTransform(), attributes);
+                }
+                else if (!qName.equals(TAG_ROOT))
+                {
+                    throw new JMokaException("XML: " + currentFilePath + " is malformed.");
+                }
+            }
+            else
+            {
+                entityReader.readComponent(currentEntity, qName, attributes);
+            }
+        }
 
-		@Override
-		public void endElement(String uri, String localName, String qName) throws SAXException
-		{
-			if(qName.equals(TAG_ENTITY))
-				currentEntity = null;
-		}
+        @Override
+        public void endElement(String uri, String localName, String qName) throws SAXException
+        {
+            if (qName.equals(TAG_ENTITY))
+            {
+                currentEntity = null;
+            }
+        }
 
-		@Override
-		public void endDocument() throws SAXException
-		{
-			currentEntity = null;
-			currentFilePath = null;
-			game = null;
-		}
-	}
+        @Override
+        public void endDocument() throws SAXException
+        {
+            currentEntity = null;
+            currentFilePath = null;
+            game = null;
+        }
+    }
 
-	public XmlSceneReader(Context game)
-	{
-		this.game = game;
+    public XmlSceneReader(Context game)
+    {
+        this.game = game;
 
-		entityReader = new XmlEntityReader(game);
+        entityReader = new XmlEntityReader(game);
 
-		try
-		{
-			parser = SAXParserFactory.newInstance().newSAXParser();
-		}
-		catch(ParserConfigurationException | SAXException e)
-		{
-			throw new JMokaException("SAXParser creation error.");
-		}
-	}
+        try
+        {
+            parser = SAXParserFactory.newInstance().newSAXParser();
+        }
+        catch (ParserConfigurationException | SAXException e)
+        {
+            throw new JMokaException("SAXParser creation error.");
+        }
+    }
 
-	public XmlEntityReader getEntityReader()
-	{
-		return entityReader;
-	}
+    public XmlEntityReader getEntityReader()
+    {
+        return entityReader;
+    }
 }
