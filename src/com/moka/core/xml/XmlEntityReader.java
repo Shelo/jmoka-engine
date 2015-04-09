@@ -137,9 +137,9 @@ public class XmlEntityReader
     /**
      * Read and load an entity XML file.
      *
-     * @param filePath  path to the XML file.
-     * @param name      name for the new entity.
-     * @return          the created entity.
+     * @param filePath path to the XML file.
+     * @param name     name for the new entity.
+     * @return the created entity.
      */
     public Entity read(String filePath, String name)
     {
@@ -219,7 +219,7 @@ public class XmlEntityReader
      * com.moka.components.Sprite. This also considers the secondary path.
      *
      * @param componentName the component name.
-     * @return              the component class.
+     * @return the component class.
      */
     public Class<?> forComponent(String componentName)
     {
@@ -264,9 +264,9 @@ public class XmlEntityReader
      * a texture string. This method will get that attribute and call the method on the
      * given component in order to set the texture properly.
      *
-     * @param component     the target component.
-     * @param method        the method that will be called.
-     * @param attributes    the attribute object of the component, specified on the XML file.
+     * @param component  the target component.
+     * @param method     the method that will be called.
+     * @param attributes the attribute object of the component, specified on the XML file.
      */
     private void handleAttribute(Component component, Method method, Attributes attributes)
     {
@@ -326,13 +326,13 @@ public class XmlEntityReader
      * that entity for you. If the value is a reference to a resource value, that value will be
      * searched and delivered, and finally, if the value is an expression, this will attempt to
      * resolve it.
-     *
+     * <p/>
      * TODO: catch components with EntityName.ComponentClass.
      *
      * @param param the parameter class
      * @param value the value that will be tested.
      * @param <T>   the generic type of the parameter.
-     * @return      the resulting value, one of: int, float, double, boolean, String or Entity.
+     * @return the resulting value, one of: int, float, double, boolean, String or Entity.
      */
     @SuppressWarnings("unchecked")
     public <T> T getTestedValue(Class<T> param, String value)
@@ -468,8 +468,8 @@ public class XmlEntityReader
     /**
      * Reads the position given an attributes object.
      *
-     * @param attributes    the attributes objects of an entity.
-     * @return              the position as a 2D vector.
+     * @param attributes the attributes objects of an entity.
+     * @return the position as a 2D vector.
      */
     public Vector2f readPositionValues(Attributes attributes)
     {
@@ -482,8 +482,8 @@ public class XmlEntityReader
     /**
      * Reads the layer attribute of an entity.
      *
-     * @param attributes    the attributes object of the entity.
-     * @return              the layer value.
+     * @param attributes the attributes object of the entity.
+     * @return the layer value.
      */
     public int readLayer(Attributes attributes)
     {
@@ -494,8 +494,8 @@ public class XmlEntityReader
     /**
      * Reads the rotation attribute of an entity.
      *
-     * @param attributes    the attribute object.
-     * @return              the rotation float value.
+     * @param attributes the attribute object.
+     * @return the rotation float value.
      */
     public float readRotation(Attributes attributes)
     {
@@ -505,8 +505,8 @@ public class XmlEntityReader
     /**
      * Reads the size of an entity.
      *
-     * @param attributes    the attributes object of that entity.
-     * @return              the size as a 2D vector.
+     * @param attributes the attributes object of that entity.
+     * @return the size as a 2D vector.
      */
     public Vector2f readSizeValues(Attributes attributes)
     {
@@ -521,8 +521,8 @@ public class XmlEntityReader
      * one parameter in an qualified method, if the method has more than one parameter, the program
      * will crash so the client can fix this.
      *
-     * @param method    the method.
-     * @return          the parameter's class.
+     * @param method the method.
+     * @return the parameter's class.
      */
     Class<?> getParamFor(Method method)
     {
@@ -544,8 +544,8 @@ public class XmlEntityReader
      * Gets the qualified methods of a given class, meaning, all methods that have an
      * {@link XmlAttribute} annotation in it.
      *
-     * @param componentClass    the component class.
-     * @return                  the list of qualified methods only.
+     * @param componentClass the component class.
+     * @return the list of qualified methods only.
      */
     public ArrayList<Method> getQualifiedMethods(Class<?> componentClass)
     {
@@ -571,8 +571,8 @@ public class XmlEntityReader
     /**
      * Replaces all reference with string values in an expression in order to evaluate it latter.
      *
-     * @param expression    the expression to be fixed.
-     * @return              the replaced expression.
+     * @param expression the expression to be fixed.
+     * @return the replaced expression.
      */
     private String replaceReferences(String expression)
     {
@@ -638,10 +638,10 @@ public class XmlEntityReader
     /**
      * Simply replaces all occurrences in a string builder. Just a helper method.
      *
-     * @param builder   the string builder.
-     * @param from      the string that will be searched.
-     * @param to        the string that will replace the searched one.
-     * @return          the new string builder object.
+     * @param builder the string builder.
+     * @param from    the string that will be searched.
+     * @param to      the string that will replace the searched one.
+     * @return the new string builder object.
      */
     private StringBuilder replaceAll(StringBuilder builder, String from, String to)
     {

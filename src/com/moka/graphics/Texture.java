@@ -76,13 +76,13 @@ public class Texture
 	 */
 	public static Texture newTexture(Resources resources, String path)
 	{
-		if(resources.getTextures(path) == null)
+		if(resources.getTexture(path) == null)
 		{
 			return resources.addTexture(path, new Texture(path));
 		}
 		else
 		{
-			return resources.getTextures(path);
+			return resources.getTexture(path);
 		}
 	}
 }

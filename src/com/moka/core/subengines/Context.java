@@ -102,9 +102,15 @@ public abstract class Context extends SubEngine
         }
     }
 
+    /**
+     * Adds an entity to a given layer.
+     *
+     * @param entity the entity to be added.
+     * @param layer  the layer at which the context will add the entity.
+     * @return the same entity given.
+     */
     public final Entity addEntity(Entity entity, int layer)
     {
-
         // if the layer doesn't exists...
         if (layers.size() <= layer)
         {
@@ -123,6 +129,7 @@ public abstract class Context extends SubEngine
 
     /**
      * Constructs a new {@link com.moka.core.Entity} and add it to the hierarchy.
+     * Also says that the entity belongs to this context. That cannot change latter.
      *
      * @return the new {@link com.moka.core.Entity}.
      */
@@ -157,7 +164,7 @@ public abstract class Context extends SubEngine
     public Entity newCamera(String name, boolean current)
     {
         Entity entity = newEntity(name, 0);
-        Camera camera = new Camera( 0, getDisplay().getWidth(), 0, getDisplay().getHeight(),
+        Camera camera = new Camera(0, getDisplay().getWidth(), 0, getDisplay().getHeight(),
                 Camera.Z_NEAR, Camera.Z_FAR);
 
         entity.addComponent(camera);
@@ -252,6 +259,11 @@ public abstract class Context extends SubEngine
         return entity;
     }
 
+    /**
+     * Gets all entities across all layers.
+     *
+     * @return all entities as an array list.
+     */
     public ArrayList<Entity> getAllEntities()
     {
         allEntities.clear();

@@ -11,6 +11,7 @@ public class Game
     {
         Application application = new Application();
 
+        // set the game context for the application.
         application.setContext(new XmlContext("res/scene/scene.xml", "res/values.xml"));
 
         // set context options.
@@ -19,8 +20,10 @@ public class Game
         // set display options.
         application.getDisplay().createDisplay("screen_width", "screen_height", "JMoka Engine");
 
+        // set renderer options.
         application.getRenderer().setClearColor(1, 0, 0);
 
+        // create and start the application.
         application.create().start(60);
     }
 }

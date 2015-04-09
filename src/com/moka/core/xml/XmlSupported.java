@@ -7,7 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation to indicate that a component is supported for use with XML.
- * @author Shelo  
+ *
+ * @author Shelo
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.TYPE)

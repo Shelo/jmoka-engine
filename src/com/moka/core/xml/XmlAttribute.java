@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface XmlAttribute
 {
-	boolean required() default false;
-	String value();
+    boolean required() default false;
+
+    String value();
 }
