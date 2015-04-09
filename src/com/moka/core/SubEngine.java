@@ -7,6 +7,8 @@ import com.moka.physics.Physics;
 /**
  * Class designed for internal inheritance, it will give shortcut methods to access other
  * sub engines around the application.
+ *
+ * @author shelo
  */
 public abstract class SubEngine
 {

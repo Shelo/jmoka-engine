@@ -1,5 +1,11 @@
 #!/bin/bash
 
+git add --all
+
+read message
+
+git commit -a -m "$message"
+
 echo "==== GITHUB ===="
 git push -u jmoka master
 
