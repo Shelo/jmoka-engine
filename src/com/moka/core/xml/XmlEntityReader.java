@@ -3,7 +3,6 @@ package com.moka.core.xml;
 import com.moka.components.Component;
 import com.moka.core.subengines.Context;
 import com.moka.core.Entity;
-import com.moka.core.subengines.Resources;
 import com.moka.core.Transform;
 import com.moka.exceptions.JMokaException;
 import com.moka.math.Vector2f;
@@ -203,7 +202,6 @@ public class XmlEntityReader
             {
                 handleAttribute(component, method, attributes);
             }
-
         }
         catch (InstantiationException e)
         {
@@ -217,15 +215,20 @@ public class XmlEntityReader
     }
 
     /**
-     * For a component name, return the full path. This allows xml to just write "Sprite" instead of
-     * com.moka.components.Sprite.
+     * For a component name, return the component class. This allows xml to just write "Sprite" instead of
+     * com.moka.components.Sprite. This also considers the secondary path.
      *
      * @param componentName the component name.
      * @return              the component class.
      */
     public Class<?> forComponent(String componentName)
     {
-        String name = hasPackage(componentName) ? componentName : DEFAULT_PACKAGE + componentName;
+        // this will allow us to throw an exception if the component has a package
+        // but we couldn't find it.
+        boolean componentHasPackage = hasPackage(componentName);
+
+        // append the package if needed.
+        String name = componentHasPackage ? componentName : DEFAULT_PACKAGE + componentName;
 
         try
         {
@@ -233,7 +236,26 @@ public class XmlEntityReader
         }
         catch (ClassNotFoundException e)
         {
-            throw new JMokaException("Component class " + name + " not found.");
+            // try to find the component in the secondary path.
+            if (!componentHasPackage && context.getSecondaryPackage() != null)
+            {
+                // define the secondary path.
+                name = context.getSecondaryPackage() + "." + componentName;
+
+                // try to find it in the secondary package.
+                try
+                {
+                    return Class.forName(name);
+                }
+                catch (ClassNotFoundException d)
+                {
+                    throw new JMokaException("Component class " + name + " not found.");
+                }
+            }
+            else
+            {
+                throw new JMokaException("Component class " + name + " not found.");
+            }
         }
     }
 

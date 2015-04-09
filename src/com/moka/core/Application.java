@@ -11,6 +11,8 @@ import com.moka.physics.Physics;
 /**
  * The Application is the general wrapper of a jMoka game. It contains all sub engines and
  * helper classes in one place.
+ *
+ * @author shelo
  */
 public class Application
 {

@@ -82,7 +82,7 @@ public final class Core extends SubEngine
 				render = true;
 
 				getTime().update(delta);
-				getContext().updateAll();
+				getContext().update();
 				getContext().onUpdate();
 				getPhysics().checkCollisions();
 				getContext().postUpdate();
