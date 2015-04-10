@@ -161,12 +161,22 @@ public class Resources extends SubEngine
      */
     public Texture getTexture(String path)
     {
-        if (!resources.containsKey(path))
+        if (!textures.containsKey(path))
         {
             throw new JMokaException("Texture with path " + path + " doesn't exists.");
         }
 
         return textures.get(path);
+    }
+
+    /**
+     * Checks if the resource manager has a texture registered.
+     *
+     * @return true if it has it.
+     */
+    public boolean hasTexture(String path)
+    {
+        return textures.containsKey(path);
     }
 
 }

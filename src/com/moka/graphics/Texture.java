@@ -76,7 +76,7 @@ public class Texture
 	 */
 	public static Texture newTexture(Resources resources, String path)
 	{
-		if(resources.getTexture(path) == null)
+		if(!resources.hasTexture(path))
 		{
 			return resources.addTexture(path, new Texture(path));
 		}

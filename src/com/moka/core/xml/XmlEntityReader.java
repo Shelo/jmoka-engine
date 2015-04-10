@@ -4,6 +4,7 @@ import com.moka.components.Component;
 import com.moka.core.Context;
 import com.moka.core.Entity;
 import com.moka.core.Transform;
+import com.moka.core.triggers.Trigger;
 import com.moka.utils.JMokaException;
 import com.moka.math.Vector2f;
 import net.sourceforge.jeval.EvaluationException;
@@ -19,8 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -268,6 +268,7 @@ public class XmlEntityReader
      * @param method     the method that will be called.
      * @param attributes the attribute object of the component, specified on the XML file.
      */
+    @SuppressWarnings("unchecked")
     private void handleAttribute(Component component, Method method, Attributes attributes)
     {
         XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
@@ -288,13 +289,38 @@ public class XmlEntityReader
             return;
         }
 
-        // here the value is always something.
-        // we should always take the first parameter type because these methods are supposed to
-        // have only one.
-        Class<?> param = getParamFor(method);
+        // create the needed casted type.
+        Object casted = null;
 
-        // test the value and cast it to the parameter's class.
-        Object casted = getTestedValue(param, value);
+        // check if the method needs a generic.
+        if (!attribute.trigger())
+        {
+            // here the value is always something. We should always take the first parameter
+            // type because these methods are supposed to have only one.
+            Class<?> param = getParamFor(method);
+
+            // test the value and cast it to the parameter's class.
+            casted = getTestedValue(param, value);
+        }
+        else
+        {
+            // This magic piece of code is awesome.
+
+            // get the generic types of the parameters
+            Type[] type = method.getGenericParameterTypes();
+
+            // get the parametrized type, that is, a type with parameters.
+            ParameterizedType pType = (ParameterizedType) type[0];
+
+            // get the real type parameter for the first generic type.
+            Type metaType = pType.getActualTypeArguments()[0];
+
+            // finally catch the class of that generic type.
+            Class<?> metaClass = metaType.getClass();
+
+            // get the trigger.
+            casted = Trigger.getStaticTrigger(value, metaClass);
+        }
 
         try
         {

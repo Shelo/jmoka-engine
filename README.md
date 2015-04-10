@@ -16,7 +16,7 @@ prefabricated entities (which are technically the same) and global resources.
 
     <entity position="${@screen_width}, ${@screen_height / 2}" rotation="0" name="Player" layer="2">
         <Sprite texture="res/images/player.png" />
-        <example.components.MyShooter />
+        <example.components.Shooter />
         <Controllable topSpeed="500" acceleration="600" />
         <LookTowardsMouse />
     </entity>
