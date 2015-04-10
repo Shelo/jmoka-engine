@@ -1,7 +1,6 @@
 package com.moka.utils;
 
 import com.moka.core.Vertex;
-import com.moka.utils.JMokaException;
 import com.moka.math.Matrix4;
 import org.lwjgl.BufferUtils;
 

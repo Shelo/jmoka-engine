@@ -1,12 +1,10 @@
 package com.moka.components;
 
 import com.moka.core.*;
-import com.moka.core.Resources;
-import com.moka.core.Time;
-import com.moka.utils.JMokaException;
 import com.moka.graphics.Display;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
+import com.moka.utils.JMokaException;
 
 /**
  * Component class, establishes the common way a component should behave.

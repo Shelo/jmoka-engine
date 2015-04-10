@@ -2,8 +2,8 @@ package com.moka.core;
 
 import com.moka.components.Component;
 import com.moka.core.xml.XmlAttribute;
-import com.moka.utils.JMokaException;
 import com.moka.math.Vector2f;
+import com.moka.utils.JMokaException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

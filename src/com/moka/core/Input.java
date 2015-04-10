@@ -1,7 +1,7 @@
 package com.moka.core;
 
-import com.moka.utils.JMokaException;
 import com.moka.math.Vector2f;
+import com.moka.utils.JMokaException;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 

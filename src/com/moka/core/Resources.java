@@ -1,8 +1,8 @@
 package com.moka.core;
 
 import com.moka.core.xml.XmlResourcesReader;
-import com.moka.utils.JMokaException;
 import com.moka.graphics.Texture;
+import com.moka.utils.JMokaException;
 
 import java.util.HashMap;
 

@@ -1,7 +1,7 @@
 package com.moka.physics;
 
-import com.moka.utils.JMokaException;
 import com.moka.math.Vector2f;
+import com.moka.utils.JMokaException;
 
 public class Projection
 {

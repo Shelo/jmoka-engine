@@ -5,8 +5,6 @@ import com.moka.core.Prefab;
 import com.moka.core.contexts.XmlContext;
 import com.moka.core.triggers.Trigger;
 import com.moka.core.triggers.TriggerEvent;
-import com.moka.math.Vector2f;
-import example.spaceinvaders.ShipShooting;
 
 public class Game
 {

@@ -2,12 +2,12 @@ package com.moka.components;
 
 import com.moka.core.xml.XmlAttribute;
 import com.moka.core.xml.XmlSupported;
-import com.moka.utils.JMokaException;
 import com.moka.graphics.Color;
 import com.moka.graphics.Quad;
 import com.moka.graphics.Shader;
 import com.moka.graphics.Texture;
 import com.moka.math.Vector2f;
+import com.moka.utils.JMokaException;
 
 /**
  * Sprite class, this draws a Texture on a Quad given the transform specifications.

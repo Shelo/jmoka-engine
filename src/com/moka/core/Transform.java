@@ -1,7 +1,9 @@
 package com.moka.core;
 
+import com.moka.math.Quaternion;
+import com.moka.math.Vector2f;
+import com.moka.math.Vector3f;
 import com.moka.utils.JMokaException;
-import com.moka.math.*;
 
 public final class Transform
 {

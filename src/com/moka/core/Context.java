@@ -4,8 +4,8 @@ import com.moka.components.Camera;
 import com.moka.core.xml.XmlEntityReader;
 import com.moka.core.xml.XmlPrefabReader;
 import com.moka.core.xml.XmlSceneReader;
-import com.moka.utils.JMokaException;
 import com.moka.graphics.Shader;
+import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
 
 import java.util.ArrayList;

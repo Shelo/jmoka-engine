@@ -4,7 +4,6 @@ import com.moka.components.Component;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.MokaMath;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.system.MathUtil;
 
 public class ShipMovement extends Component
 {

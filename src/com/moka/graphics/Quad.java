@@ -1,8 +1,8 @@
 package com.moka.graphics;
 
-import com.moka.utils.Utils;
 import com.moka.core.Vertex;
 import com.moka.math.Vector2f;
+import com.moka.utils.Utils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;

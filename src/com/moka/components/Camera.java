@@ -2,9 +2,9 @@ package com.moka.components;
 
 import com.moka.core.Transform;
 import com.moka.core.xml.XmlSupported;
-import com.moka.utils.JMokaException;
 import com.moka.math.Matrix4;
 import com.moka.math.Quaternion;
+import com.moka.utils.JMokaException;
 
 @XmlSupported
 public class Camera extends Component
