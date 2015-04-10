@@ -3,6 +3,7 @@ package com.moka.core.xml;
 import com.moka.components.Component;
 import com.moka.core.Context;
 import com.moka.core.Entity;
+import com.moka.core.Prefab;
 import com.moka.core.Transform;
 import com.moka.core.triggers.Trigger;
 import com.moka.utils.JMokaException;
@@ -264,6 +265,8 @@ public class XmlEntityReader
      * a texture string. This method will get that attribute and call the method on the
      * given component in order to set the texture properly.
      *
+     * This method can handle entities references, triggers and prefabs.
+     *
      * @param component  the target component.
      * @param method     the method that will be called.
      * @param attributes the attribute object of the component, specified on the XML file.
@@ -289,20 +292,15 @@ public class XmlEntityReader
             return;
         }
 
-        // create the needed casted type.
+        // here the value is always something. We should always take the first parameter
+        // type because these methods are supposed to have only one.
+        Class<?> param = getParamFor(method);
+
+        // create the needed casted object.
         Object casted = null;
 
-        // check if the method needs a generic.
-        if (!attribute.trigger())
-        {
-            // here the value is always something. We should always take the first parameter
-            // type because these methods are supposed to have only one.
-            Class<?> param = getParamFor(method);
-
-            // test the value and cast it to the parameter's class.
-            casted = getTestedValue(param, value);
-        }
-        else
+        // test different cases, where the param can be a trigger, a prefab, or other thing.
+        if (param.isAssignableFrom(Trigger.class))
         {
             // This magic piece of code is awesome.
 
@@ -320,6 +318,15 @@ public class XmlEntityReader
 
             // get the trigger.
             casted = Trigger.getStaticTrigger(value, metaClass);
+        }
+        else if (param.isAssignableFrom(Prefab.class))
+        {
+            casted = context.newPrefab(value);
+        }
+        else
+        {
+            // test the value and cast it to the parameter's class.
+            casted = getTestedValue(param, value);
         }
 
         try

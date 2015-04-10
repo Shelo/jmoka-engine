@@ -1,0 +1,11 @@
+<entity xmlns="http://www.mokadev.com/entity"
+        position="0, 0" rotation="0" size="${@bullet_size}, ${@bullet_size}" layer="1">
+
+    <Sprite
+            texture="res/images/moka.png" />
+
+    <Bullet
+            directionX="0"
+            directionY="1"
+            speed="400" />
+</entity>

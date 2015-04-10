@@ -1,8 +1,0 @@
-<entity xmlns="http://www.mokadev.com/entity"
-        position="300, 300" rotation="90" size="20, 20" layer="1">
-
-    <Sprite texture="res/images/moka.png" />
-    <Bullet speed="400" />
-    <CircleCollider radius="20" trigger="true" />
-
-</entity>

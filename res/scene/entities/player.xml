@@ -1,0 +1,15 @@
+<entity xmlns="http://www.mokadev.com/entity"
+        position="${@screen_width / 2}, @ship_margin_bottom" size="@ship_size, @ship_size" rotation="90" layer="2">
+
+        <Sprite
+                texture="res/images/player.png" />
+
+        <ShipMovement
+                speed="450"
+                boundLeft="${@ship_size / 2}"
+                boundRight="${@screen_width - @ship_size / 2}" />
+
+        <ShipShooting
+                trigger="example.Game.fireTrigger"
+                bulletPrefab="res/scene/prefabs/bullet.xml" />
+</entity>

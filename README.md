@@ -84,3 +84,4 @@ A first approach is to give a build option that will optimize the XML code into 
 - Separate the context into JavaContext and XmlContext.
 - Optimize matrix calculations.
 - Optimize Quaternions.
+- An automatic way of passing a prefab to a component. Similar to a trigger.

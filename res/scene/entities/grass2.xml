@@ -1,6 +1,0 @@
-<entity xmlns="http://www.mokadev.com/entity"
-        position="0, 0" layer="0" rotation="0" size="64, 64">
-
-    <Sprite texture="@image_grass2" />
-
-</entity>

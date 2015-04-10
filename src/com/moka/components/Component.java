@@ -52,8 +52,14 @@ public abstract class Component
 		return enabled;
 	}
 
+	/**
+	 * Creates a new prefab from a XML file. Remember: The Prefab is a state machine.
+	 *
+	 * @param filePath	the xml file.
+	 * @return the new creaed prefab.
+	 */
 	public Prefab newPrefab(String filePath) {
-		return getApplication().getContext().newPrefab(filePath);
+		return entity.getContext().newPrefab(filePath);
 	}
 
 	public boolean hasCollider() {

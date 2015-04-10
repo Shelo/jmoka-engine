@@ -1,6 +1,7 @@
 package com.moka.core.triggers;
 
 import com.moka.components.Component;
+import com.moka.core.Entity;
 
 /**
  * Defines a simple definition for an event.
@@ -41,5 +42,14 @@ public class TriggerEvent<T>
     public Component getComponent()
     {
         return component;
+    }
+
+    /**
+     * A shortcut method to get the entity. This is potentially a very common operation.
+     * @return the entity holding the component.
+     */
+    public Entity getEntity()
+    {
+        return component.getEntity();
     }
 }

@@ -13,16 +13,10 @@ import org.lwjgl.glfw.GLFW;
 public class Shooter extends Component
 {
     private Vector2f buf = new Vector2f();
-    private Prefab bullet;
-    private int counter;
 
     private Trigger<Vector2f> fireTrigger;
-
-    @Override
-    public void onCreate()
-    {
-        bullet = newPrefab("res/scene/entities/bullet.xml");
-    }
+    private Prefab bullet;
+    private int counter;
 
     @Override
     public void onUpdate()
@@ -49,8 +43,14 @@ public class Shooter extends Component
         }
     }
 
-    @XmlAttribute(value = "fireTrigger", trigger = true)
+    @XmlAttribute("fireTrigger")
     public void setFireTrigger(Trigger<Vector2f> trigger) {
         fireTrigger = trigger;
+    }
+
+    @XmlAttribute("bulletPrefab")
+    public void setBullet(Prefab bullet)
+    {
+        this.bullet = bullet;
     }
 }

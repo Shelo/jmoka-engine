@@ -26,6 +26,11 @@ public final class Prefab
     private float rotation;
     private int layer;
 
+    /**
+     * Creates a new Prefab for a given context with given components.
+     * @param context       the context.
+     * @param components    components.
+     */
     public Prefab(Context context, PreComponents components)
     {
         this.components = components;

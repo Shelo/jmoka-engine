@@ -8,6 +8,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 public class XmlPrefabReader
 {
     private XmlEntityReader entityReader;
+    private SAXParser parser;
     private Context context;
 
     private class Handler extends DefaultHandler
@@ -95,6 +99,15 @@ public class XmlPrefabReader
 
     public XmlPrefabReader(XmlEntityReader entityReader, Context context)
     {
+        try
+        {
+            parser = SAXParserFactory.newInstance().newSAXParser();
+        }
+        catch (ParserConfigurationException | SAXException e)
+        {
+            throw new JMokaException("Error SAXParser: " + e.toString());
+        }
+
         this.entityReader = entityReader;
         this.context = context;
     }
@@ -116,7 +129,7 @@ public class XmlPrefabReader
 
         try
         {
-            entityReader.getParser().parse(filePath, handler);
+            parser.parse(filePath, handler);
         }
         catch (SAXException | IOException e)
         {

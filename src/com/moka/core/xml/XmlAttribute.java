@@ -10,6 +10,5 @@ import java.lang.annotation.Target;
 public @interface XmlAttribute
 {
     boolean required() default false;
-    boolean trigger() default false;
     String value();
 }

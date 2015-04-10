@@ -40,13 +40,7 @@ public class Bullet extends Component {
 	@Override
 	public void onCollide(Collision collision)
 	{
-		/*if (collision.isGuilty()) {
-			collision.entity.destroy();
 
-			if (collision.entity.getName().startsWith("Bullet")) {
-				getEntity().destroy();
-			}
-		}*/
 	}
 
 	@XmlAttribute("speed")
@@ -55,11 +49,13 @@ public class Bullet extends Component {
 		this.speed = speed;
 	}
 
+	@XmlAttribute("directionX")
 	public void setDirectionX(float d)
 	{
 		direction.x = d;
 	}
 
+	@XmlAttribute("directionY")
 	public void setDirectionY(float d)
 	{
 		direction.y = d;
