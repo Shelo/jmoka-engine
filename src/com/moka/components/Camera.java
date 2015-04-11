@@ -1,17 +1,16 @@
 package com.moka.components;
 
 import com.moka.core.Transform;
-import com.moka.core.xml.XmlSupported;
 import com.moka.math.Matrix4;
 import com.moka.math.Quaternion;
 import com.moka.utils.JMokaException;
 
-@XmlSupported
 public class Camera extends Component
 {
 	public static final float Z_NEAR 	= -10;
 	public static final float Z_FAR 	=  10;
 
+	private Quaternion conjugate = new Quaternion(0, 0, 0, 1);
 	private Matrix4 projection;
 	private Matrix4 translationMat = new Matrix4();
 	private Matrix4 rotationMat = new Matrix4();
@@ -49,9 +48,8 @@ public class Camera extends Component
 
 		Transform t = getTransform();
 
-		Quaternion rotation = t.getRotation().conjugate();
-		Matrix4 translation = translationMat.toTranslation(t.getPositionX() * -1,
-				t.getPositionY() * -1, t.getPositionZ() * -1);
+		Quaternion rotation = t.getRotation().conjugate(conjugate);
+		Matrix4 translation = translationMat.toTranslation(t.getPositionX() * -1, t.getPositionY() * -1, 0);
 		Matrix4 rotate = rotation.toRotationMatrix(rotationMat);
 		rotate.mul(translation, mulBuffer);
 		return projection.mul(mulBuffer, mulBuffer);

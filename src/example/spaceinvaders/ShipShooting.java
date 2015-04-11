@@ -14,7 +14,7 @@ public class ShipShooting extends Component
 
     public ShipShooting()
     {
-        // Empty class to support xml.
+        // XML Support.
     }
 
     @Override
@@ -22,21 +22,26 @@ public class ShipShooting extends Component
     {
         if (getInput().getKeyDown(GLFW.GLFW_KEY_SPACE))
         {
-            if (trigger != null)
-            {
-                trigger.onTrigger(new TriggerEvent<>(this, bulletPrefab));
-            }
+            onFire();
+        }
+    }
+
+    protected void onFire()
+    {
+        if (trigger != null)
+        {
+            trigger.onTrigger(new TriggerEvent<>(this, bulletPrefab));
         }
     }
 
     @XmlAttribute("trigger")
-    public void setTrigger(Trigger<Prefab> trigger)
+    public final void setTrigger(Trigger<Prefab> trigger)
     {
         this.trigger = trigger;
     }
 
     @XmlAttribute("bulletPrefab")
-    public void setBulletPrefab(Prefab bulletPrefab)
+    public final void setBulletPrefab(Prefab bulletPrefab)
     {
         this.bulletPrefab = bulletPrefab;
     }

@@ -13,7 +13,8 @@ import java.lang.reflect.Field;
 public abstract class Trigger<T>
 {
     /**
-     * Triggers an action for a given component.
+     * Triggers an action for a given component. To know what the parameter does,
+     * see {@link TriggerEvent}.
      *
      * @param event the event sent by the caller.
      * @return true if the action was successfully handled.

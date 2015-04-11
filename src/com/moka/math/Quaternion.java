@@ -52,9 +52,9 @@ public class Quaternion
         return new Quaternion(x / length, y / length, z / length, w / length);
     }
 
-    public Quaternion conjugate()
+    public Quaternion conjugate(Quaternion conjugate)
     {
-        return new Quaternion(-x, -y, -z, w);
+        return conjugate.set(-x, -y, -z, w);
     }
 
     public Quaternion mul(float r)

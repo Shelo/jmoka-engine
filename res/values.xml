@@ -4,10 +4,10 @@
     </string>
 
     <integer>
-        <res name="screen_width" value="1024" />
-        <res name="screen_height" value="760" />
+        <res name="screen_width" value="480" />
+        <res name="screen_height" value="800" />
         <res name="ship_margin_bottom" value="100" />
         <res name="ship_size" value="72" />
-        <res name="bullet_size" value="32" />
+        <res name="bullet_size" value="16" />
     </integer>
 </values>

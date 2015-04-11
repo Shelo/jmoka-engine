@@ -5,6 +5,7 @@ import com.moka.math.Vector2f;
 import com.moka.math.Vector3f;
 import com.moka.utils.JMokaException;
 
+// TODO: comments.
 public final class Transform
 {
     private final Entity entity;
@@ -121,11 +122,6 @@ public final class Transform
         return position.y;
     }
 
-    public float getPositionZ()
-    {
-        return 0;
-    }
-
     public boolean hasRotated()
     {
         return !prevRotation.equals(rotation);
@@ -149,5 +145,25 @@ public final class Transform
     public void move(Vector2f movement)
     {
         move(movement.x, movement.y);
+    }
+
+    public Vector2f getForward()
+    {
+        return null;
+    }
+
+    public Vector2f getBackward()
+    {
+        return null;
+    }
+
+    public Vector2f getLeft()
+    {
+        return null;
+    }
+
+    public Vector2f getRight()
+    {
+        return null;
     }
 }

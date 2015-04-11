@@ -10,6 +10,9 @@ public class Game
 {
     private static final String SECONDARY_PATH = "example.spaceinvaders";
 
+    /*
+     * This is an example of a trigger.
+     */
     public static Trigger<Prefab> fireTrigger = new Trigger<Prefab>()
     {
         private int counter = 0;
