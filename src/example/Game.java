@@ -1,12 +1,13 @@
 package example;
 
 import com.moka.core.Application;
+import com.moka.core.Entity;
 import com.moka.core.Prefab;
 import com.moka.core.contexts.XmlContext;
 import com.moka.core.triggers.Trigger;
 import com.moka.core.triggers.TriggerEvent;
-import com.moka.math.Matrix3;
 import com.moka.math.Vector2f;
+import com.moka.utils.CalcUtils;
 
 public class Game
 {
@@ -23,7 +24,6 @@ public class Game
         public boolean onTrigger(TriggerEvent<Prefab> event)
         {
             Prefab prefab = event.getMeta();
-            prefab.setPosition(event.getEntity().getTransform().getPosition());
             prefab.newEntity("Bullet-" + (counter++));
             return true;
         }

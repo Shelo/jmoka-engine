@@ -5,6 +5,7 @@ import com.moka.core.Prefab;
 import com.moka.core.triggers.Trigger;
 import com.moka.core.triggers.TriggerEvent;
 import com.moka.core.xml.XmlAttribute;
+import com.moka.utils.CalcUtils;
 import org.lwjgl.glfw.GLFW;
 
 public class ShipShooting extends Component
@@ -22,6 +23,9 @@ public class ShipShooting extends Component
     {
         if (getInput().getKeyDown(GLFW.GLFW_KEY_SPACE))
         {
+            bulletPrefab.setPosition(getTransform().getPosition());
+            bulletPrefab.setRotation(getTransform().getFrontAngle());
+
             onFire();
         }
     }

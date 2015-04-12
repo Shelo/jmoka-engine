@@ -1,5 +1,7 @@
 package com.moka.math;
 
+import com.moka.utils.JMokaException;
+
 public class Matrix3
 {
     private float[][] values = new float[3][3];
@@ -48,8 +50,8 @@ public class Matrix3
         values[1][1] = values[0][0];
         values[2][1] = 0;
 
-        values[2][0] = 0;
-        values[2][1] = 0;
+        values[0][2] = 0;
+        values[1][2] = 0;
         values[2][2] = 1;
 
         return this;
@@ -100,6 +102,11 @@ public class Matrix3
 
     public Vector2f mul(Vector2f r, Vector2f result)
     {
+        if (result == null)
+        {
+            throw new JMokaException("The result vector given is null.");
+        }
+
         result.x = values[0][0] * r.x + values[0][1] * r.y + values[0][2];
         result.y = values[1][0] * r.x + values[1][1] * r.y + values[1][2];
         return result;

@@ -1,7 +1,7 @@
 package com.moka.graphics;
 
 import com.moka.core.Resources;
-import com.moka.utils.Utils;
+import com.moka.utils.CoreUtils;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import java.io.File;
@@ -21,7 +21,7 @@ public class Texture
 
         if (filePath != null)
         {
-            String ext = Utils.getExtensionFrom(filePath);
+            String ext = CoreUtils.getExtensionFrom(filePath);
 
             try
             {

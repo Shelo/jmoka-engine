@@ -2,7 +2,7 @@ package com.moka.graphics;
 
 import com.moka.core.Vertex;
 import com.moka.math.Vector2f;
-import com.moka.utils.Utils;
+import com.moka.utils.CoreUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -45,10 +45,10 @@ public class Quad
         };
 
         // populate vertexBuffer.
-        vertexBuffer = Utils.genBuffer(vertices);
+        vertexBuffer = CoreUtils.genBuffer(vertices);
 
         // populate indexBuffer.
-        indexBuffer = Utils.genBuffer(new int[]{
+        indexBuffer = CoreUtils.genBuffer(new int[]{
                 0, 1, 2, 0, 2, 3
         });
 

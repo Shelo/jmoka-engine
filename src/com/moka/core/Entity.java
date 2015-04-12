@@ -6,7 +6,7 @@ import com.moka.math.Vector2f;
 import com.moka.math.Matrix3;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
-import com.moka.utils.CoreUtils;
+import com.moka.utils.CalcUtils;
 
 import java.util.ArrayList;
 
@@ -154,7 +154,7 @@ public class Entity
     public Vector2f[] transformVertices(final Vector2f[] vertices)
     {
         Vector2f[] res = new Vector2f[vertices.length];
-        Matrix3 model = CoreUtils.calcModelMatrix(getTransform());
+        Matrix3 model = CalcUtils.calcModelMatrix(getTransform());
 
         for (int i = 0; i < vertices.length; i++)
         {

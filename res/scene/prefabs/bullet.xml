@@ -5,7 +5,5 @@
             texture="res/images/moka.png" />
 
     <Bullet
-            directionX="0"
-            directionY="1"
             speed="400" />
 </entity>

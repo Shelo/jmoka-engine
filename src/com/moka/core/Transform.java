@@ -2,12 +2,14 @@ package com.moka.core;
 
 import com.moka.math.Vector2f;
 import com.moka.math.Matrix3;
+import com.moka.utils.CalcUtils;
 import com.moka.utils.JMokaException;
 
 /**
- * New transform to test stuff, this should replace the normal Transform.
- *
- * TODO: change comment.
+ * The transform indicates all about the position, rotation and size of an entity,
+ * every entity has a transform, and only one transform. The position, rotation and
+ * size vectors are marked as final, so fell free to store them to keep track of them
+ * in the future.
  *
  * @author shelo
  */
@@ -18,20 +20,9 @@ public class Transform
      */
     private final Entity entity;
 
-    /**
-     * Rotation stored as a matrix, for optimization porpoises.
-     */
-    private Matrix3 rotation;
-
-    /**
-     * Position that describes the transform.
-     */
-    private Vector2f position;
-
-    /**
-     * Size that describes the transform.
-     */
-    private Vector2f size;
+    private final Vector2f position;
+    private final Matrix3 rotation;
+    private final Vector2f size;
 
     /**
      * If we should use our size or an sprite size.
@@ -41,16 +32,7 @@ public class Transform
     /**
      * Save a previous state in order to check changes.
      */
-    private Transform prev = null;
-
-    public Transform()
-    {
-        this.entity = null;
-
-        rotation = new Matrix3();
-        position = new Vector2f();
-        size = new Vector2f();
-    }
+    private final Transform prev;
 
     public Transform(Entity entity)
     {
@@ -61,6 +43,20 @@ public class Transform
         size = new Vector2f();
 
         prev = new Transform();
+    }
+
+    /**
+     * This constructor is used internally to create a previous state transform.
+     */
+    private Transform()
+    {
+        this.entity = null;
+
+        rotation = new Matrix3();
+        position = new Vector2f();
+        size = new Vector2f();
+
+        prev = null;
     }
 
     /**
@@ -81,6 +77,11 @@ public class Transform
         position.add(distance);
     }
 
+    public void rotate(float radians)
+    {
+        CalcUtils.rotateMatrix(rotation, radians);
+    }
+
     private void set(Transform other)
     {
         position.set(other.getPosition());
@@ -98,7 +99,7 @@ public class Transform
     public void setSize(Vector2f size)
     {
         useOwnSize = true;
-        this.size = size;
+        this.size.set(size);
     }
 
     public void setPosition(float x, float y)
@@ -108,7 +109,7 @@ public class Transform
 
     public void setPosition(Vector2f position)
     {
-        this.position = position;
+        this.position.set(position);
     }
 
     public void setRotation(float radians)
@@ -116,6 +117,62 @@ public class Transform
         this.rotation.toRotation(radians);
     }
 
+    /**
+     * Returns the vector that points front in the direction of the transform.
+     *
+     * @param result where we will store the result.
+     * @return the result with the forward direction.
+     */
+    public Vector2f getFront(final Vector2f result)
+    {
+        return rotation.mul(Vector2f.FORWARD, result).nor();
+    }
+
+    /**
+     * Returns the vector that points back in the direction of the transform.
+     *
+     * @param result where we will store the result.
+     * @return the result with the backward direction.
+     */
+    public Vector2f getBack(final Vector2f result)
+    {
+        return rotation.mul(Vector2f.BACKWARD, result).nor();
+    }
+
+    /**
+     * Returns the vector that points to the right in the direction of the transform.
+     *
+     * @param result where we will store the result.
+     * @return the result with the right direction.
+     */
+    public Vector2f getRight(final Vector2f result)
+    {
+        return rotation.mul(Vector2f.RIGHT, result).nor();
+    }
+
+    /**
+     * Returns the vector that points to the left in the direction of the transform.
+     *
+     * @param result where we will store the result.
+     * @return the result with the left direction.
+     */
+    public Vector2f getLeft(final Vector2f result)
+    {
+        return rotation.mul(Vector2f.LEFT, result).nor();
+    }
+
+    public float getFrontAngle()
+    {
+        return CalcUtils.calcFrontAngle(this);
+    }
+
+    /**
+     * Gets the size that the transform is using at the time, if no size
+     * was specified before, then this method will return the sprite's size,
+     * if any.
+     *
+     * @return the size used by the transform.
+     */
     public Vector2f getSize()
     {
         Vector2f rSize;
@@ -144,11 +201,21 @@ public class Transform
         return rSize;
     }
 
+    /**
+     * Returns the rotation matrix used at this moment.
+     *
+     * @return the rotation matrix.
+     */
     public Matrix3 getRotation()
     {
         return rotation;
     }
 
+    /**
+     * Returns the position vector used at this moment.
+     *
+     * @return the position vector.
+     */
     public Vector2f getPosition()
     {
         return position;

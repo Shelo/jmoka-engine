@@ -61,11 +61,11 @@ public final class Prefab
     /**
      * Sets the rotation of new entities from now on, in degrees.
      *
-     * @param rotation angle.
+     * @param radians angle in radians.
      */
-    public void setRotation(float rotation)
+    public void setRotation(float radians)
     {
-        this.rotation = rotation;
+        this.rotation = radians;
     }
 
     /**

@@ -1,30 +1,108 @@
 package com.moka.utils;
 
-import com.moka.core.Transform;
-import com.moka.math.Vector2f;
+import com.moka.core.Vertex;
+import com.moka.math.Matrix4;
 import com.moka.math.Matrix3;
+import org.lwjgl.BufferUtils;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 public class CoreUtils
 {
-    private static final Matrix3 TRANS_MAT  = new Matrix3();
-    private static final Matrix3 SCL_MAT    = new Matrix3();
-    private static final Matrix3 BUF_MAT    = new Matrix3();
-
-    /**
-     * Gets the model matrix from a transform, using static defined
-     * matrices in order to reuse them when trying to achieve this operation.
-     *
-     * @param transform the transform where we'll get the model.
-     * @return the model matrix.
-     */
-    public static Matrix3 calcModelMatrix(Transform transform)
+    public static FloatBuffer genBuffer(Vertex[] vertices)
     {
-        Vector2f position = transform.getPosition();
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(vertices.length * Vertex.SIZE);
 
-        Matrix3 translation = TRANS_MAT.toTranslation((int) position.x, (int) position.y);
-        Matrix3 scale = SCL_MAT.toScale(transform.getSize().x, transform.getSize().y);
-        Matrix3 rotate = transform.getRotation();
+        for (Vertex vertex : vertices)
+        {
+            buffer.put(vertex.getX());
+            buffer.put(vertex.getY());
+            buffer.put(vertex.getS());
+            buffer.put(vertex.getT());
+        }
 
-        return translation.mul(rotate.mul(scale, BUF_MAT), BUF_MAT);
+        return (FloatBuffer) buffer.flip();
+    }
+
+    public static IntBuffer genBuffer(int[] indices)
+    {
+        IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
+
+        for (int index : indices)
+        {
+            buffer.put(index);
+        }
+
+        return (IntBuffer) buffer.flip();
+    }
+
+    public static String readFile(String filePath)
+    {
+        BufferedReader reader;
+        StringBuilder builder;
+
+        try
+        {
+            reader = new BufferedReader(new FileReader(filePath));
+            builder = new StringBuilder();
+
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                builder.append(line).append("\n");
+            }
+
+            reader.close();
+            return builder.toString();
+        }
+        catch (FileNotFoundException e)
+        {
+            throw new JMokaException("File " + filePath + " not found.");
+        }
+        catch (IOException e)
+        {
+            throw new JMokaException("IOException when reading file " + filePath + ".");
+        }
+    }
+
+    public static FloatBuffer genBuffer(Matrix4 matrix)
+    {
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(4 * 4);
+
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                buffer.put(matrix.get(j, i));
+            }
+        }
+
+        return (FloatBuffer) buffer.flip();
+    }
+
+    public static FloatBuffer genBuffer(Matrix3 matrix)
+    {
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(3 * 3);
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                buffer.put(matrix.get(j, i));
+            }
+        }
+
+        return (FloatBuffer) buffer.flip();
+    }
+
+    public static String getExtensionFrom(String filePath)
+    {
+        String[] s = filePath.split("\\.(?=[^\\.]+$)");
+        return s[s.length - 1];
     }
 }
