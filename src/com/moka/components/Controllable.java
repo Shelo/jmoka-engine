@@ -1,11 +1,9 @@
 package com.moka.components;
 
 import com.moka.core.xml.XmlAttribute;
-import com.moka.core.xml.XmlSupported;
 import com.moka.physics.Collision;
 import org.lwjgl.glfw.GLFW;
 
-@XmlSupported
 public class Controllable extends Component
 {
 	public static final float TOLERANCE = 0.03f;

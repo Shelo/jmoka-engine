@@ -7,6 +7,6 @@ public class Rotator extends Component
 	@Override
 	public void onUpdate()
 	{
-		getTransform().setRotationDeg(angle += (float) (getTime().getDelta() * 90));
+		getTransform().setRotation(angle += (float) (getTime().getDelta() * 90));
 	}
 }

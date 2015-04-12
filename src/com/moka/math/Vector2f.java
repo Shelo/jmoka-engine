@@ -8,6 +8,8 @@ package com.moka.math;
  * @author Shelo
  */
 public class Vector2f {
+	public static final Vector2f FORWARD 	= new Vector2f(  1, 0);
+	public static final Vector2f BACKWARD 	= new Vector2f(- 1, 0);
 	public float x;
 	public float y;
 
@@ -83,6 +85,7 @@ public class Vector2f {
 
 	/**
 	 * Rotate this vector by a given angle.
+	 *
 	 * @param radians angle in radians.
 	 * @return this vector.
 	 */
@@ -96,6 +99,7 @@ public class Vector2f {
 
 	/**
 	 * Calculate the angle of this vector.
+	 *
 	 * @return the angle in radians.
 	 */
 	public float angle() {
@@ -116,10 +120,15 @@ public class Vector2f {
 
 	@Override
 	public boolean equals(Object obj) {
-		Vector2f r = null;
-		if(obj instanceof Vector2f) r = (Vector2f) obj;
-		return r != null && this.x == r.x && this.y == r.y;
-
+		if (obj instanceof Vector2f)
+		{
+			Vector2f other = (Vector2f) obj;
+			return this.x == other.x && this.y == other.y;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	@Override

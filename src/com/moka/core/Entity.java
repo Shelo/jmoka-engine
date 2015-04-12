@@ -2,8 +2,8 @@ package com.moka.core;
 
 import com.moka.components.Component;
 import com.moka.components.Sprite;
-import com.moka.math.Matrix4;
 import com.moka.math.Vector2f;
+import com.moka.math.Matrix3;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 import com.moka.utils.CoreUtils;
@@ -74,6 +74,7 @@ public class Entity
     public void update()
     {
         transform.update();
+
         for (Component component : components)
         {
             if (component.isEnabled())
@@ -153,11 +154,11 @@ public class Entity
     public Vector2f[] transformVertices(final Vector2f[] vertices)
     {
         Vector2f[] res = new Vector2f[vertices.length];
-        Matrix4 model = CoreUtils.getModelMatrix(getTransform());
+        Matrix3 model = CoreUtils.calcModelMatrix(getTransform());
 
         for (int i = 0; i < vertices.length; i++)
         {
-            res[i] = model.mul(vertices[i]);
+            model.mul(vertices[i], res[i]);
         }
 
         return res;

@@ -1,15 +1,16 @@
 #version 330
 
-layout (location = 0) in vec3 a_position;
+layout (location = 0) in vec2 a_position;
 layout (location = 1) in vec2 a_texCoord;
 
-uniform mat4 u_projectedView;
-uniform mat4 u_model;
+uniform mat3 u_projectedView;
+uniform mat3 u_model;
 
 out vec2 texCoord;
 
 void main() {
-	gl_Position = u_projectedView * (u_model * vec4(a_position, 1.0));
+	vec3 position = u_projectedView * (u_model * vec3(a_position, 1.0));
+	gl_Position = vec4(position.xy, 0, position.z);
 
 	// out.
 	texCoord = a_texCoord;

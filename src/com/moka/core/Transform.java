@@ -1,40 +1,74 @@
 package com.moka.core;
 
-import com.moka.math.Quaternion;
 import com.moka.math.Vector2f;
-import com.moka.math.Vector3f;
+import com.moka.math.Matrix3;
 import com.moka.utils.JMokaException;
 
-// TODO: comments.
-public final class Transform
+/**
+ * New transform to test stuff, this should replace the normal Transform.
+ *
+ * TODO: change comment.
+ *
+ * @author shelo
+ */
+public class Transform
 {
+    /**
+     * Entity that has this transform.
+     */
     private final Entity entity;
 
-    private boolean useOwnSize = false;
-    private Quaternion prevRotation;
-    private Vector2f prevPosition;
-    private Quaternion rotation;
+    /**
+     * Rotation stored as a matrix, for optimization porpoises.
+     */
+    private Matrix3 rotation;
+
+    /**
+     * Position that describes the transform.
+     */
     private Vector2f position;
-    private Vector2f prevSize;
+
+    /**
+     * Size that describes the transform.
+     */
     private Vector2f size;
+
+    /**
+     * If we should use our size or an sprite size.
+     */
+    private boolean useOwnSize;
+
+    /**
+     * Save a previous state in order to check changes.
+     */
+    private Transform prev = null;
+
+    public Transform()
+    {
+        this.entity = null;
+
+        rotation = new Matrix3();
+        position = new Vector2f();
+        size = new Vector2f();
+    }
 
     public Transform(Entity entity)
     {
         this.entity = entity;
 
-        prevRotation = new Quaternion();
-        rotation = new Quaternion();
-        prevPosition = new Vector2f();
+        rotation = new Matrix3();
         position = new Vector2f();
-        prevSize = new Vector2f();
         size = new Vector2f();
+
+        prev = new Transform();
     }
 
+    /**
+     * Updates the previous transform in order to catch up.
+     */
     public void update()
     {
-        prevPosition.set(position);
-        prevRotation.set(rotation);
-        prevSize.set(getSize());
+        prev.set(this);
     }
 
     public void move(float x, float y)
@@ -42,9 +76,33 @@ public final class Transform
         position.add(x, y);
     }
 
-    public Quaternion getRotation()
+    public void move(Vector2f distance)
     {
-        return rotation;
+        position.add(distance);
+    }
+
+    private void set(Transform other)
+    {
+        position.set(other.getPosition());
+        rotation.set(other.getRotation());
+        size.set(other.getSize());
+        useOwnSize = other.useOwnSize;
+    }
+
+    public void setSize(Vector2f size)
+    {
+        useOwnSize = true;
+        this.size = size;
+    }
+
+    public void setPosition(Vector2f position)
+    {
+        this.position = position;
+    }
+
+    public void setRotation(float radians)
+    {
+        this.rotation.toRotation(radians);
     }
 
     public Vector2f getSize()
@@ -61,7 +119,6 @@ public final class Transform
                 {
                     throw new JMokaException("Entity has no dimensions!");
                 }
-
             }
             else
             {
@@ -76,65 +133,9 @@ public final class Transform
         return rSize;
     }
 
-    public void setRotation(Quaternion rotation)
+    public Matrix3 getRotation()
     {
-        this.rotation = rotation;
-    }
-
-    public void setRotation(float radians)
-    {
-        this.rotation = new Quaternion(Vector3f.AXIS_Z, radians);
-    }
-
-    public void setRotationDeg(float rotation)
-    {
-        this.rotation.set(new Quaternion(Vector3f.AXIS_Z, (float) Math.toRadians(rotation)));
-    }
-
-    public void setSize(float x, float y)
-    {
-        useOwnSize = true;
-        size.set(x, y);
-    }
-
-    public void setSize(Vector2f size)
-    {
-        setSize(size.x, size.y);
-    }
-
-    public void setPosition(float x, float y)
-    {
-        position.set(x, y);
-    }
-
-    public void setPosition(Vector2f position)
-    {
-        this.position.set(position);
-    }
-
-    public float getPositionX()
-    {
-        return position.x;
-    }
-
-    public float getPositionY()
-    {
-        return position.y;
-    }
-
-    public boolean hasRotated()
-    {
-        return !prevRotation.equals(rotation);
-    }
-
-    public boolean hasMoved()
-    {
-        return !prevPosition.equals(position);
-    }
-
-    public boolean hasChanged()
-    {
-        return hasRotated() || hasMoved();
+        return rotation;
     }
 
     public Vector2f getPosition()
@@ -142,28 +143,29 @@ public final class Transform
         return position;
     }
 
-    public void move(Vector2f movement)
+    /**
+     * Gets the entity that has this transform. That entity will never
+     * change, since the entity is declared as a final.
+     *
+     * @return the entity.
+     */
+    public Entity getEntity()
     {
-        move(movement.x, movement.y);
+        return entity;
     }
 
-    public Vector2f getForward()
+    public boolean hasRotated()
     {
-        return null;
+        return !prev.getRotation().equals(rotation);
     }
 
-    public Vector2f getBackward()
+    public boolean hasMoved()
     {
-        return null;
+        return !prev.getPosition().equals(position);
     }
 
-    public Vector2f getLeft()
+    public boolean hasChanged()
     {
-        return null;
-    }
-
-    public Vector2f getRight()
-    {
-        return null;
+        return hasRotated() || hasMoved();
     }
 }

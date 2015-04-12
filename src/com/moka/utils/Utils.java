@@ -2,6 +2,7 @@ package com.moka.utils;
 
 import com.moka.core.Vertex;
 import com.moka.math.Matrix4;
+import com.moka.math.Matrix3;
 import org.lwjgl.BufferUtils;
 
 import java.io.BufferedReader;
@@ -21,7 +22,6 @@ public class Utils
         {
             buffer.put(vertex.getX());
             buffer.put(vertex.getY());
-            buffer.put(vertex.getZ());
             buffer.put(vertex.getS());
             buffer.put(vertex.getT());
         }
@@ -77,6 +77,21 @@ public class Utils
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
+            {
+                buffer.put(matrix.get(j, i));
+            }
+        }
+
+        return (FloatBuffer) buffer.flip();
+    }
+
+    public static FloatBuffer genBuffer(Matrix3 matrix)
+    {
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(3 * 3);
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
             {
                 buffer.put(matrix.get(j, i));
             }

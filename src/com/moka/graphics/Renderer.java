@@ -52,7 +52,7 @@ public final class Renderer extends SubEngine
             throw new JMokaException("There's no camera attached to the renderer.");
         }
 
-        shader.setUniform("u_projectedView", camera.getProjectedViewMatrix());
+        shader.setUniform("u_projectedView", camera.getProjectedView());
 
         getContext().render(shader);
     }

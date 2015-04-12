@@ -58,22 +58,22 @@ public class AABBCollider extends Collider
 
 	public float getTop()
 	{
-		return getTransform().getPositionY() + height / 2;
+		return getTransform().getPosition().y + height / 2;
 	}
 
-	public float getBot()
+	public float getBottom()
 	{
-		return getTransform().getPositionY() + offy - height / 2;
+		return getTransform().getPosition().y + offy - height / 2;
 	}
 
 	public float getLeft()
 	{
-		return getTransform().getPositionX() + offx - width / 2;
+		return getTransform().getPosition().x + offx - width / 2;
 	}
 
 	public float getRight()
 	{
-		return getTransform().getPositionX() + width / 2;
+		return getTransform().getPosition().x + width / 2;
 	}
 
 	@Override

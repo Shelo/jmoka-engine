@@ -142,6 +142,7 @@ public class Matrix4
                         + m[i][3] * r.get(3, j));
             }
         }
+
         return res;
     }
 

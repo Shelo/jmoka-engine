@@ -78,14 +78,14 @@ public abstract class Collider extends Component
 
     public static Collision aabb(AABBCollider box1, AABBCollider box2)
     {
-        if (!(box1.getBot() >= box2.getTop() ||
-                box1.getTop() <= box2.getBot() ||
+        if (!(box1.getBottom() >= box2.getTop() ||
+                box1.getTop() <= box2.getBottom() ||
                 box1.getLeft() >= box2.getRight() ||
                 box1.getRight() <= box2.getLeft()))
         {
 
-            float top = box2.getTop() - box1.getBot();
-            float bot = box1.getTop() - box2.getBot();
+            float top = box2.getTop() - box1.getBottom();
+            float bot = box1.getTop() - box2.getBottom();
             float left = box1.getRight() - box2.getLeft();
             float right = box2.getRight() - box1.getLeft();
 
@@ -155,8 +155,8 @@ public abstract class Collider extends Component
 		/* if in corner */
         if (circleCenter.x > aabb.getRight() && circleCenter.y > aabb.getTop() ||
                 circleCenter.x < aabb.getLeft() && circleCenter.y > aabb.getTop() ||
-                circleCenter.x > aabb.getRight() && circleCenter.y < aabb.getBot() ||
-                circleCenter.x < aabb.getLeft() && circleCenter.y < aabb.getBot())
+                circleCenter.x > aabb.getRight() && circleCenter.y < aabb.getBottom() ||
+                circleCenter.x < aabb.getLeft() && circleCenter.y < aabb.getBottom())
         {
             return circle(circle, aabb.getBoundingCircle());
         }

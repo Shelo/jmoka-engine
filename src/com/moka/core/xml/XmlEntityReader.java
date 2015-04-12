@@ -1,10 +1,7 @@
 package com.moka.core.xml;
 
 import com.moka.components.Component;
-import com.moka.core.Context;
-import com.moka.core.Entity;
-import com.moka.core.Prefab;
-import com.moka.core.Transform;
+import com.moka.core.*;
 import com.moka.core.triggers.Trigger;
 import com.moka.math.Vector2f;
 import com.moka.utils.JMokaException;
@@ -491,7 +488,7 @@ public class XmlEntityReader
         if (attributes.getValue(VAL_ROTATION) != null)
         {
             float rotation = readRotation(attributes);
-            transform.setRotationDeg(rotation);
+            transform.setRotation((float) Math.toRadians(rotation));
         }
 
         if (attributes.getValue(VAL_SIZE) != null)

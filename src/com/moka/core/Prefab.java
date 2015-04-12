@@ -93,7 +93,7 @@ public final class Prefab
         Transform transform = entity.getTransform();
         transform.setPosition(position.cpy());
         transform.setSize(size.cpy());
-        transform.setRotationDeg(rotation);
+        transform.setRotation(rotation);
 
         // creates every component and adds it to the entity.
         for (Class<?> cClass : components.keySet())

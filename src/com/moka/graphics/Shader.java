@@ -5,6 +5,7 @@ import com.moka.core.Transform;
 import com.moka.math.Matrix4;
 import com.moka.math.Vector2f;
 import com.moka.math.Vector3f;
+import com.moka.math.Matrix3;
 import com.moka.utils.CoreUtils;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
@@ -56,7 +57,7 @@ public class Shader
 
     public void update(final Transform transform, final Sprite sprite)
     {
-        Matrix4 model = CoreUtils.getModelMatrix(transform);
+        Matrix3 model = CoreUtils.calcModelMatrix(transform);
 
         setUniform("u_model", model);
         setUniform("u_color", sprite.getTint());
@@ -120,6 +121,12 @@ public class Shader
     {
         FloatBuffer buffer = Utils.genBuffer(matrix);
         glUniformMatrix4(getUniformLocation(uniform), false, buffer);
+    }
+
+    public void setUniform(String uniform, Matrix3 matrix)
+    {
+        FloatBuffer buffer = Utils.genBuffer(matrix);
+        glUniformMatrix3(getUniformLocation(uniform), false, buffer);
     }
 
     public void setUniform(String uniform, float x, float y, float z)

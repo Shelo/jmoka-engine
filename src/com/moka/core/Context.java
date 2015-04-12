@@ -166,8 +166,7 @@ public abstract class Context extends SubEngine
     public Entity newCamera(String name, boolean current)
     {
         Entity entity = newEntity(name, 0);
-        Camera camera = new Camera(0, getDisplay().getWidth(), 0, getDisplay().getHeight(),
-                Camera.Z_NEAR, Camera.Z_FAR);
+        Camera camera = new Camera(0, getDisplay().getWidth(), 0, getDisplay().getHeight());
 
         entity.addComponent(camera);
 
