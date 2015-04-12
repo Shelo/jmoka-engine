@@ -19,15 +19,18 @@ public class Texture
     {
         this.filePath = filePath;
 
-        String ext = Utils.getExtensionFrom(filePath);
+        if (filePath != null)
+        {
+            String ext = Utils.getExtensionFrom(filePath);
 
-        try
-        {
-            texture = TextureLoader.getTexture(ext, new FileInputStream(new File(filePath)), false, GL_NEAREST);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
+            try
+            {
+                texture = TextureLoader.getTexture(ext, new FileInputStream(new File(filePath)), false, GL_NEAREST);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 

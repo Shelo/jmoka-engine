@@ -35,8 +35,7 @@ public final class Display extends SubEngine
 
         // center window.
         ByteBuffer vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2,
-                (GLFWvidmode.height(vidMode) - height) / 2);
+        glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2, (GLFWvidmode.height(vidMode) - height) / 2);
 
         if (window == 0)
         {
@@ -48,13 +47,9 @@ public final class Display extends SubEngine
         }
 
         glfwMakeContextCurrent(window);
-        glfwShowWindow(window);
 
         // this is a critical line!!
         GLContext.createFromCurrent();
-
-        // init other instances.
-        getRenderer().create();
     }
 
     public void createDisplay(String widthRes, String heightRes, String title)
@@ -64,6 +59,11 @@ public final class Display extends SubEngine
         int height = getResources().getInt(heightRes);
 
         createDisplay(width, height, title);
+    }
+
+    public void start()
+    {
+        glfwShowWindow(window);
     }
 
     @Deprecated

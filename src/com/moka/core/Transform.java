@@ -89,10 +89,21 @@ public class Transform
         useOwnSize = other.useOwnSize;
     }
 
+    public void setSize(float width, float height)
+    {
+        useOwnSize = true;
+        this.size.set(width, height);
+    }
+
     public void setSize(Vector2f size)
     {
         useOwnSize = true;
         this.size = size;
+    }
+
+    public void setPosition(float x, float y)
+    {
+        this.position.set(x, y);
     }
 
     public void setPosition(Vector2f position)

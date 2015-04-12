@@ -67,6 +67,7 @@ public class Application
 
     public void start(int maxFrameRate)
     {
+        display.start();
         core.start(maxFrameRate);
     }
 

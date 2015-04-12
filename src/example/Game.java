@@ -5,6 +5,7 @@ import com.moka.core.Prefab;
 import com.moka.core.contexts.XmlContext;
 import com.moka.core.triggers.Trigger;
 import com.moka.core.triggers.TriggerEvent;
+import com.moka.math.Matrix3;
 import com.moka.math.Vector2f;
 
 public class Game
