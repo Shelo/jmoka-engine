@@ -7,11 +7,11 @@
 
     <!-- Sprite. -->
     <xs:complexType name="SpriteType">
-        <xs:attribute name="texture"   type="xs:string"        use="required" />
-        <xs:attribute name="tintR"     type="colorComponent"   use="optional" default="1" />
-        <xs:attribute name="tintG"     type="colorComponent"   use="optional" default="1" />
-        <xs:attribute name="tintB"     type="colorComponent"   use="optional" default="1" />
-        <xs:attribute name="tintA"     type="colorComponent"   use="optional" default="1" />
+        <xs:attribute name="texture"   type="xs:string"  use="required" />
+        <xs:attribute name="tintR"     type="xs:float"   use="optional" />
+        <xs:attribute name="tintG"     type="xs:float"   use="optional" />
+        <xs:attribute name="tintB"     type="xs:float"   use="optional" />
+        <xs:attribute name="tintA"     type="xs:float"   use="optional" />
     </xs:complexType>
 
     <!-- Camera. -->
@@ -48,11 +48,4 @@
         <xs:attribute name="offsetX" type="xs:float" />
         <xs:attribute name="offsetY" type="xs:float" />
     </xs:complexType>
-
-    <xs:simpleType name="colorComponent">
-        <xs:restriction base="xs:float">
-            <xs:minInclusive value="0" />
-            <xs:maxInclusive value="1" />
-        </xs:restriction>
-    </xs:simpleType>
 </xs:schema>

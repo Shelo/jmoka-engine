@@ -4,7 +4,7 @@
     </string>
 
     <integer>
-        <res name="screen_width" value="480" />
+        <res name="screen_width" value="800" />
         <res name="screen_height" value="800" />
         <res name="ship_margin_bottom" value="100" />
         <res name="ship_size" value="72" />

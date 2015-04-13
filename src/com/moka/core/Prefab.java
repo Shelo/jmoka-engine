@@ -1,6 +1,5 @@
 package com.moka.core;
 
-import com.moka.components.Component;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2f;
 import com.moka.utils.JMokaException;

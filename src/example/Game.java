@@ -4,7 +4,6 @@ import com.moka.core.Application;
 import com.moka.core.Prefab;
 import com.moka.core.contexts.XmlContext;
 import com.moka.core.triggers.Trigger;
-import com.moka.core.triggers.TriggerEvent;
 
 public class Game
 {
@@ -15,13 +14,11 @@ public class Game
      */
     public static Trigger<Prefab> fireTrigger = new Trigger<Prefab>()
     {
-        private int counter = 0;
-
         @Override
-        public boolean onTrigger(TriggerEvent<Prefab> event)
+        public boolean onTrigger()
         {
-            Prefab prefab = event.getMeta();
-            prefab.newEntity("Bullet-" + (counter++));
+            Prefab prefab = getMeta();
+            prefab.newEntity(null);
             return true;
         }
     };

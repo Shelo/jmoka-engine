@@ -1,6 +1,6 @@
 package com.moka.core.xml;
 
-import com.moka.components.Component;
+import com.moka.core.Component;
 import com.moka.core.*;
 import com.moka.core.triggers.Trigger;
 import com.moka.math.Vector2f;
@@ -340,7 +340,8 @@ public class XmlEntityReader
         }
         catch (InvocationTargetException e)
         {
-            e.printStackTrace();
+            throw new JMokaException(String.format("Method %s for component %s cannot be called.",
+                    method.getName(), componentName));
         }
     }
 

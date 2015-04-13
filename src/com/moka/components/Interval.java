@@ -1,8 +1,8 @@
 package com.moka.components;
 
+import com.moka.core.Component;
 import com.moka.core.Timer;
 import com.moka.core.triggers.Trigger;
-import com.moka.core.triggers.TriggerEvent;
 import com.moka.core.xml.XmlAttribute;
 
 /**
@@ -28,7 +28,7 @@ public class Interval extends Component
     {
         if (timer.isGreaterThan(time))
         {
-            trigger.onTrigger(new TriggerEvent<Timer>(this, timer));
+            trigger.trigger(this, timer);
             timer.restart();
         }
     }

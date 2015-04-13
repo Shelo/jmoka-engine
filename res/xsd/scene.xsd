@@ -11,13 +11,15 @@
     <xs:element name="scene">
         <xs:complexType>
             <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:element name="entity" type="EntityTypeWithTag" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="entity" type="EntityTypeWithName" minOccurs="0" maxOccurs="unbounded" />
                 <xs:element name="include" type="IncludeType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:complexType name="EntityTypeWithTag" xml:base="EntityType">
+    <xs:element name="entity" type="EntityType"/>
+
+    <xs:complexType name="EntityTypeWithName">
         <xs:simpleContent>
             <xs:extension base="EntityType">
                 <xs:attribute name="name" use="required" />
@@ -41,5 +43,4 @@
             <xs:pattern value="'.*'" />
         </xs:restriction>
     </xs:simpleType>
-
 </xs:schema>

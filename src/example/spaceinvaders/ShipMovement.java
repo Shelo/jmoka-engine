@@ -1,6 +1,6 @@
 package example.spaceinvaders;
 
-import com.moka.components.Component;
+import com.moka.core.Component;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.MokaMath;
 import org.lwjgl.glfw.GLFW;

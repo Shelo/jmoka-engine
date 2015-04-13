@@ -1,9 +1,8 @@
 package com.moka.components;
 
-import com.moka.components.Component;
+import com.moka.core.Component;
 import com.moka.core.Prefab;
 import com.moka.core.triggers.Trigger;
-import com.moka.core.triggers.TriggerEvent;
 import com.moka.core.xml.XmlAttribute;
 import org.lwjgl.glfw.GLFW;
 
@@ -33,7 +32,7 @@ public class Shooting extends Component
     {
         if (trigger != null)
         {
-            trigger.onTrigger(new TriggerEvent<>(this, bulletPrefab));
+            trigger.trigger(this, bulletPrefab);
         }
     }
 

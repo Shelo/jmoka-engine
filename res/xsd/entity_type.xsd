@@ -1,29 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema
-        targetNamespace="http://www.moka-dev.com/entity_type"
-        xmlns="http://www.moka-dev.com/entity_type"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        elementFormDefault="qualified" >
+  targetNamespace="http://www.moka-dev.com/entity_type"
+  xmlns="http://www.moka-dev.com/entity_type"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified" >
 
-    <xs:include schemaLocation="types.xsd" />
-    <xs:include schemaLocation="components_types.xsd" />
+  <xs:include schemaLocation="types.xsd" />
+  <xs:include schemaLocation="components_types.xsd" />
 
-    <!-- Define Entity's Type. -->
-    <xs:complexType name="EntityType">
-        <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="Sprite" type="SpriteType"                 minOccurs="0" maxOccurs="1" />
-            <xs:element name="Camera" type="CameraType"                 minOccurs="0" maxOccurs="1" />
-            <xs:element name="Controllable" type="ControllableType"     minOccurs="0" maxOccurs="1" />
-            <xs:element name="SATCollider" type="SATColliderType"       minOccurs="0" maxOccurs="1" />
-            <xs:element name="CircleCollider" type="CircleColliderType" minOccurs="0" maxOccurs="1" />
-            <xs:element name="AABBCollider" type="AABBColliderType"     minOccurs="0" maxOccurs="1" />
-            <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
-        </xs:sequence>
+  <!-- Define Entity's Type. -->
+  <xs:complexType name="EntityType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
 
-        <xs:attribute name="layer" type="xs:int" use="optional" default="0" />
-        <xs:attribute name="position" type="Vector2" use="required" default="0, 0" />
-        <xs:attribute name="rotation" type="xs:float" use="required" default="0" />
-        <xs:attribute name="size" type="Vector2" use="optional" />
-    </xs:complexType>
-    
+      <!-- Start Generated Code -->
+
+      <xs:element name="AABBCollider" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="offsetX" type="xs:float" use="optional" />
+        <xs:attribute name="offsetY" type="xs:float" use="optional" />
+        <xs:attribute name="width" type="xs:float" use="optional" />
+        <xs:attribute name="height" type="xs:float" use="optional" />
+        <xs:attribute name="trigger" type="xs:boolean" use="optional" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="Bullet" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="speed" type="xs:integer" use="optional" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="Camera" minOccurs="0" maxOccurs="1"><xs:complexType>
+      </xs:complexType></xs:element>
+
+      <xs:element name="CircleCollider" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="radius" type="xs:float" use="optional" />
+        <xs:attribute name="trigger" type="xs:boolean" use="optional" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="Controllable" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="topSpeed" type="xs:integer" use="optional" />
+        <xs:attribute name="acceleration" type="xs:integer" use="optional" />
+        <xs:attribute name="constrainX" type="xs:boolean" use="optional" />
+        <xs:attribute name="constrainY" type="xs:boolean" use="optional" />
+        <xs:attribute name="impulse" type="xs:float" use="optional" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="Interval" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="time" type="xs:double" use="optional" />
+        <xs:attribute name="trigger" type="xs:string" use="required" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="LookAt" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="target" type="xs:string" use="optional" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="SATCollider" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="vertices" type="xs:string" use="optional" />
+        <xs:attribute name="trigger" type="xs:boolean" use="optional" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="Shooting" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="bulletPrefab" type="xs:string" use="required" />
+        <xs:attribute name="trigger" type="xs:string" use="optional" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="Sprite" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="texture" type="xs:string" use="required" />
+        <xs:attribute name="tintR" type="xs:float" use="optional" />
+        <xs:attribute name="tintG" type="xs:float" use="optional" />
+        <xs:attribute name="tintB" type="xs:float" use="optional" />
+        <xs:attribute name="tintA" type="xs:float" use="optional" />
+        <xs:attribute name="width" type="xs:float" use="optional" />
+        <xs:attribute name="clipTop" type="xs:float" use="optional" />
+        <xs:attribute name="clipRight" type="xs:float" use="optional" />
+        <xs:attribute name="height" type="xs:float" use="optional" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="DirectionalMovement" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="ignoreRotation" type="xs:boolean" use="optional" />
+        <xs:attribute name="rotationSpeed" type="xs:float" use="optional" />
+        <xs:attribute name="speed" type="xs:float" use="optional" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="ShipMovement" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="speed" type="xs:float" use="optional" />
+        <xs:attribute name="boundLeft" type="xs:float" use="optional" />
+        <xs:attribute name="boundRight" type="xs:float" use="optional" />
+      </xs:complexType></xs:element>
+
+      <!-- End Generated Code -->
+
+      <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="layer" type="xs:int" use="optional" default="0" />
+    <xs:attribute name="position" type="Vector2" use="required" default="0, 0" />
+    <xs:attribute name="rotation" type="xs:float" use="required" default="0" />
+    <xs:attribute name="size" type="Vector2" use="optional" />
+  </xs:complexType>
 </xs:schema>

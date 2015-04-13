@@ -1,26 +1,65 @@
 package com.moka.core.triggers;
 
-import com.moka.components.Component;
+import com.moka.core.Component;
+import com.moka.core.Entity;
+import com.moka.core.Transform;
 import com.moka.utils.JMokaException;
 
 import java.lang.reflect.Field;
 
 /**
  * Defines a simple trigger method for use in a component. Components should use this to trigger actions,
- * see "delegation pattern".
+ * see "delegation pattern". The trigger can hold a meta data, that is just additional information for
+ * the trigger.
  *
  * @author shelo
  */
 public abstract class Trigger<T>
 {
+    private Component component;
+    private T meta;
+
     /**
-     * Triggers an action for a given component. To know what the parameter does,
-     * see {@link TriggerEvent}.
+     * Calls the trigger and stores the component and meta data.
+     *
+     * @param component the caller component.
+     * @param meta the meta data.
+     */
+    public void trigger(final Component component, final T meta)
+    {
+        if (component == null)
+        {
+            throw new JMokaException("Cannot pass null to the component parameter.");
+        }
+
+        this.component = component;
+        this.meta = meta;
+
+        onTrigger();
+    }
+
+    /**
+     * Triggers the action called by the component.
      *
      * @param event the event sent by the caller.
      * @return true if the action was successfully handled.
      */
-    public abstract boolean onTrigger(TriggerEvent<T> e);
+    public abstract boolean onTrigger();
+
+    public Component getComponent()
+    {
+        return component;
+    }
+
+    public Entity getEntity()
+    {
+        return component.getEntity();
+    }
+
+    public T getMeta()
+    {
+        return meta;
+    }
 
     /**
      * Gets the static trigger for a given path and a type.
@@ -53,5 +92,10 @@ public abstract class Trigger<T>
         {
             throw new JMokaException("Cannot access the trigger.");
         }
+    }
+
+    public Transform getTransform()
+    {
+        return component.getTransform();
     }
 }

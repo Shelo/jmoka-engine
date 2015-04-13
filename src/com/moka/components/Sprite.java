@@ -1,5 +1,6 @@
 package com.moka.components;
 
+import com.moka.core.Component;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.graphics.Color;
 import com.moka.graphics.Quad;
@@ -14,6 +15,9 @@ import com.moka.utils.JMokaException;
  */
 public class Sprite extends Component
 {
+	private Vector2f clipBottomLeft = null;
+	private Vector2f clipTopRight = null;
+
 	private Texture texture;
 	private Vector2f size;
 	private Color tint;
@@ -28,9 +32,7 @@ public class Sprite extends Component
 	{
 		this.texture = texture;
 		this.tint = tint;
-
 		this.size.set(size);
-		quad = new Quad(texture.getTexCoordX(), texture.getTexCoordY());
 	}
 
 	public Sprite(Texture texture, Color tint)
@@ -50,6 +52,25 @@ public class Sprite extends Component
 	public Sprite(String filePath)
 	{
 		this(new Texture(filePath));
+	}
+
+	@Override
+	public void onCreate()
+	{
+		if (clipTopRight != null)
+		{
+			clipTopRight.x = clipTopRight.x / texture.getWidth()  * texture.getTexCoordX();
+			clipTopRight.y = clipTopRight.y / texture.getHeight() * texture.getTexCoordY();
+		}
+		else
+		{
+			clipTopRight = new Vector2f();
+
+			clipTopRight.x = texture.getTexCoordX();
+			clipTopRight.y = texture.getTexCoordY();
+		}
+
+		quad = new Quad(clipBottomLeft, clipTopRight);
 	}
 
 	public void render(Shader shader)
@@ -93,7 +114,6 @@ public class Sprite extends Component
 	public void setTexture(Texture texture)
 	{
 		this.texture = texture;
-		quad = new Quad(texture.getTexCoordX(), texture.getTexCoordY());
 	}
 
 	@XmlAttribute(value = "texture", required = true)
@@ -136,6 +156,28 @@ public class Sprite extends Component
 	public void setHeight(float value)
 	{
 		size.y = value;
+	}
+
+	@XmlAttribute("clipTop")
+	public void setClipTop(float clipTop)
+	{
+		if (clipTopRight == null)
+		{
+			clipTopRight = new Vector2f();
+		}
+
+		this.clipTopRight.y = clipTop;
+	}
+
+	@XmlAttribute("clipRight")
+	public void setClipRight(float clipRight)
+	{
+		if (clipTopRight == null)
+		{
+			clipTopRight = new Vector2f();
+		}
+
+		this.clipTopRight.x = clipRight;
 	}
 
 	public Vector2f getSize()

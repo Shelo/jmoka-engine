@@ -25,7 +25,7 @@ public class Quad
     private int vao;
     private int ibo;
 
-    public Quad(float xTexCoord, float yTexCoord)
+    public Quad(Vector2f bottomLeftTexCoord, Vector2f topRightTexCoord)
     {
         // create and bind the buffer.
         vao = glGenVertexArrays();
@@ -38,10 +38,10 @@ public class Quad
         // generate vertices.
         // texture is drawn flipped on porpoise.
         vertices = new Vertex[]{
-                new Vertex(-0.5f, -0.5f, 0, yTexCoord),
-                new Vertex(-0.5f, 0.5f, 0, 0),
-                new Vertex(0.5f, 0.5f, xTexCoord, 0),
-                new Vertex(0.5f, -0.5f, xTexCoord, yTexCoord)
+                new Vertex(-0.5f, -0.5f,    0,          topRightTexCoord.y),
+                new Vertex(-0.5f, 0.5f,     0,          0),
+                new Vertex(0.5f, 0.5f,      topRightTexCoord.x,  0),
+                new Vertex(0.5f, -0.5f,     topRightTexCoord.x,  topRightTexCoord.y)
         };
 
         // populate vertexBuffer.

@@ -125,7 +125,7 @@ public class Transform
      */
     public Vector2f getFront(final Vector2f result)
     {
-        return rotation.mul(Vector2f.FORWARD, result).nor();
+        return rotation.mul(Vector2f.RIGHT, result).nor();
     }
 
     /**
@@ -136,7 +136,7 @@ public class Transform
      */
     public Vector2f getBack(final Vector2f result)
     {
-        return rotation.mul(Vector2f.BACKWARD, result).nor();
+        return rotation.mul(Vector2f.LEFT, result).nor();
     }
 
     /**
@@ -147,7 +147,7 @@ public class Transform
      */
     public Vector2f getRight(final Vector2f result)
     {
-        return rotation.mul(Vector2f.RIGHT, result).nor();
+        return rotation.mul(Vector2f.DOWN, result).nor();
     }
 
     /**
@@ -158,7 +158,7 @@ public class Transform
      */
     public Vector2f getLeft(final Vector2f result)
     {
-        return rotation.mul(Vector2f.LEFT, result).nor();
+        return rotation.mul(Vector2f.UP, result).nor();
     }
 
     public float getLookAngle()
