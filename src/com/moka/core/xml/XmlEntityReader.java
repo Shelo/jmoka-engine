@@ -286,8 +286,8 @@ public class XmlEntityReader
         {
             if (attribute.required())
             {
-                throw new JMokaException("Component " + componentName + " requires the attribute "
-                        + attribute.value());
+                throw new JMokaException("Component " + componentName + " requires the '" + attribute.value()
+                        + "' attribute.");
             }
             return;
         }

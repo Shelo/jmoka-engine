@@ -161,7 +161,7 @@ public class Transform
         return rotation.mul(Vector2f.LEFT, result).nor();
     }
 
-    public float getFrontAngle()
+    public float getLookAngle()
     {
         return CalcUtils.calcFrontAngle(this);
     }

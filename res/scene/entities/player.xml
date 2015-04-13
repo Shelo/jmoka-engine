@@ -9,7 +9,10 @@
                 boundLeft="${@ship_size / 2}"
                 boundRight="${@screen_width - @ship_size / 2}" />
 
-        <ShipShooting
+        <Shooting
                 trigger="example.Game.fireTrigger"
                 bulletPrefab="res/scene/prefabs/bullet.xml" />
+
+        <LookAt
+                target="Cursor" />
 </entity>

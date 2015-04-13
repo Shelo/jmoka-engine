@@ -1,13 +1,10 @@
 package example;
 
 import com.moka.core.Application;
-import com.moka.core.Entity;
 import com.moka.core.Prefab;
 import com.moka.core.contexts.XmlContext;
 import com.moka.core.triggers.Trigger;
 import com.moka.core.triggers.TriggerEvent;
-import com.moka.math.Vector2f;
-import com.moka.utils.CalcUtils;
 
 public class Game
 {

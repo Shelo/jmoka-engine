@@ -3,5 +3,11 @@
         <Camera />
     </entity>
 
+    <!-- Create an entity that will hold the cursor position. -->
+    <entity position="0, 0" rotation="0" name="Cursor">
+        <Interval
+                trigger="com.moka.triggers.CursorTriggers.moveToCursor" />
+    </entity>
+
     <include path="res/scene/entities/player.xml" name="Play" />
 </scene>

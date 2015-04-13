@@ -1,19 +1,18 @@
-package example.spaceinvaders;
+package com.moka.components;
 
 import com.moka.components.Component;
 import com.moka.core.Prefab;
 import com.moka.core.triggers.Trigger;
 import com.moka.core.triggers.TriggerEvent;
 import com.moka.core.xml.XmlAttribute;
-import com.moka.utils.CalcUtils;
 import org.lwjgl.glfw.GLFW;
 
-public class ShipShooting extends Component
+public class Shooting extends Component
 {
     private Trigger<Prefab> trigger;
     private Prefab bulletPrefab;
 
-    public ShipShooting()
+    public Shooting()
     {
         // XML Support.
     }
@@ -24,7 +23,7 @@ public class ShipShooting extends Component
         if (getInput().getKeyDown(GLFW.GLFW_KEY_SPACE))
         {
             bulletPrefab.setPosition(getTransform().getPosition());
-            bulletPrefab.setRotation(getTransform().getFrontAngle());
+            bulletPrefab.setRotation(getTransform().getLookAngle());
 
             onFire();
         }
@@ -44,7 +43,7 @@ public class ShipShooting extends Component
         this.trigger = trigger;
     }
 
-    @XmlAttribute("bulletPrefab")
+    @XmlAttribute(value = "bulletPrefab", required = true)
     public final void setBulletPrefab(Prefab bulletPrefab)
     {
         this.bulletPrefab = bulletPrefab;

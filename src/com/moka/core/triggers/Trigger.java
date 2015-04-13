@@ -1,5 +1,6 @@
 package com.moka.core.triggers;
 
+import com.moka.components.Component;
 import com.moka.utils.JMokaException;
 
 import java.lang.reflect.Field;
@@ -19,7 +20,7 @@ public abstract class Trigger<T>
      * @param event the event sent by the caller.
      * @return true if the action was successfully handled.
      */
-    public abstract boolean onTrigger(TriggerEvent<T> event);
+    public abstract boolean onTrigger(TriggerEvent<T> e);
 
     /**
      * Gets the static trigger for a given path and a type.
