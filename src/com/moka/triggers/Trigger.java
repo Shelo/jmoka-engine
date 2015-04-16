@@ -1,9 +1,10 @@
-package com.moka.core.triggers;
+package com.moka.triggers;
 
 import com.moka.core.Component;
 import com.moka.core.Entity;
 import com.moka.core.Transform;
 import com.moka.utils.JMokaException;
+import com.moka.utils.JMokaLog;
 
 import java.lang.reflect.Field;
 
@@ -62,6 +63,20 @@ public abstract class Trigger<T>
     }
 
     /**
+     * Logs a descriptive message to the console.
+     */
+    public void log(String message)
+    {
+        String tag = getEntity().getName() + " -> " + getComponent().getClass().getSimpleName() + " -> Trigger";
+        JMokaLog.o(tag, message);
+    }
+
+    public Transform getTransform()
+    {
+        return component.getTransform();
+    }
+
+    /**
      * Gets the static trigger for a given path and a type.
      *
      * @param path      the path to the static trigger.
@@ -92,10 +107,5 @@ public abstract class Trigger<T>
         {
             throw new JMokaException("Cannot access the trigger.");
         }
-    }
-
-    public Transform getTransform()
-    {
-        return component.getTransform();
     }
 }

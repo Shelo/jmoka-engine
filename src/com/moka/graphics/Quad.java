@@ -1,8 +1,7 @@
 package com.moka.graphics;
 
-import com.moka.core.Vertex;
 import com.moka.math.Vector2f;
-import com.moka.utils.CoreUtils;
+import com.moka.utils.CoreUtil;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -45,10 +44,10 @@ public class Quad
         };
 
         // populate vertexBuffer.
-        vertexBuffer = CoreUtils.genBuffer(vertices);
+        vertexBuffer = CoreUtil.genBuffer(vertices);
 
         // populate indexBuffer.
-        indexBuffer = CoreUtils.genBuffer(new int[]{
+        indexBuffer = CoreUtil.genBuffer(new int[]{
                 0, 1, 2, 0, 2, 3
         });
 
@@ -96,7 +95,8 @@ public class Quad
 
         for (int i = 0; i < res.length; i++)
         {
-            res[i] = vertices[i].getXY();
+            res[i] = new Vector2f();
+            res[i].set(vertices[i].getXY());
         }
 
         return res;

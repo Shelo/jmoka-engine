@@ -21,6 +21,7 @@ public final class Prefab
     private PreComponents components = new PreComponents();
     private Vector2f position = new Vector2f();
     private Vector2f size = new Vector2f();
+    private boolean useOwnSize = false;
     private Context context;
     private float rotation;
     private int layer;
@@ -54,6 +55,7 @@ public final class Prefab
      */
     public void setSize(Vector2f size)
     {
+        useOwnSize = true;
         this.size.set(size);
     }
 
@@ -91,8 +93,12 @@ public final class Prefab
         // set transform values for this entity.
         Transform transform = entity.getTransform();
         transform.setPosition(position.cpy());
-        transform.setSize(size.cpy());
         transform.setRotation(rotation);
+
+        if (useOwnSize)
+        {
+            transform.setSize(size.cpy());
+        }
 
         // creates every component and adds it to the entity.
         for (Class<?> cClass : components.keySet())

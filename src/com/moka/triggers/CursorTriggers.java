@@ -1,17 +1,14 @@
 package com.moka.triggers;
 
-import com.moka.core.Timer;
-import com.moka.core.triggers.Trigger;
-
 public class CursorTriggers
 {
-    public static Trigger<Timer> moveToCursor = new Trigger<Timer>()
+    public static Trigger moveToCursor = new Trigger()
     {
         @Override
         public boolean onTrigger()
         {
             getTransform().setPosition(getComponent().getInput().getCursorPos());
-            return false;
+            return true;
         }
     };
 }

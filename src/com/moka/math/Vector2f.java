@@ -42,6 +42,14 @@ public class Vector2f
         this.y = y;
     }
 
+    /**
+     * Creates a new vector with the same values of other vector.
+     */
+    public Vector2f(Vector2f other)
+    {
+        this(other.x, other.y);
+    }
+
     public Vector2f add(Vector2f o)
     {
         this.x += o.x;

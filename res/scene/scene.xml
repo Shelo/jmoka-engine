@@ -1,12 +1,34 @@
 <scene xmlns="http://www.mokadev.com/scene">
     <entity name="MainCamera" position="0, 0" rotation="0" layer="0">
-        <Camera/>
+        <Camera />
     </entity>
 
-    <!-- Create an entity that will hold the cursor position. -->
     <entity position="0, 0" rotation="0" name="Cursor">
-        <Interval trigger="com.moka.triggers.CursorTriggers.moveToCursor"/>
+        <Interval trigger="com.moka.triggers.CursorTriggers.moveToCursor" />
     </entity>
 
-    <include path="res/scene/entities/player.xml" name="Play"/>
+    <entity position="${@screen_width / 2}, ${@screen_height / 2}" size="${@screen_width}, ${@screen_height}"
+            rotation="0" name="Background">
+
+        <Sprite
+            texture="res/images/background.jpg"
+            />
+    </entity>
+
+    <entity position="50, ${@screen_height / 2}" rotation="0" size="125, 125" name="Player" layer="2">
+        <Sprite
+            texture="res/images/ship.png"
+            />
+
+        <Shooting
+            button="fire"
+            trigger="example.Game.fireTrigger"
+            bulletPrefab="res/scene/prefabs/bullet.xml"
+            />
+
+        <DirectionalMovement
+            speed="500"
+            directions="RIGHT"
+            />
+    </entity>
 </scene>

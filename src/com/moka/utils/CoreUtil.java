@@ -1,6 +1,6 @@
 package com.moka.utils;
 
-import com.moka.core.Vertex;
+import com.moka.graphics.Vertex;
 import com.moka.math.Matrix4;
 import com.moka.math.Matrix3;
 import org.lwjgl.BufferUtils;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-public class CoreUtils
+public class CoreUtil
 {
     public static FloatBuffer genBuffer(Vertex[] vertices)
     {

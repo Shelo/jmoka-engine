@@ -2,8 +2,8 @@ package com.moka.physics;
 
 import com.moka.components.AABBCollider;
 import com.moka.components.CircleCollider;
+import com.moka.components.SatCollider;
 import com.moka.core.Component;
-import com.moka.components.SATCollider;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2f;
 
@@ -15,7 +15,7 @@ public abstract class Collider extends Component
     private boolean trigger = false;
     private static Vector2f buf = new Vector2f();
 
-    public static Collision sat(SATCollider box1, SATCollider box2)
+    public static Collision sat(SatCollider box1, SatCollider box2)
     {
         if (box1.getEntity().getTransform().hasRotated())
         {
@@ -68,7 +68,7 @@ public abstract class Collider extends Component
                 if (Math.abs(o) < Math.abs(overlap))
                 {
                     overlap = o;
-                    smallest = axis;
+                    smallest = new Vector2f(axis);
                 }
             }
         }
@@ -126,23 +126,23 @@ public abstract class Collider extends Component
     }
 
     // SAT-AABB
-    public static Collision satAABB(SATCollider sat, AABBCollider aabb)
+    public static Collision satAABB(SatCollider sat, AABBCollider aabb)
     {
         return null;
     }
 
-    public static Collision satAABB(AABBCollider aabb, SATCollider sat)
+    public static Collision satAABB(AABBCollider aabb, SatCollider sat)
     {
         return satAABB(sat, aabb);
     }
 
     // SAT-CIRCLE
-    public static Collision satCircle(SATCollider sat, CircleCollider circle)
+    public static Collision satCircle(SatCollider sat, CircleCollider circle)
     {
         return null;
     }
 
-    public static Collision satCircle(CircleCollider circle, SATCollider sat)
+    public static Collision satCircle(CircleCollider circle, SatCollider sat)
     {
         return satCircle(sat, circle);
     }
@@ -171,7 +171,7 @@ public abstract class Collider extends Component
         return aabbCircle(aabb, circle);
     }
 
-    @XmlAttribute("trigger")
+    @XmlAttribute("isTrigger")
     public void setTrigger(boolean trigger)
     {
         this.trigger = trigger;

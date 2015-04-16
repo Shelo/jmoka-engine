@@ -9,14 +9,14 @@ import com.moka.utils.JMokaException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SATCollider extends Collider
+public class SatCollider extends Collider
 {
 	private Vector2f[] vertices;
 	private int[] npvi; // Non parallel vertices indexes
 	private Vector2f[] tVertices; // Transformed vertices
 	private Vector2f[] axes;
 
-	public SATCollider()
+	public SatCollider()
 	{
 		
 	}
@@ -26,7 +26,10 @@ public class SATCollider extends Collider
 	{
 		if (vertices == null)
 		{
-			setVertices(getEntity().getSprite().getMesh().getVerticesAsVector2());
+			if (getEntity().hasSprite())
+			{
+				setVertices(getEntity().getSprite().getMesh().getVerticesAsVector2());
+			}
 		}
 	}
 
@@ -34,8 +37,9 @@ public class SATCollider extends Collider
 	{
 		if (this.vertices != null)
 		{
-			throw new JMokaException("Vertices already set.");
+			throw new JMokaException("Vertices are already set.");
 		}
+
 		if (vertices == null)
 		{
 			throw new JMokaException("Vertices cannot be null.");
@@ -58,9 +62,12 @@ public class SATCollider extends Collider
 		List<Float> slopes = new ArrayList<>();
 		ArrayList<Integer> npvi = new ArrayList<>();
 
+		Vector2f buffer = new Vector2f();
+
 		for (int i = 0; i < vertices.length; i++)
 		{
-			edges[i] = vertices[i].sub(vertices[(i == vertices.length - 1) ? 0 : i + 1]);
+			edges[i] = new Vector2f(vertices[i]);
+			edges[i].sub(vertices[(i + 1) % vertices.length]);
 		}
 
 		for (int i = 0; i < edges.length; i++)
@@ -102,7 +109,7 @@ public class SATCollider extends Collider
 		int k = 0;
 		for (int i : npvi)
 		{
-			Vector2f v1 = tVertices[i];
+			Vector2f v1 = new Vector2f(tVertices[i]);
 			Vector2f v2 = tVertices[(i == tVertices.length - 1) ? 0 : i + 1];
 			Vector2f edge = v1.sub(v2);
 
@@ -119,9 +126,9 @@ public class SATCollider extends Collider
 	@Override
 	public Collision collidesWith(Collider other)
 	{
-		if (other instanceof SATCollider)
+		if (other instanceof SatCollider)
 		{
-			return Collider.sat(this, (SATCollider) other);
+			return Collider.sat(this, (SatCollider) other);
 		}
 
 		return null;
@@ -143,7 +150,7 @@ public class SATCollider extends Collider
 		return null;
 	}
 
-	public Collision collidesWith(SATCollider sat)
+	public Collision collidesWith(SatCollider sat)
 	{
 		/*
 		if (getEntity().getTransform().hasRotated())

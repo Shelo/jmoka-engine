@@ -11,7 +11,7 @@ import com.moka.math.Matrix3;
  *
  * @author shelo
  */
-public class CalcUtils
+public class CalcUtil
 {
     private static final Matrix3 BUF_1_MAT = new Matrix3();
     private static final Matrix3 BUF_2_MAT = new Matrix3();

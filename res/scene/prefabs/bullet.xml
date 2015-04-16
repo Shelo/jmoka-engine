@@ -1,10 +1,11 @@
 <entity xmlns="http://www.mokadev.com/scene"
-        position="0, 0" rotation="0" size="${@bullet_size}, ${@bullet_size}" layer="1">
+        position="0, 0" rotation="0" layer="1">
 
     <Sprite
-        texture="res/images/moka.png"/>
+        texture="res/images/red-dot.png"/>
 
     <Bullet
-        speed="400"/>
+        speed="600"
+        />
 
 </entity>

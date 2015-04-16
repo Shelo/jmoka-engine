@@ -9,26 +9,17 @@ import com.moka.math.Vector2f;
 public class LookAt extends Component
 {
 	private Vector2f buffer = new Vector2f();
-
 	private Entity target;
-	private Transform transform;
-
-	@Override
-	public void onCreate()
-	{
-		transform = getTransform();
-	}
 
 	@Override
 	public void onUpdate()
 	{
-		Vector2f position = target.getTransform().getPosition();
-		buffer.set(position);
-		buffer.sub(transform.getPosition());
-		transform.setRotation(buffer.angle());
+		buffer.set(target.getTransform().getPosition());
+		buffer.sub(getTransform().getPosition());
+		getTransform().setRotation(buffer.angle());
 	}
 
-	@XmlAttribute("target")
+	@XmlAttribute(value = "target", required = true)
 	public void setTarget(Entity target)
 	{
 		this.target = target;

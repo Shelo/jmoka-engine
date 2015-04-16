@@ -5,6 +5,7 @@ import com.moka.graphics.Display;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 import com.moka.utils.JMokaException;
+import com.moka.utils.JMokaLog;
 
 /**
  * Component class, establishes the common way a component should behave.
@@ -107,6 +108,15 @@ public abstract class Component
 	public Resources getResources()
 	{
 		return getApplication().getResources();
+	}
+
+	/**
+	 * Logs a descriptive message to the console.
+	 */
+	public void log(String message)
+	{
+		String tag = getEntity().getName() + " -> " + this.getClass().getSimpleName();
+		JMokaLog.o(tag, message);
 	}
 
 	/**

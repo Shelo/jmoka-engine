@@ -2,7 +2,7 @@ package com.moka.core;
 
 import com.moka.math.Vector2f;
 import com.moka.math.Matrix3;
-import com.moka.utils.CalcUtils;
+import com.moka.utils.CalcUtil;
 import com.moka.utils.JMokaException;
 
 /**
@@ -79,7 +79,7 @@ public class Transform
 
     public void rotate(float radians)
     {
-        CalcUtils.rotateMatrix(rotation, radians);
+        CalcUtil.rotateMatrix(rotation, radians);
     }
 
     private void set(Transform other)
@@ -98,8 +98,14 @@ public class Transform
 
     public void setSize(Vector2f size)
     {
-        useOwnSize = true;
+        if (size == null)
+        {
+            useOwnSize = false;
+            return;
+        }
+
         this.size.set(size);
+        useOwnSize = true;
     }
 
     public void setPosition(float x, float y)
@@ -163,7 +169,7 @@ public class Transform
 
     public float getLookAngle()
     {
-        return CalcUtils.calcFrontAngle(this);
+        return CalcUtil.calcFrontAngle(this);
     }
 
     /**

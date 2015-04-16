@@ -6,10 +6,10 @@ import com.moka.math.Matrix4;
 import com.moka.math.Vector2f;
 import com.moka.math.Vector3f;
 import com.moka.math.Matrix3;
-import com.moka.utils.CalcUtils;
+import com.moka.utils.CalcUtil;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
-import com.moka.utils.CoreUtils;
+import com.moka.utils.CoreUtil;
 
 import java.nio.FloatBuffer;
 import java.util.HashMap;
@@ -25,11 +25,11 @@ public class Shader
     private int program;
     private int vertex;
 
-    public Shader(String vertexFilePath, String fragmentFilePath)
+    public Shader(String vertexCode, String fragmentCode)
     {
         program = glCreateProgram();
-        vertex = createShader(vertexFilePath, GL_VERTEX_SHADER);
-        fragment = createShader(fragmentFilePath, GL_FRAGMENT_SHADER);
+        vertex = createShader(vertexCode, GL_VERTEX_SHADER);
+        fragment = createShader(fragmentCode, GL_FRAGMENT_SHADER);
 
         glBindAttribLocation(program, 0, "a_position");
         glBindAttribLocation(program, 1, "a_texCoord");
@@ -57,7 +57,7 @@ public class Shader
 
     public void update(final Transform transform, final Sprite sprite)
     {
-        Matrix3 model = CalcUtils.calcModelMatrix(transform);
+        Matrix3 model = CalcUtil.calcModelMatrix(transform);
 
         setUniform("u_model", model);
         setUniform("u_color", sprite.getTint());
@@ -68,15 +68,13 @@ public class Shader
         glUseProgram(program);
     }
 
-    private int createShader(String filePath, int type)
+    private int createShader(String code, int type)
     {
-        String code = CoreUtils.readFile(filePath);
-
         int shader = glCreateShader(type);
 
         if (shader == 0)
         {
-            throw new JMokaException("Shader creation failed for file " + filePath);
+            throw new JMokaException("Shader creation failed.");
         }
 
         glShaderSource(shader, code);
@@ -84,8 +82,7 @@ public class Shader
 
         if (glGetShaderi(shader, GL_COMPILE_STATUS) == 0)
         {
-            throw new JMokaException(
-                    "Shader compile error for file " + filePath + ": " + glGetShaderInfoLog(shader, 1024));
+            throw new JMokaException("Shader compile error: " + glGetShaderInfoLog(shader, 1024));
         }
 
         glAttachShader(program, shader);
@@ -119,13 +116,13 @@ public class Shader
     /* setUniform's */
     public void setUniform(String uniform, Matrix4 matrix)
     {
-        FloatBuffer buffer = CoreUtils.genBuffer(matrix);
+        FloatBuffer buffer = CoreUtil.genBuffer(matrix);
         glUniformMatrix4(getUniformLocation(uniform), false, buffer);
     }
 
     public void setUniform(String uniform, Matrix3 matrix)
     {
-        FloatBuffer buffer = CoreUtils.genBuffer(matrix);
+        FloatBuffer buffer = CoreUtil.genBuffer(matrix);
         glUniformMatrix3(getUniformLocation(uniform), false, buffer);
     }
 

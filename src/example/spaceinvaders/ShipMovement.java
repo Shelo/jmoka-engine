@@ -2,7 +2,7 @@ package example.spaceinvaders;
 
 import com.moka.core.Component;
 import com.moka.core.xml.XmlAttribute;
-import com.moka.math.MokaMath;
+import com.moka.math.MathUtil;
 import org.lwjgl.glfw.GLFW;
 
 public class ShipMovement extends Component
@@ -29,7 +29,7 @@ public class ShipMovement extends Component
             getTransform().move(- (float) (speed * getTime().getDelta()), 0);
         }
 
-        getTransform().getPosition().x = MokaMath.clamp(getTransform().getPosition().x, boundLeft, boundRight);
+        getTransform().getPosition().x = MathUtil.clamp(getTransform().getPosition().x, boundLeft, boundRight);
     }
 
     @XmlAttribute("speed")

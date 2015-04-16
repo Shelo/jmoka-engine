@@ -2,14 +2,14 @@ package com.moka.components;
 
 import com.moka.core.Component;
 import com.moka.core.Prefab;
-import com.moka.core.triggers.Trigger;
+import com.moka.triggers.Trigger;
 import com.moka.core.xml.XmlAttribute;
-import org.lwjgl.glfw.GLFW;
 
 public class Shooting extends Component
 {
     private Trigger<Prefab> trigger;
     private Prefab bulletPrefab;
+    private String button;
 
     public Shooting()
     {
@@ -19,11 +19,11 @@ public class Shooting extends Component
     @Override
     public void onUpdate()
     {
-        if (getInput().getKeyDown(GLFW.GLFW_KEY_SPACE))
+        if (getInput().getButtonDown(button))
         {
             bulletPrefab.setPosition(getTransform().getPosition());
             bulletPrefab.setRotation(getTransform().getLookAngle());
-
+            log("Shooting");
             onFire();
         }
     }
@@ -36,7 +36,7 @@ public class Shooting extends Component
         }
     }
 
-    @XmlAttribute("trigger")
+    @XmlAttribute(value = "trigger", required = true)
     public final void setTrigger(Trigger<Prefab> trigger)
     {
         this.trigger = trigger;
@@ -46,5 +46,11 @@ public class Shooting extends Component
     public final void setBulletPrefab(Prefab bulletPrefab)
     {
         this.bulletPrefab = bulletPrefab;
+    }
+
+    @XmlAttribute(value = "button", required = true)
+    public void setButton(String button)
+    {
+        this.button = button;
     }
 }

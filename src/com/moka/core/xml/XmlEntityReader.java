@@ -2,7 +2,7 @@ package com.moka.core.xml;
 
 import com.moka.core.Component;
 import com.moka.core.*;
-import com.moka.core.triggers.Trigger;
+import com.moka.triggers.Trigger;
 import com.moka.math.Vector2f;
 import com.moka.utils.JMokaException;
 import net.sourceforge.jeval.EvaluationException;
@@ -24,6 +24,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class XmlEntityReader
 {
@@ -319,9 +320,29 @@ public class XmlEntityReader
             // get the trigger.
             casted = Trigger.getStaticTrigger(value, metaClass);
         }
+        // in case the param type is a prefab.
         else if (param.isAssignableFrom(Prefab.class))
         {
             casted = context.newPrefab(value);
+        }
+        // in case the param type is an enum.
+        else if (param.isEnum())
+        {
+            Object[] constants = param.getEnumConstants();
+
+            for (Object constant : constants)
+            {
+                if (constant.toString().equals(value))
+                {
+                    casted = constant;
+                    break;
+                }
+            }
+
+            if (casted == null)
+            {
+                throw new JMokaException("Enum " + param.getSimpleName() + " has no value " + value + ".");
+            }
         }
         else
         {

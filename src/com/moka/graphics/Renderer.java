@@ -8,9 +8,41 @@ import static org.lwjgl.opengl.GL11.*;
 
 public final class Renderer extends SubEngine
 {
-    public static final String SHADERS_PATH     = "res/shaders/";
-    public static final String VERTEX_SHADER    = "pass_through_vertex.glsl";
-    public static final String FRAGMENT_SHADER  = "pass_through_fragment.glsl";
+    public static final String VERTEX_CODE =
+            "#version 330\n" +
+            "\n" +
+            "layout (location = 0) in vec2 a_position;\n" +
+            "layout (location = 1) in vec2 a_texCoord;\n" +
+            "\n" +
+            "uniform mat3 u_projectedView;\n" +
+            "uniform mat3 u_model;\n" +
+            "\n" +
+            "out vec2 texCoord;\n" +
+            "\n" +
+            "void main() {\n" +
+            "\tvec3 position = u_projectedView * (u_model * vec3(a_position, 1.0));\n" +
+            "\tgl_Position = vec4(position.xy, 0, position.z);\n" +
+            "\n" +
+            "\t// out.\n" +
+            "\ttexCoord = a_texCoord;\n" +
+            "}";
+
+    public static final String FRAGMENT_CODE =
+            "#version 330\n" +
+            "\n" +
+            "uniform sampler2D u_texture;\n" +
+            "uniform vec4 u_color;\n" +
+            "\n" +
+            "in vec2 texCoord;\n" +
+            "\n" +
+            "void main() {\n" +
+            "\tvec4 baseColor = texture2D(u_texture, texCoord);\n" +
+            "\n" +
+            "\tif(baseColor.a == 0)\n" +
+            "\t\tdiscard;\n" +
+            "\telse\n" +
+            "\t\tgl_FragColor = baseColor * u_color;\n" +
+            "}\n";
 
     private Camera camera;
     private Shader shader;
@@ -23,7 +55,7 @@ public final class Renderer extends SubEngine
     public void create()
     {
         // create shader.
-        shader = new Shader(SHADERS_PATH + VERTEX_SHADER, SHADERS_PATH + FRAGMENT_SHADER);
+        shader = new Shader(VERTEX_CODE, FRAGMENT_CODE);
 
         // initialize OpenGL stuff.
         updateClearColor();

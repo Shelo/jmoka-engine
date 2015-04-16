@@ -2,7 +2,7 @@ package com.moka.components;
 
 import com.moka.core.Component;
 import com.moka.core.Timer;
-import com.moka.core.triggers.Trigger;
+import com.moka.triggers.Trigger;
 import com.moka.core.xml.XmlAttribute;
 
 /**

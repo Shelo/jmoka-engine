@@ -8,9 +8,17 @@ import org.lwjgl.glfw.GLFW;
 public class DirectionalMovement extends Component
 {
     private boolean ignoreRotation = false;
+    private Directions directions;
     private float rotationSpeed = 0.1f;
     private Vector2f buffer = new Vector2f();
     private float speed = 400;
+
+    private enum Directions {
+        RIGHT,
+        LEFT,
+        DOWN,
+        UP
+    }
 
     @Override
     public void onUpdate()
@@ -46,8 +54,8 @@ public class DirectionalMovement extends Component
 
     public void move(Vector2f direction)
     {
-        getTransform().move(direction.x * (float) getTime().getDelta() * speed,
-                direction.y * (float) getTime().getDelta() * speed);
+        float delta = (float) getTime().getDelta();
+        getTransform().move(direction.x * delta * speed, direction.y * delta * speed);
 
         if (!ignoreRotation)
         {
@@ -73,5 +81,11 @@ public class DirectionalMovement extends Component
     public void setRotationSpeed(float rotationSpeed)
     {
         this.rotationSpeed = rotationSpeed;
+    }
+
+    @XmlAttribute("directions")
+    public void setDirections(Directions directions)
+    {
+        this.directions = directions;
     }
 }

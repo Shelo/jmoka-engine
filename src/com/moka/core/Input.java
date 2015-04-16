@@ -6,6 +6,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 
 import java.nio.DoubleBuffer;
+import java.util.HashMap;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -24,6 +25,9 @@ public final class Input extends SubEngine
     private DoubleBuffer cursorPosY;
     private boolean[] activeMouse;
     private boolean[] activeKeys;
+
+    private HashMap<String, Integer> buttonsKeys    = new HashMap<>();
+    private HashMap<String, Integer> buttonsMouse   = new HashMap<>();
 
     public void create()
     {
@@ -51,6 +55,96 @@ public final class Input extends SubEngine
         cursorPosX.rewind();
         cursorPosY.rewind();
         glfwGetCursorPos(getWindow(), cursorPosX, cursorPosY);
+    }
+
+    public Input bindKey(String button, int keyCode)
+    {
+        if (button == null)
+        {
+            throw new JMokaException("Button name cannot be null.");
+        }
+
+        if (buttonsMouse.containsKey(button))
+        {
+            throw new JMokaException("Button is already set for mouse.");
+        }
+
+        buttonsKeys.put(button, keyCode);
+
+        return this;
+    }
+
+    public Input bindMouse(String button, int keyCode)
+    {
+        if (button == null)
+        {
+            throw new JMokaException("Button name cannot be null.");
+        }
+
+        if (buttonsKeys.containsKey(button))
+        {
+            throw new JMokaException("Button is already set for keyboard.");
+        }
+
+        buttonsMouse.put(button, keyCode);
+
+        return this;
+    }
+
+    public int getButtonKeyCode(String button)
+    {
+        if (!buttonsKeys.containsKey(button))
+        {
+            throw new JMokaException("Keyboard button " + button + " is not set.");
+        }
+
+        return buttonsKeys.get(button);
+    }
+
+    public int getButtonMouseCode(String button)
+    {
+        if (!buttonsMouse.containsKey(button))
+        {
+            throw new JMokaException("Mouse button " + button + " is not set.");
+        }
+
+        return buttonsMouse.get(button);
+    }
+
+    public boolean getButton(String button)
+    {
+        if (buttonsKeys.containsKey(button))
+        {
+            return getKey(getButtonKeyCode(button));
+        }
+        else
+        {
+            return getMouse(getButtonMouseCode(button));
+        }
+    }
+
+    public boolean getButtonDown(String button)
+    {
+        if (buttonsKeys.containsKey(button))
+        {
+            return getKeyDown(getButtonKeyCode(button));
+        }
+        else
+        {
+            return getMouseDown(getButtonMouseCode(button));
+        }
+    }
+
+    public boolean getButtonUp(String button)
+    {
+        if (buttonsKeys.containsKey(button))
+        {
+            return getKeyUp(getButtonKeyCode(button));
+        }
+        else
+        {
+            return getMouseUp(getButtonMouseCode(button));
+        }
     }
 
     public boolean getKey(int keyCode)

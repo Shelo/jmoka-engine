@@ -12,6 +12,8 @@ public class XmlComponentSchemeWriter
     private static final String TYPE_LINE = "      <xs:element name=\"%s\" minOccurs=\"0\" maxOccurs=\"1\">" +
             "<xs:complexType>\n";
     private static final String ATTRIBUTE_LINE = "        <xs:attribute name=\"%s\" type=\"xs:%s\" use=\"%s\" />\n";
+    private static final String ATTRIBUTE_LINE_ENUM = "        <xs:attribute name=\"%s\" use=\"%s\"><xs:simpleType>\n";
+    private static final String ENUM_VALUE = "            <xs:enumeration value=\"%s\" />\n";
 
     public static String write(Class<?> component)
     {
@@ -39,14 +41,34 @@ public class XmlComponentSchemeWriter
             String name = attribute.value();
             String required = attribute.required() ? "required" : "optional";
 
-            String type = param.getSimpleName();
-            type = type.equals("int") ? "integer" : type;
-            type = type.equals("Trigger") ? "string" : type;
-            type = type.equals("String") ? "string" : type;
-            type = type.equals("Prefab") ? "string" : type;
-            type = type.equals("Entity") ? "string" : type;
+            // enum is very special so it has to be done separately.
+            if (param.isEnum())
+            {
+                Object[] constants = param.getEnumConstants();
 
-            result.append(String.format(ATTRIBUTE_LINE, name, type, required));
+                result.append(String.format(ATTRIBUTE_LINE_ENUM, name, required));
+                result.append("          <xs:restriction base=\"xs:string\">\n");
+
+                for (Object constant : constants)
+                {
+                    result.append(String.format(ENUM_VALUE, constant.toString()));
+                }
+
+                result.append("          </xs:restriction>\n");
+                result.append("        </xs:simpleType></xs:attribute>\n");
+            }
+            else
+            {
+
+                String type = param.getSimpleName();
+                type = type.equals("int") ? "integer" : type;
+                type = type.equals("Trigger") ? "string" : type;
+                type = type.equals("String") ? "string" : type;
+                type = type.equals("Prefab") ? "string" : type;
+                type = type.equals("Entity") ? "string" : type;
+
+                result.append(String.format(ATTRIBUTE_LINE, name, type, required));
+            }
         }
 
         result.append("      </xs:complexType></xs:element>\n\n");
