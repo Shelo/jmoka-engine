@@ -15,7 +15,7 @@
             />
     </entity>
 
-    <entity position="50, ${@screen_height / 2}" rotation="0" size="125, 125" name="Player" layer="2">
+    <entity position="150, ${@screen_height / 2}" rotation="0" size="125, 125" name="Player" layer="2">
         <Sprite
             texture="res/images/ship.png"
             />
@@ -28,7 +28,8 @@
 
         <DirectionalMovement
             speed="500"
-            directions="RIGHT"
+            lockDirection="VERTICAL"
+            angleTrigger="example.Game.lockAngleTrigger"
             />
     </entity>
 </scene>

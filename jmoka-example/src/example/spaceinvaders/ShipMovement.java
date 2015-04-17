@@ -1,9 +1,9 @@
 package example.spaceinvaders;
 
 import com.moka.core.Component;
+import com.moka.core.Input;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.MathUtil;
-import org.lwjgl.glfw.GLFW;
 
 public class ShipMovement extends Component
 {
@@ -19,12 +19,12 @@ public class ShipMovement extends Component
     @Override
     public void onUpdate()
     {
-        if (getInput().getKey(GLFW.GLFW_KEY_D))
+        if (getInput().getKey(Input.KEY_D))
         {
             getTransform().move((float) (speed * getTime().getDelta()), 0);
         }
 
-        if (getInput().getKey(GLFW.GLFW_KEY_A))
+        if (getInput().getKey(Input.KEY_A))
         {
             getTransform().move(- (float) (speed * getTime().getDelta()), 0);
         }

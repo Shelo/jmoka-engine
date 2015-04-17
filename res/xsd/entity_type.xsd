@@ -12,10 +12,10 @@
       <!-- Start Generated Code -->
 
       <xs:element name="AABBCollider" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="offsetX" type="xs:float" use="optional" />
         <xs:attribute name="offsetY" type="xs:float" use="optional" />
         <xs:attribute name="width" type="xs:float" use="optional" />
         <xs:attribute name="height" type="xs:float" use="optional" />
-        <xs:attribute name="offsetX" type="xs:float" use="optional" />
         <xs:attribute name="isTrigger" type="xs:boolean" use="optional" />
       </xs:complexType></xs:element>
 
@@ -54,20 +54,20 @@
       </xs:complexType></xs:element>
 
       <xs:element name="Shooting" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="trigger" type="xs:string" use="required" />
         <xs:attribute name="bulletPrefab" type="xs:string" use="required" />
         <xs:attribute name="button" type="xs:string" use="required" />
-        <xs:attribute name="trigger" type="xs:string" use="required" />
       </xs:complexType></xs:element>
 
       <xs:element name="Sprite" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="texture" type="xs:string" use="required" />
+        <xs:attribute name="tintR" type="xs:float" use="optional" />
         <xs:attribute name="tintG" type="xs:float" use="optional" />
         <xs:attribute name="tintB" type="xs:float" use="optional" />
         <xs:attribute name="tintA" type="xs:float" use="optional" />
         <xs:attribute name="width" type="xs:float" use="optional" />
         <xs:attribute name="clipTop" type="xs:float" use="optional" />
         <xs:attribute name="clipRight" type="xs:float" use="optional" />
-        <xs:attribute name="texture" type="xs:string" use="required" />
-        <xs:attribute name="tintR" type="xs:float" use="optional" />
         <xs:attribute name="height" type="xs:float" use="optional" />
       </xs:complexType></xs:element>
 
@@ -75,20 +75,20 @@
         <xs:attribute name="ignoreRotation" type="xs:boolean" use="optional" />
         <xs:attribute name="speed" type="xs:float" use="optional" />
         <xs:attribute name="rotationSpeed" type="xs:float" use="optional" />
-        <xs:attribute name="directions" use="optional"><xs:simpleType>
+        <xs:attribute name="lockDirection" use="optional"><xs:simpleType>
           <xs:restriction base="xs:string">
-            <xs:enumeration value="RIGHT" />
-            <xs:enumeration value="LEFT" />
-            <xs:enumeration value="DOWN" />
-            <xs:enumeration value="UP" />
+            <xs:enumeration value="NONE" />
+            <xs:enumeration value="VERTICAL" />
+            <xs:enumeration value="HORIZONTAL" />
           </xs:restriction>
         </xs:simpleType></xs:attribute>
+        <xs:attribute name="angleTrigger" type="xs:string" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="ShipMovement" minOccurs="0" maxOccurs="1"><xs:complexType>
         <xs:attribute name="speed" type="xs:float" use="optional" />
-        <xs:attribute name="boundLeft" type="xs:float" use="optional" />
         <xs:attribute name="boundRight" type="xs:float" use="optional" />
+        <xs:attribute name="boundLeft" type="xs:float" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="DebugPosition" minOccurs="0" maxOccurs="1"><xs:complexType>

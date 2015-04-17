@@ -25,8 +25,10 @@ public abstract class Trigger<T>
      *
      * @param component the caller component.
      * @param meta the meta data.
+     *
+     * @return an optional information object given by the trigger.
      */
-    public void trigger(final Component component, final T meta)
+    public Object trigger(final Component component, final T meta)
     {
         if (component == null)
         {
@@ -36,16 +38,15 @@ public abstract class Trigger<T>
         this.component = component;
         this.meta = meta;
 
-        onTrigger();
+        return onTrigger();
     }
 
     /**
      * Triggers the action called by the component.
      *
-     * @param event the event sent by the caller.
-     * @return true if the action was successfully handled.
+     * @return an information object if needed.
      */
-    public abstract boolean onTrigger();
+    public abstract Object onTrigger();
 
     public Component getComponent()
     {
