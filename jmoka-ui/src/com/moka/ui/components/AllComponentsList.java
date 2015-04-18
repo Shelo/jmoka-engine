@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -13,14 +14,12 @@ import java.util.Iterator;
 
 public class AllComponentsList extends JList<String>
 {
-    private Hierarchy hierarchy;
     private JFrame parent;
 
-    private AllComponentsList(ListModel<String> model, JFrame parent, Hierarchy hierarchy)
+    private AllComponentsList(ListModel<String> model, JFrame parent)
     {
         super(model);
 
-        this.hierarchy = hierarchy;
         this.parent = parent;
 
         addMouseListener(new SelectComponent());
@@ -28,7 +27,7 @@ public class AllComponentsList extends JList<String>
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    public static JComponent newInstance(Hierarchy hierarchy, JFrame parent)
+    public static JComponent newInstance(JFrame parent)
     {
         // create a list model to put in the list.
         DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -45,7 +44,7 @@ public class AllComponentsList extends JList<String>
         }
 
         // create the list with the list model.
-        AllComponentsList list = new AllComponentsList(listModel, parent, hierarchy);
+        AllComponentsList list = new AllComponentsList(listModel, parent);
 
         // return the list with a scroll pane.
         return new JScrollPane(list);
@@ -74,9 +73,7 @@ public class AllComponentsList extends JList<String>
         {
             if (e.getClickCount() == 2)
             {
-                String value = getSelectedValue();
-                System.out.println(value);
-
+                Hierarchy.getInstance().addNewComponent(getSelectedValue());
                 parent.dispatchEvent(new WindowEvent(parent, WindowEvent.WINDOW_CLOSING));
             }
         }

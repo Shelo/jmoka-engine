@@ -1,7 +1,7 @@
 package com.moka.ui;
 
-import com.moka.ui.components.AllComponentsList;
-import com.moka.ui.top.AddNewComponent;
+import com.moka.ui.top.NewComponent;
+import com.moka.ui.top.NewEntity;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,9 +9,11 @@ import java.awt.event.ActionListener;
 
 public class ToolBar extends JToolBar
 {
+    private static ToolBar INSTANCE;
+
     private Hierarchy hierarchy;
 
-    public ToolBar(Hierarchy hierarchy)
+    private ToolBar(Hierarchy hierarchy)
     {
         this.hierarchy = hierarchy;
 
@@ -20,10 +22,11 @@ public class ToolBar extends JToolBar
 
         JButton addNewEntityButton = new JButton();
         addNewEntityButton.setText("New Entity");
+        addNewEntityButton.addActionListener(new NewEntityWindow());
         add(addNewEntityButton);
 
         JButton addNewComponentButton = new JButton();
-        addNewComponentButton.setText("New Component");
+        addNewComponentButton.setText("Add Component");
         addNewComponentButton.addActionListener(new NewComponentWindow());
         add(addNewComponentButton);
 
@@ -48,7 +51,36 @@ public class ToolBar extends JToolBar
         public void actionPerformed(ActionEvent actionEvent)
         {
             // open the component frame.
-            new AddNewComponent(hierarchy);
+            new NewComponent(hierarchy);
+        }
+    }
+
+    public static ToolBar getInstance()
+    {
+        if (INSTANCE == null)
+        {
+            throw new NullPointerException("ToolBar singleton not initialized.");
+        }
+
+        return INSTANCE;
+    }
+
+    public static ToolBar getInstance(Hierarchy hierarchy)
+    {
+        if (INSTANCE == null)
+        {
+            INSTANCE = new ToolBar(hierarchy);
+        }
+
+        return INSTANCE;
+    }
+
+    private class NewEntityWindow implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            new NewEntity();
         }
     }
 }

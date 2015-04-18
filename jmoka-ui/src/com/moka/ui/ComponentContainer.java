@@ -2,9 +2,9 @@ package com.moka.ui;
 
 import javax.swing.*;
 
-public class Component extends JPanel
+public class ComponentContainer extends JPanel
 {
-    public Component()
+    public ComponentContainer()
     {
         JLabel label = new JLabel("Test");
         add(label);

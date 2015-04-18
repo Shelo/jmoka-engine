@@ -10,11 +10,11 @@ public class Container extends JSplitPane
     {
         super(JSplitPane.HORIZONTAL_SPLIT);
 
-        hierarchy = Hierarchy.newInstance();
+        hierarchy = Hierarchy.getInstance();
         JScrollPane scrollPane = new JScrollPane(hierarchy);
         setLeftComponent(scrollPane);
 
-        Component component = new Component();
+        ComponentContainer component = new ComponentContainer();
         setRightComponent(component);
 
         setOneTouchExpandable(true);
