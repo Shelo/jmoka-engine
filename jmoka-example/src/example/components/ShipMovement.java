@@ -1,4 +1,4 @@
-package example.spaceinvaders;
+package example.components;
 
 import com.moka.core.Component;
 import com.moka.core.Input;

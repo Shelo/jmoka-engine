@@ -1,18 +1,18 @@
 package example;
 
-import com.moka.core.xml.XmlEntitySchemeWriter;
-import example.spaceinvaders.DebugPosition;
-import example.spaceinvaders.DirectionalMovement;
-import example.spaceinvaders.ShipMovement;
+import com.moka.core.sync.EntitySchemeWriter;
+import example.components.Debugger;
+import example.components.DirectionalMovement;
+import example.components.ShipMovement;
 
 public class XmlSync
 {
     public static void main(String[] args)
     {
-        XmlEntitySchemeWriter.register(DirectionalMovement.class);
-        XmlEntitySchemeWriter.register(ShipMovement.class);
-        XmlEntitySchemeWriter.register(DebugPosition.class);
+        EntitySchemeWriter.register(DirectionalMovement.class);
+        EntitySchemeWriter.register(ShipMovement.class);
+        EntitySchemeWriter.register(Debugger.class);
 
-        XmlEntitySchemeWriter.render();
+        EntitySchemeWriter.render();
     }
 }

@@ -1,35 +1,57 @@
 <scene xmlns="http://www.mokadev.com/scene">
-    <entity name="MainCamera" position="0, 0" rotation="0" layer="0">
+    <entity
+        name="MainCamera"
+        position="0, 0"
+        rotation="0"
+        layer="0" >
+
         <Camera />
+
     </entity>
 
-    <entity position="0, 0" rotation="0" name="Cursor">
-        <Interval trigger="com.moka.triggers.CursorTriggers.moveToCursor" />
+    <entity
+        position="0, 0"
+        rotation="0"
+        name="Cursor">
+
+        <Interval
+            trigger="com.moka.triggers.CursorTriggers.moveToCursor" />
+
     </entity>
 
-    <entity position="${@screen_width / 2}, ${@screen_height / 2}" size="${@screen_width}, ${@screen_height}"
-            rotation="0" name="Background">
+    <entity
+        position="${@screen_width / 2}, ${@screen_height / 2}"
+        size="${@screen_width}, ${@screen_height}"
+        rotation="0"
+        name="Background" >
 
         <Sprite
-            texture="res/images/background.jpg"
-            />
+            texture="res/images/background.jpg" />
+
     </entity>
 
-    <entity position="150, ${@screen_height / 2}" rotation="0" size="125, 125" name="Player" layer="2">
+    <entity
+        position="150, ${@screen_height / 2}"
+        rotation="0"
+        size="125, 125"
+        name="Player"
+        layer="2">
+
         <Sprite
-            texture="res/images/ship.png"
-            />
+            texture="res/images/ship.png" />
 
         <Shooting
             button="fire"
             trigger="example.Game.fireTrigger"
-            bulletPrefab="res/scene/prefabs/bullet.xml"
-            />
+            bulletPrefab="res/scene/prefabs/bullet.xml" />
+
+        <Debugger
+            option="POSITION" />
 
         <DirectionalMovement
             speed="500"
             lockDirection="VERTICAL"
-            angleTrigger="example.Game.lockAngleTrigger"
-            />
+            angleTrigger="example.Game.lockAngleTrigger" />
+
     </entity>
 </scene>

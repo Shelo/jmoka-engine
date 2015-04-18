@@ -1,14 +1,18 @@
-package com.moka.core.xml;
+package com.moka.core.sync;
 
 import com.moka.components.*;
+import com.moka.core.Component;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XmlEntitySchemeWriter
+public class EntitySchemeWriter
 {
     private static final String HEADER =
             "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
@@ -34,47 +38,70 @@ public class XmlEntitySchemeWriter
             "  </xs:complexType>\n" +
             "</xs:schema>";
 
-    private static List<Class<?>> components = new ArrayList<>();
+    private static List<Class<? extends Component>> components = new ArrayList<>();
 
     static {
-        XmlEntitySchemeWriter.register(AABBCollider.class);
-        XmlEntitySchemeWriter.register(Bullet.class);
-        XmlEntitySchemeWriter.register(Camera.class);
-        XmlEntitySchemeWriter.register(CircleCollider.class);
-        XmlEntitySchemeWriter.register(Controllable.class);
-        XmlEntitySchemeWriter.register(Interval.class);
-        XmlEntitySchemeWriter.register(LookAt.class);
-        XmlEntitySchemeWriter.register(SatCollider.class);
-        XmlEntitySchemeWriter.register(Shooting.class);
-        XmlEntitySchemeWriter.register(Sprite.class);
+        register(AABBCollider.class);
+        register(Bullet.class);
+        register(Camera.class);
+        register(CircleCollider.class);
+        register(Controllable.class);
+        register(Interval.class);
+        register(LookAt.class);
+        register(SatCollider.class);
+        register(Shooting.class);
+        register(Sprite.class);
     }
 
-    public static void register(Class<?> component)
+    public static void register(Class<? extends Component> component)
     {
         components.add(component);
     }
 
     public static void render()
     {
-        String destFile = "res/xsd/entity_type.xsd";
+        String xmlDestFile = "gen/xsd/entity_type.xsd";
+        String jsonDestFile = "gen/components.json";
 
-        StringBuilder source = new StringBuilder();
+        final StringBuilder source = new StringBuilder();
+        final JSONObject jsonObject = new JSONObject();
+
+        // add the first part (the header) to the xml source text.
         source.append(HEADER + "\n");
 
         for (Class<?> component : components)
         {
-            source.append(XmlComponentSchemeWriter.write(component));
+            ComponentDescriptor descriptor = ComponentSchemeWriter.write(component);
+            source.append(descriptor.getStringBuilder().toString());
+
+            try
+            {
+                jsonObject.put(component.getSimpleName(), descriptor.getJsonObject());
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         source.append(FOOTER);
 
-        File file = new File(destFile);
+        try
+        {
+            PrintWriter writer = new PrintWriter(xmlDestFile);
+            writer.write(source.toString());
+            writer.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
         try
         {
-            PrintWriter writer = new PrintWriter(file);
-            writer.write(source.toString());
-            writer.close();
+            FileWriter jsonFile = new FileWriter(jsonDestFile);
+            jsonFile.write(jsonObject.toString());
+            jsonFile.close();
         }
         catch (IOException e)
         {

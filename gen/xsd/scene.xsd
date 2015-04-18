@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        targetNamespace="http://www.mokadev.com/scene"
+        xmlns="http://www.mokadev.com/scene"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified" >
+
+    <xs:include
+        schemaLocation="entity_type.xsd"/>
+
+    <!-- Define root Entities element. -->
+    <xs:element name="scene">
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="entity" type="EntityTypeWithName" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="include" type="IncludeType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="entity" type="EntityType"/>
+
+    <xs:complexType name="EntityTypeWithName">
+        <xs:simpleContent>
+            <xs:extension base="EntityType">
+                <xs:attribute name="name" use="required" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Define Include Tag -->
+    <xs:complexType name="IncludeType">
+        <xs:attribute name="path"       use="required" />
+        <xs:attribute name="name"       use="required" />
+        <xs:attribute name="position"   use="optional" type="xs:string" default="0, 0" />
+        <xs:attribute name="rotation"   use="optional" type="xs:float" default="0, 0, 0" />
+        <xs:attribute name="layer"      use="optional" type="xs:integer" default="0" />
+        <xs:attribute name="size"       use="optional" type="xs:string" default="0, 0" />
+    </xs:complexType>
+
+    <!-- Define Data types. -->
+    <xs:simpleType name="String">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="'.*'" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

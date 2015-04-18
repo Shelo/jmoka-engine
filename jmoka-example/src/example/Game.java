@@ -1,7 +1,6 @@
 package example;
 
 import com.moka.core.Application;
-import com.moka.core.Entity;
 import com.moka.core.Input;
 import com.moka.core.Prefab;
 import com.moka.core.contexts.XmlContext;
@@ -10,7 +9,7 @@ import com.moka.triggers.Trigger;
 
 public class Game
 {
-    private static final String SECONDARY_PATH = "example.spaceinvaders";
+    private static final String SECONDARY_PATH = "example.components";
 
     /*
      * This is an example of a trigger.
@@ -21,7 +20,7 @@ public class Game
         public Object onTrigger()
         {
             Prefab prefab = getMeta();
-            Entity entity = prefab.newEntity(null);
+            prefab.newEntity(null);
             return true;
         }
     };

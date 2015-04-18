@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        targetNamespace="http://www.moka-dev.com/scene"
+        xmlns="http://www.moka-dev.com/scene"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified" >
+
+    <xs:simpleType name="Vector4">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(([\d\\.]*)|(\$[A-Za-z_][0-9A-Za-z_]*)), (([\d\\.]*)|(\$[A-Za-z_][0-9A-Za-z_]*)), (([\d\\.]*)|(\$[A-Za-z_][0-9A-Za-z_]*)), (([\d\\.]*)|(\$[A-Za-z_][0-9A-Za-z_]*))" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Vector3">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(([\d\\.]*)|(\$[A-Za-z_][0-9A-Za-z_]*)), (([\d\\.]*)|(\$[A-Za-z_][0-9A-Za-z_]*)), (([\d\\.]*)|(\$[A-Za-z_][0-9A-Za-z_]*))" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Vector2">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(([\d\\.]*)|(\$[A-Za-z_][0-9A-Za-z_]*)), (([\d\\.]*)|(\$[A-Za-z_][0-9A-Za-z_]*))" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ValueNameType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z_][0-9A-Za-z_]*" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+</xs:schema>
