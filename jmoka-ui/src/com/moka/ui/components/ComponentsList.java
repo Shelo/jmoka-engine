@@ -1,22 +1,23 @@
 package com.moka.ui.components;
 
 import com.moka.ui.Hierarchy;
+import com.moka.ui.JsonData;
 import com.moka.utils.CoreUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.util.Iterator;
+import java.util.List;
 
-public class AllComponentsList extends JList<String>
+public class ComponentsList extends JList<String>
 {
     private JFrame parent;
 
-    private AllComponentsList(ListModel<String> model, JFrame parent)
+    private ComponentsList(ListModel<String> model, JFrame parent)
     {
         super(model);
 
@@ -33,37 +34,20 @@ public class AllComponentsList extends JList<String>
         DefaultListModel<String> listModel = new DefaultListModel<>();
 
         // get the root json object to load component names.
-        JSONObject object = loadJson();
+        JSONObject object = JsonData.getInstance().getRoot();
 
-        // get the iterator and add all component names to the list model.
-        Iterator iterator = object.keys();
-        while (iterator.hasNext())
+        List<String> names = JsonData.getInstance().getComponentsNames();
+
+        for (String name : names)
         {
-            String key = (String) iterator.next();
-            listModel.addElement(key);
+            listModel.addElement(name);
         }
 
         // create the list with the list model.
-        AllComponentsList list = new AllComponentsList(listModel, parent);
+        ComponentsList list = new ComponentsList(listModel, parent);
 
         // return the list with a scroll pane.
         return new JScrollPane(list);
-    }
-
-    public static JSONObject loadJson()
-    {
-        JSONObject object = null;
-
-        try
-        {
-            object = new JSONObject(CoreUtil.readFile("gen/components.json"));
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-
-        return object;
     }
 
     private class SelectComponent extends MouseAdapter

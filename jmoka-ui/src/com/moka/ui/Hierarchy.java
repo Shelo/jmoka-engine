@@ -27,10 +27,18 @@ public class Hierarchy extends JTree
                 if (e.getClickCount() == 2)
                 {
                     DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) getLastSelectedPathComponent();
+
+                    try
+                    {
+                        ComponentContainer.getInstance().setComponentPanel(selectedNode.getUserObject().toString());
+                    }
+                    catch (NullPointerException np)
+                    {
+                        // Do nothing.
+                    }
                 }
             }
         });
-
     }
 
     private static Hierarchy newInstance()
@@ -40,19 +48,11 @@ public class Hierarchy extends JTree
         DefaultMutableTreeNode cameraEntity = new DefaultMutableTreeNode("Camera");
         DefaultMutableTreeNode cameraComponent = new DefaultMutableTreeNode("Camera");
 
-        DefaultMutableTreeNode playerEntity = new DefaultMutableTreeNode("Player");
-        DefaultMutableTreeNode playerSprite = new DefaultMutableTreeNode("Sprite");
-        DefaultMutableTreeNode playerShooter = new DefaultMutableTreeNode("Shooter");
-
         root.add(cameraEntity);
-        root.add(playerEntity);
 
         final Hierarchy entities = new Hierarchy(root);
 
         cameraEntity.add(cameraComponent);
-
-        playerEntity.add(playerSprite);
-        playerEntity.add(playerShooter);
 
         return entities;
     }

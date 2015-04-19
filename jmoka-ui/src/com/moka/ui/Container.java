@@ -14,8 +14,9 @@ public class Container extends JSplitPane
         JScrollPane scrollPane = new JScrollPane(hierarchy);
         setLeftComponent(scrollPane);
 
-        ComponentContainer component = new ComponentContainer();
-        setRightComponent(component);
+        ComponentContainer component = ComponentContainer.getInstance();
+        JScrollPane scrollPane1 = new JScrollPane(component);
+        setRightComponent(scrollPane1);
 
         setOneTouchExpandable(true);
         setDividerLocation(300);

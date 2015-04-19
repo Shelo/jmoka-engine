@@ -1,7 +1,7 @@
 package com.moka.ui.top;
 
 import com.moka.ui.Hierarchy;
-import com.moka.ui.components.AllComponentsList;
+import com.moka.ui.components.ComponentsList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ public class NewComponent extends JFrame
         setSize(200, 400);
         setLocationRelativeTo(null);
 
-        JComponent list = AllComponentsList.newInstance(this);
+        JComponent list = ComponentsList.newInstance(this);
         add(list, BorderLayout.CENTER);
 
         setVisible(true);
