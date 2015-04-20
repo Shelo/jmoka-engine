@@ -1,9 +1,8 @@
 package com.moka.core.xml;
 
-import com.moka.core.Component;
 import com.moka.core.*;
-import com.moka.triggers.Trigger;
 import com.moka.math.Vector2f;
+import com.moka.triggers.Trigger;
 import com.moka.utils.JMokaException;
 import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;
@@ -25,7 +24,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 public class XmlEntityReader
 {

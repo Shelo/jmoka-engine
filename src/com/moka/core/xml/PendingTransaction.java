@@ -1,7 +1,6 @@
 package com.moka.core.xml;
 
 import com.moka.core.Component;
-import org.xml.sax.Attributes;
 
 import java.lang.reflect.Method;
 

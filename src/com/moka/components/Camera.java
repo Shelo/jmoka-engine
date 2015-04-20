@@ -1,8 +1,8 @@
 package com.moka.components;
 
 import com.moka.core.Component;
-import com.moka.math.Vector2f;
 import com.moka.math.Matrix3;
+import com.moka.math.Vector2f;
 import com.moka.utils.JMokaException;
 
 public class Camera extends Component

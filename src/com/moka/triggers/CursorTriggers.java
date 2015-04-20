@@ -1,7 +1,5 @@
 package com.moka.triggers;
 
-import java.util.Objects;
-
 public class CursorTriggers
 {
     public static Trigger moveToCursor = new Trigger()

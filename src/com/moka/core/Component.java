@@ -1,6 +1,5 @@
 package com.moka.core;
 
-import com.moka.core.*;
 import com.moka.graphics.Display;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;

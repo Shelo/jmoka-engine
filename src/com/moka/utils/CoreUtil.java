@@ -1,8 +1,8 @@
 package com.moka.utils;
 
 import com.moka.graphics.Vertex;
-import com.moka.math.Matrix4;
 import com.moka.math.Matrix3;
+import com.moka.math.Matrix4;
 import org.lwjgl.BufferUtils;
 
 import java.io.BufferedReader;

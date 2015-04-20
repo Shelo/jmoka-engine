@@ -2,7 +2,6 @@ package com.moka.core.sync;
 
 import com.moka.core.xml.XmlAttribute;
 import com.moka.utils.JMokaException;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

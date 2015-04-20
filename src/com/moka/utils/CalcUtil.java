@@ -1,8 +1,8 @@
 package com.moka.utils;
 
 import com.moka.core.Transform;
-import com.moka.math.Vector2f;
 import com.moka.math.Matrix3;
+import com.moka.math.Vector2f;
 
 /**
  * Used to make calculations without creating a lot of

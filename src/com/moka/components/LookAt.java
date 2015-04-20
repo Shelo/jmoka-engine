@@ -2,7 +2,6 @@ package com.moka.components;
 
 import com.moka.core.Component;
 import com.moka.core.Entity;
-import com.moka.core.Transform;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2f;
 

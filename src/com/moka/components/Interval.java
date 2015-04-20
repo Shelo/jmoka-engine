@@ -2,8 +2,8 @@ package com.moka.components;
 
 import com.moka.core.Component;
 import com.moka.core.Timer;
-import com.moka.triggers.Trigger;
 import com.moka.core.xml.XmlAttribute;
+import com.moka.triggers.Trigger;
 
 /**
  * Sets up an interval that will call a trigger every X seconds. Note that you can set
