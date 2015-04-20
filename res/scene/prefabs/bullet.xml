@@ -5,7 +5,6 @@
         texture="res/images/red-dot.png"/>
 
     <Bullet
-        speed="600"
-        />
+        speed="600" />
 
 </entity>

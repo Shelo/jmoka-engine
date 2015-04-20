@@ -35,6 +35,7 @@ public class XmlSceneReader
             InputStream stream = new FileInputStream(filePath);
             currentFilePath = filePath;
             parser.parse(stream, new Handler());
+            entityReader.resolvePendingTransactions();
         }
         catch (SAXException | IOException e)
         {
@@ -99,11 +100,11 @@ public class XmlSceneReader
         }
     }
 
-    public XmlSceneReader(Context game)
+    public XmlSceneReader(Context context)
     {
-        this.game = game;
+        this.game = context;
 
-        entityReader = new XmlEntityReader(game);
+        entityReader = new XmlEntityReader(context);
 
         try
         {

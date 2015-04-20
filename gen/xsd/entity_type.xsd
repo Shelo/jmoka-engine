@@ -13,8 +13,8 @@
 
       <xs:element name="AABBCollider" minOccurs="0" maxOccurs="1"><xs:complexType>
         <xs:attribute name="offsetX" type="xs:float" use="optional" />
-        <xs:attribute name="width" type="xs:float" use="optional" />
         <xs:attribute name="offsetY" type="xs:float" use="optional" />
+        <xs:attribute name="width" type="xs:float" use="optional" />
         <xs:attribute name="height" type="xs:float" use="optional" />
         <xs:attribute name="isTrigger" type="xs:boolean" use="optional" />
       </xs:complexType></xs:element>
@@ -56,7 +56,7 @@
       <xs:element name="Shooting" minOccurs="0" maxOccurs="1"><xs:complexType>
         <xs:attribute name="bulletPrefab" type="xs:string" use="required" />
         <xs:attribute name="button" type="xs:string" use="required" />
-        <xs:attribute name="trigger" type="xs:string" use="required" />
+        <xs:attribute name="trigger" type="xs:string" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="Sprite" minOccurs="0" maxOccurs="1"><xs:complexType>
@@ -86,9 +86,9 @@
       </xs:complexType></xs:element>
 
       <xs:element name="ShipMovement" minOccurs="0" maxOccurs="1"><xs:complexType>
-        <xs:attribute name="speed" type="xs:float" use="optional" />
         <xs:attribute name="boundLeft" type="xs:float" use="optional" />
         <xs:attribute name="boundRight" type="xs:float" use="optional" />
+        <xs:attribute name="speed" type="xs:float" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="Debugger" minOccurs="0" maxOccurs="1"><xs:complexType>

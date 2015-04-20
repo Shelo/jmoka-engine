@@ -1,4 +1,4 @@
-package example.components;
+package com.moka.components;
 
 import com.moka.core.Component;
 import com.moka.core.Timer;

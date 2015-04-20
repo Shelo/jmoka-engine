@@ -102,7 +102,7 @@ public abstract class Trigger<T>
         }
         catch (NoSuchFieldException e)
         {
-            throw new JMokaException("The trigger doesn't exists within the class.");
+            throw new JMokaException("The trigger: " + path + " doesn't exists within the class.");
         }
         catch (IllegalAccessException e)
         {

@@ -11,53 +11,31 @@ public class Game
 {
     private static final String SECONDARY_PATH = "example.components";
 
-    /*
-     * This is an example of a trigger.
-     */
-    public static Trigger<Prefab> fireTrigger = new Trigger<Prefab>()
-    {
-        @Override
-        public Object onTrigger()
-        {
-            Prefab prefab = getMeta();
-            prefab.newEntity(null);
-            return true;
-        }
-    };
-
-    public static Trigger<Float> lockAngleTrigger = new Trigger<Float>()
-    {
-        @Override
-        public Object onTrigger()
-        {
-            Float angle = getMeta();
-            return MathUtil.clamp(angle, (float) - Math.PI / 6, (float) Math.PI / 6);
-        }
-    };
-
     /**
      * Main entrance of the engine.
      */
     public static void main(String[] args)
     {
-        Application application = new Application();
+        Application app = new Application();
 
         // set the game context for the application.
-        application.setContext(new XmlContext("res/scene/scene.xml", "res/values.xml"));
+        app.setContext(new XmlContext("res/scene/scene.xml", "res/values.xml"));
 
         // set context options.
-        application.getContext().setSecondaryPackage(SECONDARY_PATH);
+        app.getContext().setSecondaryPackage(SECONDARY_PATH);
 
-        application.getInput()
-                .bindMouse("fire", Input.MOUSE_BUTTON_1);
+        // set some inputs.
+        app.getInput().bindMouse("fire", Input.MOUSE_BUTTON_1);
+
+        InputBindings.bindWasd(app.getInput());
 
         // set display options.
-        application.getDisplay().createDisplay("screen_width", "screen_height", "JMoka Engine");
+        app.getDisplay().createDisplay("screen_width", "screen_height", "JMoka Engine");
 
         // set renderer options.
-        application.getRenderer().setClearColor(0, 0, 0);
+        app.getRenderer().setClearColor(0, 0, 0);
 
         // create and start the application.
-        application.create().start(60);
+        app.create().start(60);
     }
 }

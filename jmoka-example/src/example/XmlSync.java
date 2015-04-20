@@ -1,7 +1,7 @@
 package example;
 
 import com.moka.core.sync.EntitySchemeWriter;
-import example.components.Debugger;
+import com.moka.components.Debugger;
 import example.components.DirectionalMovement;
 import example.components.ShipMovement;
 

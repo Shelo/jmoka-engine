@@ -24,6 +24,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 
 public class XmlEntityReader
@@ -41,6 +42,7 @@ public class XmlEntityReader
     public static final ArrayList<Character> SYMBOLS = new ArrayList<>();
     public static final String DEFAULT_PACKAGE = "com.moka.components.";
 
+    private List<PendingTransaction> pendingTransactions;
     private Evaluator evaluator;
     private String entityName;
     private Context context;
@@ -123,6 +125,7 @@ public class XmlEntityReader
         state = STATE_CLOSED;
 
         // create the JEval evaluator.
+        pendingTransactions = new ArrayList<>();
         evaluator = new Evaluator();
 
         // create SAX parser.
@@ -150,10 +153,9 @@ public class XmlEntityReader
             throw new JMokaException("XmlEntityReader's state is not init.");
         }
 
-        // first state is init.
-        state = STATE_INIT;
-        entity = null;
         entityName = name;
+        entity = null;
+        state = STATE_INIT;
 
         try
         {
@@ -175,6 +177,17 @@ public class XmlEntityReader
         }
 
         return entity;
+    }
+
+    public void resolvePendingTransactions()
+    {
+        for (int i = pendingTransactions.size() - 1; i >= 0; i--)
+        {
+            PendingTransaction pendingTransaction = pendingTransactions.get(i);
+            invokeMethodOnComponent(pendingTransaction.getComponent(), pendingTransaction.getMethod(),
+                    pendingTransaction.getValue());
+            pendingTransactions.remove(i);
+        }
     }
 
     /**
@@ -279,7 +292,6 @@ public class XmlEntityReader
         String value = attributes.getValue(attribute.value());
 
         // save the component name for errors.
-        String componentName = component.getClass().getSimpleName();
 
         // if the value is not present we can either ignore it or, if the XmlAttribute
         // specifies that is required, throw an exception.
@@ -287,12 +299,19 @@ public class XmlEntityReader
         {
             if (attribute.required())
             {
+                String componentName = component.getClass().getSimpleName();
                 throw new JMokaException("Component " + componentName + " requires the '" + attribute.value()
                         + "' attribute.");
             }
+
             return;
         }
 
+        invokeMethodOnComponent(component, method, value);
+    }
+
+    private void invokeMethodOnComponent(Component component, Method method, String value)
+    {
         // here the value is always something. We should always take the first parameter
         // type because these methods are supposed to have only one.
         Class<?> param = getParamFor(method);
@@ -320,11 +339,6 @@ public class XmlEntityReader
             // get the trigger.
             casted = Trigger.getStaticTrigger(value, metaClass);
         }
-        // in case the param type is a prefab.
-        else if (param.isAssignableFrom(Prefab.class))
-        {
-            casted = context.newPrefab(value);
-        }
         // in case the param type is an enum.
         else if (param.isEnum())
         {
@@ -348,6 +362,14 @@ public class XmlEntityReader
         {
             // test the value and cast it to the parameter's class.
             casted = getTestedValue(param, value);
+
+            // this is a very special case. Here the entity we tried to reference doesn't exists yet, but
+            // can exist in the future, so we will save this state to analyze it later.
+            if (casted == null && param.isAssignableFrom(Entity.class))
+            {
+                pendingTransactions.add(new PendingTransaction(component, method, value));
+                return;
+            }
         }
 
         try
@@ -357,12 +379,12 @@ public class XmlEntityReader
         catch (IllegalAccessException e)
         {
             throw new JMokaException(String.format("Method %s for component %s is inaccessible",
-                    method.getName(), componentName));
+                    method.getName(), component.getClass().getSimpleName()));
         }
         catch (InvocationTargetException e)
         {
             throw new JMokaException(String.format("Method %s for component %s cannot be called.",
-                    method.getName(), componentName));
+                    method.getName(), component.getClass().getSimpleName()));
         }
     }
 
@@ -419,7 +441,20 @@ public class XmlEntityReader
             }
             else if (param == Entity.class)
             {
-                result = context.findEntity(context.getResources().getString(resource));
+                try
+                {
+                    result = context.findEntity(value);
+                }
+                // if the entity is not found, we'll get an exception, but rather than quit,
+                // we will mark this one as a pending transaction.
+                catch (JMokaException e)
+                {
+                    return null;
+                }
+            }
+            else if (param == Prefab.class)
+            {
+                result = context.newPrefab(context.getResources().getString(resource));
             }
 
             return (T) result;
@@ -439,24 +474,7 @@ public class XmlEntityReader
                 throw new JMokaException("[JEval] " + e.toString());
             }
 
-            if (param == int.class)
-            {
-                result = Integer.parseInt(expValue);
-            }
-            else if (param == float.class)
-            {
-                result = Float.parseFloat(expValue);
-            }
-            else if (param == double.class)
-            {
-                result = Double.parseDouble(expValue);
-            }
-            else if (param == boolean.class)
-            {
-                result = Boolean.parseBoolean(expValue);
-            }
-
-            return (T) result;
+            return getTestedValue(param, expValue);
         }
         else
         {
@@ -484,7 +502,16 @@ public class XmlEntityReader
             }
             else if (param == Entity.class)
             {
-                result = context.findEntity(value);
+                try
+                {
+                    result = context.findEntity(value);
+                }
+                // if the entity is not found, we'll get an exception, but rather than quit,
+                // we will mark this one as a pending transaction.
+                catch (JMokaException e)
+                {
+                    return null;
+                }
             }
 
             return (T) result;

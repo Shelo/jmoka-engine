@@ -1,6 +1,6 @@
 <values xmlns="http://www.mokadev.com/resources">
     <string>
-
+        <res name="bullet_prefab" value="res/scene/prefabs/bullet.xml" />
     </string>
 
     <integer>

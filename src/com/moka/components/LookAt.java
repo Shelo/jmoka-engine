@@ -22,6 +22,7 @@ public class LookAt extends Component
 	@XmlAttribute(value = "target", required = true)
 	public void setTarget(Entity target)
 	{
+		System.out.println(target.getName());
 		this.target = target;
 	}
 }

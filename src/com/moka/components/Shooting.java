@@ -23,7 +23,6 @@ public class Shooting extends Component
         {
             bulletPrefab.setPosition(getTransform().getPosition());
             bulletPrefab.setRotation(getTransform().getLookAngle());
-            log("Shooting");
             onFire();
         }
     }
@@ -34,9 +33,13 @@ public class Shooting extends Component
         {
             trigger.trigger(this, bulletPrefab);
         }
+        else
+        {
+            bulletPrefab.newEntity(null);
+        }
     }
 
-    @XmlAttribute(value = "trigger", required = true)
+    @XmlAttribute("trigger")
     public final void setTrigger(Trigger<Prefab> trigger)
     {
         this.trigger = trigger;

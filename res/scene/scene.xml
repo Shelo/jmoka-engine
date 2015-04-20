@@ -1,6 +1,5 @@
 <scene xmlns="http://www.mokadev.com/scene">
-    <entity
-        name="MainCamera"
+    <entity name="MainCamera"
         position="0, 0"
         rotation="0"
         layer="0" >
@@ -9,49 +8,47 @@
 
     </entity>
 
-    <entity
+    <entity name="Cursor"
         position="0, 0"
-        rotation="0"
-        name="Cursor">
+        rotation="0" >
 
         <Interval
             trigger="com.moka.triggers.CursorTriggers.moveToCursor" />
 
     </entity>
 
-    <entity
+    <entity name="Background"
         position="${@screen_width / 2}, ${@screen_height / 2}"
         size="${@screen_width}, ${@screen_height}"
-        rotation="0"
-        name="Background" >
+        rotation="0" >
 
         <Sprite
-            texture="res/images/background.jpg" />
+            texture="res/images/green-tile.png" />
+
+        <LookAt
+            target="Player" />
 
     </entity>
 
-    <entity
+    <entity name="Player"
         position="150, ${@screen_height / 2}"
         rotation="0"
         size="125, 125"
-        name="Player"
         layer="2">
 
         <Sprite
             texture="res/images/ship.png" />
 
-        <Shooting
-            button="fire"
-            trigger="example.Game.fireTrigger"
-            bulletPrefab="res/scene/prefabs/bullet.xml" />
-
-        <Debugger
-            option="POSITION" />
-
         <DirectionalMovement
-            speed="500"
-            lockDirection="VERTICAL"
-            angleTrigger="example.Game.lockAngleTrigger" />
+            speed="300"
+            ignoreRotation="true" />
+
+        <LookAt
+            target="Cursor" />
+
+        <Shooting
+            bulletPrefab="@bullet_prefab"
+            button="fire" />
 
     </entity>
 </scene>
