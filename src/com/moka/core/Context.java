@@ -114,15 +114,10 @@ public abstract class Context extends SubEngine
     public final Entity addEntity(Entity entity, int layer)
     {
         // if the layer doesn't exists...
-        if (layers.size() <= layer)
+        while (layers.size() <= layer)
         {
-            // add new layers if needed.
-            // TODO: maybe this will change.
-            for (int i = 0; i <= layer - layers.size() + 1; i++)
-            {
-                layers.add(new ArrayList<Entity>());
-                JMokaLog.o(TAG, "New layer: " + (i + layers.size() - 1));
-            }
+            layers.add(new ArrayList<Entity>());
+            JMokaLog.o(TAG, "New layer: " + (layers.size() - 1));
         }
 
         layers.get(layer).add(entity);

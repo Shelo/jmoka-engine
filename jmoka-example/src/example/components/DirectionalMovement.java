@@ -4,7 +4,7 @@ import com.moka.core.Component;
 import com.moka.core.Input;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.MathUtil;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 
 public class DirectionalMovement extends Component
@@ -14,7 +14,7 @@ public class DirectionalMovement extends Component
     private boolean ignoreRotation = false;
     private Directions lockDirection = Directions.NONE;
     private float rotationSpeed = 0.1f;
-    private Vector2f buffer = new Vector2f();
+    private Vector2 buffer = new Vector2();
     private float speed = 400;
     private Trigger<Float> angleTrigger;
 
@@ -33,12 +33,12 @@ public class DirectionalMovement extends Component
         {
             if (getInput().getKey(Input.KEY_A))
             {
-                buffer.add(Vector2f.LEFT);
+                buffer.add(Vector2.LEFT);
             }
 
             if (getInput().getKey(Input.KEY_D))
             {
-                buffer.add(Vector2f.RIGHT);
+                buffer.add(Vector2.RIGHT);
             }
         }
 
@@ -46,23 +46,23 @@ public class DirectionalMovement extends Component
         {
             if (lockDirection != Directions.HORIZONTAL && getInput().getKey(Input.KEY_W))
             {
-                buffer.add(Vector2f.UP);
+                buffer.add(Vector2.UP);
             }
 
             if (lockDirection != Directions.HORIZONTAL && getInput().getKey(Input.KEY_S))
             {
-                buffer.add(Vector2f.DOWN);
+                buffer.add(Vector2.DOWN);
             }
         }
 
-        if (!buffer.equals(Vector2f.ZERO))
+        if (!buffer.equals(Vector2.ZERO))
         {
             buffer.nor();
             move(buffer);
         }
     }
 
-    public void move(Vector2f direction)
+    public void move(Vector2 direction)
     {
         float delta = (float) getTime().getDelta();
         getTransform().move(direction.x * delta * speed, direction.y * delta * speed);

@@ -1,6 +1,6 @@
 package com.moka.physics;
 
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.utils.JMokaException;
 
 public class Projection
@@ -14,7 +14,7 @@ public class Projection
         this.max = max;
     }
 
-    public Projection(Vector2f[] vertices, Vector2f axis)
+    public Projection(Vector2[] vertices, Vector2 axis)
     {
         if (vertices.length == 0)
         {

@@ -2,7 +2,7 @@ package com.moka.utils;
 
 import com.moka.core.Transform;
 import com.moka.math.Matrix3;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 
 /**
  * Used to make calculations without creating a lot of
@@ -17,7 +17,7 @@ public class CalcUtil
     private static final Matrix3 BUF_2_MAT = new Matrix3();
     private static final Matrix3 BUF_3_MAT = new Matrix3();
 
-    private static final Vector2f BUF_1_VEC2 = new Vector2f();
+    private static final Vector2 BUF_1_VEC2 = new Vector2();
 
     /**
      * Gets the model matrix from a transform, using static defined
@@ -28,7 +28,7 @@ public class CalcUtil
      */
     public static Matrix3 calcModelMatrix(final Transform transform)
     {
-        Vector2f position = transform.getPosition();
+        Vector2 position = transform.getPosition();
 
         Matrix3 translation = BUF_1_MAT.toTranslation((int) position.x, (int) position.y);
         Matrix3 scale = BUF_2_MAT.toScale(transform.getSize().x, transform.getSize().y);

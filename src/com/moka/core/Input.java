@@ -1,6 +1,6 @@
 package com.moka.core;
 
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.utils.JMokaException;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
@@ -20,7 +20,7 @@ public final class Input extends SubEngine
     private static final int MOUSE_COUNT = 5;
     private static final int KEY_COUNT = 348;
 
-    private Vector2f cursorPosition;
+    private Vector2 cursorPosition;
     private DoubleBuffer cursorPosX;
     private DoubleBuffer cursorPosY;
     private boolean[] activeMouse;
@@ -176,7 +176,7 @@ public final class Input extends SubEngine
         cursorPosX = BufferUtils.createDoubleBuffer(1);
         cursorPosY = BufferUtils.createDoubleBuffer(1);
 
-        cursorPosition = new Vector2f();
+        cursorPosition = new Vector2();
     }
 
     public void update()
@@ -349,7 +349,7 @@ public final class Input extends SubEngine
         return getDisplay().getWindow();
     }
 
-    public Vector2f getCursorPos()
+    public Vector2 getCursorPos()
     {
         return cursorPosition.set(getCursorPosX(), getCursorPosY());
     }

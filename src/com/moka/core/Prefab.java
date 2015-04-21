@@ -1,7 +1,7 @@
 package com.moka.core;
 
 import com.moka.core.xml.XmlAttribute;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.utils.JMokaException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,8 +19,8 @@ import java.util.Set;
 public final class Prefab
 {
     private PreComponents components = new PreComponents();
-    private Vector2f position = new Vector2f();
-    private Vector2f size = new Vector2f();
+    private Vector2 position = new Vector2();
+    private Vector2 size = new Vector2();
     private boolean useOwnSize = false;
     private Context context;
     private float rotation;
@@ -42,7 +42,7 @@ public final class Prefab
      *
      * @param position position vector.
      */
-    public void setPosition(Vector2f position)
+    public void setPosition(Vector2 position)
     {
         this.position.set(position);
     }
@@ -53,7 +53,7 @@ public final class Prefab
      *
      * @param size size vector.
      */
-    public void setSize(Vector2f size)
+    public void setSize(Vector2 size)
     {
         useOwnSize = true;
         this.size.set(size);

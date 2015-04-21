@@ -6,7 +6,7 @@ import com.moka.graphics.Color;
 import com.moka.graphics.Quad;
 import com.moka.graphics.Shader;
 import com.moka.graphics.Texture;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.utils.JMokaException;
 
 /**
@@ -15,11 +15,11 @@ import com.moka.utils.JMokaException;
  */
 public class Sprite extends Component
 {
-	private Vector2f clipBottomLeft = null;
-	private Vector2f clipTopRight = null;
+	private Vector2 clipBottomLeft = null;
+	private Vector2 clipTopRight = null;
 
 	private Texture texture;
-	private Vector2f size;
+	private Vector2 size;
 	private Color tint;
 	private Quad quad;
 
@@ -28,7 +28,7 @@ public class Sprite extends Component
 		tint = new Color(1, 1, 1, 1);
 	}
 
-	public Sprite(Texture texture, Vector2f size, Color tint)
+	public Sprite(Texture texture, Vector2 size, Color tint)
 	{
 		this.texture = texture;
 		this.tint = tint;
@@ -40,7 +40,7 @@ public class Sprite extends Component
 		this(texture, null, tint);
 	}
 
-	public Sprite(Texture texture, Vector2f size)
+	public Sprite(Texture texture, Vector2 size)
 	{
 		this(texture, size, Color.WHITE);
 	}
@@ -64,7 +64,7 @@ public class Sprite extends Component
 		}
 		else
 		{
-			clipTopRight = new Vector2f();
+			clipTopRight = new Vector2();
 
 			clipTopRight.x = texture.getTexCoordX();
 			clipTopRight.y = texture.getTexCoordY();
@@ -163,7 +163,7 @@ public class Sprite extends Component
 	{
 		if (clipTopRight == null)
 		{
-			clipTopRight = new Vector2f();
+			clipTopRight = new Vector2();
 		}
 
 		this.clipTopRight.y = clipTop;
@@ -174,17 +174,17 @@ public class Sprite extends Component
 	{
 		if (clipTopRight == null)
 		{
-			clipTopRight = new Vector2f();
+			clipTopRight = new Vector2();
 		}
 
 		this.clipTopRight.x = clipRight;
 	}
 
-	public Vector2f getSize()
+	public Vector2 getSize()
 	{
 		if(size == null)
 		{
-			size = new Vector2f(texture.getWidth(), texture.getHeight());
+			size = new Vector2(texture.getWidth(), texture.getHeight());
 		}
 
 		return size;

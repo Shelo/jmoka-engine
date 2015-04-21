@@ -4,8 +4,8 @@ import com.moka.components.Sprite;
 import com.moka.core.Transform;
 import com.moka.math.Matrix3;
 import com.moka.math.Matrix4;
-import com.moka.math.Vector2f;
-import com.moka.math.Vector3f;
+import com.moka.math.Vector2;
+import com.moka.math.Vector3;
 import com.moka.utils.CalcUtil;
 import com.moka.utils.CoreUtil;
 import com.moka.utils.JMokaException;
@@ -141,12 +141,12 @@ public class Shader
         glUniform2f(getUniformLocation(uniform), x, y);
     }
 
-    public void setUniform(String uniform, Vector3f v)
+    public void setUniform(String uniform, Vector3 v)
     {
         setUniform(uniform, v.x, v.y, v.z);
     }
 
-    public void setUniform(String uniform, Vector2f v)
+    public void setUniform(String uniform, Vector2 v)
     {
         setUniform(uniform, v.x, v.y);
     }

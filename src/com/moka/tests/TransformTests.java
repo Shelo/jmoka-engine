@@ -6,7 +6,7 @@ import com.moka.core.Entity;
 import com.moka.core.Transform;
 import com.moka.core.contexts.TestContext;
 import com.moka.graphics.Texture;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -23,7 +23,7 @@ public class TransformTests
         Transform transform = entity.getTransform();
         transform.setPosition(100, 100);
         assertThat("Transform's position should change when calling setPosition.",
-                new Vector2f(100, 100), is(equalTo(transform.getPosition())));
+                new Vector2(100, 100), is(equalTo(transform.getPosition())));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class TransformTests
         Transform transform = entity.getTransform();
         transform.setSize(100, 100);
         assertThat("Transform's size should change when calling setSize.",
-                new Vector2f(100, 100), is(equalTo(transform.getSize())));
+                new Vector2(100, 100), is(equalTo(transform.getSize())));
     }
 
     @Test
@@ -64,11 +64,11 @@ public class TransformTests
         Transform transform = entity.getTransform();
 
         assertThat("The size should be the image's size.",
-                new Vector2f(50, 50), is(equalTo(transform.getSize())));
+                new Vector2(50, 50), is(equalTo(transform.getSize())));
 
         transform.setSize(100, 100);
 
         assertThat("The size should be the one that the user set to the transform.",
-                new Vector2f(100, 100), is(equalTo(transform.getSize())));
+                new Vector2(100, 100), is(equalTo(transform.getSize())));
     }
 }

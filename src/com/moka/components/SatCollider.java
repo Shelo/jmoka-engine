@@ -1,7 +1,7 @@
 package com.moka.components;
 
 import com.moka.core.xml.XmlAttribute;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 import com.moka.utils.JMokaException;
@@ -11,10 +11,10 @@ import java.util.List;
 
 public class SatCollider extends Collider
 {
-	private Vector2f[] vertices;
+	private Vector2[] vertices;
 	private int[] npvi; // Non parallel vertices indexes
-	private Vector2f[] tVertices; // Transformed vertices
-	private Vector2f[] axes;
+	private Vector2[] tVertices; // Transformed vertices
+	private Vector2[] axes;
 
 	public SatCollider()
 	{
@@ -33,7 +33,7 @@ public class SatCollider extends Collider
 		}
 	}
 
-	public void setVertices(Vector2f[] vertices)
+	public void setVertices(Vector2[] vertices)
 	{
 		if (this.vertices != null)
 		{
@@ -58,15 +58,15 @@ public class SatCollider extends Collider
 			throw new JMokaException("Axes already initiated.");
 		}
 
-		Vector2f[] edges = new Vector2f[vertices.length];
+		Vector2[] edges = new Vector2[vertices.length];
 		List<Float> slopes = new ArrayList<>();
 		ArrayList<Integer> npvi = new ArrayList<>();
 
-		Vector2f buffer = new Vector2f();
+		Vector2 buffer = new Vector2();
 
 		for (int i = 0; i < vertices.length; i++)
 		{
-			edges[i] = new Vector2f(vertices[i]);
+			edges[i] = new Vector2(vertices[i]);
 			edges[i].sub(vertices[(i + 1) % vertices.length]);
 		}
 
@@ -89,11 +89,11 @@ public class SatCollider extends Collider
 			this.npvi[i] = npvi.get(i);
 		}
 
-		axes = new Vector2f[npvi.size()];
+		axes = new Vector2[npvi.size()];
 
 		for (int i = 0; i < axes.length; i++)
 		{
-			axes[i] = new Vector2f();
+			axes[i] = new Vector2();
 		}
 	}
 
@@ -109,9 +109,9 @@ public class SatCollider extends Collider
 		int k = 0;
 		for (int i : npvi)
 		{
-			Vector2f v1 = new Vector2f(tVertices[i]);
-			Vector2f v2 = tVertices[(i == tVertices.length - 1) ? 0 : i + 1];
-			Vector2f edge = v1.sub(v2);
+			Vector2 v1 = new Vector2(tVertices[i]);
+			Vector2 v2 = tVertices[(i == tVertices.length - 1) ? 0 : i + 1];
+			Vector2 edge = v1.sub(v2);
 
 			// Perpendicular
 			float y = edge.y;
@@ -159,18 +159,18 @@ public class SatCollider extends Collider
 		if (sat.getEntity().getTransform().hasRotated())
 			sat.updateData();
 
-		ArrayList<Vector2f> axes = new ArrayList<>();
+		ArrayList<Vector2> axes = new ArrayList<>();
 
 		Collections.addAll(axes, this.axes);
 
-		for (Vector2f axis : sat.axes)
+		for (Vector2 axis : sat.axes)
 			if (!axes.contains(axis))
 				axes.add(axis);
 
 		float overlap = Float.POSITIVE_INFINITY;
-		Vector2f smallest = null;
+		Vector2 smallest = null;
 
-		for (Vector2f axis : axes) {
+		for (Vector2 axis : axes) {
 			Projection p1 = new Projection(tVertices, axis);
 			Projection p2 = new Projection(sat.tVertices, axis);
 
@@ -191,12 +191,12 @@ public class SatCollider extends Collider
 		return null;
 	}
 
-	public Vector2f[] getAxes()
+	public Vector2[] getAxes()
 	{
 		return axes;
 	}
 
-	public Vector2f[] getTVertices()
+	public Vector2[] getTVertices()
 	{
 		return tVertices;
 	}

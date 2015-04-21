@@ -1,7 +1,7 @@
 package com.moka.core;
 
 import com.moka.math.Matrix3;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.utils.CalcUtil;
 import com.moka.utils.JMokaException;
 
@@ -20,9 +20,9 @@ public class Transform
      */
     private final Entity entity;
 
-    private final Vector2f position;
+    private final Vector2 position;
     private final Matrix3 rotation;
-    private final Vector2f size;
+    private final Vector2 size;
 
     /**
      * If we should use our size or an sprite size.
@@ -39,8 +39,8 @@ public class Transform
         this.entity = entity;
 
         rotation = new Matrix3();
-        position = new Vector2f();
-        size = new Vector2f();
+        position = new Vector2();
+        size = new Vector2();
 
         prev = new Transform();
     }
@@ -53,8 +53,8 @@ public class Transform
         this.entity = null;
 
         rotation = new Matrix3();
-        position = new Vector2f();
-        size = new Vector2f();
+        position = new Vector2();
+        size = new Vector2();
 
         prev = null;
     }
@@ -72,7 +72,7 @@ public class Transform
         position.add(x, y);
     }
 
-    public void move(Vector2f distance)
+    public void move(Vector2 distance)
     {
         position.add(distance);
     }
@@ -96,7 +96,7 @@ public class Transform
         this.size.set(width, height);
     }
 
-    public void setSize(Vector2f size)
+    public void setSize(Vector2 size)
     {
         if (size == null)
         {
@@ -113,7 +113,7 @@ public class Transform
         this.position.set(x, y);
     }
 
-    public void setPosition(Vector2f position)
+    public void setPosition(Vector2 position)
     {
         this.position.set(position);
     }
@@ -129,9 +129,9 @@ public class Transform
      * @param result where we will store the result.
      * @return the result with the forward direction.
      */
-    public Vector2f getFront(final Vector2f result)
+    public Vector2 getFront(final Vector2 result)
     {
-        return rotation.mul(Vector2f.RIGHT, result).nor();
+        return rotation.mul(Vector2.RIGHT, result).nor();
     }
 
     /**
@@ -140,9 +140,9 @@ public class Transform
      * @param result where we will store the result.
      * @return the result with the backward direction.
      */
-    public Vector2f getBack(final Vector2f result)
+    public Vector2 getBack(final Vector2 result)
     {
-        return rotation.mul(Vector2f.LEFT, result).nor();
+        return rotation.mul(Vector2.LEFT, result).nor();
     }
 
     /**
@@ -151,9 +151,9 @@ public class Transform
      * @param result where we will store the result.
      * @return the result with the right direction.
      */
-    public Vector2f getRight(final Vector2f result)
+    public Vector2 getRight(final Vector2 result)
     {
-        return rotation.mul(Vector2f.DOWN, result).nor();
+        return rotation.mul(Vector2.DOWN, result).nor();
     }
 
     /**
@@ -162,9 +162,9 @@ public class Transform
      * @param result where we will store the result.
      * @return the result with the left direction.
      */
-    public Vector2f getLeft(final Vector2f result)
+    public Vector2 getLeft(final Vector2 result)
     {
-        return rotation.mul(Vector2f.UP, result).nor();
+        return rotation.mul(Vector2.UP, result).nor();
     }
 
     public float getLookAngle()
@@ -179,9 +179,9 @@ public class Transform
      *
      * @return the size used by the transform.
      */
-    public Vector2f getSize()
+    public Vector2 getSize()
     {
-        Vector2f rSize;
+        Vector2 rSize;
 
         if (!useOwnSize)
         {
@@ -222,7 +222,7 @@ public class Transform
      *
      * @return the position vector.
      */
-    public Vector2f getPosition()
+    public Vector2 getPosition()
     {
         return position;
     }

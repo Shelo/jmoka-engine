@@ -2,7 +2,7 @@ package com.moka.components;
 
 import com.moka.core.Component;
 import com.moka.math.Matrix3;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.utils.JMokaException;
 
 public class Camera extends Component
@@ -45,7 +45,7 @@ public class Camera extends Component
 			throw new JMokaException("Camera: " + getEntity().getName() + "'s projection is null.");
 		}
 
-		Vector2f position = getTransform().getPosition();
+		Vector2 position = getTransform().getPosition();
 		Matrix3 translation = transBuffer.toTranslation(position.x * (- 1), position.y * (- 1));
 		return projection.mul(translation, buffer);
 	}
@@ -53,5 +53,19 @@ public class Camera extends Component
 	public Matrix3 getProjection()
 	{
 		return projection;
+	}
+
+	/**
+	 * Converts the given point to world coordinates, applying the camera transformations.
+	 *
+	 * @param point		the point that will be translated.
+	 * @param result	the resulting vector (just so we don't create a new one).
+	 * @return the transformed point.
+	 */
+	public Vector2 moveToWorldCoords(Vector2 point, Vector2 result)
+	{
+		result.set(point);
+		result.add(getTransform().getPosition());
+		return result;
 	}
 }

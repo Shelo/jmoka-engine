@@ -85,7 +85,7 @@ public class Matrix4
         return this;
     }
 
-    public Matrix4 initRotation(Vector3f forward, Vector3f up, Vector3f right)
+    public Matrix4 initRotation(Vector3 forward, Vector3 up, Vector3 right)
     {
         m[0][0] = right.x;
         m[0][1] = right.y;
@@ -106,9 +106,9 @@ public class Matrix4
         return this;
     }
 
-    public Vector3f transform(Vector3f r)
+    public Vector3 transform(Vector3 r)
     {
-        return new Vector3f(
+        return new Vector3(
                 m[0][0] * r.x + m[0][1] * r.y + m[0][2] * r.z + m[0][3],
                 m[1][0] * r.x + m[1][1] * r.y + m[1][2] * r.z + m[1][3],
                 m[2][0] * r.x + m[2][1] * r.y + m[2][2] * r.z + m[2][3]
@@ -146,9 +146,9 @@ public class Matrix4
         return res;
     }
 
-    public Vector2f mul(Vector2f vector)
+    public Vector2 mul(Vector2 vector)
     {
-        return new Vector2f(m[0][0] * vector.x + m[0][1] * vector.y + m[0][3],
+        return new Vector2(m[0][0] * vector.x + m[0][1] * vector.y + m[0][3],
                 m[1][0] * vector.x + m[1][1] * vector.y + m[1][3]);
     }
 

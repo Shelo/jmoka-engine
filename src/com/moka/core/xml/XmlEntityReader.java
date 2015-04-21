@@ -1,7 +1,7 @@
 package com.moka.core.xml;
 
 import com.moka.core.*;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 import com.moka.utils.JMokaException;
 import net.sourceforge.jeval.EvaluationException;
@@ -528,8 +528,8 @@ public class XmlEntityReader
     {
         if (attributes.getValue(VAL_POSITION) != null)
         {
-            Vector2f position = readPositionValues(attributes);
-            transform.setPosition(new Vector2f(position.x, position.y));
+            Vector2 position = readPositionValues(attributes);
+            transform.setPosition(new Vector2(position.x, position.y));
         }
 
         if (attributes.getValue(VAL_ROTATION) != null)
@@ -540,7 +540,7 @@ public class XmlEntityReader
 
         if (attributes.getValue(VAL_SIZE) != null)
         {
-            Vector2f size = readSizeValues(attributes);
+            Vector2 size = readSizeValues(attributes);
             transform.setSize(size);
         }
     }
@@ -551,12 +551,12 @@ public class XmlEntityReader
      * @param attributes the attributes objects of an entity.
      * @return the position as a 2D vector.
      */
-    public Vector2f readPositionValues(Attributes attributes)
+    public Vector2 readPositionValues(Attributes attributes)
     {
         String[] params = attributes.getValue(VAL_POSITION).split(" *, *");
         float x = getTestedValue(float.class, params[0]);
         float y = getTestedValue(float.class, params[1]);
-        return new Vector2f(x, y);
+        return new Vector2(x, y);
     }
 
     /**
@@ -588,12 +588,12 @@ public class XmlEntityReader
      * @param attributes the attributes object of that entity.
      * @return the size as a 2D vector.
      */
-    public Vector2f readSizeValues(Attributes attributes)
+    public Vector2 readSizeValues(Attributes attributes)
     {
         String[] params = attributes.getValue(VAL_SIZE).split(" *, *");
         float x = getTestedValue(float.class, params[0]);
         float y = getTestedValue(float.class, params[1]);
-        return new Vector2f(x, y);
+        return new Vector2(x, y);
     }
 
     /**

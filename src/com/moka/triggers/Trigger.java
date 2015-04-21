@@ -1,5 +1,6 @@
 package com.moka.triggers;
 
+import com.moka.core.Application;
 import com.moka.core.Component;
 import com.moka.core.Entity;
 import com.moka.core.Transform;
@@ -63,6 +64,16 @@ public abstract class Trigger<T>
         return meta;
     }
 
+    public Application getApplication()
+    {
+        return component.getApplication();
+    }
+
+    public Transform getTransform()
+    {
+        return component.getTransform();
+    }
+
     /**
      * Logs a descriptive message to the console.
      */
@@ -70,11 +81,6 @@ public abstract class Trigger<T>
     {
         String tag = getEntity().getName() + " -> " + getComponent().getClass().getSimpleName() + " -> Trigger";
         JMokaLog.o(tag, message);
-    }
-
-    public Transform getTransform()
-    {
-        return component.getTransform();
     }
 
     /**

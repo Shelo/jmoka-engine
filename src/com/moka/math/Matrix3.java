@@ -100,7 +100,7 @@ public class Matrix3
         return res;
     }
 
-    public Vector2f mul(final Vector2f r, Vector2f result)
+    public Vector2 mul(final Vector2 r, Vector2 result)
     {
         if (result == null)
         {

@@ -1,6 +1,6 @@
 package com.moka.graphics;
 
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.utils.CoreUtil;
 
 import java.nio.FloatBuffer;
@@ -24,7 +24,7 @@ public class Quad
     private int vao;
     private int ibo;
 
-    public Quad(Vector2f bottomLeftTexCoord, Vector2f topRightTexCoord)
+    public Quad(Vector2 bottomLeftTexCoord, Vector2 topRightTexCoord)
     {
         // create and bind the buffer.
         vao = glGenVertexArrays();
@@ -88,14 +88,14 @@ public class Quad
         return vertices;
     }
 
-    public Vector2f[] getVerticesAsVector2()
+    public Vector2[] getVerticesAsVector2()
     {
         // TODO: optimize vertices because they are all the same every time.
-        Vector2f[] res = new Vector2f[vertices.length];
+        Vector2[] res = new Vector2[vertices.length];
 
         for (int i = 0; i < res.length; i++)
         {
-            res[i] = new Vector2f();
+            res[i] = new Vector2();
             res[i].set(vertices[i].getXY());
         }
 

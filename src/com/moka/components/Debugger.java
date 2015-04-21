@@ -3,7 +3,8 @@ package com.moka.components;
 import com.moka.core.Component;
 import com.moka.core.Timer;
 import com.moka.core.xml.XmlAttribute;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
+import com.moka.utils.pools.Vector2Pool;
 
 public class Debugger extends Component
 {
@@ -16,7 +17,6 @@ public class Debugger extends Component
     }
 
     private Options selection = Options.NONE;
-    private Vector2f buffer = new Vector2f();
 
     private double frequency = 1;
     private Timer timer;
@@ -46,7 +46,11 @@ public class Debugger extends Component
                 break;
 
             case ROTATION:
+                Vector2 buffer = Vector2Pool.take();
+
                 log("rotation: " + getTransform().getFront(buffer).angle());
+
+                Vector2Pool.put(buffer);
                 break;
 
             case SIZE:

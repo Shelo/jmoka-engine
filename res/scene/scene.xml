@@ -6,10 +6,15 @@
 
         <Camera />
 
+        <SpotOn
+            target="Player" />
+
     </entity>
 
     <entity name="Cursor"
         position="0, 0"
+        size="100, 100"
+        layer="3"
         rotation="0" >
 
         <Interval
@@ -17,21 +22,8 @@
 
     </entity>
 
-    <entity name="Background"
-        position="${@screen_width / 2}, ${@screen_height / 2}"
-        size="${@screen_width}, ${@screen_height}"
-        rotation="0" >
-
-        <Sprite
-            texture="res/images/green-tile.png" />
-
-        <LookAt
-            target="Player" />
-
-    </entity>
-
     <entity name="Player"
-        position="150, ${@screen_height / 2}"
+        position="${@screen_width / 2}, ${@screen_height / 2}"
         rotation="0"
         size="125, 125"
         layer="2">

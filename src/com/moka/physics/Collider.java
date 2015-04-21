@@ -5,7 +5,7 @@ import com.moka.components.CircleCollider;
 import com.moka.components.SatCollider;
 import com.moka.core.Component;
 import com.moka.core.xml.XmlAttribute;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +13,7 @@ import java.util.Collections;
 public abstract class Collider extends Component
 {
     private boolean trigger = false;
-    private static Vector2f buf = new Vector2f();
+    private static Vector2 buf = new Vector2();
 
     public static Collision sat(SatCollider box1, SatCollider box2)
     {
@@ -37,11 +37,11 @@ public abstract class Collider extends Component
             box2.updateVertices();
         }
 
-        ArrayList<Vector2f> axes = new ArrayList<>();
+        ArrayList<Vector2> axes = new ArrayList<>();
 
         Collections.addAll(axes, box1.getAxes());
 
-        for (Vector2f axis : box2.getAxes())
+        for (Vector2 axis : box2.getAxes())
         {
             if (!axes.contains(axis))
             {
@@ -50,9 +50,9 @@ public abstract class Collider extends Component
         }
 
         float overlap = Float.POSITIVE_INFINITY;
-        Vector2f smallest = null;
+        Vector2 smallest = null;
 
-        for (Vector2f axis : axes)
+        for (Vector2 axis : axes)
         {
             Projection p1 = new Projection(box1.getTVertices(), axis);
             Projection p2 = new Projection(box2.getTVertices(), axis);
@@ -68,7 +68,7 @@ public abstract class Collider extends Component
                 if (Math.abs(o) < Math.abs(overlap))
                 {
                     overlap = o;
-                    smallest = new Vector2f(axis);
+                    smallest = new Vector2(axis);
                 }
             }
         }
@@ -94,11 +94,11 @@ public abstract class Collider extends Component
 
             if (Math.abs(y) < Math.abs(x))
             {
-                return new Collision(box2.getEntity(), new Vector2f(0, 1), y);
+                return new Collision(box2.getEntity(), new Vector2(0, 1), y);
             }
             else
             {
-                return new Collision(box2.getEntity(), new Vector2f(1, 0), x);
+                return new Collision(box2.getEntity(), new Vector2(1, 0), x);
             }
         }
 
@@ -107,10 +107,10 @@ public abstract class Collider extends Component
 
     public static Collision circle(CircleCollider circle1, CircleCollider circle2)
     {
-        Vector2f position1 = circle1.getEntity().getTransform().getPosition();
-        Vector2f position2 = circle2.getEntity().getTransform().getPosition();
+        Vector2 position1 = circle1.getEntity().getTransform().getPosition();
+        Vector2 position2 = circle2.getEntity().getTransform().getPosition();
 
-        Vector2f displace = buf.set(position1).sub(position2);
+        Vector2 displace = buf.set(position1).sub(position2);
         float distanceSqrt = displace.sqrLen();
 
         float radiusSum = circle1.getRadius() + circle2.getRadius();
@@ -150,7 +150,7 @@ public abstract class Collider extends Component
     // AABB-Circle
     public static Collision aabbCircle(AABBCollider aabb, CircleCollider circle)
     {
-        Vector2f circleCenter = circle.getEntity().getTransform().getPosition();
+        Vector2 circleCenter = circle.getEntity().getTransform().getPosition();
 
 		/* if in corner */
         if (circleCenter.x > aabb.getRight() && circleCenter.y > aabb.getTop() ||

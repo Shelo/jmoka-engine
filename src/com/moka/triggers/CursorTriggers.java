@@ -1,5 +1,9 @@
 package com.moka.triggers;
 
+import com.moka.components.Camera;
+import com.moka.math.Vector2;
+import com.moka.utils.pools.Vector2Pool;
+
 public class CursorTriggers
 {
     public static Trigger moveToCursor = new Trigger()
@@ -7,7 +11,12 @@ public class CursorTriggers
         @Override
         public Object onTrigger()
         {
-            getTransform().setPosition(getComponent().getInput().getCursorPos());
+            Vector2 buffer = Vector2Pool.take();
+
+            Camera camera = getApplication().getRenderer().getCamera();
+            getTransform().setPosition(camera.moveToWorldCoords(getComponent().getInput().getCursorPos(), buffer));
+
+            Vector2Pool.put(buffer);
             return true;
         }
     };

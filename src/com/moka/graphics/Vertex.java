@@ -1,18 +1,18 @@
 package com.moka.graphics;
 
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 
 public class Vertex
 {
     public static final int SIZE = 4;
 
-    private final Vector2f xy;
+    private final Vector2 xy;
     private float s;
     private float t;
 
     public Vertex(float x, float y, float s, float t)
     {
-        xy = new Vector2f(x, y);
+        xy = new Vector2(x, y);
         this.s = s;
         this.t = t;
     }
@@ -37,7 +37,7 @@ public class Vertex
         return t;
     }
 
-    public Vector2f getXY()
+    public Vector2 getXY()
     {
         return xy;
     }

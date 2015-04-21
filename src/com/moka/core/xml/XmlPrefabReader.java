@@ -2,7 +2,7 @@ package com.moka.core.xml;
 
 import com.moka.core.Context;
 import com.moka.core.Prefab;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.utils.JMokaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -42,7 +42,7 @@ public class XmlPrefabReader
             {
                 if (attributes.getValue(XmlEntityReader.VAL_POSITION) != null)
                 {
-                    Vector2f position = entityReader.readPositionValues(attributes);
+                    Vector2 position = entityReader.readPositionValues(attributes);
                     prefab.setPosition(position);
                 }
 
@@ -60,7 +60,7 @@ public class XmlPrefabReader
 
                 if (attributes.getValue(XmlEntityReader.VAL_SIZE) != null)
                 {
-                    Vector2f size = entityReader.readSizeValues(attributes);
+                    Vector2 size = entityReader.readSizeValues(attributes);
                     prefab.setSize(size);
                 }
             }

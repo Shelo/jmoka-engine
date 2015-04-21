@@ -2,7 +2,7 @@ package com.moka.core;
 
 import com.moka.components.Sprite;
 import com.moka.math.Matrix3;
-import com.moka.math.Vector2f;
+import com.moka.math.Vector2;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 import com.moka.utils.CalcUtil;
@@ -150,14 +150,14 @@ public class Entity
         return name;
     }
 
-    public Vector2f[] transformVertices(final Vector2f[] vertices)
+    public Vector2[] transformVertices(final Vector2[] vertices)
     {
-        Vector2f[] res = new Vector2f[vertices.length];
+        Vector2[] res = new Vector2[vertices.length];
         Matrix3 model = CalcUtil.calcModelMatrix(getTransform());
 
         for (int i = 0; i < vertices.length; i++)
         {
-            res[i] = new Vector2f();
+            res[i] = new Vector2();
             model.mul(vertices[i], res[i]);
         }
 
