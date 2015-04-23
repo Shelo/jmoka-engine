@@ -313,7 +313,7 @@ public class XmlEntityReader
         return true;
     }
 
-    private void invokeMethodOnComponent(Component component, Method method, String value)
+    public void invokeMethodOnComponent(Component component, Method method, String value)
     {
         // here the value is always something. We should always take the first parameter
         // type because these methods are supposed to have only one.
@@ -323,48 +323,26 @@ public class XmlEntityReader
         Object casted = null;
 
         // test different cases, where the param can be a trigger, a prefab, or other thing.
+
         if (param.isAssignableFrom(Trigger.class))
         {
             if (value.isEmpty())
             {
-                throw new JMokaException(component.getClass().getSimpleName() + "'s trigger is empty.");
+                throw new JMokaException(param.getDeclaringClass().getSimpleName() + "'s trigger is empty.");
             }
 
-            // This magic piece of code is awesome.
-
-            // get the generic types of the parameters
-            Type[] type = method.getGenericParameterTypes();
-
-            // get the parametrized type, that is, a type with parameters.
-            ParameterizedType pType = (ParameterizedType) type[0];
-
-            // get the real type parameter for the first generic type.
-            Type metaType = pType.getActualTypeArguments()[0];
-
-            // finally catch the class of that generic type.
-            Class<?> metaClass = metaType.getClass();
-
-            // get the trigger.
-            casted = Trigger.getStaticTrigger(value, metaClass);
+            // get a new instance for the trigger.
+            casted = Trigger.getStaticTrigger(value, getTriggerGenericClass(method));
         }
         // in case the param type is an enum.
         else if (param.isEnum())
         {
-            Object[] constants = param.getEnumConstants();
-
-            for (Object constant : constants)
+            if (value.isEmpty())
             {
-                if (constant.toString().equals(value))
-                {
-                    casted = constant;
-                    break;
-                }
+                throw new JMokaException(param.getDeclaringClass().getSimpleName() + "'s enum option cannot be blank.");
             }
 
-            if (casted == null)
-            {
-                throw new JMokaException("Enum " + param.getSimpleName() + " has no value " + value + ".");
-            }
+            casted = castEnumType(param, value);
         }
         else
         {
@@ -396,6 +374,23 @@ public class XmlEntityReader
         }
     }
 
+    public Class<?> getTriggerGenericClass(Method method)
+    {
+        // This magic piece of code is awesome.
+
+        // get the generic types of the parameters
+        Type[] type = method.getGenericParameterTypes();
+
+        // get the parametrized type, that is, a type with parameters.
+        ParameterizedType pType = (ParameterizedType) type[0];
+
+        // get the real type parameter for the first generic type.
+        Type metaType = pType.getActualTypeArguments()[0];
+
+        // finally return the class of that generic type.
+        return metaType.getClass();
+    }
+
     /**
      * Returns the parser used by this reader. This prevent the creation of additional parsers.
      *
@@ -404,6 +399,22 @@ public class XmlEntityReader
     public SAXParser getParser()
     {
         return parser;
+    }
+
+    public Object castEnumType(Class<?> param, String value)
+    {
+        Object[] constants = param.getEnumConstants();
+
+        for (Object constant : constants)
+        {
+            if (constant.toString().equals(value))
+            {
+                return constant;
+            }
+        }
+
+        // if we get here, the value given for the enum is simply not valid.
+        throw new JMokaException("Enum " + param.getSimpleName() + " has no value " + value + ".");
     }
 
     /**

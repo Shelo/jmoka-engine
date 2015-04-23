@@ -3,6 +3,8 @@ package com.moka.core.xml;
 import com.moka.core.Context;
 import com.moka.core.Prefab;
 import com.moka.math.Vector2;
+import com.moka.triggers.Trigger;
+import com.moka.triggers.TriggerPrefab;
 import com.moka.utils.JMokaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -79,7 +81,25 @@ public class XmlPrefabReader
                     if (entityReader.validateAttribute(attribute, value, componentClass.getSimpleName()))
                     {
                         Class<?> param = entityReader.getParamFor(method);
-                        Object casted = entityReader.getTestedValue(param, value);
+
+                        Object casted = null;
+
+                        // we have to take different paths with different types, as we have to act differently when
+                        // instantiating.
+                        if (param.isAssignableFrom(Trigger.class))
+                        {
+                            casted = new TriggerPrefab(Trigger.getStaticTriggerClass(value,
+                                    entityReader.getTriggerGenericClass(method)));
+                        }
+                        else if (param.isEnum())
+                        {
+                            casted = entityReader.castEnumType(param, value);
+                        }
+                        else
+                        {
+                            casted = entityReader.getTestedValue(param, value);
+                        }
+
                         attrs.addMethodValue(method, casted);
                     }
                 }

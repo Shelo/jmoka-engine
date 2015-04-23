@@ -2,6 +2,8 @@ package com.moka.core;
 
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2;
+import com.moka.triggers.Trigger;
+import com.moka.triggers.TriggerPrefab;
 import com.moka.utils.JMokaException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -126,6 +128,13 @@ public final class Prefab
                 for (Method method : componentAttrs.getKeySet())
                 {
                     Object attr = componentAttrs.getValue(method);
+
+                    // if the attr is an instance of a trigger, then get a new instance of that trigger
+                    // in order to pass it to the setter method.
+                    if (attr.getClass().isAssignableFrom(TriggerPrefab.class))
+                    {
+                        attr = Trigger.getNewTriggerInstance(((TriggerPrefab) attr).getTriggerClass());
+                    }
 
                     try
                     {
