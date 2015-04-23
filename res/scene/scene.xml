@@ -6,9 +6,6 @@
 
         <Camera />
 
-        <SpotOn
-            target="Player" />
-
     </entity>
 
     <entity name="Cursor"
@@ -18,29 +15,27 @@
         rotation="0" >
 
         <Interval
-            trigger="com.moka.triggers.CursorTriggers.moveToCursor" />
+            trigger="com.moka.triggers.CursorTriggers.MoveToCursor" />
 
     </entity>
 
     <entity name="Player"
-        position="${@screen_width / 2}, ${@screen_height / 2}"
+        position="${@screen_width / 2}, 100"
         rotation="0"
         size="125, 125"
         layer="2">
 
         <Sprite
-            texture="res/images/ship.png" />
+            texture="res/images/minship.png" />
 
         <DirectionalMovement
             speed="300"
+            lockDirection="HORIZONTAL"
             ignoreRotation="true" />
-
-        <LookAt
-            target="Cursor" />
 
         <Shooting
             bulletPrefab="@bullet_prefab"
+            trigger="example.PlayerTriggers.FireTrigger"
             button="fire" />
-
     </entity>
 </scene>

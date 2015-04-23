@@ -4,7 +4,7 @@ import com.moka.core.Component;
 import com.moka.core.Entity;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2;
-import com.moka.utils.pools.Vector2Pool;
+import com.moka.utils.Pools;
 
 public class LookAt extends Component
 {
@@ -13,13 +13,13 @@ public class LookAt extends Component
 	@Override
 	public void onUpdate()
 	{
-		Vector2 buffer = Vector2Pool.take();
+		Vector2 buffer = Pools.vector2.take();
 
 		buffer.set(target.getTransform().getPosition());
 		buffer.sub(getTransform().getPosition());
 		getTransform().setRotation(buffer.angle());
 
-		Vector2Pool.put(buffer);
+		Pools.vector2.put(buffer);
 	}
 
 	@XmlAttribute(value = "target", required = true)

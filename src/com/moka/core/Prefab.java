@@ -48,6 +48,17 @@ public final class Prefab
     }
 
     /**
+     * Sets the position for the new instances from now on.
+     *
+     * @param x the x's position for the vector.
+     * @param y the y's position for the vector.
+     */
+    public void setPosition(float x, float y)
+    {
+        this.position.set(x, y);
+    }
+
+    /**
      * Sets the size from now on, you can always set it to null so the transform uses
      * the size of the sprite.
      *

@@ -99,20 +99,36 @@ public abstract class Trigger<T>
         try
         {
             Class<?> triggerClass = Class.forName(classPath);
-            Field field = triggerClass.getDeclaredField(triggerName);
-            return (Trigger<T>) field.get(null);
+
+            Class<?> trigger = null;
+            for (Class<?> innerClass : triggerClass.getDeclaredClasses())
+            {
+                if (innerClass.getSimpleName().equals(triggerName))
+                {
+                    trigger = innerClass;
+                    break;
+                }
+            }
+
+            if (trigger == null)
+            {
+                throw new JMokaException("Could not find the trigger " + triggerName + " in " + classPath);
+            }
+
+            Object instance = trigger.newInstance();
+            return (Trigger<T>) instance;
         }
         catch (ClassNotFoundException e)
         {
             throw new JMokaException("Class not found for that trigger.");
         }
-        catch (NoSuchFieldException e)
-        {
-            throw new JMokaException("The trigger: " + path + " doesn't exists within the class.");
-        }
         catch (IllegalAccessException e)
         {
             throw new JMokaException("Cannot access the trigger.");
+        }
+        catch (InstantiationException e)
+        {
+            throw new JMokaException("Cannot instantiate the trigger.");
         }
     }
 }

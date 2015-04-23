@@ -320,6 +320,11 @@ public class XmlEntityReader
         // test different cases, where the param can be a trigger, a prefab, or other thing.
         if (param.isAssignableFrom(Trigger.class))
         {
+            if (value.isEmpty())
+            {
+                throw new JMokaException(component.getClass().getSimpleName() + "'s trigger is empty.");
+            }
+
             // This magic piece of code is awesome.
 
             // get the generic types of the parameters
