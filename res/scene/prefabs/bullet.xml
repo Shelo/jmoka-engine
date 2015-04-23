@@ -14,5 +14,7 @@
 
     <AABBCollider
         collisionTrigger="example.BulletTriggers.CollisionWithEnemy"
+        isTrigger="true"
         />
+
 </entity>

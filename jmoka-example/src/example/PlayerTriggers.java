@@ -11,10 +11,10 @@ public class PlayerTriggers
         @Override
         public Object onTrigger()
         {
-            Prefab prefab = getMeta();
+            Prefab prefab = meta();
             prefab.setRotation((float) Math.toRadians(90));
 
-            Vector2 playerPos = getTransform().getPosition();
+            Vector2 playerPos = transform().getPosition();
 
             prefab.setPosition(playerPos.x, playerPos.y + 35);
             prefab.newEntity(null);

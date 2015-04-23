@@ -10,7 +10,7 @@ public class BulletTriggers
         @Override
         public Object onTrigger()
         {
-            System.out.println(1);
+            entity().destroy();
             return null;
         }
     }

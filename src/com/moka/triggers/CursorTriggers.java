@@ -14,7 +14,7 @@ public class CursorTriggers
             Vector2 buffer = Pools.vector2.take();
 
             Camera camera = getApplication().getRenderer().getCamera();
-            getTransform().setPosition(camera.moveToWorldCoords(getComponent().getInput().getCursorPos(), buffer));
+            transform().setPosition(camera.moveToWorldCoords(getComponent().getInput().getCursorPos(), buffer));
 
             Pools.vector2.put(buffer);
             return true;

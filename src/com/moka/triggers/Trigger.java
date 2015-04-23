@@ -7,8 +7,6 @@ import com.moka.core.Transform;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
 
-import java.lang.reflect.Field;
-
 /**
  * Defines a simple trigger method for use in a component. Components should use this to trigger actions,
  * see "delegation pattern". The trigger can hold a meta data, that is just additional information for
@@ -54,14 +52,19 @@ public abstract class Trigger<T>
         return component;
     }
 
-    public Entity getEntity()
+    public Entity entity()
     {
         return component.getEntity();
     }
 
-    public T getMeta()
+    public T meta()
     {
         return meta;
+    }
+
+    public Transform transform()
+    {
+        return component.getTransform();
     }
 
     public Application getApplication()
@@ -69,17 +72,12 @@ public abstract class Trigger<T>
         return component.getApplication();
     }
 
-    public Transform getTransform()
-    {
-        return component.getTransform();
-    }
-
     /**
      * Logs a descriptive message to the console.
      */
     public void log(String message)
     {
-        String tag = getEntity().getName() + " -> " + getComponent().getClass().getSimpleName() + " -> Trigger";
+        String tag = entity().getName() + " -> " + getComponent().getClass().getSimpleName() + " -> Trigger";
         JMokaLog.o(tag, message);
     }
 
