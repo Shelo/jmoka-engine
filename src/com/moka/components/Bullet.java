@@ -32,12 +32,6 @@ public class Bullet extends Component
 		Pools.vector2.put(buffer);
 	}
 
-	@Override
-	public void onCollide(Collision collision)
-	{
-
-	}
-
 	@XmlAttribute("speed")
 	public void setSpeed(int speed)
 	{

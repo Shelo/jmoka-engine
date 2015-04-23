@@ -6,6 +6,7 @@ import com.moka.components.SatCollider;
 import com.moka.core.Component;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2;
+import com.moka.triggers.Trigger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +15,17 @@ public abstract class Collider extends Component
 {
     private boolean trigger = false;
     private static Vector2 buf = new Vector2();
+
+    private Trigger<Collision> collisionTrigger;
+
+    @Override
+    public void onCollide(Collision collision)
+    {
+        if (collisionTrigger != null)
+        {
+            collisionTrigger.trigger(this, collision);
+        }
+    }
 
     public static Collision sat(SatCollider box1, SatCollider box2)
     {
@@ -171,6 +183,12 @@ public abstract class Collider extends Component
         return aabbCircle(aabb, circle);
     }
 
+    @XmlAttribute("collisionTrigger")
+    public void setCollisionTrigger(Trigger<Collision> collisionTrigger)
+    {
+        this.collisionTrigger = collisionTrigger;
+    }
+
     @XmlAttribute("isTrigger")
     public void setTrigger(boolean trigger)
     {
@@ -182,7 +200,6 @@ public abstract class Collider extends Component
         return trigger;
     }
 
-    public abstract Collision collidesWith(Collider other);
-
     public abstract void response(Collision collision);
+    public abstract Collision collidesWith(Collider other);
 }

@@ -16,6 +16,7 @@ public final class Core extends SubEngine
 
     private float frameTime;
     private boolean daemon;
+    private Runtime runtime;
 
     /**
      * Creates a new instance of the engine.
@@ -30,6 +31,8 @@ public final class Core extends SubEngine
         {
             JMokaLog.o(TAG, "GLFW initialized.");
         }
+
+        runtime = Runtime.getRuntime();
     }
 
     public void start(int maxFrameRate)
@@ -52,6 +55,16 @@ public final class Core extends SubEngine
 
     public void run()
     {
+        try
+        {
+            JMokaLog.o(TAG, "Stabilizing for 500ms...");
+            Thread.sleep(500);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+
         // fixed delta time.
         double delta = frameTime;
 
@@ -126,7 +139,8 @@ public final class Core extends SubEngine
 
             if (accSeconds >= 1)
             {
-                JMokaLog.o(TAG, renderFrames + " fps, " + updateFrames + " ups.");
+                float usedMemory = ((runtime.totalMemory() - runtime.freeMemory()) / (1024.0f * 1024.0f));
+                JMokaLog.o(TAG, renderFrames + " fps, " + updateFrames + " ups. Used Memory: " + usedMemory + "MB");
                 accSeconds = renderFrames = updateFrames = 0;
             }
         }

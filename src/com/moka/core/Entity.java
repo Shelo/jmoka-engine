@@ -74,6 +74,16 @@ public class Entity
     {
         transform.update();
 
+        if (hasCollider())
+        {
+            getCollider().onUpdate();
+        }
+
+        if (hasSprite())
+        {
+            getSprite().onUpdate();
+        }
+
         for (Component component : components)
         {
             if (component.isEnabled())
@@ -85,6 +95,16 @@ public class Entity
 
     public void collide(Collision collision)
     {
+        if (hasCollider())
+        {
+            getCollider().onCollide(collision);
+        }
+
+        if (hasSprite())
+        {
+            getSprite().onCollide(collision);
+        }
+
         for (Component component : components)
         {
             if (component.isEnabled())
@@ -96,6 +116,16 @@ public class Entity
 
     public void postUpdate()
     {
+        if (hasCollider())
+        {
+            getCollider().onPostUpdate();
+        }
+
+        if (hasSprite())
+        {
+            getSprite().onPostUpdate();
+        }
+
         for (Component component : components)
         {
             if (component.isEnabled())

@@ -3,6 +3,7 @@ package com.moka.components;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
+import com.moka.triggers.Trigger;
 
 public class AABBCollider extends Collider
 {
