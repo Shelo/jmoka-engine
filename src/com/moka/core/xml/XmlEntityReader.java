@@ -289,23 +289,28 @@ public class XmlEntityReader
         XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
         String value = attributes.getValue(attribute.value());
 
-        // save the component name for errors.
-
         // if the value is not present we can either ignore it or, if the XmlAttribute
         // specifies that is required, throw an exception.
+        if (!validateAttribute(attribute, value, component.getClass().getSimpleName()))
+            return;
+
+        invokeMethodOnComponent(component, method, value);
+    }
+
+    public boolean validateAttribute(XmlAttribute xmlAttr, String value, String componentName)
+    {
         if (value == null)
         {
-            if (attribute.required())
+            if (xmlAttr.required())
             {
-                String componentName = component.getClass().getSimpleName();
-                throw new JMokaException("Component " + componentName + " requires the '" + attribute.value()
+                throw new JMokaException("Component " + componentName + " requires the '" + xmlAttr.value()
                         + "' attribute.");
             }
 
-            return;
+            return false;
         }
 
-        invokeMethodOnComponent(component, method, value);
+        return true;
     }
 
     private void invokeMethodOnComponent(Component component, Method method, String value)

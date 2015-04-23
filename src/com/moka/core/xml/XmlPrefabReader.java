@@ -76,15 +76,7 @@ public class XmlPrefabReader
                     XmlAttribute attribute = method.getAnnotation(XmlAttribute.class);
                     String value = attributes.getValue(attribute.value());
 
-                    if (value == null)
-                    {
-                        if (attribute.required())
-                        {
-                            throw new JMokaException("Component " + qName + " requires the " +
-                                    "attribute " + attribute.value());
-                        }
-                    }
-                    else
+                    if (entityReader.validateAttribute(attribute, value, componentClass.getSimpleName()))
                     {
                         Class<?> param = entityReader.getParamFor(method);
                         Object casted = entityReader.getTestedValue(param, value);

@@ -37,6 +37,7 @@
             bulletPrefab="@bullet_prefab"
             trigger="example.PlayerTriggers.FireTrigger"
             button="fire" />
+
     </entity>
 
     <entity name="Enemy1"
@@ -48,7 +49,7 @@
         <Sprite
             texture="res/images/minship2.png" />
 
-        <AABBCollider
-            />
+        <AABBCollider />
+
     </entity>
 </scene>
