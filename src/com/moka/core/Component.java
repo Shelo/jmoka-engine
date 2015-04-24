@@ -2,7 +2,7 @@ package com.moka.core;
 
 import com.moka.graphics.Display;
 import com.moka.physics.Collider;
-import com.moka.physics.Collision;
+import com.moka.triggers.Trigger;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
 
@@ -30,7 +30,7 @@ public abstract class Component
 		return entity.getTransform();
 	}
 
-	public final Entity getEntity() {
+	public final Entity entity() {
 		return entity;
 	}
 
@@ -38,7 +38,7 @@ public abstract class Component
 		return getApplication().getContext().findEntity(tag);
 	}
 
-	public final <T> T getComponent(Class<T> componentClass) {
+	public final <T extends Component> T getComponent(Class<T> componentClass) {
 		return entity.getComponent(componentClass);
 	}
 
@@ -48,6 +48,16 @@ public abstract class Component
 
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	public <T> Object callTrigger(Trigger<T> trigger, T meta)
+	{
+		if (trigger != null)
+		{
+			return trigger.trigger(this, meta);
+		}
+
+		return null;
 	}
 
 	/**
@@ -114,7 +124,7 @@ public abstract class Component
 	 */
 	public void log(String message)
 	{
-		String tag = getEntity().getName() + " -> " + this.getClass().getSimpleName();
+		String tag = entity().getName() + " -> " + this.getClass().getSimpleName();
 		JMokaLog.o(tag, message);
 	}
 
@@ -130,15 +140,6 @@ public abstract class Component
 	 * Called every update frame.
 	 */
 	public void onUpdate()
-	{
-
-	}
-
-	/**
-	 * Called when the entity collided with another entity.
-	 * @param collision the collision information.
-	 */
-	public void onCollide(Collision collision)
 	{
 
 	}

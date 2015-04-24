@@ -26,9 +26,9 @@ public class SatCollider extends Collider
 	{
 		if (vertices == null)
 		{
-			if (getEntity().hasSprite())
+			if (entity().hasSprite())
 			{
-				setVertices(getEntity().getSprite().getMesh().getVerticesAsVector2());
+				setVertices(entity().getSprite().getMesh().getVerticesAsVector2());
 			}
 		}
 	}
@@ -99,7 +99,7 @@ public class SatCollider extends Collider
 
 	public void updateVertices()
 	{
-		tVertices = getEntity().transformVertices(vertices);
+		tVertices = entity().transformVertices(vertices);
 	}
 
 	public void updateAxes()
@@ -138,57 +138,6 @@ public class SatCollider extends Collider
 	public void response(Collision collision)
 	{
 		getTransform().move(collision.getMovement());
-	}
-
-	public Collision collidesWith(CircleCollider circle)
-	{
-		return null;
-	}
-
-	public Collision collidesWith(AABBCollider rect)
-	{
-		return null;
-	}
-
-	public Collision collidesWith(SatCollider sat)
-	{
-		/*
-		if (getEntity().getTransform().hasRotated())
-			updateData();
-
-		if (sat.getEntity().getTransform().hasRotated())
-			sat.updateData();
-
-		ArrayList<Vector2> axes = new ArrayList<>();
-
-		Collections.addAll(axes, this.axes);
-
-		for (Vector2 axis : sat.axes)
-			if (!axes.contains(axis))
-				axes.add(axis);
-
-		float overlap = Float.POSITIVE_INFINITY;
-		Vector2 smallest = null;
-
-		for (Vector2 axis : axes) {
-			Projection p1 = new Projection(tVertices, axis);
-			Projection p2 = new Projection(sat.tVertices, axis);
-
-			if (!p1.overlaps(p2)) {
-				return null;
-			} else {
-				float o = p1.getOverlap(p2);
-
-				if (Math.abs(o) < Math.abs(overlap)) {
-					overlap = o;
-					smallest = axis;
-				}
-			}
-		}
-
-		return (smallest != null) ? new Collision(sat.getEntity(), smallest, overlap) : null;
-		*/
-		return null;
 	}
 
 	public Vector2[] getAxes()

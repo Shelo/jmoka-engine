@@ -40,16 +40,18 @@
 
     </entity>
 
-    <entity name="Enemy1"
-        position="${@screen_width / 2}, ${@screen_height - 100}"
-        rotation="0"
-        size="64, 64"
-        layer="2">
+    <include
+        name="Enemy1"
+        path="res/scene/prefabs/enemy.xml"
+        position="${@screen_width / 2 - 100}, ${@screen_height - 100}" />
 
-        <Sprite
-            texture="res/images/minship2.png" />
+    <include
+        name="Enemy2"
+        path="res/scene/prefabs/enemy.xml"
+        position="${@screen_width / 2}, ${@screen_height - 100}" />
 
-        <AABBCollider />
-
-    </entity>
+    <include
+        name="Enemy3"
+        path="res/scene/prefabs/enemy.xml"
+        position="${@screen_width / 2 + 100}, ${@screen_height - 100}" />
 </scene>

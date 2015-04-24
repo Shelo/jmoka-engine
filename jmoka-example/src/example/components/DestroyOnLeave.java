@@ -1,7 +1,6 @@
 package example.components;
 
 import com.moka.core.Component;
-import com.moka.math.Vector2;
 
 public class DestroyOnLeave extends Component
 {
@@ -12,7 +11,7 @@ public class DestroyOnLeave extends Component
 
         if (getTransform().getPosition().y > height)
         {
-            getEntity().destroy();
+            entity().destroy();
         }
     }
 }

@@ -3,7 +3,6 @@ package com.moka.components;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
-import com.moka.triggers.Trigger;
 
 public class AABBCollider extends Collider
 {
@@ -103,7 +102,7 @@ public class AABBCollider extends Collider
 		if (boundingCircle == null)
 		{
 			boundingCircle = new CircleCollider();
-			boundingCircle.setEntity(getEntity());
+			boundingCircle.setEntity(entity());
 			boundingCircle.setRadius((float) Math.sqrt(width * width + height * height) / 2);
 		}
 

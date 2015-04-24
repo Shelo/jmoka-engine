@@ -1,0 +1,13 @@
+<entity xmlns="http://www.mokadev.com/scene"
+    position="0, 0"
+    rotation="0"
+    size="64, 64"
+    layer="2">
+
+    <Sprite texture="res/images/minship2.png" />
+    <AABBCollider />
+
+    <Health
+        defense="0.25" />
+
+</entity>

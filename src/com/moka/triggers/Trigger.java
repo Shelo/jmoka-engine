@@ -54,7 +54,7 @@ public abstract class Trigger<T>
 
     public Entity entity()
     {
-        return component.getEntity();
+        return component.entity();
     }
 
     public T meta()

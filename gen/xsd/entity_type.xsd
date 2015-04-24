@@ -114,6 +114,13 @@
       <xs:element name="DestroyOnLeave" minOccurs="0" maxOccurs="1"><xs:complexType>
       </xs:complexType></xs:element>
 
+      <xs:element name="Health" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="defense" type="xs:float" use="optional" />
+        <xs:attribute name="damageTrigger" type="xs:string" use="optional" />
+        <xs:attribute name="destroyTrigger" type="xs:string" use="optional" />
+        <xs:attribute name="hitPoints" type="xs:float" use="optional" />
+      </xs:complexType></xs:element>
+
       <!-- End Generated Code -->
 
       <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />

@@ -42,7 +42,7 @@ public class Camera extends Component
 	{
 		if(projection == null)
 		{
-			throw new JMokaException("Camera: " + getEntity().getName() + "'s projection is null.");
+			throw new JMokaException("Camera: " + entity().getName() + "'s projection is null.");
 		}
 
 		Vector2 position = getTransform().getPosition();

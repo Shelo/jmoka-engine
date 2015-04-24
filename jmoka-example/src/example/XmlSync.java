@@ -2,10 +2,7 @@ package example;
 
 import com.moka.core.sync.EntitySchemeWriter;
 import com.moka.components.Debugger;
-import example.components.DestroyOnLeave;
-import example.components.DirectionalMovement;
-import example.components.ShipMovement;
-import example.components.SpotOn;
+import example.components.*;
 
 public class XmlSync
 {
@@ -16,6 +13,7 @@ public class XmlSync
         EntitySchemeWriter.register(Debugger.class);
         EntitySchemeWriter.register(SpotOn.class);
         EntitySchemeWriter.register(DestroyOnLeave.class);
+        EntitySchemeWriter.register(Health.class);
 
         EntitySchemeWriter.render();
     }

@@ -93,27 +93,6 @@ public class Entity
         }
     }
 
-    public void collide(Collision collision)
-    {
-        if (hasCollider())
-        {
-            getCollider().onCollide(collision);
-        }
-
-        if (hasSprite())
-        {
-            getSprite().onCollide(collision);
-        }
-
-        for (Component component : components)
-        {
-            if (component.isEnabled())
-            {
-                component.onCollide(collision);
-            }
-        }
-    }
-
     public void postUpdate()
     {
         if (hasCollider())
@@ -148,7 +127,7 @@ public class Entity
         }
     }
 
-    public <T> T getComponent(Class<T> componentClass)
+    public <T extends Component> T getComponent(Class<T> componentClass)
     {
         for (Component component : components)
         {
@@ -157,6 +136,7 @@ public class Entity
                 return componentClass.cast(component);
             }
         }
+
         return null;
     }
 

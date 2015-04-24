@@ -100,19 +100,6 @@ public class Controllable extends Component
 		getTransform().move(vx, vy);
 	}
 
-	@Override
-	public void onCollide(Collision collision)
-	{
-		if (Math.abs(tx) > Math.abs(ty))
-		{
-			tx = 0;
-		}
-		else
-		{
-			ty = 0;
-		}
-	}
-
 	@XmlAttribute("topSpeed")
 	public void setTopSpeed(int topSpeed)
 	{
