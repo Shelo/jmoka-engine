@@ -29,14 +29,8 @@ public abstract class Trigger<T>
      */
     public Object trigger(final Component component, final T meta)
     {
-        if (component == null)
-        {
-            throw new JMokaException("Cannot pass null to the component parameter.");
-        }
-
         this.component = component;
         this.meta = meta;
-
         return onTrigger();
     }
 

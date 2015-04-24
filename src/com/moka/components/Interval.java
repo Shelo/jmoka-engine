@@ -1,7 +1,7 @@
 package com.moka.components;
 
 import com.moka.core.Component;
-import com.moka.core.Timer;
+import com.moka.core.time.StopWatch;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.triggers.Trigger;
 
@@ -13,23 +13,23 @@ import com.moka.triggers.Trigger;
  */
 public class Interval extends Component
 {
-    private Trigger<Timer> trigger;
+    private Trigger<StopWatch> trigger;
     private double time;
-    private Timer timer;
+    private StopWatch stopWatch;
 
     @Override
     public void onCreate()
     {
-        timer = getTime().newTimer();
+        stopWatch = getTime().newStopWatch();
     }
 
     @Override
     public void onUpdate()
     {
-        if (timer.isGreaterThan(time))
+        if (stopWatch.isGreaterThan(time))
         {
-            trigger.trigger(this, timer);
-            timer.restart();
+            trigger.trigger(this, stopWatch);
+            stopWatch.restart();
         }
     }
 
@@ -51,7 +51,7 @@ public class Interval extends Component
      * @param trigger the trigger to be called.
      */
     @XmlAttribute(value = "trigger", required = true)
-    public void setTrigger(Trigger<Timer> trigger)
+    public void setTrigger(Trigger<StopWatch> trigger)
     {
         this.trigger = trigger;
     }

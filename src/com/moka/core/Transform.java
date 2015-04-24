@@ -252,4 +252,14 @@ public class Transform
     {
         return hasRotated() || hasMoved();
     }
+
+    public void moveX(float distance)
+    {
+        position.add(distance, 0);
+    }
+
+    public void moveY(float distance)
+    {
+        position.add(0, distance);
+    }
 }

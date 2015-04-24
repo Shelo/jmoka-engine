@@ -1,5 +1,6 @@
 package com.moka.core;
 
+import com.moka.core.time.Time;
 import com.moka.graphics.Display;
 import com.moka.physics.Collider;
 import com.moka.triggers.Trigger;

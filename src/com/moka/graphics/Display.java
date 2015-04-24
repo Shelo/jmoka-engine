@@ -1,6 +1,7 @@
 package com.moka.graphics;
 
 import com.moka.core.SubEngine;
+import com.moka.math.Vector2;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
 import org.lwjgl.glfw.GLFWvidmode;
@@ -96,6 +97,11 @@ public final class Display extends SubEngine
     public int getHeight()
     {
         return height;
+    }
+
+    public Vector2 getSizeVector()
+    {
+        return new Vector2(width, height);
     }
 
     public String getTitle()

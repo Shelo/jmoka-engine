@@ -1,7 +1,7 @@
 package com.moka.components;
 
 import com.moka.core.Component;
-import com.moka.core.Timer;
+import com.moka.core.time.StopWatch;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2;
 import com.moka.utils.Pools;
@@ -19,20 +19,20 @@ public class Debugger extends Component
     private Options selection = Options.NONE;
 
     private double frequency = 1;
-    private Timer timer;
+    private StopWatch stopWatch;
 
     @Override
     public void onCreate()
     {
-        timer = getTime().newTimer();
+        stopWatch = getTime().newStopWatch();
     }
 
     @Override
     public void onUpdate()
     {
-        if (timer.isGreaterThan(frequency))
+        if (stopWatch.isGreaterThan(frequency))
         {
-            timer.restart();
+            stopWatch.restart();
         }
         else
         {

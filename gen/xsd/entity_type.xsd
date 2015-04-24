@@ -12,12 +12,12 @@
       <!-- Start Generated Code -->
 
       <xs:element name="AABBCollider" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="offsetX" type="xs:float" use="optional" />
         <xs:attribute name="offsetY" type="xs:float" use="optional" />
         <xs:attribute name="width" type="xs:float" use="optional" />
         <xs:attribute name="height" type="xs:float" use="optional" />
-        <xs:attribute name="offsetX" type="xs:float" use="optional" />
-        <xs:attribute name="collisionTrigger" type="xs:string" use="optional" />
         <xs:attribute name="isTrigger" type="xs:boolean" use="optional" />
+        <xs:attribute name="collisionTrigger" type="xs:string" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="Bullet" minOccurs="0" maxOccurs="1"><xs:complexType>
@@ -29,8 +29,8 @@
 
       <xs:element name="CircleCollider" minOccurs="0" maxOccurs="1"><xs:complexType>
         <xs:attribute name="radius" type="xs:float" use="optional" />
-        <xs:attribute name="collisionTrigger" type="xs:string" use="optional" />
         <xs:attribute name="isTrigger" type="xs:boolean" use="optional" />
+        <xs:attribute name="collisionTrigger" type="xs:string" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="Controllable" minOccurs="0" maxOccurs="1"><xs:complexType>
@@ -52,8 +52,8 @@
 
       <xs:element name="SatCollider" minOccurs="0" maxOccurs="1"><xs:complexType>
         <xs:attribute name="vertices" type="xs:string" use="optional" />
-        <xs:attribute name="collisionTrigger" type="xs:string" use="optional" />
         <xs:attribute name="isTrigger" type="xs:boolean" use="optional" />
+        <xs:attribute name="collisionTrigger" type="xs:string" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="Shooting" minOccurs="0" maxOccurs="1"><xs:complexType>
@@ -89,9 +89,9 @@
       </xs:complexType></xs:element>
 
       <xs:element name="ShipMovement" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="speed" type="xs:float" use="optional" />
         <xs:attribute name="boundLeft" type="xs:float" use="optional" />
         <xs:attribute name="boundRight" type="xs:float" use="optional" />
-        <xs:attribute name="speed" type="xs:float" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="Debugger" minOccurs="0" maxOccurs="1"><xs:complexType>
@@ -107,8 +107,8 @@
       </xs:complexType></xs:element>
 
       <xs:element name="SpotOn" minOccurs="0" maxOccurs="1"><xs:complexType>
-        <xs:attribute name="target" type="xs:string" use="required" />
         <xs:attribute name="factor" type="xs:float" use="optional" />
+        <xs:attribute name="target" type="xs:string" use="required" />
       </xs:complexType></xs:element>
 
       <xs:element name="DestroyOnLeave" minOccurs="0" maxOccurs="1"><xs:complexType>
@@ -119,6 +119,9 @@
         <xs:attribute name="damageTrigger" type="xs:string" use="optional" />
         <xs:attribute name="destroyTrigger" type="xs:string" use="optional" />
         <xs:attribute name="hitPoints" type="xs:float" use="optional" />
+      </xs:complexType></xs:element>
+
+      <xs:element name="EnemyAI" minOccurs="0" maxOccurs="1"><xs:complexType>
       </xs:complexType></xs:element>
 
       <!-- End Generated Code -->

@@ -14,6 +14,7 @@ public class XmlSync
         EntitySchemeWriter.register(SpotOn.class);
         EntitySchemeWriter.register(DestroyOnLeave.class);
         EntitySchemeWriter.register(Health.class);
+        EntitySchemeWriter.register(EnemyAI.class);
 
         EntitySchemeWriter.render();
     }

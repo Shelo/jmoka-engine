@@ -7,7 +7,7 @@
     <Sprite texture="res/images/minship2.png" />
     <AABBCollider />
 
-    <Health
-        defense="0.25" />
+    <Health />
+    <EnemyAI />
 
 </entity>
