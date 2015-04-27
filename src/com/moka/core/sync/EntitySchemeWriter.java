@@ -1,7 +1,7 @@
 package com.moka.core.sync;
 
 import com.moka.components.*;
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +29,8 @@ public class EntitySchemeWriter
     private static final String FOOTER =
             "      <!-- End Generated Code -->\n\n" +
             "      <xs:any processContents=\"skip\" minOccurs=\"0\" maxOccurs=\"unbounded\" />\n" +
-            "    </xs:sequence>\n" +
+            "    </xs:sequence>\n\n" +
+            "    <xs:attribute name=\"group\" type=\"xs:string\" use=\"optional\" />\n" +
             "    <xs:attribute name=\"layer\" type=\"xs:int\" use=\"optional\" default=\"0\" />\n" +
             "    <xs:attribute name=\"position\" type=\"xs:string\" use=\"required\" default=\"0, 0\" />\n" +
             "    <xs:attribute name=\"rotation\" type=\"xs:float\" use=\"required\" default=\"0\" />\n" +

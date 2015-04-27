@@ -7,7 +7,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Pools
 {
-    public static class vector2 {
+    public static class vec2
+    {
         private static Queue<Vector2> objects = new LinkedBlockingQueue<>();
 
         public static void put(Vector2 value)
@@ -15,16 +16,22 @@ public class Pools
             objects.add(value);
         }
 
-        public static Vector2 take()
+        public static Vector2 take(float x, float y)
         {
             Vector2 object = objects.poll();
 
             if (object == null)
             {
-                object = new Vector2();
+                object = new Vector2(x, y);
             }
 
-            return object;
+            return object.set(x, y);
         }
+
+        public static Vector2 take()
+        {
+            return take(0, 0);
+        }
+
     }
 }

@@ -2,12 +2,12 @@
     position="0, 0"
     rotation="0"
     size="64, 64"
+    group="Enemies"
     layer="2">
 
     <Sprite texture="res/images/minship2.png" />
     <AABBCollider />
 
     <Health />
-    <EnemyAI />
 
 </entity>

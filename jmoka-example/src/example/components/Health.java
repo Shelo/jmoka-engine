@@ -1,10 +1,9 @@
 package example.components;
 
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.MathUtil;
 import com.moka.triggers.Trigger;
-import com.moka.utils.CalcUtil;
 import com.moka.utils.None;
 
 public class Health extends Component

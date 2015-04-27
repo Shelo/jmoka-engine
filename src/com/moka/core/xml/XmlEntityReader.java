@@ -1,6 +1,9 @@
 package com.moka.core.xml;
 
 import com.moka.core.*;
+import com.moka.core.contexts.Context;
+import com.moka.core.entity.Component;
+import com.moka.core.entity.Entity;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 import com.moka.utils.JMokaException;
@@ -27,7 +30,6 @@ import java.util.List;
 
 public class XmlEntityReader
 {
-    public static final String TAG_ENTITY = "entity";
     public static final int STATE_INIT = 0;
     public static final int STATE_ENTITY = 1;
     public static final int STATE_CLOSED = 2;
@@ -80,11 +82,15 @@ public class XmlEntityReader
             }
 
             // the parser needs to be in the init state to be able to read the entity tag.
-            if (state == STATE_INIT && qName.equals(TAG_ENTITY))
+            if (state == STATE_INIT && qName.equals(XmlSceneReader.TAG_ENTITY))
             {
                 state = STATE_ENTITY;
                 entity = context.newEntity(entityName, readLayer(attributes));
                 setTransformValues(entity.getTransform(), attributes);
+
+                String group = attributes.getValue(XmlSceneReader.KEY_GROUP);
+
+                entity.setGroup(group);
             }
             else
             {
@@ -103,7 +109,7 @@ public class XmlEntityReader
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException
         {
-            if (qName.equals(TAG_ENTITY))
+            if (qName.equals(XmlSceneReader.TAG_ENTITY))
             {
                 state = STATE_CLOSED;
             }
@@ -538,7 +544,7 @@ public class XmlEntityReader
     }
 
     /**
-     * Set the transform values of the given {@link com.moka.core.Entity}, casting them from
+     * Set the transform values of the given {@link Entity}, casting them from
      * Strings, evaluating expressions and resolving references, in any case, this is mostly
      * used by this class internally when reading the XML.
      *

@@ -1,7 +1,7 @@
 package com.moka.core.xml;
 
-import com.moka.core.Context;
-import com.moka.core.Entity;
+import com.moka.core.contexts.Context;
+import com.moka.core.entity.Entity;
 import com.moka.utils.JMokaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -16,11 +16,12 @@ import java.io.InputStream;
 
 public class XmlSceneReader
 {
-    private static final String TAG_INCLUDE = "include";
-    private static final String TAG_ENTITY = "entity";
-    private static final String TAG_ROOT = "scene";
-    private static final String KEY_NAME = "name";
-    private static final String KEY_PATH = "path";
+    public static final String TAG_INCLUDE = "include";
+    public static final String TAG_ENTITY = "entity";
+    public static final String TAG_ROOT = "scene";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_PATH = "path";
+    public static final String KEY_GROUP = "group";
 
     private XmlEntityReader entityReader;
     private String currentFilePath;
@@ -56,7 +57,9 @@ public class XmlSceneReader
                 {
                     // get and set the name for that entity.
                     String name = attributes.getValue(KEY_NAME);
+                    String group = attributes.getValue(KEY_GROUP);
                     currentEntity = game.newEntity(name, entityReader.readLayer(attributes));
+                    currentEntity.setGroup(group);
 
                     // set transform position, rotation and scale.
                     entityReader.setTransformValues(currentEntity.getTransform(), attributes);
@@ -67,9 +70,15 @@ public class XmlSceneReader
                     // override possible transform properties.
                     String path = attributes.getValue(KEY_PATH);
                     String name = attributes.getValue(KEY_NAME);
+                    String group = attributes.getValue(KEY_GROUP);
 
                     Entity entity = entityReader.read(path, name);
                     entityReader.setTransformValues(entity.getTransform(), attributes);
+
+                    if (group != null)
+                    {
+                        entity.setGroup(group);
+                    }
                 }
                 else if (!qName.equals(TAG_ROOT))
                 {

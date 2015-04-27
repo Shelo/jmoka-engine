@@ -1,8 +1,8 @@
 package com.moka.triggers;
 
 import com.moka.core.Application;
-import com.moka.core.Component;
-import com.moka.core.Entity;
+import com.moka.core.entity.Component;
+import com.moka.core.entity.Entity;
 import com.moka.core.Transform;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;

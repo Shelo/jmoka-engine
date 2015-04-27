@@ -1,6 +1,6 @@
 package com.moka.core.xml;
 
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 
 import java.lang.reflect.Method;
 

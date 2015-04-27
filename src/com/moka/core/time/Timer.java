@@ -1,9 +1,12 @@
 package com.moka.core.time;
 
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 import com.moka.triggers.Trigger;
-import com.moka.utils.None;
 
+/**
+ * A timer is an interval, it will call a trigger every x seconds.
+ * @param <T> the type for the trigger that this will call.
+ */
 public class Timer<T> extends StopWatch
 {
     private Component component;

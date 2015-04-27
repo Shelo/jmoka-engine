@@ -1,6 +1,6 @@
 package com.moka.components;
 
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 import com.moka.core.Prefab;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.triggers.Trigger;

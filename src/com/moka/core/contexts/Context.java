@@ -1,6 +1,9 @@
-package com.moka.core;
+package com.moka.core.contexts;
 
 import com.moka.components.Camera;
+import com.moka.core.Prefab;
+import com.moka.core.SubEngine;
+import com.moka.core.entity.Entity;
 import com.moka.core.xml.XmlEntityReader;
 import com.moka.core.xml.XmlPrefabReader;
 import com.moka.core.xml.XmlSceneReader;
@@ -10,6 +13,7 @@ import com.moka.utils.JMokaLog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Base class of a game, takes care of internal core usage.
@@ -18,9 +22,9 @@ public abstract class Context extends SubEngine
 {
     private static final String TAG = "Context";
     private HashMap<String, Entity> nameRelations;
+    private ArrayList<ArrayList<Entity>> layers;
     private XmlEntityReader entityReader;
     private XmlPrefabReader prefabReader;
-    private ArrayList<ArrayList<Entity>> layers;
     private XmlSceneReader sceneReader;
     private String secondaryPackage;
 
@@ -28,6 +32,7 @@ public abstract class Context extends SubEngine
      * Used to store all layers.
      */
     private final ArrayList<Entity> allEntities = new ArrayList<>();
+    private final ArrayList<Entity> groupEntities = new ArrayList<>();
 
     public Context()
     {
@@ -125,10 +130,10 @@ public abstract class Context extends SubEngine
     }
 
     /**
-     * Constructs a new {@link com.moka.core.Entity} and add it to the hierarchy.
+     * Constructs a new {@link Entity} and add it to the hierarchy.
      * Also says that the entity belongs to this context. That cannot change latter.
      *
-     * @return the new {@link com.moka.core.Entity}.
+     * @return the new {@link Entity}.
      */
     public final Entity newEntity(String name, int layer)
     {
@@ -273,6 +278,29 @@ public abstract class Context extends SubEngine
         }
 
         return allEntities;
+    }
+
+    /**
+     * Gets all entities from a group.
+     *
+     * @return all entities from that group as an array list or null if the list is empty.
+     */
+    public List<Entity> getEntitiesFromGroup(String group)
+    {
+        groupEntities.clear();
+
+        for (ArrayList<Entity> layer : layers)
+        {
+            for (Entity entity : layer)
+            {
+                if (entity.belongsTo(group))
+                {
+                    groupEntities.add(entity);
+                }
+            }
+        }
+
+        return groupEntities.isEmpty()? null : (List<Entity>) groupEntities.clone();
     }
 
     /**

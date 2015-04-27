@@ -1,6 +1,6 @@
 package example;
 
-import com.moka.core.Entity;
+import com.moka.core.entity.Entity;
 import com.moka.physics.Collision;
 import com.moka.triggers.Trigger;
 import example.components.Health;

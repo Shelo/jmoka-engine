@@ -1,5 +1,6 @@
-package com.moka.core;
+package com.moka.core.entity;
 
+import com.moka.core.*;
 import com.moka.core.time.Time;
 import com.moka.graphics.Display;
 import com.moka.physics.Collider;
@@ -17,6 +18,11 @@ public abstract class Component
 	private boolean enabled = true;
 	private Entity entity;
 
+	public Component()
+	{
+
+	}
+
 	public final void setEntity(final Entity entity)
 	{
 		if (this.entity != null)
@@ -27,16 +33,17 @@ public abstract class Component
 		this.entity = entity;
 	}
 
-	public final Transform getTransform() {
-		return entity.getTransform();
-	}
-
 	public final Entity entity() {
 		return entity;
 	}
 
 	public final Entity findEntity(String tag) {
 		return getApplication().getContext().findEntity(tag);
+	}
+
+	public Transform getTransform()
+	{
+		return entity.getTransform();
 	}
 
 	public final <T extends Component> T getComponent(Class<T> componentClass) {

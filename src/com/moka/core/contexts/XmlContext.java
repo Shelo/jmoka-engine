@@ -1,6 +1,5 @@
 package com.moka.core.contexts;
 
-import com.moka.core.Context;
 import com.moka.utils.JMokaException;
 
 public class XmlContext extends Context {

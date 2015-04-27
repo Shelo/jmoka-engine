@@ -1,6 +1,6 @@
 package com.moka.components;
 
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 import com.moka.core.time.StopWatch;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2;
@@ -46,11 +46,11 @@ public class Debugger extends Component
                 break;
 
             case ROTATION:
-                Vector2 buffer = Pools.vector2.take();
+                Vector2 buffer = Pools.vec2.take();
 
                 log("rotation: " + getTransform().getFront(buffer).angle());
 
-                Pools.vector2.put(buffer);
+                Pools.vec2.put(buffer);
                 break;
 
             case SIZE:

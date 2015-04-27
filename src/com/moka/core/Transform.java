@@ -1,5 +1,6 @@
 package com.moka.core;
 
+import com.moka.core.entity.Entity;
 import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
 import com.moka.utils.CalcUtil;

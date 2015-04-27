@@ -3,7 +3,7 @@ package com.moka.physics;
 import com.moka.components.AABBCollider;
 import com.moka.components.CircleCollider;
 import com.moka.components.SatCollider;
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;

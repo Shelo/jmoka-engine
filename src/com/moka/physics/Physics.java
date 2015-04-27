@@ -1,6 +1,6 @@
 package com.moka.physics;
 
-import com.moka.core.Entity;
+import com.moka.core.entity.Entity;
 import com.moka.core.SubEngine;
 
 import java.util.ArrayList;

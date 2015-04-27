@@ -1,8 +1,7 @@
 package com.moka.components;
 
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 import com.moka.core.xml.XmlAttribute;
-import com.moka.physics.Collision;
 import org.lwjgl.glfw.GLFW;
 
 public class Controllable extends Component

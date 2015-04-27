@@ -2,7 +2,7 @@ package com.moka.tests;
 
 import com.moka.components.Sprite;
 import com.moka.core.Application;
-import com.moka.core.Entity;
+import com.moka.core.entity.Entity;
 import com.moka.core.Transform;
 import com.moka.core.contexts.TestContext;
 import com.moka.graphics.Texture;

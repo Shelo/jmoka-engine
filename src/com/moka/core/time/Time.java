@@ -1,6 +1,6 @@
 package com.moka.core.time;
 
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 import com.moka.core.SubEngine;
 import com.moka.triggers.Trigger;
 

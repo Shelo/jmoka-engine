@@ -1,6 +1,6 @@
 package example.components;
 
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 
 public class DestroyOnLeave extends Component
 {

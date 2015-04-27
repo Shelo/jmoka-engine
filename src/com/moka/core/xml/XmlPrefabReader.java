@@ -1,6 +1,6 @@
 package com.moka.core.xml;
 
-import com.moka.core.Context;
+import com.moka.core.contexts.Context;
 import com.moka.core.Prefab;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;

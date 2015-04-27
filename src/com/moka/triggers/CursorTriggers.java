@@ -11,12 +11,12 @@ public class CursorTriggers
         @Override
         public Object onTrigger()
         {
-            Vector2 buffer = Pools.vector2.take();
+            Vector2 buffer = Pools.vec2.take();
 
             Camera camera = getApplication().getRenderer().getCamera();
             transform().setPosition(camera.moveToWorldCoords(getComponent().getInput().getCursorPos(), buffer));
 
-            Pools.vector2.put(buffer);
+            Pools.vec2.put(buffer);
             return true;
         }
     };

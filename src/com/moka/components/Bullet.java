@@ -1,9 +1,8 @@
 package com.moka.components;
 
-import com.moka.core.Component;
+import com.moka.core.entity.Component;
 import com.moka.core.xml.XmlAttribute;
 import com.moka.math.Vector2;
-import com.moka.physics.Collision;
 import com.moka.utils.Pools;
 
 public class Bullet extends Component
@@ -24,12 +23,12 @@ public class Bullet extends Component
 	@Override
 	public void onUpdate()
 	{
-		Vector2 buffer = Pools.vector2.take();
+		Vector2 buffer = Pools.vec2.take(0, 0);
 
 		buffer.set(getTransform().getFront(buffer)).mul((float) (speed * getTime().getDelta()));
 		getTransform().move(buffer);
 
-		Pools.vector2.put(buffer);
+		Pools.vec2.put(buffer);
 	}
 
 	@XmlAttribute("speed")
