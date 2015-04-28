@@ -33,7 +33,7 @@ public class Game
         app.getDisplay().createDisplay("screen_width", "screen_height", "JMoka Engine");
 
         // set renderer options.
-        app.getRenderer().setClearColor(0.15f, 0.15f, 0.15f);
+        app.getRenderer().setClearColor(0, 0, 0);
 
         // create and start the application.
         app.create().start(60);

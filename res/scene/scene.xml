@@ -2,10 +2,9 @@
     <entity name="GeneralController"
         position="0, 0"
         rotation="0"
-        layer="0" >
+        layer="0">
 
         <Camera />
-        <EnemyMovementController />
 
     </entity>
 
@@ -13,7 +12,7 @@
         position="0, 0"
         size="100, 100"
         layer="3"
-        rotation="0" >
+        rotation="0">
 
         <Interval
             trigger="com.moka.triggers.CursorTriggers.MoveToCursor" />
@@ -21,38 +20,54 @@
     </entity>
 
     <entity name="Player"
-        position="${@screen_width / 2}, 100"
+        position="${@screen_width / 2}, 400"
         rotation="0"
         size="64, 64"
         layer="2">
 
-        <Sprite
-            texture="res/images/minship.png" />
+        <Sprite texture="res/images/minship.png" />
 
         <DirectionalMovement
             speed="300"
             lockDirection="HORIZONTAL"
             ignoreRotation="true" />
 
-        <Shooting
-            bulletPrefab="@bullet_prefab"
-            trigger="example.PlayerTriggers.FireTrigger"
-            button="fire" />
+        <PlatformerController />
+        <AABBCollider />
 
     </entity>
 
-    <include
-        name="Enemy1"
-        path="res/scene/prefabs/enemy.xml"
-        position="${@screen_width / 2 - 100}, ${@screen_height - 100}" />
+    <entity name="Floor"
+        group="Floor"
+        position="${@screen_width / 2}, 50"
+        rotation="0"
+        size="@screen_width, 100">
 
-    <include
-        name="Enemy2"
-        path="res/scene/prefabs/enemy.xml"
-        position="${@screen_width / 2}, ${@screen_height - 100}" />
+        <Sprite texture="res/images/green-tile.png" />
+        <AABBCollider />
 
-    <include
-        name="Enemy3"
-        path="res/scene/prefabs/enemy.xml"
-        position="${@screen_width / 2 + 100}, ${@screen_height - 100}" />
+    </entity>
+
+    <entity name="Floor2"
+        group="Floor"
+        position="${@screen_width / 2}, 150"
+        rotation="0"
+        size="100, 100">
+
+        <Sprite texture="res/images/green-tile.png" />
+        <AABBCollider />
+
+    </entity>
+
+    <entity name="Floor3"
+        group="Floor"
+        position="350, 250"
+        rotation="0"
+        size="100, 100">
+
+        <Sprite texture="res/images/green-tile.png" />
+        <AABBCollider />
+
+    </entity>
+
 </scene>

@@ -47,9 +47,7 @@ public class Debugger extends Component
 
             case ROTATION:
                 Vector2 buffer = Pools.vec2.take();
-
                 log("rotation: " + getTransform().getFront(buffer).angle());
-
                 Pools.vec2.put(buffer);
                 break;
 
