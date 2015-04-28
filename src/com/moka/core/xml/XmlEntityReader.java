@@ -444,19 +444,19 @@ public class XmlEntityReader
             String resource = value.substring(1);
             Object result = null;
 
-            if (param == int.class)
+            if (param == int.class || param == Integer.class)
             {
                 result = ((Number) context.getResources().get(resource)).intValue();
             }
-            else if (param == float.class)
+            else if (param == float.class || param == Float.class)
             {
                 result = ((Number) context.getResources().get(resource)).floatValue();
             }
-            else if (param == double.class)
+            else if (param == double.class || param == Double.class)
             {
                 result = ((Number) context.getResources().get(resource)).doubleValue();
             }
-            else if (param == boolean.class)
+            else if (param == boolean.class || param == Boolean.class)
             {
                 result = context.getResources().getBoolean(resource);
             }
@@ -505,19 +505,19 @@ public class XmlEntityReader
         {
             Object result = null;
 
-            if (param == int.class)
+            if (param == int.class || param == Integer.class)
             {
                 result = Integer.parseInt(value);
             }
-            else if (param == float.class)
+            else if (param == float.class || param == Float.class)
             {
                 result = Float.parseFloat(value);
             }
-            else if (param == double.class)
+            else if (param == double.class || param == Double.class)
             {
                 result = Double.parseDouble(value);
             }
-            else if (param == boolean.class)
+            else if (param == boolean.class || param == Boolean.class)
             {
                 result = Boolean.parseBoolean(value);
             }

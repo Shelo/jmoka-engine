@@ -3,10 +3,16 @@ package example.components;
 import com.moka.core.entity.Component;
 import com.moka.core.entity.Entity;
 import com.moka.core.xml.XmlAttribute;
+import com.moka.math.MathUtil;
 import com.moka.math.Vector2;
 
 public class SpotOn extends Component
 {
+    private Float bottom;
+    private Float right;
+    private Float left;
+    private Float top;
+
     private float factor = .1f;
     private Entity target;
 
@@ -26,6 +32,46 @@ public class SpotOn extends Component
         Vector2 targetPos = target.getTransform().getPosition();
         buffer.set(targetPos).sub(halfScreenSize);
         position.add(buffer.sub(position).mul(factor));
+
+        // bottom bound.
+        position.y = checkBound(position.y, bottom, true);
+        position.y = checkBound(position.y, top, false);
+        position.x = checkBound(position.x, left, true);
+        position.x = checkBound(position.x, right, false);
+    }
+
+    public float checkBound(float original, Float value, boolean lower)
+    {
+        if (value == null)
+        {
+            return original;
+        }
+
+        return lower ? (original < value ? value : original) : (original > value ? value : original);
+    }
+
+    @XmlAttribute("left")
+    public void setLeft(Float left)
+    {
+        this.left = left;
+    }
+
+    @XmlAttribute("right")
+    public void setRight(Float right)
+    {
+        this.right = right;
+    }
+
+    @XmlAttribute("bottom")
+    public void setBottom(Float bottom)
+    {
+        this.bottom = bottom;
+    }
+
+    @XmlAttribute("top")
+    public void setTop(Float top)
+    {
+        this.top = top;
     }
 
     @XmlAttribute(value = "target", required = true)

@@ -4,8 +4,11 @@
         rotation="0"
         layer="0">
 
-        <LookAt target="Player" />
         <Camera />
+        <SpotOn
+            target="Player"
+            bottom="0"
+            left="0" />
 
     </entity>
 
@@ -22,7 +25,7 @@
 
     <entity name="Player"
         position="${@screen_width / 2}, 400"
-        rotation="0"
+        rotation="-90"
         size="64, 64"
         layer="2">
 
