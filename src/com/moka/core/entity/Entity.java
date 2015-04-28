@@ -210,4 +210,10 @@ public class Entity
     {
         return context;
     }
+
+    @Override
+    public String toString()
+    {
+        return name;
+    }
 }

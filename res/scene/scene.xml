@@ -4,6 +4,7 @@
         rotation="0"
         layer="0">
 
+        <LookAt target="Player" />
         <Camera />
 
     </entity>
@@ -37,37 +38,19 @@
 
     </entity>
 
-    <entity name="Floor"
-        group="Floor"
+    <include name="Floor1"
+        path="res/scene/prefabs/floor.xml"
         position="${@screen_width / 2}, 50"
-        rotation="0"
-        size="@screen_width, 100">
+        size="@screen_width, 100" />
 
-        <Sprite texture="res/images/green-tile.png" />
-        <AABBCollider />
-
-    </entity>
-
-    <entity name="Floor2"
-        group="Floor"
+    <include name="Floor2"
+        path="res/scene/prefabs/floor.xml"
         position="${@screen_width / 2}, 150"
-        rotation="0"
-        size="100, 100">
+        size="100, 100" />
 
-        <Sprite texture="res/images/green-tile.png" />
-        <AABBCollider />
-
-    </entity>
-
-    <entity name="Floor3"
-        group="Floor"
+    <include name="Floor3"
+        path="res/scene/prefabs/floor.xml"
         position="350, 250"
-        rotation="0"
-        size="100, 100">
-
-        <Sprite texture="res/images/green-tile.png" />
-        <AABBCollider />
-
-    </entity>
+        size="100, 100" />
 
 </scene>
