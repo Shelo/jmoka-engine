@@ -152,6 +152,12 @@ public class Vector2
         return this;
     }
 
+    public void floor(Vector2 result)
+    {
+        result.x = (int) x;
+        result.y = (int) y;
+    }
+
     @Override
     public boolean equals(Object obj)
     {

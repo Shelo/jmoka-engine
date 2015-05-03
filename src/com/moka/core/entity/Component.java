@@ -11,17 +11,13 @@ import com.moka.utils.JMokaLog;
 /**
  * Component class, establishes the common way a component should behave.
  * Class designed for inheritance.
+ *
  * @author Shelo
  */
 public abstract class Component
 {
 	private boolean enabled = true;
 	private Entity entity;
-
-	public Component()
-	{
-
-	}
 
 	public final void setEntity(final Entity entity)
 	{

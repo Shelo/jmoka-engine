@@ -4,6 +4,7 @@ import com.moka.core.entity.Component;
 import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
 import com.moka.utils.JMokaException;
+import com.moka.utils.Pools;
 
 public class Camera extends Component
 {
@@ -45,7 +46,8 @@ public class Camera extends Component
 			throw new JMokaException("Camera: " + entity().getName() + "'s projection is null.");
 		}
 
-		Vector2 position = getTransform().getPosition();
+		Vector2 position = Pools.vec2.take();
+		getTransform().getPosition().floor(position);
 		Matrix3 translation = transBuffer.toTranslation(position.x * (- 1), position.y * (- 1));
 		return projection.mul(translation, buffer);
 	}
