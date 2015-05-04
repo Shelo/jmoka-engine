@@ -5,6 +5,7 @@ import com.moka.core.Application;
 import com.moka.core.Input;
 import com.moka.core.contexts.XmlContext;
 import com.moka.core.sync.EntitySchemeWriter;
+import com.moka.utils.CoreUtil;
 import example.components.*;
 
 public class Game

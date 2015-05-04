@@ -105,4 +105,10 @@ public class CoreUtil
         String[] s = filePath.split("\\.(?=[^\\.]+$)");
         return s[s.length - 1];
     }
+
+    public static String getBaseDirectory(String filePath)
+    {
+        String[] s = filePath.split("/[^/]*$");
+        return s[0];
+    }
 }

@@ -5,6 +5,7 @@ import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
 import com.moka.utils.CalcUtil;
 import com.moka.utils.JMokaException;
+import com.moka.utils.Pools;
 
 /**
  * The transform indicates all about the position, rotation and size of an entity,
@@ -40,8 +41,8 @@ public class Transform
         this.entity = entity;
 
         rotation = new Matrix3();
-        position = new Vector2();
-        size = new Vector2();
+        position = Pools.vec2.take();
+        size = Pools.vec2.take();
 
         prev = new Transform();
     }
@@ -262,5 +263,11 @@ public class Transform
     public void moveY(float distance)
     {
         position.add(0, distance);
+    }
+
+    public void dispose()
+    {
+        Pools.vec2.put(position);
+        Pools.vec2.put(size);
     }
 }

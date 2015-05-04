@@ -2,6 +2,7 @@ package com.moka.core.xml;
 
 import com.moka.core.contexts.Context;
 import com.moka.core.entity.Entity;
+import com.moka.utils.CoreUtil;
 import com.moka.utils.JMokaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -24,6 +25,7 @@ public class XmlSceneReader
     public static final String KEY_GROUP = "group";
 
     private XmlEntityReader entityReader;
+    private String baseDirectoryPath;
     private String currentFilePath;
     private Entity currentEntity;
     private SAXParser parser;
@@ -35,6 +37,8 @@ public class XmlSceneReader
         {
             InputStream stream = new FileInputStream(filePath);
             currentFilePath = filePath;
+            // TODO: use the base directory to find resting files referenced in the scene.
+            baseDirectoryPath = CoreUtil.getBaseDirectory(filePath);
             parser.parse(stream, new Handler());
             entityReader.resolvePendingTransactions();
         }

@@ -157,10 +157,19 @@ public abstract class Component
 	}
 
 	/**
-	 * Called just before wrapping entity is removed
-	 * from entities collection
+	 * Called just before wrapping entity is removed from the world, this will
+	 * only be called on enabled components.
 	 */
 	public void onDestroy()
+	{
+
+	}
+
+	/**
+	 * Called after the destroy method, use this to safely release resources.
+	 * This will be called in all components, even if they're disabled.
+	 */
+	public void onDispose()
 	{
 
 	}

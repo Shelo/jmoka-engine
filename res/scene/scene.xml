@@ -48,11 +48,7 @@
 
     <include name="Floor2"
         path="res/scene/prefabs/floor.xml"
-        position="${@screen_width / 2}, 150"
+        position="200, 200"
         size="100, 100" />
 
-    <include name="Floor3"
-        path="res/scene/prefabs/floor.xml"
-        position="350, 250"
-        size="100, 100" />
 </scene>

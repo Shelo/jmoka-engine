@@ -9,7 +9,6 @@ import com.moka.core.xml.XmlPrefabReader;
 import com.moka.core.xml.XmlSceneReader;
 import com.moka.graphics.Shader;
 import com.moka.utils.JMokaException;
-import com.moka.utils.JMokaLog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,6 +102,7 @@ public abstract class Context extends SubEngine
             {
                 if (layer.get(i).isDestroyed())
                 {
+                    layer.get(i).dispose();
                     layer.remove(i);
                 }
             }

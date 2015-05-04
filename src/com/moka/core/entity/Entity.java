@@ -7,6 +7,7 @@ import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
 import com.moka.physics.Collider;
 import com.moka.utils.CalcUtil;
+import com.moka.utils.Pools;
 
 import java.util.ArrayList;
 
@@ -162,6 +163,16 @@ public class Entity
         return name;
     }
 
+    public void dispose()
+    {
+        getTransform().dispose();
+
+        for (Component component : components)
+        {
+            component.onDispose();
+        }
+    }
+
     public Vector2[] transformVertices(final Vector2[] vertices)
     {
         Vector2[] res = new Vector2[vertices.length];
@@ -169,7 +180,7 @@ public class Entity
 
         for (int i = 0; i < vertices.length; i++)
         {
-            res[i] = new Vector2();
+            res[i] = Pools.vec2.take();
             model.mul(vertices[i], res[i]);
         }
 
