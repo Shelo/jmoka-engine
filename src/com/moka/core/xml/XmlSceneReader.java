@@ -44,7 +44,7 @@ public class XmlSceneReader
         }
         catch (SAXException | IOException e)
         {
-            e.printStackTrace();
+            throw new JMokaException(e.getMessage());
         }
     }
 
