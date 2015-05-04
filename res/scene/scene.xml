@@ -14,7 +14,7 @@
 
     <entity name="Cursor"
         position="0, 0"
-        size="100, 100"
+        size="0, 0"
         layer="3"
         rotation="0">
 
@@ -25,8 +25,8 @@
 
     <entity name="Player"
         position="${@screen_width / 2}, 400"
-        rotation="-90"
-        size="64, 64"
+        rotation="0"
+        size="64,64"
         layer="2">
 
         <Sprite texture="res/images/minship.png" />
@@ -55,5 +55,4 @@
         path="res/scene/prefabs/floor.xml"
         position="350, 250"
         size="100, 100" />
-
 </scene>

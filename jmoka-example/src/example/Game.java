@@ -3,17 +3,9 @@ package example;
 import com.moka.components.Debugger;
 import com.moka.core.Application;
 import com.moka.core.Input;
-import com.moka.core.Prefab;
 import com.moka.core.contexts.XmlContext;
 import com.moka.core.sync.EntitySchemeWriter;
-import com.moka.math.MathUtil;
-import com.moka.triggers.Trigger;
 import example.components.*;
-
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Enumeration;
 
 public class Game
 {
@@ -55,6 +47,8 @@ public class Game
 
         // set renderer options.
         app.getRenderer().setClearColor(0, 0, 0);
+
+        app.getCore().enableExperimentalFeedback();
 
         // create and start the application.
         app.create().start(60);

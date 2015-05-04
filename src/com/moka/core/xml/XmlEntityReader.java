@@ -152,11 +152,6 @@ public class XmlEntityReader
      */
     public Entity read(String filePath, String name)
     {
-        if (state != STATE_CLOSED)
-        {
-            throw new JMokaException("XmlEntityReader's state is not init.");
-        }
-
         entityName = name;
         entity = null;
         state = STATE_INIT;

@@ -14,9 +14,12 @@ public final class Core extends SubEngine
 {
     private static final String TAG = "CORE";
 
+    private ChangeWatcher watcher;
+    private boolean experimental;
     private float frameTime;
     private boolean daemon;
     private Runtime runtime;
+    private boolean watch;
 
     /**
      * Creates a new instance of the engine.
@@ -33,6 +36,7 @@ public final class Core extends SubEngine
         }
 
         runtime = Runtime.getRuntime();
+        watcher = new ChangeWatcher("res/scene");
     }
 
     public void start(int maxFrameRate)
@@ -97,6 +101,44 @@ public final class Core extends SubEngine
                 // we'll need to render only if we update the scene... obviously.
                 render = true;
 
+                if (watch && (experimental || getDisplay().hasFocus()))
+                {
+                    if (watcher.hasChanges())
+                    {
+                        StringBuilder lastMessage = new StringBuilder();
+                        boolean notUpdated = true;
+                        while (notUpdated)
+                        {
+                            try
+                            {
+                                getContext().hardReset();
+                                getContext().onCreate();
+                                getContext().create();
+                                notUpdated = false;
+                            }
+                            catch (JMokaException e)
+                            {
+                                String message = "Could not update: " + e.getMessage();
+                                if (!lastMessage.toString().equals(message))
+                                {
+                                    lastMessage.append("Could not update: ");
+                                    lastMessage.append(e.getMessage());
+                                    System.err.println(message);
+                                }
+
+                                try
+                                {
+                                    Thread.sleep(100);
+                                }
+                                catch (InterruptedException e1)
+                                {
+                                    // Left blank.
+                                }
+                            }
+                        }
+                    }
+                }
+
                 getTime().update(delta);
                 getContext().update();
                 getContext().onUpdate();
@@ -153,5 +195,16 @@ public final class Core extends SubEngine
         JMokaLog.o(TAG, "Stopping JMoka Engine.");
         daemon = false;
         glfwTerminate();
+    }
+
+    public void enableFeedback()
+    {
+        watch = true;
+    }
+
+    public void enableExperimentalFeedback()
+    {
+        watch = true;
+        experimental = true;
     }
 }

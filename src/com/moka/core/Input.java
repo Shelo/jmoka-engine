@@ -289,7 +289,14 @@ public final class Input extends SubEngine
     public boolean getKey(int keyCode)
     {
         validate();
-        return glfwGetKey(getWindow(), keyCode) == GLFW.GLFW_PRESS;
+        boolean result = glfwGetKey(getWindow(), keyCode) == GLFW.GLFW_PRESS;
+
+        if (result && !getDisplay().hasFocus())
+        {
+            getDisplay().fixFocus();
+        }
+
+        return result;
     }
 
     public boolean getKeyDown(int keyCode)
@@ -307,7 +314,14 @@ public final class Input extends SubEngine
     public boolean getMouse(int button)
     {
         validate();
-        return glfwGetMouseButton(getWindow(), button) == GLFW.GLFW_PRESS;
+        boolean result = glfwGetMouseButton(getWindow(), button) == GLFW.GLFW_PRESS;
+
+        if (result && !getDisplay().hasFocus())
+        {
+            getDisplay().fixFocus();
+        }
+
+        return result;
     }
 
     public boolean getMouseDown(int buttonCode)

@@ -105,7 +105,6 @@ public class XmlSceneReader
         {
             currentEntity = null;
             currentFilePath = null;
-            game = null;
         }
     }
 

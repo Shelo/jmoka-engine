@@ -4,6 +4,8 @@ import com.moka.core.SubEngine;
 import com.moka.math.Vector2;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
+import org.lwjgl.glfw.GLFWWindowFocusCallback;
+import org.lwjgl.glfw.GLFWWindowIconifyCallback;
 import org.lwjgl.glfw.GLFWvidmode;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.system.MemoryUtil;
@@ -11,11 +13,15 @@ import org.lwjgl.system.MemoryUtil;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 public final class Display extends SubEngine
 {
     private static final String TAG = "DISPLAY";
 
+    private WindowsFocusCallback windowsFocusCallback;
+
+    private boolean focus;
     private String title;
     private long window;
     private int height;
@@ -27,7 +33,7 @@ public final class Display extends SubEngine
         this.width = width;
         this.title = title;
 
-        glfwWindowHint(GLFW_SAMPLES, 4);
+        glfwWindowHint(GLFW_SAMPLES, 1);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -51,6 +57,11 @@ public final class Display extends SubEngine
 
         // this is a critical line!!
         GLContext.createFromCurrent();
+
+        // set the focus gain or lose callback.
+        windowsFocusCallback = new WindowsFocusCallback();
+        glfwSetWindowFocusCallback(window, windowsFocusCallback);
+
     }
 
     public void createDisplay(String widthRes, String heightRes, String title)
@@ -84,6 +95,19 @@ public final class Display extends SubEngine
         return glfwWindowShouldClose(window) != 0;
     }
 
+    public boolean hasFocus()
+    {
+        return focus;
+    }
+
+    /**
+     * This is a simple workaround for the focus issue of GLFW.
+     */
+    public void fixFocus()
+    {
+        focus = true;
+    }
+
     public long getWindow()
     {
         return window;
@@ -107,5 +131,17 @@ public final class Display extends SubEngine
     public String getTitle()
     {
         return title;
+    }
+
+    /**
+     * Callback for windows focus.
+     */
+    private class WindowsFocusCallback extends GLFWWindowFocusCallback
+    {
+        @Override
+        public void invoke(long l, int i)
+        {
+            focus = i != 0;
+        }
     }
 }

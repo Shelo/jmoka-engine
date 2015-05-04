@@ -109,6 +109,12 @@ public abstract class Context extends SubEngine
         }
     }
 
+    public void hardReset()
+    {
+        layers.clear();
+        nameRelations.clear();
+    }
+
     /**
      * Adds an entity to a given layer.
      *
@@ -122,7 +128,6 @@ public abstract class Context extends SubEngine
         while (layers.size() <= layer)
         {
             layers.add(new ArrayList<Entity>());
-            JMokaLog.o(TAG, "New layer: " + (layers.size() - 1));
         }
 
         layers.get(layer).add(entity);
