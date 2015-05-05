@@ -4,6 +4,9 @@ import com.moka.components.Camera;
 import com.moka.core.Prefab;
 import com.moka.core.SubEngine;
 import com.moka.core.entity.Entity;
+import com.moka.core.readers.EntityReader;
+import com.moka.core.readers.PrefabReader;
+import com.moka.core.readers.SceneReader;
 import com.moka.core.readers.xml.XmlEntityReader;
 import com.moka.core.readers.xml.XmlPrefabReader;
 import com.moka.core.readers.xml.XmlSceneReader;
@@ -20,11 +23,12 @@ import java.util.List;
 public abstract class Context extends SubEngine
 {
     private static final String TAG = "Context";
+
     private HashMap<String, Entity> nameRelations;
     private ArrayList<ArrayList<Entity>> layers;
-    private XmlEntityReader entityReader;
-    private XmlPrefabReader prefabReader;
-    private XmlSceneReader sceneReader;
+    private EntityReader entityReader;
+    private PrefabReader prefabReader;
+    protected SceneReader sceneReader;
     private String secondaryPackage;
 
     /**
@@ -41,7 +45,7 @@ public abstract class Context extends SubEngine
         // initialize readers.
         sceneReader = new XmlSceneReader(this);
         entityReader = sceneReader.getEntityReader();
-        prefabReader = new XmlPrefabReader(entityReader, this);
+        prefabReader = new XmlPrefabReader((XmlEntityReader) entityReader, this);
     }
 
     public final void update()
@@ -188,9 +192,9 @@ public abstract class Context extends SubEngine
      *
      * @param sceneFilePath xml file path.
      */
-    public final void populate(String sceneFilePath)
+    public final void populate(SceneReader reader, String sceneFilePath)
     {
-        sceneReader.read(sceneFilePath);
+        reader.read(sceneFilePath);
     }
 
     /**

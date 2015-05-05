@@ -3,6 +3,7 @@ package com.moka.core.readers.xml;
 import com.moka.core.contexts.Context;
 import com.moka.core.Prefab;
 import com.moka.core.readers.ComponentAttribute;
+import com.moka.core.readers.PrefabReader;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 import com.moka.triggers.TriggerPrefab;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class XmlPrefabReader
+public class XmlPrefabReader extends PrefabReader
 {
     private XmlEntityReader entityReader;
     private SAXParser parser;
@@ -134,6 +135,7 @@ public class XmlPrefabReader
      * @param filePath path to the XML file.
      * @return the prefab object.
      */
+    @Override
     public Prefab newPrefab(String filePath)
     {
         Prefab.PreComponents componentAttrs = new Prefab.PreComponents();

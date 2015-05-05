@@ -1,8 +1,9 @@
 package com.moka.core.contexts;
 
+import com.moka.core.readers.SceneReader;
 import com.moka.utils.JMokaException;
 
-public class ReaderContext extends Context
+public abstract class ReaderContext extends Context
 {
     protected final String resources;
     protected final String scene;
@@ -28,14 +29,16 @@ public class ReaderContext extends Context
     }
 
     @Override
-    public void onCreate()
+    public final void onCreate()
     {
-
+        populate(getSceneReader(), scene);
     }
 
     @Override
-    public void onStop()
+    public final void onStop()
     {
 
     }
+
+    protected abstract SceneReader getSceneReader();
 }

@@ -1,5 +1,7 @@
 package com.moka.core.contexts;
 
+import com.moka.core.readers.SceneReader;
+
 public class XmlContext extends ReaderContext
 {
     public XmlContext(String xml, String resources)
@@ -8,14 +10,8 @@ public class XmlContext extends ReaderContext
     }
 
     @Override
-    public final void onCreate()
+    protected SceneReader getSceneReader()
     {
-        populate(scene);
-    }
-
-    @Override
-    public final void onStop()
-    {
-
+        return sceneReader;
     }
 }
