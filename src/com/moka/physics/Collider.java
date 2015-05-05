@@ -4,7 +4,7 @@ import com.moka.components.AABBCollider;
 import com.moka.components.CircleCollider;
 import com.moka.components.SatCollider;
 import com.moka.core.entity.Component;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 
@@ -182,13 +182,13 @@ public abstract class Collider extends Component
         return aabbCircle(aabb, circle);
     }
 
-    @XmlAttribute("collisionTrigger")
+    @ComponentAttribute("collisionTrigger")
     public void setCollisionTrigger(Trigger<Collision> collisionTrigger)
     {
         this.collisionTrigger = collisionTrigger;
     }
 
-    @XmlAttribute("isTrigger")
+    @ComponentAttribute("isTrigger")
     public void setTrigger(boolean trigger)
     {
         this.trigger = trigger;

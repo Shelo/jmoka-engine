@@ -1,4 +1,4 @@
-package com.moka.core.xml;
+package com.moka.core.readers;
 
 import com.moka.core.entity.Component;
 
@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
  *
  * @author shelo
  */
-class PendingTransaction
+public class PendingTransaction
 {
     private Component component;
     private Method method;

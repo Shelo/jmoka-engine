@@ -1,40 +1,21 @@
 package com.moka.core.contexts;
 
-import com.moka.utils.JMokaException;
+public class XmlContext extends ReaderContext
+{
+    public XmlContext(String xml, String resources)
+    {
+        super(xml, resources);
+    }
 
-public class XmlContext extends Context {
-	private final String resPath;
-	private final String xml;
+    @Override
+    public final void onCreate()
+    {
+        populate(scene);
+    }
 
-	public XmlContext(String xml, String resPath)
-	{
-		if(xml == null)
-		{
-			throw new JMokaException("Xml file path cannot be null.");
-		}
+    @Override
+    public final void onStop()
+    {
 
-		this.xml = xml;
-		this.resPath = resPath;
-	}
-
-	@Override
-	public void onPreLoad()
-	{
-		if(resPath != null)
-		{
-			define(resPath);
-		}
-	}
-
-	@Override
-	public final void onCreate()
-	{
-		populate(xml);
-	}
-
-	@Override
-	public final void onStop()
-	{
-
-	}
+    }
 }

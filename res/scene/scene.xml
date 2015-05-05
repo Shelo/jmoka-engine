@@ -24,7 +24,7 @@
     </entity>
 
     <entity name="Player"
-        position="${@screen_width / 2}, 400"
+        position="$(@screen_width / 2), 400"
         rotation="0"
         size="64,64"
         layer="2">
@@ -43,7 +43,7 @@
 
     <include name="Floor1"
         path="res/scene/prefabs/floor.xml"
-        position="${@screen_width / 2}, 50"
+        position="$(@screen_width / 2), 50"
         size="@screen_width, 100" />
 
     <include name="Floor2"

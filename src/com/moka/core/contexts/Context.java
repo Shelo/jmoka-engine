@@ -4,9 +4,9 @@ import com.moka.components.Camera;
 import com.moka.core.Prefab;
 import com.moka.core.SubEngine;
 import com.moka.core.entity.Entity;
-import com.moka.core.xml.XmlEntityReader;
-import com.moka.core.xml.XmlPrefabReader;
-import com.moka.core.xml.XmlSceneReader;
+import com.moka.core.readers.xml.XmlEntityReader;
+import com.moka.core.readers.xml.XmlPrefabReader;
+import com.moka.core.readers.xml.XmlSceneReader;
 import com.moka.graphics.Shader;
 import com.moka.utils.JMokaException;
 
@@ -186,11 +186,11 @@ public abstract class Context extends SubEngine
     /**
      * Loads an XML Scene file into the game.
      *
-     * @param xmlFilePath xml file path.
+     * @param sceneFilePath xml file path.
      */
-    public final void populate(String xmlFilePath)
+    public final void populate(String sceneFilePath)
     {
-        sceneReader.read(xmlFilePath);
+        sceneReader.read(sceneFilePath);
     }
 
     /**

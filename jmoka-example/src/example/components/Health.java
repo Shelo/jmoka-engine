@@ -1,7 +1,7 @@
 package example.components;
 
 import com.moka.core.entity.Component;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.MathUtil;
 import com.moka.triggers.Trigger;
 import com.moka.utils.None;
@@ -32,25 +32,25 @@ public class Health extends Component
         callTrigger(damageTrigger, damage);
     }
 
-    @XmlAttribute("defense")
+    @ComponentAttribute("defense")
     public void setDefense(float defense)
     {
         this.defense = MathUtil.clamp(defense, 0, 1);
     }
 
-    @XmlAttribute("damageTrigger")
+    @ComponentAttribute("damageTrigger")
     public void setDamageTrigger(Trigger<Float> damageTrigger)
     {
         this.damageTrigger = damageTrigger;
     }
 
-    @XmlAttribute("destroyTrigger")
+    @ComponentAttribute("destroyTrigger")
     public void setDestroyTrigger(Trigger<None> destroyTrigger)
     {
         this.destroyTrigger = destroyTrigger;
     }
 
-    @XmlAttribute("hitPoints")
+    @ComponentAttribute("hitPoints")
     public void setHitPoints(float hitPoints)
     {
         this.hitPoints = hitPoints;

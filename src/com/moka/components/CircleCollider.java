@@ -1,6 +1,6 @@
 package com.moka.components;
 
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 
@@ -41,7 +41,7 @@ public class CircleCollider extends Collider
 		getTransform().move(collision.getMovement());
 	}
 
-	@XmlAttribute("radius")
+	@ComponentAttribute("radius")
 	public void setRadius(float radius)
 	{
 		this.radius = radius;

@@ -3,7 +3,7 @@ package com.moka.core;
 import com.moka.core.contexts.Context;
 import com.moka.core.entity.Component;
 import com.moka.core.entity.Entity;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 import com.moka.triggers.TriggerPrefab;
@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * Creates an prefabricated object, which can instantiate multiple entities using a simple
  * yet easy to use <b>state machine</b>. The prefab shouldn't be instantiated directly, but through
- * a {@link com.moka.core.xml.XmlPrefabReader}, with entityReader.newPrefab(filePath).
+ * a {@link com.moka.core.readers.xml.XmlPrefabReader}, with entityReader.newPrefab(filePath).
  *
  * @author Shelo
  */
@@ -146,7 +146,7 @@ public final class Prefab
                     catch (InvocationTargetException e)
                     {
                         throw new JMokaException("Cannot set the attribute "
-                                + method.getAnnotation(XmlAttribute.class).value());
+                                + method.getAnnotation(ComponentAttribute.class).value());
                     }
                 }
 

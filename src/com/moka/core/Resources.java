@@ -1,6 +1,6 @@
 package com.moka.core;
 
-import com.moka.core.xml.XmlResourcesReader;
+import com.moka.core.readers.xml.XmlResourcesReader;
 import com.moka.graphics.Texture;
 import com.moka.utils.JMokaException;
 

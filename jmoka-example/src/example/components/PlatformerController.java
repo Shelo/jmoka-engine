@@ -2,7 +2,7 @@ package example.components;
 
 import com.moka.core.Input;
 import com.moka.core.entity.Component;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.physics.Collision;
 import com.moka.triggers.Trigger;
 
@@ -49,7 +49,7 @@ public class PlatformerController extends Component
         getTransform().moveY(fallingSpeed);
     }
 
-    @XmlAttribute("gravity")
+    @ComponentAttribute("gravity")
     public void setGravity(float gravity)
     {
         this.gravity = gravity;

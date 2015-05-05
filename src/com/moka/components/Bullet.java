@@ -1,7 +1,7 @@
 package com.moka.components;
 
 import com.moka.core.entity.Component;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.utils.Pools;
 
@@ -31,7 +31,7 @@ public class Bullet extends Component
 		Pools.vec2.put(buffer);
 	}
 
-	@XmlAttribute("speed")
+	@ComponentAttribute("speed")
 	public void setSpeed(int speed)
 	{
 		this.speed = speed;

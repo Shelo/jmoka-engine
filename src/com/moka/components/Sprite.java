@@ -1,7 +1,7 @@
 package com.moka.components;
 
 import com.moka.core.entity.Component;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.graphics.Color;
 import com.moka.graphics.Quad;
 import com.moka.graphics.Shader;
@@ -116,49 +116,49 @@ public class Sprite extends Component
 		this.texture = texture;
 	}
 
-	@XmlAttribute(value = "texture", required = true)
+	@ComponentAttribute(value = "texture", required = true)
 	public void setTexture(String path)
 	{
 		setTexture(Texture.newTexture(getResources(), path));
 	}
 
-	@XmlAttribute("tintR")
+	@ComponentAttribute("tintR")
 	public void setTintR(float value)
 	{
 		tint.r = value;
 	}
 
-	@XmlAttribute("tintG")
+	@ComponentAttribute("tintG")
 	public void setTintG(float value)
 	{
 		tint.g = value;
 	}
 
-	@XmlAttribute("tintB")
+	@ComponentAttribute("tintB")
 	public void setTintB(float value)
 	{
 		tint.b = value;
 	}
 
-	@XmlAttribute("tintA")
+	@ComponentAttribute("tintA")
 	public void setTintA(float value)
 	{
 		tint.a = value;
 	}
 
-	@XmlAttribute("width")
+	@ComponentAttribute("width")
 	public void setWidth(float value)
 	{
 		size.x = value;
 	}
 
-	@XmlAttribute("height")
+	@ComponentAttribute("height")
 	public void setHeight(float value)
 	{
 		size.y = value;
 	}
 
-	@XmlAttribute("clipTop")
+	@ComponentAttribute("clipTop")
 	public void setClipTop(float clipTop)
 	{
 		if (clipTopRight == null)
@@ -169,7 +169,7 @@ public class Sprite extends Component
 		this.clipTopRight.y = clipTop;
 	}
 
-	@XmlAttribute("clipRight")
+	@ComponentAttribute("clipRight")
 	public void setClipRight(float clipRight)
 	{
 		if (clipTopRight == null)

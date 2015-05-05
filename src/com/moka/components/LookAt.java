@@ -2,7 +2,7 @@ package com.moka.components;
 
 import com.moka.core.entity.Component;
 import com.moka.core.entity.Entity;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.utils.Pools;
 
@@ -22,7 +22,7 @@ public class LookAt extends Component
 		Pools.vec2.put(buffer);
 	}
 
-	@XmlAttribute(value = "target", required = true)
+	@ComponentAttribute(value = "target", required = true)
 	public void setTarget(Entity target)
 	{
 		this.target = target;

@@ -1,6 +1,6 @@
 package com.moka.components;
 
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
@@ -150,7 +150,7 @@ public class SatCollider extends Collider
 		return tVertices;
 	}
 
-	@XmlAttribute("vertices")
+	@ComponentAttribute("vertices")
 	public void setVertices(String path)
 	{
 		

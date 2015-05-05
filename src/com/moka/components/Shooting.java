@@ -2,7 +2,7 @@ package com.moka.components;
 
 import com.moka.core.entity.Component;
 import com.moka.core.Prefab;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.triggers.Trigger;
 
 public class Shooting extends Component
@@ -39,19 +39,19 @@ public class Shooting extends Component
         }
     }
 
-    @XmlAttribute("trigger")
+    @ComponentAttribute("trigger")
     public final void setTrigger(Trigger<Prefab> trigger)
     {
         this.trigger = trigger;
     }
 
-    @XmlAttribute(value = "bulletPrefab", required = true)
+    @ComponentAttribute(value = "bulletPrefab", required = true)
     public final void setBulletPrefab(Prefab bulletPrefab)
     {
         this.bulletPrefab = bulletPrefab;
     }
 
-    @XmlAttribute(value = "button", required = true)
+    @ComponentAttribute(value = "button", required = true)
     public void setButton(String button)
     {
         this.button = button;

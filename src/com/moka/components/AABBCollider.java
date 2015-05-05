@@ -1,6 +1,6 @@
 package com.moka.components;
 
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 
@@ -30,26 +30,26 @@ public class AABBCollider extends Collider
 		}
 	}
 
-	@XmlAttribute("offsetX")
+	@ComponentAttribute("offsetX")
 	public void setOffsetX(float offx)
 	{
 		this.offx = offx;
 	}
 
-	@XmlAttribute("offsetY")
+	@ComponentAttribute("offsetY")
 	public void setOffsetY(float offy)
 	{
 		this.offy = offy;
 	}
 
-	@XmlAttribute("width")
+	@ComponentAttribute("width")
 	public void setWith(float width)
 	{
 		shouldInitWidth = false;
 		this.width = width;
 	}
 
-	@XmlAttribute("height")
+	@ComponentAttribute("height")
 	public void setHeight(float height)
 	{
 		shouldInitHeight = false;

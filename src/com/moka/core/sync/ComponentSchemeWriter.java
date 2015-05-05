@@ -1,6 +1,6 @@
 package com.moka.core.sync;
 
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.utils.JMokaException;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +32,7 @@ public class ComponentSchemeWriter
 
         xmlResult.append(String.format(TYPE_LINE, component.getSimpleName()));
 
-        // get all methods that have the XmlAttribute annotation.
+        // get all methods that have the ComponentAttribute annotation.
         List<Method> attrMethods = findAttributeMethods(component);
 
         // iterate over all attribute methods.
@@ -65,7 +65,7 @@ public class ComponentSchemeWriter
 
         Class<?> param = params[0];
 
-        XmlAttribute attribute = attrMethod.getAnnotation(XmlAttribute.class);
+        ComponentAttribute attribute = attrMethod.getAnnotation(ComponentAttribute.class);
 
         String name = attribute.value();
         String required = attribute.required() ? "required" : "optional";
@@ -150,7 +150,7 @@ public class ComponentSchemeWriter
 
         for (Method method : methods)
         {
-            XmlAttribute annotation = method.getAnnotation(XmlAttribute.class);
+            ComponentAttribute annotation = method.getAnnotation(ComponentAttribute.class);
 
             if (annotation != null)
             {

@@ -2,7 +2,7 @@ package example.components;
 
 import com.moka.core.entity.Component;
 import com.moka.core.Input;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.MathUtil;
 
 public class ShipMovement extends Component
@@ -32,19 +32,19 @@ public class ShipMovement extends Component
         getTransform().getPosition().x = MathUtil.clamp(getTransform().getPosition().x, boundLeft, boundRight);
     }
 
-    @XmlAttribute("speed")
+    @ComponentAttribute("speed")
     public void setSpeed(float speed)
     {
         this.speed = speed;
     }
 
-    @XmlAttribute("boundLeft")
+    @ComponentAttribute("boundLeft")
     public void setBoundLeft(float boundLeft)
     {
         this.boundLeft = boundLeft;
     }
 
-    @XmlAttribute("boundRight")
+    @ComponentAttribute("boundRight")
     public void setBoundRight(float boundRight)
     {
         this.boundRight = boundRight;

@@ -2,8 +2,7 @@ package example.components;
 
 import com.moka.core.entity.Component;
 import com.moka.core.entity.Entity;
-import com.moka.core.xml.XmlAttribute;
-import com.moka.math.MathUtil;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.Vector2;
 
 public class SpotOn extends Component
@@ -50,37 +49,37 @@ public class SpotOn extends Component
         return lower ? (original < value ? value : original) : (original > value ? value : original);
     }
 
-    @XmlAttribute("left")
+    @ComponentAttribute("left")
     public void setLeft(Float left)
     {
         this.left = left;
     }
 
-    @XmlAttribute("right")
+    @ComponentAttribute("right")
     public void setRight(Float right)
     {
         this.right = right;
     }
 
-    @XmlAttribute("bottom")
+    @ComponentAttribute("bottom")
     public void setBottom(Float bottom)
     {
         this.bottom = bottom;
     }
 
-    @XmlAttribute("top")
+    @ComponentAttribute("top")
     public void setTop(Float top)
     {
         this.top = top;
     }
 
-    @XmlAttribute(value = "target", required = true)
+    @ComponentAttribute(value = "target", required = true)
     public void setTarget(Entity target)
     {
         this.target = target;
     }
 
-    @XmlAttribute("factor")
+    @ComponentAttribute("factor")
     public void setFactor(float factor)
     {
         this.factor = factor;

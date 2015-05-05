@@ -2,7 +2,7 @@ package example.components;
 
 import com.moka.core.entity.Component;
 import com.moka.core.Input;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.MathUtil;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
@@ -82,31 +82,31 @@ public class DirectionalMovement extends Component
         }
     }
 
-    @XmlAttribute("ignoreRotation")
+    @ComponentAttribute("ignoreRotation")
     public void setIgnoreRotation(boolean ignoreRotation)
     {
         this.ignoreRotation = ignoreRotation;
     }
 
-    @XmlAttribute("speed")
+    @ComponentAttribute("speed")
     public void setSpeed(float speed)
     {
         this.speed = speed;
     }
 
-    @XmlAttribute("rotationSpeed")
+    @ComponentAttribute("rotationSpeed")
     public void setRotationSpeed(float rotationSpeed)
     {
         this.rotationSpeed = rotationSpeed;
     }
 
-    @XmlAttribute("lockDirection")
+    @ComponentAttribute("lockDirection")
     public void setLockDirection(Directions lockDirection)
     {
         this.lockDirection = lockDirection;
     }
 
-    @XmlAttribute("angleTrigger")
+    @ComponentAttribute("angleTrigger")
     public void setAngleTrigger(Trigger<Float> angleTrigger)
     {
         this.angleTrigger = angleTrigger;

@@ -1,7 +1,7 @@
 package com.moka.components;
 
 import com.moka.core.entity.Component;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import org.lwjgl.glfw.GLFW;
 
 public class Controllable extends Component
@@ -99,31 +99,31 @@ public class Controllable extends Component
 		getTransform().move(vx, vy);
 	}
 
-	@XmlAttribute("topSpeed")
+	@ComponentAttribute("topSpeed")
 	public void setTopSpeed(int topSpeed)
 	{
 		this.topSpeed = topSpeed;
 	}
 
-	@XmlAttribute("acceleration")
+	@ComponentAttribute("acceleration")
 	public void setAcceleration(int acceleration)
 	{
 		this.acceleration = acceleration;
 	}
 
-	@XmlAttribute("constrainX")
+	@ComponentAttribute("constrainX")
 	public void setConstrainX(boolean constrainX)
 	{
 		this.constrainX = constrainX;
 	}
 
-	@XmlAttribute("constrainY")
+	@ComponentAttribute("constrainY")
 	public void setConstrainY(boolean constrainY)
 	{
 		this.constrainY = constrainY;
 	}
 
-	@XmlAttribute("impulse")
+	@ComponentAttribute("impulse")
 	public void setImpulse(float impulse)
 	{
 		this.impulse = impulse;

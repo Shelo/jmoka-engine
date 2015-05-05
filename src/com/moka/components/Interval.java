@@ -2,7 +2,7 @@ package com.moka.components;
 
 import com.moka.core.entity.Component;
 import com.moka.core.time.StopWatch;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.triggers.Trigger;
 
 /**
@@ -38,7 +38,7 @@ public class Interval extends Component
      *
      * @param time the time in seconds.
      */
-    @XmlAttribute("time")
+    @ComponentAttribute("time")
     public void setTime(double time)
     {
         this.time = time;
@@ -50,7 +50,7 @@ public class Interval extends Component
      *
      * @param trigger the trigger to be called.
      */
-    @XmlAttribute(value = "trigger", required = true)
+    @ComponentAttribute(value = "trigger", required = true)
     public void setTrigger(Trigger<StopWatch> trigger)
     {
         this.trigger = trigger;

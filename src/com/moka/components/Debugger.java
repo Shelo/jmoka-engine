@@ -2,7 +2,7 @@ package com.moka.components;
 
 import com.moka.core.entity.Component;
 import com.moka.core.time.StopWatch;
-import com.moka.core.xml.XmlAttribute;
+import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.utils.Pools;
 
@@ -57,13 +57,13 @@ public class Debugger extends Component
         }
     }
 
-    @XmlAttribute("option")
+    @ComponentAttribute("option")
     public void setSelection(Options selection)
     {
         this.selection = selection;
     }
 
-    @XmlAttribute("frequency")
+    @ComponentAttribute("frequency")
     public void setFrequency(double frequency)
     {
         this.frequency = frequency;
