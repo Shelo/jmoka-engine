@@ -195,6 +195,7 @@ public final class Core extends SubEngine
     {
         JMokaLog.o(TAG, "Stopping JMoka Engine.");
         daemon = false;
+        getContext().dispose();
         glfwTerminate();
     }
 

@@ -10,12 +10,19 @@ import com.moka.core.readers.SceneReader;
 import com.moka.core.readers.xml.XmlEntityReader;
 import com.moka.core.readers.xml.XmlPrefabReader;
 import com.moka.core.readers.xml.XmlSceneReader;
+import com.moka.core.threading.ActionDelegator;
+import com.moka.core.threading.EntityRunner;
+import com.moka.core.threading.Threading;
 import com.moka.graphics.Shader;
 import com.moka.utils.JMokaException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Base class of a game, takes care of internal core usage.
@@ -30,6 +37,7 @@ public abstract class Context extends SubEngine
     private PrefabReader prefabReader;
     protected SceneReader sceneReader;
     private String secondaryPackage;
+    private ExecutorService service;
 
     /**
      * Used to store all layers.
@@ -41,6 +49,7 @@ public abstract class Context extends SubEngine
     {
         nameRelations = new HashMap<>();
         layers = new ArrayList<>();
+        service = Executors.newFixedThreadPool(3);
 
         // initialize readers.
         sceneReader = new XmlSceneReader(this);
@@ -56,6 +65,10 @@ public abstract class Context extends SubEngine
 
             for (int i = layer.size() - 1; i >= 0; i--)
             {
+                /*
+                Runnable runnable = Threading.runnable(ActionDelegator.update, layer.get(i));
+                service.execute(runnable);
+                */
                 layer.get(i).update();
             }
         }
@@ -310,6 +323,11 @@ public abstract class Context extends SubEngine
         }
 
         return groupEntities.isEmpty()? null : (List<Entity>) groupEntities.clone();
+    }
+
+    public void dispose()
+    {
+        service.shutdown();
     }
 
     /**

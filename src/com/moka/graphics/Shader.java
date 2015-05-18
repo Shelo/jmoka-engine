@@ -15,6 +15,9 @@ import java.nio.FloatBuffer;
 import java.util.HashMap;
 
 import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glCheckFramebufferStatus;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class Shader
 {
@@ -42,12 +45,15 @@ public class Shader
             throw new JMokaException(glGetShaderInfoLog(program, 1024));
         }
 
+        int vao = glGenVertexArrays();
+        glBindVertexArray(vao);
+
         // Validate and check errors.
         glValidateProgram(program);
 
         if (glGetProgrami(program, GL_VALIDATE_STATUS) == 0)
         {
-            throw new JMokaException(glGetShaderInfoLog(program, 1024));
+            throw new JMokaException(glGetProgramInfoLog(program, 1024));
         }
 
         uniformLocations = new HashMap<>();

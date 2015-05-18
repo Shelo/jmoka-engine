@@ -5,6 +5,7 @@ import com.moka.core.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
 import com.moka.physics.Physics;
+import com.moka.utils.JMokaLog;
 
 /**
  * The Application is the general wrapper of a jMoka game. It contains all sub engines and
@@ -14,6 +15,7 @@ import com.moka.physics.Physics;
  */
 public class Application
 {
+    private static final String TAG = "Application";
     private Resources resources;
     private Renderer renderer;
     private Context context;
@@ -64,6 +66,7 @@ public class Application
         // create all components.
         context.create();
 
+        JMokaLog.o(TAG, "Created.");
         return this;
     }
 

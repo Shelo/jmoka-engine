@@ -3,13 +3,16 @@ package com.moka.graphics;
 import com.moka.components.Camera;
 import com.moka.core.SubEngine;
 import com.moka.utils.JMokaException;
+import com.moka.utils.JMokaLog;
 
 import static org.lwjgl.opengl.GL11.*;
 
 public final class Renderer extends SubEngine
 {
+    private static final String TAG = "RENDERER";
+
     public static final String VERTEX_CODE =
-            "#version 330\n" +
+            "#version 330 core\n" +
             "\n" +
             "layout (location = 0) in vec2 a_position;\n" +
             "layout (location = 1) in vec2 a_texCoord;\n" +
@@ -28,20 +31,22 @@ public final class Renderer extends SubEngine
             "}";
 
     public static final String FRAGMENT_CODE =
-            "#version 330\n" +
+            "#version 330 core\n" +
             "\n" +
             "uniform sampler2D u_texture;\n" +
             "uniform vec4 u_color;\n" +
             "\n" +
             "in vec2 texCoord;\n" +
             "\n" +
+            "out vec4 fragColor;\n" +
+            "\n" +
             "void main() {\n" +
-            "\tvec4 baseColor = texture2D(u_texture, texCoord);\n" +
+            "\tvec4 baseColor = texture(u_texture, texCoord);\n" +
             "\n" +
             "\tif(baseColor.a == 0)\n" +
             "\t\tdiscard;\n" +
             "\telse\n" +
-            "\t\tgl_FragColor = baseColor * u_color;\n" +
+            "\t\tfragColor = baseColor * u_color;\n" +
             "}\n";
 
     private Camera camera;
@@ -69,6 +74,8 @@ public final class Renderer extends SubEngine
         // enable blending.
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        JMokaLog.o(TAG, "Created correctly.");
     }
 
     /**

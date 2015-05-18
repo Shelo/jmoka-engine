@@ -14,6 +14,9 @@ import java.nio.ByteBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL20.*;
 
 public final class Display extends SubEngine
 {
@@ -33,16 +36,13 @@ public final class Display extends SubEngine
         this.width = width;
         this.title = title;
 
-        glfwWindowHint(GLFW_SAMPLES, 1);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_SAMPLES, 4);
 
         window = glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
-
-        // center window.
-        ByteBuffer vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2, (GLFWvidmode.height(vidMode) - height) / 2);
 
         if (window == 0)
         {
@@ -53,6 +53,10 @@ public final class Display extends SubEngine
             JMokaLog.o(TAG, "Window created.");
         }
 
+        // center window.
+        ByteBuffer vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2, (GLFWvidmode.height(vidMode) - height) / 2);
+
         glfwMakeContextCurrent(window);
 
         // this is a critical line!!
@@ -61,7 +65,6 @@ public final class Display extends SubEngine
         // set the focus gain or lose callback.
         windowsFocusCallback = new WindowsFocusCallback();
         glfwSetWindowFocusCallback(window, windowsFocusCallback);
-
     }
 
     public void createDisplay(String widthRes, String heightRes, String title)

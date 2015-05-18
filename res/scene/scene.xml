@@ -53,27 +53,12 @@
 
     <include name="Floor3"
         path="res/scene/prefabs/floor.xml"
-        position="300, 300"
+        position="500, 200"
         size="100, 100" />
 
     <include name="Floor4"
         path="res/scene/prefabs/floor.xml"
-        position="500, 400"
-        size="100, 100" />
-
-    <include name="Floor5"
-        path="res/scene/prefabs/floor.xml"
-        position="700, 700"
-        size="100, 100" />
-
-    <include name="Floor6"
-        path="res/scene/prefabs/floor.xml"
-        position="300, 200"
-        size="100, 100" />
-
-    <include name="Floor7"
-        path="res/scene/prefabs/floor.xml"
-        position="400, 200"
+        position="900, 200"
         size="100, 100" />
 
 </scene>

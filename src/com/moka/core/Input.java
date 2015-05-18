@@ -336,14 +336,14 @@ public final class Input extends SubEngine
         return !getMouse(buttonCode) && activeMouse[buttonCode];
     }
 
-    public int getCursorPosX()
+    public synchronized int getCursorPosX()
     {
         int x = (int) cursorPosX.get();
         cursorPosX.rewind();
         return x;
     }
 
-    public int getCursorPosY()
+    public synchronized int getCursorPosY()
     {
         int y = (int) cursorPosY.get();
         cursorPosY.rewind();
@@ -363,7 +363,7 @@ public final class Input extends SubEngine
         return getDisplay().getWindow();
     }
 
-    public Vector2 getCursorPos()
+    public synchronized Vector2 getCursorPos()
     {
         return cursorPosition.set(getCursorPosX(), getCursorPosY());
     }

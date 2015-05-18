@@ -98,6 +98,7 @@ public abstract class Component
 
 	/**
 	 * [Shortcut] Gets the current context's display.
+     *
 	 * @return the display object.
 	 */
 	public Display getDisplay()
@@ -107,6 +108,7 @@ public abstract class Component
 
 	/**
 	 * [Shortcut] Gets the current context's time.
+     *
 	 * @return the time object.
 	 */
 	public Time getTime()
@@ -116,6 +118,7 @@ public abstract class Component
 
 	/**
 	 * [Shortcut] Gets the current context's resources.
+     *
 	 * @return the resources object.
 	 */
 	public Resources getResources()
@@ -124,7 +127,7 @@ public abstract class Component
 	}
 
 	/**
-	 * Logs a descriptive message to the console.
+	 * Logs a descriptive message.
 	 */
 	public void log(String message)
 	{
