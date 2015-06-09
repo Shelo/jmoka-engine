@@ -119,7 +119,8 @@ public class Sprite extends Component
 	@ComponentAttribute(value = "texture", required = true)
 	public void setTexture(String path)
 	{
-		setTexture(Texture.newTexture(getResources(), path));
+        System.out.println(path);
+        setTexture(Texture.newTexture(getResources(), path));
 	}
 
 	@ComponentAttribute("tintR")
@@ -193,5 +194,10 @@ public class Sprite extends Component
 	public Quad getMesh()
 	{
 		return quad;
+	}
+
+	public void setTint(float r, float g, float b, float a)
+	{
+		tint.set(r, g, b, a);
 	}
 }

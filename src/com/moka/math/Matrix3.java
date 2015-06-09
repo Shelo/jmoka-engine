@@ -77,6 +77,23 @@ public class Matrix3
         return this;
     }
 
+    public Matrix3 toIdentity()
+    {
+        values[0][0] = 1;
+        values[0][1] = 0;
+        values[0][2] = 0;
+
+        values[1][0] = 0;
+        values[1][1] = 1;
+        values[1][2] = 0;
+
+        values[2][0] = 0;
+        values[2][1] = 0;
+        values[2][2] = 1;
+
+        return this;
+    }
+
     public void set(int row, int col, float value)
     {
         values[row][col] = value;

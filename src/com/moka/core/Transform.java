@@ -40,7 +40,7 @@ public class Transform
     {
         this.entity = entity;
 
-        rotation = new Matrix3();
+        rotation = new Matrix3().toIdentity();
         position = Pools.vec2.take();
         size = Pools.vec2.take();
 

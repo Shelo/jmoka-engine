@@ -5,7 +5,6 @@ import com.moka.math.Vector2;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
 import org.lwjgl.glfw.GLFWWindowFocusCallback;
-import org.lwjgl.glfw.GLFWWindowIconifyCallback;
 import org.lwjgl.glfw.GLFWvidmode;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.system.MemoryUtil;
@@ -15,8 +14,6 @@ import java.nio.ByteBuffer;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL20.*;
 
 public final class Display extends SubEngine
 {
@@ -36,11 +33,11 @@ public final class Display extends SubEngine
         this.width = width;
         this.title = title;
 
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_SAMPLES, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-        glfwWindowHint(GLFW_SAMPLES, 4);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
         window = glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
 
@@ -55,7 +52,8 @@ public final class Display extends SubEngine
 
         // center window.
         ByteBuffer vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2, (GLFWvidmode.height(vidMode) - height) / 2);
+        glfwSetWindowPos(window,(GLFWvidmode.width(vidMode) - width) / 2,
+                (GLFWvidmode.height(vidMode) - height) / 2);
 
         glfwMakeContextCurrent(window);
 

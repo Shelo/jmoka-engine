@@ -19,6 +19,11 @@ public abstract class Component
 	private boolean enabled = true;
 	private Entity entity;
 
+    public Component()
+    {
+        System.out.println(this.getClass().getSimpleName());
+    }
+
 	public final void setEntity(final Entity entity)
 	{
 		if (this.entity != null)

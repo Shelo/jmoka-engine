@@ -16,7 +16,6 @@ import java.util.HashMap;
 
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glCheckFramebufferStatus;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class Shader
@@ -34,11 +33,11 @@ public class Shader
         vertex = createShader(vertexCode, GL_VERTEX_SHADER);
         fragment = createShader(fragmentCode, GL_FRAGMENT_SHADER);
 
-        glBindAttribLocation(program, 0, "a_position");
-        glBindAttribLocation(program, 1, "a_texCoord");
-
         // Link and check errors.
         glLinkProgram(program);
+
+        glBindAttribLocation(program, 0, "a_position");
+        glBindAttribLocation(program, 1, "a_texCoord");
 
         if (glGetProgrami(program, GL_LINK_STATUS) == 0)
         {
@@ -92,6 +91,7 @@ public class Shader
         }
 
         glAttachShader(program, shader);
+
         return shader;
     }
 
@@ -123,13 +123,13 @@ public class Shader
     public void setUniform(String uniform, Matrix4 matrix)
     {
         FloatBuffer buffer = CoreUtil.genBuffer(matrix);
-        glUniformMatrix4(getUniformLocation(uniform), false, buffer);
+        glUniformMatrix4fv(getUniformLocation(uniform), false, buffer);
     }
 
     public void setUniform(String uniform, Matrix3 matrix)
     {
         FloatBuffer buffer = CoreUtil.genBuffer(matrix);
-        glUniformMatrix3(getUniformLocation(uniform), false, buffer);
+        glUniformMatrix3fv(getUniformLocation(uniform), false, buffer);
     }
 
     public void setUniform(String uniform, float x, float y, float z)
