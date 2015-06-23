@@ -1,14 +1,19 @@
 <values xmlns="http://www.mokadev.com/resources">
     <string>
+        <!-- Image paths. -->
+        <res name="background" value="res/img/background.png" />
+        <res name="playerPlane" value="res/img/playerPlane.png" />
+
+        <!-- Prefab paths. -->
         <res name="bulletPrefab" value="res/scene/prefabs/bullet.xml" />
     </string>
 
     <integer>
-        <res name="screenWidth" value="800" />
-        <res name="screenHeight" value="420" />
+        <!-- Scene values. -->
+        <res name="screenWidth" value="360" />
+        <res name="screenHeight" value="540" />
 
-        <res name="shipMarginBottom" value="100" />
-        <res name="shipSize" value="72" />
-        <res name="bulletSize" value="16" />
+        <!-- Player values. -->
+        <res name="playerPosY" value="50" />
     </integer>
 </values>

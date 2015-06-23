@@ -1,6 +1,5 @@
 package com.moka.core.contexts;
 
-import com.moka.core.readers.SceneReader;
 import com.moka.utils.JMokaException;
 
 public abstract class ReaderContext extends Context
@@ -31,7 +30,7 @@ public abstract class ReaderContext extends Context
     @Override
     public final void onCreate()
     {
-        populate(getSceneReader(), scene);
+        populate(scene);
     }
 
     @Override
@@ -39,6 +38,4 @@ public abstract class ReaderContext extends Context
     {
 
     }
-
-    protected abstract SceneReader getSceneReader();
 }

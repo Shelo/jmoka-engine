@@ -29,13 +29,8 @@ import java.util.concurrent.Future;
  */
 public abstract class Context extends SubEngine
 {
-    private static final String TAG = "Context";
-
     private HashMap<String, Entity> nameRelations;
     private ArrayList<ArrayList<Entity>> layers;
-    private EntityReader entityReader;
-    private PrefabReader prefabReader;
-    protected SceneReader sceneReader;
     private String secondaryPackage;
     private ExecutorService service;
 
@@ -50,12 +45,11 @@ public abstract class Context extends SubEngine
         nameRelations = new HashMap<>();
         layers = new ArrayList<>();
         service = Executors.newFixedThreadPool(3);
-
-        // initialize readers.
-        sceneReader = new XmlSceneReader(this);
-        entityReader = sceneReader.getEntityReader();
-        prefabReader = new XmlPrefabReader((XmlEntityReader) entityReader, this);
     }
+
+    public abstract EntityReader getEntityReader();
+    public abstract PrefabReader getPrefabReader();
+    public abstract SceneReader getSceneReader();
 
     public final void update()
     {
@@ -205,9 +199,9 @@ public abstract class Context extends SubEngine
      *
      * @param sceneFilePath xml file path.
      */
-    public final void populate(SceneReader reader, String sceneFilePath)
+    public final void populate(String sceneFilePath)
     {
-        reader.read(sceneFilePath);
+        getSceneReader().read(sceneFilePath);
     }
 
     /**
@@ -240,7 +234,7 @@ public abstract class Context extends SubEngine
      */
     public Prefab newPrefab(String filePath)
     {
-        return prefabReader.newPrefab(filePath);
+        return getPrefabReader().newPrefab(filePath);
     }
 
     /**
@@ -251,7 +245,7 @@ public abstract class Context extends SubEngine
      */
     public final void readEntity(String xmlFilePath, String name)
     {
-        entityReader.read(xmlFilePath, name);
+        getEntityReader().read(xmlFilePath, name);
     }
 
     /**

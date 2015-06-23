@@ -9,27 +9,29 @@
 
     </entity>
 
-    <entity position="0, 0"
+    <entity position="$(@screenWidth / 2), $(@screenHeight / 2)"
         rotation="0"
-        name="Cursor">
+        layer="0"
+        name="Background">
 
-        <Interval trigger="com.moka.triggers.CursorTriggers.MoveToCursor" />
+        <Sprite texture="@background" />
 
     </entity>
 
-    <entity position="50, 240"
-        rotation="0"
-        name="Pichula">
+    <entity position="$(@screenWidth / 2), @playerPosY"
+        rotation="90"
+        name="Player">
 
-        <Sprite
-            texture="res/images/green-tile.png"
-            width="100"
-            height="100" />
+        <Sprite texture="@playerPlane" />
 
-        <Pichulear
-            speed="200" />
+        <ShipMovement
+            speed="200"
+            boundLeft="0"
+            boundRight="$(@screenWidth)" />
 
-        <LookAt target="Cursor" />
+        <Shooting
+            button="fire"
+            bulletPrefab="@bulletPrefab" />
 
     </entity>
 </scene>

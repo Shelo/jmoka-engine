@@ -38,7 +38,7 @@ public class Game
         app.getContext().setSecondaryPackage(SECONDARY_PATH);
 
         // set some inputs.
-        app.getInput().bindMouse("fire", Input.MOUSE_BUTTON_1);
+        app.getInput().bindKey("fire", Input.KEY_SPACE);
 
         InputBindings.bindWasd(app.getInput());
 
