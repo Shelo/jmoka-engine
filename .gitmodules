@@ -1,3 +1,3 @@
-[submodule "Oping"]
-	path = Oping
-	url = https://github.com/Shelo/Oping
+[submodule "oping"]
+	path = oping
+	url = https://github.com/Shelo/oping
