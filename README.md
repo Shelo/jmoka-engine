@@ -77,3 +77,9 @@ more. (There's a complete Java API if you don't really like the XML way too).
 
 This little project of mine will grow of course, but before I have to really think in a way of optimizing memory.
 A first approach is to give a build option that will optimize the XML code into Java Code. But more on that latter :).
+
+
+### TODO
+
+- The concept of resource packages. An example could be a *SpaceShip* package, where the client will be provided with
+common resources for that kind of game, such as components, a programming framework and certain utilities.

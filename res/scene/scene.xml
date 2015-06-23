@@ -17,19 +17,26 @@
         <Interval
             trigger="com.moka.triggers.CursorTriggers.MoveToCursor" />
 
+    </entity>
+
+    <entity name="Background"
+        position="$(@screenWidth / 2), $(@screenHeight / 2)"
+        size="$(@screenWidth), $(@screenHeight)"
+        rotation="0">
+
         <Sprite
-            texture="res/images/green-tile.png" />
+            texture="res/images/background0.png" />
 
     </entity>
 
-    <!--
     <entity name="Player"
-        position="$(@screen_width / 2), 400"
+        position="$(@screenWidth / 2), 400"
         rotation="0"
-        size="64,64"
+        size="32,32"
         layer="2">
 
-        <Sprite texture="res/images/minship.png" />
+        <Sprite
+            texture="res/images/minship.png" />
 
         <DirectionalMovement
             speed="300"
@@ -41,24 +48,16 @@
 
     </entity>
 
-    <include name="Floor1"
-        path="res/scene/prefabs/floor.xml"
-        position="$(@screen_width / 2), 50"
-        size="@screen_width, 100" />
+    <entity
+        name="Floor"
+        position="$(@screenWidth / 2), 32"
+        rotation="0"
+        group="Floor"
+        size="$(@screenWidth), 64">
 
-    <include name="Floor2"
-        path="res/scene/prefabs/floor.xml"
-        position="200, 200"
-        size="100, 100" />
+        <Sprite texture="res/images/green-tile.png" />
+        <AABBCollider />
 
-    <include name="Floor3"
-        path="res/scene/prefabs/floor.xml"
-        position="500, 200"
-        size="100, 100" />
+    </entity>
 
-    <include name="Floor4"
-        path="res/scene/prefabs/floor.xml"
-        position="900, 200"
-        size="100, 100" />
-    -->
 </scene>

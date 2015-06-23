@@ -1,13 +1,14 @@
 <values xmlns="http://www.mokadev.com/resources">
     <string>
-        <res name="bullet_prefab" value="res/scene/prefabs/bullet.xml" />
+        <res name="bulletPrefab" value="res/scene/prefabs/bullet.xml" />
     </string>
 
     <integer>
-        <res name="screen_width" value="800" />
-        <res name="screen_height" value="640" />
-        <res name="ship_margin_bottom" value="100" />
-        <res name="ship_size" value="72" />
-        <res name="bullet_size" value="16" />
+        <res name="screenWidth" value="800" />
+        <res name="screenHeight" value="420" />
+
+        <res name="shipMarginBottom" value="100" />
+        <res name="shipSize" value="72" />
+        <res name="bulletSize" value="16" />
     </integer>
 </values>

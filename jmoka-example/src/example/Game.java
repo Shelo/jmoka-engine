@@ -43,7 +43,7 @@ public class Game
         InputBindings.bindWasd(app.getInput());
 
         // set display options.
-        app.getDisplay().createDisplay("screen_width", "screen_height", "JMoka Engine");
+        app.getDisplay().createDisplay("screenWidth", "screenHeight", "JMoka Engine");
 
         // set renderer options.
         app.getRenderer().setClearColor(0, 0, 0);
