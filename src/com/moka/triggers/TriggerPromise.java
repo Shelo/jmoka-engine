@@ -1,10 +1,10 @@
 package com.moka.triggers;
 
-public class TriggerPrefab
+public class TriggerPromise
 {
     private Class<?> triggerClass;
 
-    public TriggerPrefab(Class<?> clazz)
+    public TriggerPromise(Class<?> clazz)
     {
         triggerClass = clazz;
     }

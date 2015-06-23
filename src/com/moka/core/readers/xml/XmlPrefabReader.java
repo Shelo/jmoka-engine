@@ -6,7 +6,7 @@ import com.moka.core.readers.ComponentAttribute;
 import com.moka.core.readers.PrefabReader;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
-import com.moka.triggers.TriggerPrefab;
+import com.moka.triggers.TriggerPromise;
 import com.moka.utils.JMokaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -84,13 +84,13 @@ public class XmlPrefabReader extends PrefabReader
                     {
                         Class<?> param = entityReader.getParamFor(method);
 
-                        Object casted = null;
+                        Object casted;
 
                         // we have to take different paths with different types, as we have to act differently when
                         // instantiating.
                         if (param.isAssignableFrom(Trigger.class))
                         {
-                            casted = new TriggerPrefab(Trigger.getStaticTriggerClass(value,
+                            casted = new TriggerPromise(Trigger.getStaticTriggerClass(value,
                                     entityReader.getTriggerGenericClass(method)));
                         }
                         else if (param.isEnum())

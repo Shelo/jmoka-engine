@@ -6,7 +6,7 @@ import com.moka.core.entity.Entity;
 import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
-import com.moka.triggers.TriggerPrefab;
+import com.moka.triggers.TriggerPromise;
 import com.moka.utils.JMokaException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -134,9 +134,9 @@ public final class Prefab
 
                     // if the attr is an instance of a trigger, then get a new instance of that trigger
                     // in order to pass it to the setter method.
-                    if (attr.getClass().isAssignableFrom(TriggerPrefab.class))
+                    if (attr.getClass().isAssignableFrom(TriggerPromise.class))
                     {
-                        attr = Trigger.getNewTriggerInstance(((TriggerPrefab) attr).getTriggerClass());
+                        attr = Trigger.getNewTriggerInstance(((TriggerPromise) attr).getTriggerClass());
                     }
 
                     try

@@ -19,5 +19,5 @@ public class CursorTriggers
             Pools.vec2.put(buffer);
             return true;
         }
-    };
+    }
 }

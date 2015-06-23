@@ -150,12 +150,22 @@ public class Sprite extends Component
 	@ComponentAttribute("width")
 	public void setWidth(float value)
 	{
+        if (size == null)
+        {
+            size = new Vector2();
+        }
+
 		size.x = value;
 	}
 
 	@ComponentAttribute("height")
 	public void setHeight(float value)
 	{
+        if (size == null)
+        {
+            size = new Vector2();
+        }
+
 		size.y = value;
 	}
 

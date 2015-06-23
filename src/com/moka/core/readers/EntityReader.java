@@ -128,8 +128,8 @@ public abstract class EntityReader
         }
         catch (InvocationTargetException e)
         {
-            throw new JMokaException(String.format("Method %s for component %s cannot be called.",
-                    method.getName(), component.getClass().getSimpleName()));
+            throw new JMokaException(String.format("Method %s for component %s cannot be called: %s",
+                    method.getName(), component.getClass().getSimpleName(), e.getMessage()));
         }
     }
 
