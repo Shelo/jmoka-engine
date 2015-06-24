@@ -46,7 +46,7 @@ public abstract class Trigger<T>
         return component;
     }
 
-    public Entity entity()
+    public Entity getEntity()
     {
         return component.entity();
     }
@@ -71,7 +71,8 @@ public abstract class Trigger<T>
      */
     public void log(String message)
     {
-        String tag = entity().getName() + " -> " + getComponent().getClass().getSimpleName() + " -> Trigger";
+        String tag = getEntity().getName() + " -> " + getComponent().getClass().getSimpleName() + " -> "
+                + getClass().getSimpleName();
         JMokaLog.o(tag, message);
     }
 

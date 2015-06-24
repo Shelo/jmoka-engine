@@ -5,13 +5,13 @@ import com.moka.core.Input;
 import com.moka.core.readers.ComponentAttribute;
 import com.moka.math.MathUtil;
 
-public class ShipMovement extends Component
+public class PlayerMovement extends Component
 {
     private float speed = 50;
     private float boundLeft = 0;
     private float boundRight = 0;
 
-    public ShipMovement()
+    public PlayerMovement()
     {
         // Empty class for XML Support.
     }
@@ -21,12 +21,12 @@ public class ShipMovement extends Component
     {
         if (getInput().getKey(Input.KEY_D))
         {
-            getTransform().move((float) (speed * getTime().getDelta()), 0);
+            getTransform().move(speed * getTime().getDelta(), 0);
         }
 
         if (getInput().getKey(Input.KEY_A))
         {
-            getTransform().move(- (float) (speed * getTime().getDelta()), 0);
+            getTransform().move(- (speed * getTime().getDelta()), 0);
         }
 
         getTransform().getPosition().x = MathUtil.clamp(getTransform().getPosition().x, boundLeft, boundRight);

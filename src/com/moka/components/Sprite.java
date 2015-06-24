@@ -119,7 +119,6 @@ public class Sprite extends Component
 	@ComponentAttribute(value = "texture", required = true)
 	public void setTexture(String path)
 	{
-        System.out.println(path);
         setTexture(Texture.newTexture(getResources(), path));
 	}
 

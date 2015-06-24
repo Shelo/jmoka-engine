@@ -79,7 +79,7 @@ public abstract class EntityReader
         Class<?> param = getParamFor(method);
 
         // create the needed casted object.
-        Object casted = null;
+        Object casted;
 
         // test different cases, where the param can be a trigger, a prefab, or other thing.
 
@@ -87,7 +87,8 @@ public abstract class EntityReader
         {
             if (value.isEmpty())
             {
-                throw new JMokaException(param.getDeclaringClass().getSimpleName() + "'s trigger is empty.");
+                throw new JMokaException(component.getClass().getSimpleName() + "@" + component.entity().getName()
+                        + "'s trigger is empty.");
             }
 
             // get a new instance for the trigger.

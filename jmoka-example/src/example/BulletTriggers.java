@@ -9,21 +9,26 @@ public class BulletTriggers
 {
     public static class CollisionWithEnemy extends Trigger<Collision>
     {
-        private static int hitDamage = 20;
+        private static final int HIT_DAMAGE = 20;
 
         @Override
         public Object onTrigger()
         {
-            entity().destroy();
-
             Collision collision = meta();
-            Entity entity = collision.getEntity();
+            Entity enemy = collision.getEntity();
 
-            Health health = entity.getComponent(Health.class);
+            if (!enemy.belongsTo("Enemies"))
+            {
+                return null;
+            }
+
+            Health health = enemy.getComponent(Health.class);
             if (health != null)
             {
-                health.takeDamage(hitDamage);
+                health.takeDamage(HIT_DAMAGE);
             }
+
+            getEntity().destroy();
 
             return null;
         }

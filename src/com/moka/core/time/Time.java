@@ -24,9 +24,9 @@ public class Time extends SubEngine
 		}
 	}
 
-	public double getDelta()
+	public float getDelta()
 	{
-		return delta;
+		return (float) delta;
 	}
 
 	public double getElapsed()

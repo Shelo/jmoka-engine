@@ -21,5 +21,7 @@ public class PlayerTriggers
 
             return null;
         }
-    };
+    }
+
+
 }

@@ -1,11 +1,10 @@
 <entity xmlns="http://www.mokadev.com/scene"
-    size="16, 16"
     position="0, 0"
     rotation="0"
     layer="1">
 
     <Sprite
-        texture="res/images/red-dot.png" />
+        texture="res/img/playerProjectile.png" />
 
     <Bullet
         speed="600" />

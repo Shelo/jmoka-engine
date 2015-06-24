@@ -14,12 +14,12 @@ public class Game
     public static void syncXml()
     {
         EntitySchemeWriter.register(DirectionalMovement.class);
-        EntitySchemeWriter.register(ShipMovement.class);
+        EntitySchemeWriter.register(PlayerMovement.class);
         EntitySchemeWriter.register(Debugger.class);
         EntitySchemeWriter.register(SpotOn.class);
         EntitySchemeWriter.register(DestroyOnLeave.class);
         EntitySchemeWriter.register(Health.class);
-        EntitySchemeWriter.register(EnemyMovementController.class);
+        EntitySchemeWriter.register(EnemyMovementCurve.class);
 
         EntitySchemeWriter.render();
     }

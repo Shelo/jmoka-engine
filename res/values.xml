@@ -3,6 +3,7 @@
         <!-- Image paths. -->
         <res name="background" value="res/img/background.png" />
         <res name="playerPlane" value="res/img/playerPlane.png" />
+        <res name="enemyPlane1" value="res/img/enemyPlane1.png" />
 
         <!-- Prefab paths. -->
         <res name="bulletPrefab" value="res/scene/prefabs/bullet.xml" />

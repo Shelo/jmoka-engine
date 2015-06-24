@@ -24,14 +24,30 @@
 
         <Sprite texture="@playerPlane" />
 
-        <ShipMovement
+        <PlayerMovement
             speed="200"
             boundLeft="0"
             boundRight="$(@screenWidth)" />
 
         <Shooting
             button="fire"
-            bulletPrefab="@bulletPrefab" />
+            bulletPrefab="@bulletPrefab"
+            trigger="example.PlayerTriggers.FireTrigger"/>
 
     </entity>
+
+    <include
+        path="res/scene/prefabs/enemy1.xml"
+        position="$(@screenWidth / 2 - @screenWidth / 5), @screenHeight"
+        name="Enemy1" />
+
+    <include
+        path="res/scene/prefabs/enemy1.xml"
+        position="$(@screenWidth / 2), @screenHeight"
+        name="Enemy2" />
+
+    <include
+        path="res/scene/prefabs/enemy1.xml"
+        position="$(@screenWidth / 2 + @screenWidth / 5), @screenHeight"
+        name="Enemy3" />
 </scene>

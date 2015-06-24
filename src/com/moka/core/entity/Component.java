@@ -21,7 +21,7 @@ public abstract class Component
 
     public Component()
     {
-        System.out.println(this.getClass().getSimpleName());
+
     }
 
 	public final void setEntity(final Entity entity)
