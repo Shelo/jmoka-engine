@@ -4,9 +4,14 @@
         <res name="background" value="res/img/background.png" />
         <res name="playerPlane" value="res/img/playerPlane.png" />
         <res name="enemyPlane1" value="res/img/enemyPlane1.png" />
+        <res name="enemyPlane2" value="res/img/enemyPlane2.png" />
+        <res name="enemyPlane3" value="res/img/enemyPlane3.png" />
 
         <!-- Prefab paths. -->
-        <res name="bulletPrefab" value="res/scene/prefabs/bullet.xml" />
+        <res name="prefabBullet" value="res/prefabs/bullet.xml" />
+        <res name="prefabEnemy1" value="res/prefabs/enemy1.xml" />
+        <res name="prefabEnemy2" value="res/prefabs/enemy2.xml" />
+        <res name="prefabEnemy3" value="res/prefabs/enemy3.xml" />
     </string>
 
     <integer>

@@ -21,7 +21,9 @@ public class Health extends Component
             Boolean shouldDestroy = (Boolean) callTrigger(destroyTrigger, new None());
 
             if (shouldDestroy == null || shouldDestroy)
+            {
                 entity().destroy();
+            }
         }
     }
 

@@ -74,7 +74,7 @@ public class XmlSceneReader implements SceneReader
                 {
                     // with a include tag we should create an entity, put the name that it should have and
                     // override possible transform properties.
-                    String path = attributes.getValue(KEY_PATH);
+                    String path = entityReader.getTestedValue(String.class, attributes.getValue(KEY_PATH));
                     String name = attributes.getValue(KEY_NAME);
                     String group = attributes.getValue(KEY_GROUP);
 

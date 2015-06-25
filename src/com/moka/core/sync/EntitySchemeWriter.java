@@ -47,6 +47,7 @@ public class EntitySchemeWriter
         register(CircleCollider.class);
         register(Controllable.class);
         register(Interval.class);
+        register(Debugger.class);
         register(LookAt.class);
         register(SatCollider.class);
         register(Shooting.class);

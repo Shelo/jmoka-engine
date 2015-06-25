@@ -1,6 +1,5 @@
 package example;
 
-import com.moka.components.Debugger;
 import com.moka.core.Application;
 import com.moka.core.Input;
 import com.moka.core.contexts.XmlContext;
@@ -15,7 +14,6 @@ public class Game
     {
         EntitySchemeWriter.register(DirectionalMovement.class);
         EntitySchemeWriter.register(PlayerMovement.class);
-        EntitySchemeWriter.register(Debugger.class);
         EntitySchemeWriter.register(SpotOn.class);
         EntitySchemeWriter.register(DestroyOnLeave.class);
         EntitySchemeWriter.register(Health.class);
@@ -32,7 +30,7 @@ public class Game
         Application app = new Application();
 
         // set the game context for the application.
-        app.setContext(new XmlContext("res/scene/scene.xml", "res/values.xml"));
+        app.setContext(new XmlContext("res/scenes/game.xml", "res/values.xml"));
 
         // set context options.
         app.getContext().setSecondaryPackage(SECONDARY_PATH);

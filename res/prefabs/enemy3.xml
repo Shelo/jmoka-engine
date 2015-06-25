@@ -1,0 +1,17 @@
+<entity xmlns="http://www.mokadev.com/scene"
+    position="0, 0"
+    group="Enemies"
+    rotation="270">
+
+    <Sprite texture="@enemyPlane3" />
+
+    <EnemyMovementCurve
+        phi="3.14" />
+
+    <AABBCollider
+        isTrigger="true" />
+
+    <Health
+        hitPoints="200" />
+
+</entity>
