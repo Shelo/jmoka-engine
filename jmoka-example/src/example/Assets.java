@@ -5,10 +5,13 @@ import com.moka.resources.Resources;
 
 public class Assets extends Resources
 {
-    public static Texture player;
+    public static class textures
+    {
+        public static Texture player;
+    }
 
     public void load()
     {
-        player = texture("img/playerPlane.png");
+        textures.player = texture("img/playerPlane.png");
     }
 }

@@ -33,7 +33,11 @@ public class Sprite extends Component
     {
         this.texture = texture;
         this.tint = tint;
-        this.size.set(size);
+
+        if (size != null)
+        {
+            this.size.set(size);
+        }
     }
 
     public Sprite(Texture texture, Color tint)
@@ -48,7 +52,7 @@ public class Sprite extends Component
 
     public Sprite(Texture texture)
     {
-        this(texture, null, Color.WHITE);
+        this(texture, Color.WHITE);
     }
 
     public Sprite(String filePath)

@@ -10,7 +10,7 @@ public class Game extends Context
     public void onCreate()
     {
         newCamera("MainCamera", true);
-        newEntity("Player", Assets.player, 0);
+        newEntity("Player", Assets.textures.player, 0);
     }
 
     @Override
@@ -34,8 +34,6 @@ public class Game extends Context
 
         // set renderer options.
         app.getRenderer().setClearColor(0, 0, 0);
-
-        app.getCore().enableExperimentalFeedback();
 
         // create and start the application.
         app.create().start(60);
