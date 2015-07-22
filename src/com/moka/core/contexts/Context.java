@@ -7,22 +7,14 @@ import com.moka.core.entity.Entity;
 import com.moka.core.readers.EntityReader;
 import com.moka.core.readers.PrefabReader;
 import com.moka.core.readers.SceneReader;
-import com.moka.core.readers.xml.XmlEntityReader;
-import com.moka.core.readers.xml.XmlPrefabReader;
-import com.moka.core.readers.xml.XmlSceneReader;
-import com.moka.core.threading.ActionDelegator;
-import com.moka.core.threading.EntityRunner;
-import com.moka.core.threading.Threading;
 import com.moka.graphics.Shader;
 import com.moka.utils.JMokaException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * Base class of a game, takes care of internal core usage.

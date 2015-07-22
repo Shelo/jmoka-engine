@@ -12,10 +12,10 @@
       <!-- Start Generated Code -->
 
       <xs:element name="AABBCollider" minOccurs="0" maxOccurs="1"><xs:complexType>
-        <xs:attribute name="height" type="xs:float" use="optional" />
         <xs:attribute name="width" type="xs:float" use="optional" />
         <xs:attribute name="offsetX" type="xs:float" use="optional" />
         <xs:attribute name="offsetY" type="xs:float" use="optional" />
+        <xs:attribute name="height" type="xs:float" use="optional" />
         <xs:attribute name="collisionTrigger" type="xs:string" use="optional" />
         <xs:attribute name="isTrigger" type="xs:boolean" use="optional" />
       </xs:complexType></xs:element>
@@ -34,11 +34,11 @@
       </xs:complexType></xs:element>
 
       <xs:element name="Controllable" minOccurs="0" maxOccurs="1"><xs:complexType>
-        <xs:attribute name="topSpeed" type="xs:integer" use="optional" />
-        <xs:attribute name="impulse" type="xs:float" use="optional" />
-        <xs:attribute name="acceleration" type="xs:integer" use="optional" />
         <xs:attribute name="constrainY" type="xs:boolean" use="optional" />
+        <xs:attribute name="acceleration" type="xs:integer" use="optional" />
+        <xs:attribute name="impulse" type="xs:float" use="optional" />
         <xs:attribute name="constrainX" type="xs:boolean" use="optional" />
+        <xs:attribute name="topSpeed" type="xs:integer" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="Interval" minOccurs="0" maxOccurs="1"><xs:complexType>
@@ -47,6 +47,7 @@
       </xs:complexType></xs:element>
 
       <xs:element name="Debugger" minOccurs="0" maxOccurs="1"><xs:complexType>
+        <xs:attribute name="frequency" type="xs:double" use="optional" />
         <xs:attribute name="option" use="optional"><xs:simpleType>
           <xs:restriction base="xs:string">
             <xs:enumeration value="NONE" />
@@ -55,7 +56,6 @@
             <xs:enumeration value="SIZE" />
           </xs:restriction>
         </xs:simpleType></xs:attribute>
-        <xs:attribute name="frequency" type="xs:double" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="LookAt" minOccurs="0" maxOccurs="1"><xs:complexType>
@@ -75,20 +75,20 @@
       </xs:complexType></xs:element>
 
       <xs:element name="Sprite" minOccurs="0" maxOccurs="1"><xs:complexType>
-        <xs:attribute name="texture" type="xs:string" use="required" />
         <xs:attribute name="tintR" type="xs:float" use="optional" />
+        <xs:attribute name="texture" type="xs:string" use="required" />
         <xs:attribute name="tintG" type="xs:float" use="optional" />
         <xs:attribute name="tintB" type="xs:float" use="optional" />
         <xs:attribute name="tintA" type="xs:float" use="optional" />
         <xs:attribute name="clipTop" type="xs:float" use="optional" />
         <xs:attribute name="clipRight" type="xs:float" use="optional" />
-        <xs:attribute name="width" type="xs:float" use="optional" />
         <xs:attribute name="height" type="xs:float" use="optional" />
+        <xs:attribute name="width" type="xs:float" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="DirectionalMovement" minOccurs="0" maxOccurs="1"><xs:complexType>
-        <xs:attribute name="speed" type="xs:float" use="optional" />
         <xs:attribute name="angleTrigger" type="xs:string" use="optional" />
+        <xs:attribute name="rotationSpeed" type="xs:float" use="optional" />
         <xs:attribute name="lockDirection" use="optional"><xs:simpleType>
           <xs:restriction base="xs:string">
             <xs:enumeration value="NONE" />
@@ -97,7 +97,7 @@
           </xs:restriction>
         </xs:simpleType></xs:attribute>
         <xs:attribute name="ignoreRotation" type="xs:boolean" use="optional" />
-        <xs:attribute name="rotationSpeed" type="xs:float" use="optional" />
+        <xs:attribute name="speed" type="xs:float" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="PlayerMovement" minOccurs="0" maxOccurs="1"><xs:complexType>
@@ -108,11 +108,11 @@
 
       <xs:element name="SpotOn" minOccurs="0" maxOccurs="1"><xs:complexType>
         <xs:attribute name="target" type="xs:string" use="required" />
-        <xs:attribute name="left" type="xs:Float" use="optional" />
-        <xs:attribute name="right" type="xs:Float" use="optional" />
         <xs:attribute name="top" type="xs:Float" use="optional" />
+        <xs:attribute name="right" type="xs:Float" use="optional" />
         <xs:attribute name="bottom" type="xs:Float" use="optional" />
         <xs:attribute name="factor" type="xs:float" use="optional" />
+        <xs:attribute name="left" type="xs:Float" use="optional" />
       </xs:complexType></xs:element>
 
       <xs:element name="DestroyOnLeave" minOccurs="0" maxOccurs="1"><xs:complexType>
