@@ -1,28 +1,18 @@
 package com.moka.core.contexts;
 
 import com.moka.components.Camera;
-import com.moka.core.Prefab;
+import com.moka.components.Sprite;
 import com.moka.core.SubEngine;
 import com.moka.core.entity.Entity;
-import com.moka.core.readers.EntityReader;
-import com.moka.core.readers.PrefabReader;
-import com.moka.core.readers.SceneReader;
-import com.moka.core.readers.xml.XmlEntityReader;
-import com.moka.core.readers.xml.XmlPrefabReader;
-import com.moka.core.readers.xml.XmlSceneReader;
-import com.moka.core.threading.ActionDelegator;
-import com.moka.core.threading.EntityRunner;
-import com.moka.core.threading.Threading;
 import com.moka.graphics.Shader;
+import com.moka.graphics.Texture;
 import com.moka.utils.JMokaException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * Base class of a game, takes care of internal core usage.
@@ -46,10 +36,6 @@ public abstract class Context extends SubEngine
         layers = new ArrayList<>();
         service = Executors.newFixedThreadPool(3);
     }
-
-    public abstract EntityReader getEntityReader();
-    public abstract PrefabReader getPrefabReader();
-    public abstract SceneReader getSceneReader();
 
     public final void update()
     {
@@ -147,7 +133,6 @@ public abstract class Context extends SubEngine
 
     /**
      * Constructs a new {@link Entity} and add it to the hierarchy.
-     * Also says that the entity belongs to this context. That cannot change latter.
      *
      * @return the new {@link Entity}.
      */
@@ -173,6 +158,18 @@ public abstract class Context extends SubEngine
     }
 
     /**
+     * Constructs a new {@link Entity} with a sprite component and add it to the hierarchy.
+     *
+     * @return the new {@link Entity} with a sprite.
+     */
+    public final Entity newEntity(String name, Texture texture, int layer)
+    {
+        Entity entity = newEntity(name, layer);
+        entity.addComponent(new Sprite(texture));
+        return entity;
+    }
+
+    /**
      * Creates a new entity with a camera on it.
      *
      * @param name    name for the entity.
@@ -192,70 +189,6 @@ public abstract class Context extends SubEngine
         }
 
         return entity;
-    }
-
-    /**
-     * Loads an XML Scene file into the game.
-     *
-     * @param sceneFilePath xml file path.
-     */
-    public final void populate(String sceneFilePath)
-    {
-        getSceneReader().read(sceneFilePath);
-    }
-
-    /**
-     * Defines a secondary package to find components. If the reader fails to find the component
-     * in the framework's default package, then it will look in the secondary package. This only
-     * works for non package named components in the XML.
-     *
-     * @param path the absolute path to the package.
-     */
-    public void setSecondaryPackage(String path)
-    {
-        this.secondaryPackage = path;
-    }
-
-    /**
-     * Returns the secondary path in which we could find components classes.
-     *
-     * @return the path or null if none has been set.
-     */
-    public String getSecondaryPackage()
-    {
-        return secondaryPackage;
-    }
-
-    /**
-     * Creates a new prefab using the XmlPrefabReader defined in this context.
-     *
-     * @param filePath the path for the XML Entity file.
-     * @return the prefab.
-     */
-    public Prefab newPrefab(String filePath)
-    {
-        return getPrefabReader().newPrefab(filePath);
-    }
-
-    /**
-     * Loads an Entity definition XML file into the game.
-     *
-     * @param xmlFilePath xml file path.
-     * @deprecated use newPrefab to create a prefab object to create new entities.
-     */
-    public final void readEntity(String xmlFilePath, String name)
-    {
-        getEntityReader().read(xmlFilePath, name);
-    }
-
-    /**
-     * Loads a value definitions file into the game system.
-     *
-     * @param filePath resource file path.
-     */
-    public void define(String filePath)
-    {
-        getResources().loadResources(filePath);
     }
 
     /**
@@ -328,14 +261,6 @@ public abstract class Context extends SubEngine
      * Called every update frame, is not necessary for most games do.
      */
     public void onUpdate()
-    {
-
-    }
-
-    /**
-     * Basically this will help with loading resources before we create the game itself.
-     */
-    public void onPreLoad()
     {
 
     }

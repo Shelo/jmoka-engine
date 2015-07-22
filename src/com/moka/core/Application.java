@@ -5,6 +5,7 @@ import com.moka.core.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
 import com.moka.physics.Physics;
+import com.moka.resources.Resources;
 import com.moka.utils.JMokaLog;
 
 /**
@@ -16,6 +17,7 @@ import com.moka.utils.JMokaLog;
 public class Application
 {
     private static final String TAG = "Application";
+
     private Resources resources;
     private Renderer renderer;
     private Context context;
@@ -27,9 +29,11 @@ public class Application
 
     private boolean created;
 
-    public Application()
+    public Application(Context context, Resources resources)
     {
-        resources = new Resources();
+        this.resources = resources;
+        this.context = context;
+
         renderer = new Renderer();
         physics = new Physics();
         display = new Display();
@@ -38,13 +42,6 @@ public class Application
         time = new Time();
 
         exportApplication();
-    }
-
-    public void setContext(Context context)
-    {
-        this.context = context;
-        context.setApplication(this);
-        context.onPreLoad();
     }
 
     public Application create()
@@ -58,9 +55,12 @@ public class Application
         renderer.create();
         input.create();
 
+        // load resources.
+        resources.load();
+
         created = true;
 
-        // lets the context add all entities and components.
+        // lets create the context.
         context.onCreate();
 
         // create all components.
@@ -81,8 +81,8 @@ public class Application
      */
     private void exportApplication()
     {
-        resources.setApplication(this);
         renderer.setApplication(this);
+        context.setApplication(this);
         physics.setApplication(this);
         display.setApplication(this);
         input.setApplication(this);
@@ -104,11 +104,6 @@ public class Application
     public Display getDisplay()
     {
         return display;
-    }
-
-    public Resources getResources()
-    {
-        return resources;
     }
 
     public Time getTime()

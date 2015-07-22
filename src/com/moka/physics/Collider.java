@@ -4,7 +4,7 @@ import com.moka.components.AABBCollider;
 import com.moka.components.CircleCollider;
 import com.moka.components.SatCollider;
 import com.moka.core.entity.Component;
-import com.moka.core.readers.ComponentAttribute;
+import com.moka.core.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 

@@ -1,6 +1,6 @@
 package com.moka.components;
 
-import com.moka.core.readers.ComponentAttribute;
+import com.moka.core.ComponentAttribute;
 import com.moka.physics.Collider;
 import com.moka.physics.Collision;
 

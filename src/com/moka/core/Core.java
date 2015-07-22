@@ -199,11 +199,17 @@ public final class Core extends SubEngine
         glfwTerminate();
     }
 
+    /**
+     * @deprecated
+     */
     public void enableFeedback()
     {
         watch = true;
     }
 
+    /**
+     * @deprecated
+     */
     public void enableExperimentalFeedback()
     {
         watch = true;

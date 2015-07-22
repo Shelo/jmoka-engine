@@ -1,7 +1,5 @@
 package com.moka.graphics;
 
-import com.moka.core.Resources;
-
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
@@ -82,25 +80,5 @@ public class Texture
     public float getTexCoordY()
     {
         return 1;
-    }
-
-    /**
-     * Loads a new texture and stores it at the resources. If the texture was previously loaded,
-     * then this returns that texture instead of creating a new one.
-     *
-     * @param resources resources where the texture should look.
-     * @param path      path of the texture in the file system.
-     * @return the requested texture.
-     */
-    public static Texture newTexture(Resources resources, String path)
-    {
-        if (!resources.hasTexture(path))
-        {
-            return resources.addTexture(path, new Texture(path));
-        }
-        else
-        {
-            return resources.getTexture(path);
-        }
     }
 }

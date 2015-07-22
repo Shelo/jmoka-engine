@@ -65,15 +65,6 @@ public final class Display extends SubEngine
         glfwSetWindowFocusCallback(window, windowsFocusCallback);
     }
 
-    public void createDisplay(String widthRes, String heightRes, String title)
-    {
-        // get width and height from resources.
-        int width = getResources().getInt(widthRes);
-        int height = getResources().getInt(heightRes);
-
-        createDisplay(width, height, title);
-    }
-
     public void start()
     {
         glfwShowWindow(window);

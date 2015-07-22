@@ -41,11 +41,6 @@ public abstract class SubEngine
         return application.getRenderer();
     }
 
-    public Resources getResources()
-    {
-        return application.getResources();
-    }
-
     public Time getTime()
     {
         return application.getTime();

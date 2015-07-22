@@ -69,16 +69,6 @@ public abstract class Component
 		return null;
 	}
 
-	/**
-	 * Creates a new prefab from a XML file. Remember: The Prefab is a state machine.
-	 *
-	 * @param filePath	the xml file.
-	 * @return the new creaed prefab.
-	 */
-	public Prefab newPrefab(String filePath) {
-		return entity.getContext().newPrefab(filePath);
-	}
-
 	public boolean hasCollider() {
 		return entity.hasCollider();
 	}
@@ -119,16 +109,6 @@ public abstract class Component
 	public Time getTime()
 	{
 		return getApplication().getTime();
-	}
-
-	/**
-	 * [Shortcut] Gets the current context's resources.
-     *
-	 * @return the resources object.
-	 */
-	public Resources getResources()
-	{
-		return getApplication().getResources();
 	}
 
 	/**
