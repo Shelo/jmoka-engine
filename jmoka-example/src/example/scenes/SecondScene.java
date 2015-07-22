@@ -3,9 +3,8 @@ package example.scenes;
 import com.moka.core.Scene;
 import com.moka.core.entity.Entity;
 import example.Resources;
-import example.components.ExampleSceneLoader;
 
-public class MainScene extends Scene
+public class SecondScene extends Scene
 {
     @Override
     public void onCreate()
@@ -13,8 +12,7 @@ public class MainScene extends Scene
         newCamera("MainCamera", true);
         Entity entity = newEntity("Player", Resources.textures.player, 0);
 
-        entity.getTransform().move(400, 225);
-        entity.addComponent(new ExampleSceneLoader());
+        entity.getTransform().move(200, 225);
     }
 
     @Override

@@ -2,29 +2,17 @@ package example;
 
 import com.moka.core.Application;
 import com.moka.core.Input;
-import com.moka.core.contexts.Context;
+import example.scenes.MainScene;
+import example.scenes.SecondScene;
 
-public class Game extends Context
+public class Game
 {
-    @Override
-    public void onCreate()
-    {
-        newCamera("MainCamera", true);
-        newEntity("Player", Assets.textures.player, 0);
-    }
-
-    @Override
-    public void onStop()
-    {
-
-    }
-
     /**
      * Main entrance of the engine.
      */
     public static void main(String[] args)
     {
-        Application app = new Application(new Game(), new Assets());
+        Application app = new Application(new Resources());
 
         // set some inputs.
         app.getInput().bindKey("fire", Input.KEY_SPACE);
@@ -34,6 +22,12 @@ public class Game extends Context
 
         // set renderer options.
         app.getRenderer().setClearColor(0, 0, 0);
+
+        // set up scenes.
+        app.getContext().addScene(new MainScene());
+        app.getContext().addScene(new SecondScene());
+
+        app.getContext().setMainScene(MainScene.class);
 
         // create and start the application.
         app.create().start(60);

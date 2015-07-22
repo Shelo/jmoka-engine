@@ -1,10 +1,10 @@
 package com.moka.core;
 
-import com.moka.core.contexts.Context;
 import com.moka.core.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
 import com.moka.physics.Physics;
+import com.moka.utils.JMokaLog;
 
 /**
  * Class designed for internal inheritance, it will give shortcut methods to access other
@@ -59,5 +59,10 @@ public abstract class SubEngine
     public Input getInput()
     {
         return application.getInput();
+    }
+
+    public void log(String message)
+    {
+        JMokaLog.o(this.getClass().getSimpleName(), message);
     }
 }

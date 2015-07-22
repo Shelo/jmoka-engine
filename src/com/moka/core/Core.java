@@ -60,8 +60,8 @@ public final class Core extends SubEngine
     {
         try
         {
-            JMokaLog.o(TAG, "Stabilizing for 500ms...");
-            Thread.sleep(500);
+            JMokaLog.o(TAG, "Stabilizing for 200ms...");
+            Thread.sleep(200);
         }
         catch (InterruptedException e)
         {
@@ -102,7 +102,6 @@ public final class Core extends SubEngine
 
                 getTime().update(delta);
                 getContext().update();
-                getContext().onUpdate();
                 getPhysics().checkCollisions();
                 getContext().postUpdate();
                 getContext().clean();

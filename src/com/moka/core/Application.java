@@ -1,11 +1,10 @@
 package com.moka.core;
 
-import com.moka.core.contexts.Context;
 import com.moka.core.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
 import com.moka.physics.Physics;
-import com.moka.resources.Resources;
+import com.moka.resources.MokaResources;
 import com.moka.utils.JMokaLog;
 
 /**
@@ -18,7 +17,7 @@ public class Application
 {
     private static final String TAG = "Application";
 
-    private Resources resources;
+    private MokaResources resources;
     private Renderer renderer;
     private Context context;
     private Physics physics;
@@ -29,11 +28,11 @@ public class Application
 
     private boolean created;
 
-    public Application(Context context, Resources resources)
+    public Application(MokaResources resources)
     {
         this.resources = resources;
-        this.context = context;
 
+        context = new Context();
         renderer = new Renderer();
         physics = new Physics();
         display = new Display();
@@ -60,10 +59,7 @@ public class Application
 
         created = true;
 
-        // lets create the context.
-        context.onCreate();
-
-        // create all components.
+        // create the context.
         context.create();
 
         JMokaLog.o(TAG, "Created.");
@@ -124,5 +120,10 @@ public class Application
     public Input getInput()
     {
         return input;
+    }
+
+    public boolean isCreated()
+    {
+        return created;
     }
 }

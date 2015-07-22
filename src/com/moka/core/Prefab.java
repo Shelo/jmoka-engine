@@ -1,9 +1,7 @@
 package com.moka.core;
 
-import com.moka.core.contexts.Context;
 import com.moka.core.entity.Component;
 import com.moka.core.entity.Entity;
-import com.moka.core.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 import com.moka.triggers.TriggerPromise;

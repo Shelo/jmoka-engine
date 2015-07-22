@@ -1,7 +1,7 @@
 package com.moka.core.entity;
 
 import com.moka.components.Sprite;
-import com.moka.core.contexts.Context;
+import com.moka.core.Context;
 import com.moka.core.Transform;
 import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
