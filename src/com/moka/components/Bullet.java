@@ -1,5 +1,6 @@
 package com.moka.components;
 
+import com.moka.core.Moka;
 import com.moka.core.entity.Component;
 import com.moka.core.ComponentAttribute;
 import com.moka.math.Vector2;
@@ -25,7 +26,7 @@ public class Bullet extends Component
 	{
 		Vector2 buffer = Pools.vec2.take(0, 0);
 
-		buffer.set(getTransform().getFront(buffer)).mul((float) (speed * getTime().getDelta()));
+		buffer.set(getTransform().getFront(buffer)).mul(speed * Moka.getTime().getDelta());
 		getTransform().move(buffer);
 
 		Pools.vec2.put(buffer);

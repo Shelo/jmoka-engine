@@ -61,11 +61,6 @@ public abstract class Trigger<T>
         return component.getTransform();
     }
 
-    public Application getApplication()
-    {
-        return component.getApplication();
-    }
-
     /**
      * Logs a descriptive message to the console.
      */

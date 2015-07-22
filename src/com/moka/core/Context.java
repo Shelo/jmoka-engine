@@ -96,9 +96,10 @@ public class Context extends SubEngine
         {
             for (int i = layer.size() - 1; i >= 0; i--)
             {
-                if (layer.get(i).isDestroyed())
+                Entity entity = layer.get(i);
+
+                if (entity.isDestroyed())
                 {
-                    layer.get(i).dispose();
                     layer.remove(i);
                 }
             }
@@ -312,7 +313,12 @@ public class Context extends SubEngine
 
     public void dispose()
     {
-
+        for (ArrayList<Entity> layer : layers)
+        {
+            for (Entity entity : layer)
+            {
+                entity.dispose();
+            }
+        }
     }
 }
-

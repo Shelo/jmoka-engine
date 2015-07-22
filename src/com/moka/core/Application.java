@@ -84,46 +84,47 @@ public class Application
         input.setApplication(this);
         time.setApplication(this);
         core.setApplication(this);
-    }
-
-    // GETTERS AND SETTERS.
-    public Context getContext()
-    {
-        return context;
-    }
-
-    public Core getCore()
-    {
-        return core;
-    }
-
-    public Display getDisplay()
-    {
-        return display;
-    }
-
-    public Time getTime()
-    {
-        return time;
-    }
-
-    public Renderer getRenderer()
-    {
-        return renderer;
-    }
-
-    public Physics getPhysics()
-    {
-        return physics;
-    }
-
-    public Input getInput()
-    {
-        return input;
+        new Moka(this);
     }
 
     public boolean isCreated()
     {
         return created;
+    }
+
+    // GETTERS AND SETTERS.
+    protected Context getContext()
+    {
+        return context;
+    }
+
+    protected Core getCore()
+    {
+        return core;
+    }
+
+    protected Display getDisplay()
+    {
+        return display;
+    }
+
+    protected Time getTime()
+    {
+        return time;
+    }
+
+    protected Renderer getRenderer()
+    {
+        return renderer;
+    }
+
+    protected Physics getPhysics()
+    {
+        return physics;
+    }
+
+    protected Input getInput()
+    {
+        return input;
     }
 }

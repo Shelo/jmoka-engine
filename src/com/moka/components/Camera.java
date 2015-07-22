@@ -1,5 +1,6 @@
 package com.moka.components;
 
+import com.moka.core.Moka;
 import com.moka.core.entity.Component;
 import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
@@ -22,10 +23,7 @@ public class Camera extends Component
 	public void onCreate()
 	{
 		projection = new Matrix3();
-		projection.toOrthographic(0, getDisplay().getWidth(), 0, getDisplay().getHeight());
-
-		// TODO: this shouldn't be here.
-		setAsCurrent();
+		projection.toOrthographic(0, Moka.getDisplay().getWidth(), 0, Moka.getDisplay().getHeight());
 	}
 
 	public Camera(float left, float right, float bottom, float top)
@@ -36,7 +34,7 @@ public class Camera extends Component
 
 	public void setAsCurrent()
 	{
-		getApplication().getRenderer().setCamera(this);
+		Moka.getRenderer().setCamera(this);
 	}
 
 	public Matrix3 getProjectedView()

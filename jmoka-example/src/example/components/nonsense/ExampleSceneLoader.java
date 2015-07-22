@@ -1,5 +1,6 @@
-package example.components;
+package example.components.nonsense;
 
+import com.moka.core.Moka;
 import com.moka.core.entity.Component;
 import example.Resources;
 import example.scenes.SecondScene;
@@ -9,9 +10,9 @@ public class ExampleSceneLoader extends Component
     @Override
     public void onUpdate()
     {
-        if (getInput().getButtonDown(Resources.buttons.FIRE_BUTTON))
+        if (Moka.getInput().getButtonDown(Resources.buttons.FIRE_1))
         {
-            getApplication().getContext().loadScene(SecondScene.class, false);
+            Moka.getContext().loadScene(SecondScene.class, false);
         }
     }
 }

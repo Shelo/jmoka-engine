@@ -1,5 +1,6 @@
 package com.moka.components;
 
+import com.moka.core.Moka;
 import com.moka.core.entity.Component;
 import com.moka.core.time.StopWatch;
 import com.moka.core.ComponentAttribute;
@@ -20,7 +21,7 @@ public class Interval extends Component
     @Override
     public void onCreate()
     {
-        stopWatch = getTime().newStopWatch();
+        stopWatch = Moka.getTime().newStopWatch();
     }
 
     @Override

@@ -12,8 +12,7 @@ A jMoka project always have this scheme in order to work fast. Note that nothing
 
 * Setup
 * Scenes
-* Assets
-* Prefabs
+* Resources
 * Components
 
 ### Setup
@@ -33,17 +32,14 @@ should have to take care of: onCreate, onLeave, onResume, onExit, each one has i
 Early in the engine, the scene was set with an XML file, but that did not helped a lot since some things had to be
 repeated a lot, and with Java you can do them with simple loop.
 
-### Assets
+### Resources
 
 The jMoka Engine offers a nice way to handle your assets in the most optimal way, without repeating yourself,
-you have to simply extend a class and you get some helper methods for loading textures, sounds, fonts, etc.
+you have to simply extend a class and you get some helper methods for loading textures, prefabs, sounds, etc.
 
-
-### Prefabs
-
-A prefab is simply a definition of an entity in your game, the engine offers this because there's no need to waste
-java code in doing this, since is a very, very repetitive and easy task, shouldn't we leave it to a easy, readable
-text file?.
+¿What is a prefab?, A prefab is simply a definition of an entity in your game, the engine offers this because
+there's no need to waste java code in doing this, since is a very, very repetitive and easy task, shouldn't we
+leave it to a easy, readable text file?.
 
 The engine offers an extensible class to manage your prefabs and take care of their initialization so you don't have
 to worry when actually getting to the game.
@@ -58,3 +54,10 @@ and put there all sorts of components to help you in any platformer-like game, a
 ## The Prefab Scheme
 
 In construction...
+
+# The Architecture of the Engine
+
+The jMoka Engine is constructed as a fully OOP software. Is useful to know that the engine itself has no singletons,
+but, since is useful for code simplification, there exists the Moka class, which inside is a Singleton, but has
+static method to get all the application things.
+

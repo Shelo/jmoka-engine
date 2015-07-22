@@ -1,5 +1,6 @@
 package com.moka.components;
 
+import com.moka.core.Moka;
 import com.moka.core.entity.Component;
 import com.moka.core.Prefab;
 import com.moka.core.ComponentAttribute;
@@ -19,7 +20,7 @@ public class Shooting extends Component
     @Override
     public void onUpdate()
     {
-        if (getInput().getButtonDown(button))
+        if (Moka.getInput().getButtonDown(button))
         {
             bulletPrefab.setPosition(getTransform().getPosition());
             bulletPrefab.setRotation(getTransform().getLookAngle());

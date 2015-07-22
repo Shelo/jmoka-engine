@@ -1,5 +1,6 @@
 package com.moka.components;
 
+import com.moka.core.Moka;
 import com.moka.core.entity.Component;
 import com.moka.core.ComponentAttribute;
 import org.lwjgl.glfw.GLFW;
@@ -34,17 +35,17 @@ public class Controllable extends Component
 		float ltx = tx;
 		float lty = ty;
 
-		if (getInput().getKey(GLFW.GLFW_KEY_D))
+		if (Moka.getInput().getKey(GLFW.GLFW_KEY_D))
 		{
-			tx += getTime().getDelta() * impulse;
+			tx += Moka.getTime().getDelta() * impulse;
 		}
 
-		if (getInput().getKey(GLFW.GLFW_KEY_A))
+		if (Moka.getInput().getKey(GLFW.GLFW_KEY_A))
 		{
-			tx -= getTime().getDelta() * impulse;
+			tx -= Moka.getTime().getDelta() * impulse;
 		}
 
-		if (!(getInput().getKey(GLFW.GLFW_KEY_D) || getInput().getKey(GLFW.GLFW_KEY_A)))
+		if (!(Moka.getInput().getKey(GLFW.GLFW_KEY_D) || Moka.getInput().getKey(GLFW.GLFW_KEY_A)))
 		{
 			if (tx > -TOLERANCE && tx < TOLERANCE)
 			{
@@ -52,21 +53,21 @@ public class Controllable extends Component
 			}
 			else
 			{
-				tx += (tx < 0) ? getTime().getDelta() : 0 - getTime().getDelta();
+				tx += (tx < 0) ? Moka.getTime().getDelta() : 0 - Moka.getTime().getDelta();
 			}
 		}
 
-		if (getInput().getKey(GLFW.GLFW_KEY_W))
+		if (Moka.getInput().getKey(GLFW.GLFW_KEY_W))
 		{
-			ty += getTime().getDelta() * impulse;
+			ty += Moka.getTime().getDelta() * impulse;
 		}
 
-		if (getInput().getKey(GLFW.GLFW_KEY_S))
+		if (Moka.getInput().getKey(GLFW.GLFW_KEY_S))
 		{
-			ty -= getTime().getDelta() * impulse;
+			ty -= Moka.getTime().getDelta() * impulse;
 		}
 
-		if (!(getInput().getKey(GLFW.GLFW_KEY_W) || getInput().getKey(GLFW.GLFW_KEY_S)))
+		if (!(Moka.getInput().getKey(GLFW.GLFW_KEY_W) || Moka.getInput().getKey(GLFW.GLFW_KEY_S)))
 		{
 			if (ty > -TOLERANCE && ty < TOLERANCE)
 			{
@@ -74,7 +75,7 @@ public class Controllable extends Component
 			}
 			else
 			{
-				ty += (ty < 0) ? getTime().getDelta() : 0 - getTime().getDelta();
+				ty += (ty < 0) ? Moka.getTime().getDelta() : 0 - Moka.getTime().getDelta();
 			}
 		}
 
@@ -93,8 +94,8 @@ public class Controllable extends Component
 			ty = lty;
 		}
 
-		vx *= getTime().getDelta();
-		vy *= getTime().getDelta();
+		vx *= Moka.getTime().getDelta();
+		vy *= Moka.getTime().getDelta();
 
 		getTransform().move(vx, vy);
 	}

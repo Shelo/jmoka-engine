@@ -16,149 +16,121 @@ import com.moka.utils.JMokaLog;
  */
 public abstract class Component
 {
-	private boolean enabled = true;
-	private Entity entity;
+    private boolean enabled = true;
+    private Entity entity;
 
     public Component()
     {
 
     }
 
-	public final void setEntity(final Entity entity)
-	{
-		if (this.entity != null)
-		{
-			throw new JMokaException("This component already has an entity.");
-		}
+    public final void setEntity(final Entity entity)
+    {
+        if (this.entity != null)
+        {
+            throw new JMokaException("This component already has an entity.");
+        }
 
-		this.entity = entity;
-	}
+        this.entity = entity;
+    }
 
-	public final Entity entity() {
-		return entity;
-	}
+    public final Entity entity()
+    {
+        return entity;
+    }
 
-	public final Entity findEntity(String tag) {
-		return getApplication().getContext().findEntity(tag);
-	}
+    public final Entity findEntity(String tag)
+    {
+        return Moka.getContext().findEntity(tag);
+    }
 
-	public Transform getTransform()
-	{
-		return entity.getTransform();
-	}
+    public Transform getTransform()
+    {
+        return entity.getTransform();
+    }
 
-	public final <T extends Component> T getComponent(Class<T> componentClass) {
-		return entity.getComponent(componentClass);
-	}
+    public final <T extends Component> T getComponent(Class<T> componentClass)
+    {
+        return entity.getComponent(componentClass);
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public void setEnabled(boolean enabled)
+    {
+        this.enabled = enabled;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public boolean isEnabled()
+    {
+        return enabled;
+    }
 
-	public <T> Object callTrigger(Trigger<T> trigger, T meta)
-	{
-		if (trigger != null)
-		{
-			return trigger.trigger(this, meta);
-		}
+    public <T> Object callTrigger(Trigger<T> trigger, T meta)
+    {
+        if (trigger != null)
+        {
+            return trigger.trigger(this, meta);
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public boolean hasCollider() {
-		return entity.hasCollider();
-	}
+    public boolean hasCollider()
+    {
+        return entity.hasCollider();
+    }
 
-	public Collider getCollider() {
-		return entity.getCollider();
-	}
+    public Collider getCollider()
+    {
+        return entity.getCollider();
+    }
 
-	public Application getApplication()
-	{
-		return entity.getContext().getApplication();
-	}
+    /**
+     * Logs a descriptive message.
+     */
+    public void log(String message)
+    {
+        String tag = entity().getName() + " -> " + this.getClass().getSimpleName();
+        JMokaLog.o(tag, message);
+    }
 
-	/**
-	 * [Shortcut] Gets the current context's input.
-	 * @return the input object.
-	 */
-	public Input getInput()
-	{
-		return getApplication().getInput();
-	}
+    /**
+     * Called at the creation time.
+     */
+    public void onCreate()
+    {
 
-	/**
-	 * [Shortcut] Gets the current context's display.
-     *
-	 * @return the display object.
-	 */
-	public Display getDisplay()
-	{
-		return getApplication().getDisplay();
-	}
+    }
 
-	/**
-	 * [Shortcut] Gets the current context's time.
-     *
-	 * @return the time object.
-	 */
-	public Time getTime()
-	{
-		return getApplication().getTime();
-	}
+    /**
+     * Called every update frame.
+     */
+    public void onUpdate()
+    {
 
-	/**
-	 * Logs a descriptive message.
-	 */
-	public void log(String message)
-	{
-		String tag = entity().getName() + " -> " + this.getClass().getSimpleName();
-		JMokaLog.o(tag, message);
-	}
+    }
 
-	/**
-	 * Called at the creation time.
-	 */
-	public void onCreate()
-	{
+    /**
+     * Called just after the physics system resolved every collision.
+     */
+    public void onPostUpdate()
+    {
 
-	}
+    }
 
-	/**
-	 * Called every update frame.
-	 */
-	public void onUpdate()
-	{
+    /**
+     * Called just before entity is removed from the world, this will
+     * only be called on enabled components.
+     */
+    public void onDestroy()
+    {
 
-	}
+    }
 
-	/**
-	 * Called just after the physics system resolved every collision.
-	 */
-	public void onPostUpdate()
-	{
+    /**
+     * This will be called when the game actually needs to be disposed.
+     */
+    public void onDispose()
+    {
 
-	}
-
-	/**
-	 * Called just before wrapping entity is removed from the world, this will
-	 * only be called on enabled components.
-	 */
-	public void onDestroy()
-	{
-
-	}
-
-	/**
-	 * Called after the destroy method, use this to safely release resources.
-	 * This will be called in all components, even if they're disabled.
-	 */
-	public void onDispose()
-	{
-
-	}
+    }
 }
