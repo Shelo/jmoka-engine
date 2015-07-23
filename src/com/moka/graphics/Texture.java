@@ -10,15 +10,18 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Texture
 {
-    private String filePath;
+    public enum Filter
+    {
+        NEAREST,
+        LINEAR
+    }
+
     private int textureId;
     private int height;
     private int width;
 
-    public Texture(String filePath)
+    public Texture(String filePath, Filter filter)
     {
-        this.filePath = filePath;
-
         if (filePath != null)
         {
             IntBuffer width = BufferUtils.createIntBuffer(1);
@@ -33,8 +36,8 @@ public class Texture
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, getFilter(filter));
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, getFilter(filter));
 
             this.width = width.get();
             this.height = height.get();
@@ -46,20 +49,26 @@ public class Texture
         }
     }
 
+    public Texture(String filePath)
+    {
+        this(filePath, Filter.NEAREST);
+    }
+
+    private int getFilter(Filter filter)
+    {
+        if (filter == Filter.NEAREST)
+        {
+            return GL_NEAREST;
+        }
+        else
+        {
+            return GL_LINEAR;
+        }
+    }
+
     public void bind()
     {
         glBindTexture(GL_TEXTURE_2D, textureId);
-    }
-
-    public String getFilePath()
-    {
-        return filePath;
-    }
-
-    @Override
-    public String toString()
-    {
-        return filePath;
     }
 
     public float getWidth()

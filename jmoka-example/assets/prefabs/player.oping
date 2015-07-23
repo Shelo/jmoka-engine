@@ -1,7 +1,8 @@
 + Prefab
     - Position: 200, 200
+    - Rotation: 0
     - Group: Player
-    - Rotation: 90
+    - Size: 200, 200
 
     + Sprite
-        - Texture: jmoka-example/assets/img/playerPlane.png
+        - Texture: @textures.player

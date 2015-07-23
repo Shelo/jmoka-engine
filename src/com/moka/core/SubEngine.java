@@ -1,6 +1,6 @@
 package com.moka.core;
 
-import com.moka.core.time.Time;
+import com.moka.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
 import com.moka.physics.Physics;

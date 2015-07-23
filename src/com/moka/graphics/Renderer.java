@@ -1,6 +1,7 @@
 package com.moka.graphics;
 
 import com.moka.components.Camera;
+import com.moka.core.Moka;
 import com.moka.core.SubEngine;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
@@ -77,7 +78,7 @@ public final class Renderer extends SubEngine
 
         glEnable(GL_TEXTURE_2D);
 
-        JMokaLog.o(TAG, "Created correctly.");
+        log("Created correctly");
     }
 
     /**
@@ -111,6 +112,11 @@ public final class Renderer extends SubEngine
         this.clearColor.r = r;
         this.clearColor.g = g;
         this.clearColor.b = b;
+
+        if (getApplication().isCreated())
+        {
+            updateClearColor();
+        }
     }
 
     /**
@@ -154,5 +160,17 @@ public final class Renderer extends SubEngine
     public Shader getShader()
     {
         return shader;
+    }
+
+    /**
+     * Sets the shader to use.
+     *
+     * @param shader the shader program.
+     *
+     * @deprecated  currently this will not work.
+     */
+    public void setShader(Shader shader)
+    {
+        this.shader = shader;
     }
 }

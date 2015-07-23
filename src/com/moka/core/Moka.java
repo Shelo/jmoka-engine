@@ -1,6 +1,6 @@
 package com.moka.core;
 
-import com.moka.core.time.Time;
+import com.moka.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
 import com.moka.physics.Physics;
@@ -68,5 +68,10 @@ public class Moka
     public static MokaResources getResources()
     {
         return application.getResources();
+    }
+
+    public static Application getApplication()
+    {
+        return application;
     }
 }

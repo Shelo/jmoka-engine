@@ -16,8 +16,6 @@ import com.moka.utils.JMokaException;
  */
 public class Sprite extends Component
 {
-    private Vector2 clipBottomLeft = null;
-    private Vector2 clipTopRight = null;
 
     private Texture texture;
     private Vector2 size;
@@ -63,20 +61,12 @@ public class Sprite extends Component
     @Override
     public void onCreate()
     {
-        if (clipTopRight != null)
-        {
-            clipTopRight.x = clipTopRight.x / texture.getWidth() * texture.getTexCoordX();
-            clipTopRight.y = clipTopRight.y / texture.getHeight() * texture.getTexCoordY();
-        }
-        else
-        {
-            clipTopRight = new Vector2();
+        Vector2 clipTopRight = new Vector2();
 
-            clipTopRight.x = texture.getTexCoordX();
-            clipTopRight.y = texture.getTexCoordY();
-        }
+        clipTopRight.x = texture.getTexCoordX();
+        clipTopRight.y = texture.getTexCoordY();
 
-        quad = new Quad(clipBottomLeft, clipTopRight);
+        quad = new Quad(null, clipTopRight);
     }
 
     public void render(Shader shader)
@@ -117,42 +107,42 @@ public class Sprite extends Component
         return tint;
     }
 
+    @ComponentAttribute("Texture")
     public void setTexture(Texture texture)
     {
         this.texture = texture;
     }
 
-    @ComponentAttribute("Texture")
     public void setTexture(String path)
     {
         setTexture(new Texture(path));
     }
 
-    @ComponentAttribute("tintR")
+    @ComponentAttribute("TintR")
     public void setTintR(float value)
     {
         tint.r = value;
     }
 
-    @ComponentAttribute("tintG")
+    @ComponentAttribute("TintG")
     public void setTintG(float value)
     {
         tint.g = value;
     }
 
-    @ComponentAttribute("tintB")
+    @ComponentAttribute("TintB")
     public void setTintB(float value)
     {
         tint.b = value;
     }
 
-    @ComponentAttribute("tintA")
+    @ComponentAttribute("TintA")
     public void setTintA(float value)
     {
         tint.a = value;
     }
 
-    @ComponentAttribute("width")
+    @ComponentAttribute("Width")
     public void setWidth(float value)
     {
         if (size == null)
@@ -163,7 +153,7 @@ public class Sprite extends Component
         size.x = value;
     }
 
-    @ComponentAttribute("height")
+    @ComponentAttribute("Height")
     public void setHeight(float value)
     {
         if (size == null)
@@ -172,28 +162,6 @@ public class Sprite extends Component
         }
 
         size.y = value;
-    }
-
-    @ComponentAttribute("clipTop")
-    public void setClipTop(float clipTop)
-    {
-        if (clipTopRight == null)
-        {
-            clipTopRight = new Vector2();
-        }
-
-        this.clipTopRight.y = clipTop;
-    }
-
-    @ComponentAttribute("clipRight")
-    public void setClipRight(float clipRight)
-    {
-        if (clipTopRight == null)
-        {
-            clipTopRight = new Vector2();
-        }
-
-        this.clipTopRight.x = clipRight;
     }
 
     public Vector2 getSize()

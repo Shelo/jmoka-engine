@@ -6,8 +6,8 @@ import com.moka.physics.Collision;
 
 public class AABBCollider extends Collider
 {
-	private float offx;
-	private float offy;
+	private float offsetX;
+	private float offsetY;
 	private float width;
 	private float height;
 
@@ -33,13 +33,13 @@ public class AABBCollider extends Collider
 	@ComponentAttribute("offsetX")
 	public void setOffsetX(float offx)
 	{
-		this.offx = offx;
+		this.offsetX = offx;
 	}
 
 	@ComponentAttribute("offsetY")
 	public void setOffsetY(float offy)
 	{
-		this.offy = offy;
+		this.offsetY = offy;
 	}
 
 	@ComponentAttribute("width")
@@ -63,12 +63,12 @@ public class AABBCollider extends Collider
 
 	public float getBottom()
 	{
-		return getTransform().getPosition().y + offy - height / 2;
+		return getTransform().getPosition().y + offsetY - height / 2;
 	}
 
 	public float getLeft()
 	{
-		return getTransform().getPosition().x + offx - width / 2;
+		return getTransform().getPosition().x + offsetX - width / 2;
 	}
 
 	public float getRight()
