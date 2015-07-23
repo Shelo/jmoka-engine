@@ -122,6 +122,12 @@ public class Sprite extends Component
         this.texture = texture;
     }
 
+    @ComponentAttribute("Texture")
+    public void setTexture(String path)
+    {
+        setTexture(new Texture(path));
+    }
+
     @ComponentAttribute("tintR")
     public void setTintR(float value)
     {

@@ -2,19 +2,19 @@ package com.moka.core;
 
 import com.moka.core.entity.Entity;
 import com.moka.graphics.Shader;
+import com.moka.prefabs.OpingPrefabReader;
+import com.moka.prefabs.PrefabReader;
 import com.moka.utils.JMokaException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- *
- */
 public class Context extends SubEngine
 {
     private HashMap<String, Entity> nameRelations;
     private ArrayList<ArrayList<Entity>> layers;
+    private PrefabReader prefabReader;
 
     /**
      * Used to store all layers.
@@ -27,9 +27,11 @@ public class Context extends SubEngine
      */
     private final ArrayList<Scene> scenes = new ArrayList<>();
     private int currentScene;
+    private boolean created;
 
     public Context()
     {
+        prefabReader = new OpingPrefabReader();
         nameRelations = new HashMap<>();
         layers = new ArrayList<>();
     }
@@ -200,8 +202,10 @@ public class Context extends SubEngine
         }
         else
         {
+            created = false;
             scene.setContext(this);
             scene.onCreate();
+            created = true;
         }
     }
 
@@ -320,5 +324,15 @@ public class Context extends SubEngine
                 entity.dispose();
             }
         }
+    }
+
+    public PrefabReader getPrefabReader()
+    {
+        return prefabReader;
+    }
+
+    public boolean isCreated()
+    {
+        return created;
     }
 }

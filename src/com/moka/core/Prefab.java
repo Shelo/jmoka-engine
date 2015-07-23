@@ -24,19 +24,22 @@ public final class Prefab
     private Vector2 position = new Vector2();
     private Vector2 size = new Vector2();
     private boolean useOwnSize = false;
-    private Context context;
     private float rotation;
+    private String group;
     private int layer;
 
     /**
      * Creates a new Prefab for a given context with given components.
-     * @param context       the context.
      * @param components    components.
      */
-    public Prefab(Context context, PreComponents components)
+    public Prefab(PreComponents components)
     {
         this.components = components;
-        this.context = context;
+    }
+
+    public PreComponents getComponents()
+    {
+        return components;
     }
 
     /**
@@ -93,15 +96,30 @@ public final class Prefab
     }
 
     /**
+     * Sets the position of the prefab to the x, y values and the instantiates.
+     *
+     * @param name  unique name for the new instance.
+     * @param x     x position on the world.
+     * @param y     y position on the world.
+     * @return      the new entity.
+     */
+    public Entity newEntity(String name, float x, float y)
+    {
+        setPosition(x, y);
+        return newEntity(name);
+    }
+
+    /**
      * Creates a new instance with using this prefab rules and states. The instance will
      * be automatically added to the stage.
      *
-     * @param name unique name for the new instance.
-     * @return the entity.
+     * @param name  unique name for the new instance.
+     * @return      the entity.
      */
     public Entity newEntity(String name)
     {
-        Entity entity = context.newEntity(name, layer);
+        Entity entity = Moka.getContext().newEntity(name, layer);
+        entity.setGroup(group);
 
         // set transform values for this entity.
         Transform transform = entity.getTransform();
@@ -160,9 +178,17 @@ public final class Prefab
         }
 
         // after this we should call the onCreate method on the components.
-        entity.create();
+        if (Moka.getContext().isCreated())
+        {
+            entity.create();
+        }
 
         return entity;
+    }
+
+    public void setGroup(String group)
+    {
+
     }
 
     /**

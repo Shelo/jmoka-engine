@@ -2,7 +2,7 @@ package example;
 
 import com.moka.core.Prefab;
 import com.moka.graphics.Texture;
-import com.moka.resources.MokaResources;
+import com.moka.core.MokaResources;
 
 public class Resources extends MokaResources
 {
@@ -30,7 +30,7 @@ public class Resources extends MokaResources
     public void load()
     {
         textures.player = texture("img/playerPlane.png");
-        prefabs.player = prefab("prefabs/player.xml");
+        prefabs.player = prefab("prefabs/player.oping");
     }
 
     @Override

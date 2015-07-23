@@ -4,7 +4,6 @@ import com.moka.core.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
 import com.moka.physics.Physics;
-import com.moka.resources.MokaResources;
 import com.moka.utils.JMokaLog;
 
 /**
@@ -18,6 +17,7 @@ public class Application
     private static final String TAG = "Application";
 
     private MokaResources resources;
+    private NameManager nameManager;
     private Renderer renderer;
     private Context context;
     private Physics physics;
@@ -32,6 +32,7 @@ public class Application
     {
         this.resources = resources;
 
+        nameManager = new NameManager();
         context = new Context();
         renderer = new Renderer();
         physics = new Physics();
@@ -77,6 +78,7 @@ public class Application
      */
     private void exportApplication()
     {
+        nameManager.setApplication(this);
         renderer.setApplication(this);
         context.setApplication(this);
         physics.setApplication(this);
@@ -126,5 +128,15 @@ public class Application
     protected Input getInput()
     {
         return input;
+    }
+
+    protected NameManager getNameManager()
+    {
+        return nameManager;
+    }
+
+    protected MokaResources getResources()
+    {
+        return resources;
     }
 }

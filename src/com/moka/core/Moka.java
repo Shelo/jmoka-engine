@@ -59,4 +59,14 @@ public class Moka
     {
         return application.getInput();
     }
+
+    public static NameManager getNameManager()
+    {
+        return application.getNameManager();
+    }
+
+    public static MokaResources getResources()
+    {
+        return application.getResources();
+    }
 }

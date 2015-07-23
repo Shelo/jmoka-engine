@@ -1,4 +1,4 @@
-package com.moka.resources;
+package com.moka.core;
 
 import com.moka.core.Prefab;
 import com.moka.graphics.Texture;
@@ -15,8 +15,12 @@ public abstract class MokaResources
 
     public Prefab prefab(String path)
     {
-        // TODO: implement.
-        return null;
+        return Moka.getContext().getPrefabReader().newPrefab(ROOT + path);
+    }
+
+    public void sound(String path)
+    {
+        // TODO: do something.
     }
 
     public abstract void load();

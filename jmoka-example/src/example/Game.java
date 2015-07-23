@@ -29,6 +29,9 @@ public class Game
         // set renderer options.
         Moka.getRenderer().setClearColor(0, 0, 0);
 
+        // set up packages.
+        Moka.getNameManager().usePackage("SpaceShooter", "example.components.spaceshooter");
+
         // set up scenes.
         Moka.getContext().addScene(new MainScene());
         Moka.getContext().addScene(new SecondScene());
