@@ -101,7 +101,7 @@ public final class Prefab
      * @param name  unique name for the new instance.
      * @param x     x position on the world.
      * @param y     y position on the world.
-     * @return      the new entity.
+     * @return      the new getEntity.
      */
     public Entity newEntity(String name, float x, float y)
     {
@@ -114,14 +114,14 @@ public final class Prefab
      * be automatically added to the stage.
      *
      * @param name  unique name for the new instance.
-     * @return      the entity.
+     * @return      the getEntity.
      */
     public Entity newEntity(String name)
     {
         Entity entity = Moka.getContext().newEntity(name, layer);
         entity.setGroup(group);
 
-        // set transform values for this entity.
+        // set transform values for this getEntity.
         Transform transform = entity.getTransform();
         transform.setPosition(position.cpy());
         transform.setRotation(rotation);
@@ -131,7 +131,7 @@ public final class Prefab
             transform.setSize(size.cpy());
         }
 
-        // creates every component and adds it to the entity.
+        // creates every component and adds it to the getEntity.
         for (Class<?> cClass : components.keySet())
         {
             ComponentAttrs componentAttrs = components.get(cClass);

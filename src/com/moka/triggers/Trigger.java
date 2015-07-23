@@ -1,6 +1,5 @@
 package com.moka.triggers;
 
-import com.moka.core.Application;
 import com.moka.core.entity.Component;
 import com.moka.core.entity.Entity;
 import com.moka.core.Transform;
@@ -48,7 +47,7 @@ public abstract class Trigger<T>
 
     public Entity getEntity()
     {
-        return component.entity();
+        return component.getEntity();
     }
 
     public T meta()

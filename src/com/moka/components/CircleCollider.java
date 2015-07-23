@@ -14,8 +14,8 @@ public class CircleCollider extends Collider
 	{
 		if(radius == 0)
 		{
-			float width  = entity().getSprite().getWidth();
-			float height = entity().getSprite().getHeight();
+			float width  = getEntity().getSprite().getWidth();
+			float height = getEntity().getSprite().getHeight();
 			radius = (width + height) / 4;
 		}
 	}
@@ -57,7 +57,7 @@ public class CircleCollider extends Collider
 		if (boundingBox == null)
 		{
 			boundingBox = new AABBCollider();
-			boundingBox.setEntity(entity());
+			boundingBox.setEntity(getEntity());
 			boundingBox.setWith(radius * 2);
 			boundingBox.setHeight(radius * 2);
 		}

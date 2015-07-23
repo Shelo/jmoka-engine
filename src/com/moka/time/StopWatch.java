@@ -67,4 +67,9 @@ public class StopWatch
     {
         return elapsed > other.elapsed;
     }
+
+    public boolean shouldDestroy()
+    {
+        return false;
+    }
 }

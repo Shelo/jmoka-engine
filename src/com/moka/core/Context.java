@@ -210,11 +210,11 @@ public class Context extends SubEngine
     }
 
     /**
-     * Adds an entity to a given layer.
+     * Adds an getEntity to a given layer.
      *
-     * @param entity the entity to be added.
-     * @param layer  the layer at which the context will add the entity.
-     * @return the same entity given.
+     * @param entity the getEntity to be added.
+     * @param layer  the layer at which the context will add the getEntity.
+     * @return the same getEntity given.
      */
     public final Entity addEntity(Entity entity, int layer)
     {
@@ -241,7 +241,7 @@ public class Context extends SubEngine
             throw new JMokaException("Entity with name " + name + " already exists.");
         }
 
-        // create and add the entity to the game.
+        // create and add the getEntity to the game.
         Entity entity = new Entity(name, this);
         addEntity(entity, layer);
 
@@ -257,8 +257,8 @@ public class Context extends SubEngine
     /**
      * Finds an Entity on the game. Raises an exception if it is not found.
      *
-     * @param name entity's unique tag.
-     * @return the entity if found.
+     * @param name getEntity's unique tag.
+     * @return the getEntity if found.
      */
     public final Entity findEntity(String name)
     {

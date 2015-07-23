@@ -8,8 +8,8 @@ import com.moka.utils.JMokaException;
 import com.moka.utils.Pools;
 
 /**
- * The transform indicates all about the position, rotation and size of an entity,
- * every entity has a transform, and only one transform. The position, rotation and
+ * The transform indicates all about the position, rotation and size of an getEntity,
+ * every getEntity has a transform, and only one transform. The position, rotation and
  * size vectors are marked as final, so fell free to store them to keep track of them
  * in the future.
  *
@@ -230,10 +230,10 @@ public class Transform
     }
 
     /**
-     * Gets the entity that has this transform. That entity will never
-     * change, since the entity is declared as a final.
+     * Gets the getEntity that has this transform. That getEntity will never
+     * change, since the getEntity is declared as a final.
      *
-     * @return the entity.
+     * @return the getEntity.
      */
     public Entity getEntity()
     {

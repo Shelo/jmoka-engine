@@ -1,7 +1,7 @@
 package example;
 
 import com.moka.core.Application;
-import com.moka.core.Input;
+import com.moka.input.Input;
 import com.moka.core.Moka;
 import example.scenes.MainScene;
 import example.scenes.SecondScene;
@@ -13,15 +13,13 @@ public class Game
      */
     public static void main(String[] args)
     {
-        Application app = new Application(new Resources());
+        Application app = new Application(new Resources("jmoka-example/assets/"));
 
         // set some inputs.
-        Moka.getInput().bindKey(Resources.buttons.FIRE_1, Input.KEY_SPACE);
-        Moka.getInput().bindKey(Resources.buttons.FIRE_2, Input.KEY_M);
-        Moka.getInput().bindKey(Resources.buttons.LEFT, Input.KEY_LEFT);
-        Moka.getInput().bindKey(Resources.buttons.UP, Input.KEY_UP);
-        Moka.getInput().bindKey(Resources.buttons.RIGHT, Input.KEY_RIGHT);
-        Moka.getInput().bindKey(Resources.buttons.DOWN, Input.KEY_DOWN);
+        Moka.getInput().bindKey(Resources.buttons.FIRE_1, Input.KEY_Z);
+        Moka.getInput().bindKey(Resources.buttons.FIRE_2, Input.KEY_X);
+        Moka.getInput().bindAxes(Resources.axes.HORIZONTAL, Input.KEY_LEFT, Input.KEY_RIGHT);
+        Moka.getInput().bindAxes(Resources.axes.VERTICAL, Input.KEY_DOWN, Input.KEY_UP);
 
         // set display options.
         Moka.getDisplay().createDisplay(800, 450, "JMoka Engine");

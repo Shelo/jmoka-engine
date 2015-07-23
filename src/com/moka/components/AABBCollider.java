@@ -102,7 +102,7 @@ public class AABBCollider extends Collider
 		if (boundingCircle == null)
 		{
 			boundingCircle = new CircleCollider();
-			boundingCircle.setEntity(entity());
+			boundingCircle.setEntity(getEntity());
 			boundingCircle.setRadius((float) Math.sqrt(width * width + height * height) / 2);
 		}
 

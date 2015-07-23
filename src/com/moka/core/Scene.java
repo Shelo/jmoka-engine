@@ -40,11 +40,11 @@ public abstract class Scene
     }
 
     /**
-     * Creates a new entity with a camera on it.
+     * Creates a new getEntity with a camera on it.
      *
-     * @param name    name for the entity.
+     * @param name    name for the getEntity.
      * @param current sets this camera as the current one.
-     * @return the entity.
+     * @return the getEntity.
      */
     public Entity newCamera(String name, boolean current)
     {

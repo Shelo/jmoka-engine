@@ -9,27 +9,29 @@ import java.lang.reflect.Field;
 public abstract class MokaResources
 {
     // TODO: CHANGE THE JMOKA-EXAMPLE THING!!!.
-    private static String ROOT = "jmoka-example/assets/";
     private Class<?>[] innerClasses;
+    private String root;
 
-    public MokaResources()
+    public MokaResources(String root)
     {
+        this.root = root;
+
         innerClasses = getClass().getDeclaredClasses();
     }
 
     public Texture texture(String path)
     {
-        return new Texture(ROOT + path);
+        return new Texture(root + path);
     }
 
     public Texture texture(String path, Texture.Filter filter)
     {
-        return new Texture(ROOT + path, filter);
+        return new Texture(root + path, filter);
     }
 
     public Prefab prefab(String path)
     {
-        return Moka.getContext().getPrefabReader().newPrefab(ROOT + path);
+        return Moka.getContext().getPrefabReader().newPrefab(root + path);
     }
 
     public void sound(String path)

@@ -32,7 +32,7 @@ public abstract class Component
         this.entity = entity;
     }
 
-    public final Entity entity()
+    public final Entity getEntity()
     {
         return entity;
     }
@@ -87,7 +87,7 @@ public abstract class Component
      */
     public void log(String message)
     {
-        String tag = entity().getName() + " -> " + this.getClass().getSimpleName();
+        String tag = getEntity().getName() + " -> " + this.getClass().getSimpleName();
         JMokaLog.o(tag, message);
     }
 
@@ -116,7 +116,7 @@ public abstract class Component
     }
 
     /**
-     * Called just before entity is removed from the world, this will
+     * Called just before getEntity is removed from the world, this will
      * only be called on enabled components.
      */
     public void onDestroy()

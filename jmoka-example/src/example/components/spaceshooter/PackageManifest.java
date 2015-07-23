@@ -11,6 +11,6 @@ public class PackageManifest extends Package
     @Override
     public void registerComponents(LinkedList<Class<? extends Component>> components)
     {
-        components.add(ExampleSceneLoader.class);
+        components.add(Movement.class);
     }
 }

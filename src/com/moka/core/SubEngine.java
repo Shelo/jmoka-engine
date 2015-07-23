@@ -1,5 +1,6 @@
 package com.moka.core;
 
+import com.moka.input.Input;
 import com.moka.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;

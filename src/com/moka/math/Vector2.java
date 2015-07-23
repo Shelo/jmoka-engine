@@ -102,9 +102,14 @@ public class Vector2
 
     public Vector2 nor()
     {
+        if (x == 0 && y == 0)
+        {
+            return this;
+        }
+
         float len = len();
-        this.x /= len;
-        this.y /= len;
+        x /= len;
+        y /= len;
         return this;
     }
 

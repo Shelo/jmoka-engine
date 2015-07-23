@@ -39,7 +39,7 @@ public abstract class PrefabReader
 
     /**
      * Test the value to match the param class, also if the param type is a Entity, this will find
-     * that entity for you. If the value is a reference to a resource value, that value will be
+     * that getEntity for you. If the value is a reference to a resource value, that value will be
      * searched and delivered, and finally, if the value is an expression, this will attempt to
      * resolve it.
      * <p/>

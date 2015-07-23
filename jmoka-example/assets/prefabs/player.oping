@@ -2,7 +2,10 @@
     - Position: 200, 200
     - Rotation: 0
     - Group: Player
-    - Size: 200, 200
+    - Size: 64, 64
 
     + Sprite
         - Texture: @textures.player
+
+    + SpaceShooter:Movement
+        - Speed: 500

@@ -18,11 +18,18 @@ public class Time extends SubEngine
 		this.delta = delta;
 		elapsed += delta;
 
-		for(StopWatch stopWatch : stopWatches)
-		{
-			stopWatch.update(delta);
-		}
-	}
+        for (int i = stopWatches.size() - 1; i >= 0; i--)
+        {
+            if (stopWatches.get(i).shouldDestroy())
+            {
+                stopWatches.remove(i);
+            }
+            else
+            {
+                stopWatches.get(i).update(delta);
+            }
+        }
+    }
 
 	public float getDelta()
 	{
@@ -34,11 +41,11 @@ public class Time extends SubEngine
 		return elapsed;
 	}
 
-	public <T> Timer<T> newTimer(Component component, float time, Trigger<T> trigger)
+	public TimeOut newTimeOut(Component component, float seconds, Trigger trigger)
 	{
-		Timer<T> timer = new Timer<>(component, time, trigger);
-		stopWatches.add(timer);
-		return timer;
+        TimeOut timeOut = new TimeOut(component, seconds, trigger);
+		stopWatches.add(timeOut);
+		return timeOut;
 	}
 
 	public StopWatch newStopWatch()

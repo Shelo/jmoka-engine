@@ -26,9 +26,9 @@ public class SatCollider extends Collider
 	{
 		if (vertices == null)
 		{
-			if (entity().hasSprite())
+			if (getEntity().hasSprite())
 			{
-				setVertices(entity().getSprite().getMesh().getVerticesAsVector2());
+				setVertices(getEntity().getSprite().getMesh().getVerticesAsVector2());
 			}
 		}
 	}
@@ -99,7 +99,7 @@ public class SatCollider extends Collider
 
 	public void updateVertices()
 	{
-		tVertices = entity().transformVertices(vertices);
+		tVertices = getEntity().transformVertices(vertices);
 	}
 
 	public void updateAxes()

@@ -1,6 +1,6 @@
 package com.moka.tests;
 
-import com.moka.core.Input;
+import com.moka.input.Input;
 import com.moka.utils.JMokaException;
 import org.junit.Test;
 import org.lwjgl.glfw.GLFW;

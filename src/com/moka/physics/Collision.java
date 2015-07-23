@@ -13,7 +13,7 @@ public final class Collision
     /**
      * Creates a new collision information wrapper.
      *
-     * @param entity       the entity with which I collided.
+     * @param entity       the getEntity with which I collided.
      * @param norDirection the normalized direction of the collision.
      * @param magnitude    the magnitude collision.
      */

@@ -28,22 +28,22 @@ public abstract class Collider extends Component
 
     public static Collision sat(SatCollider box1, SatCollider box2)
     {
-        if (box1.entity().getTransform().hasRotated())
+        if (box1.getEntity().getTransform().hasRotated())
         {
             box1.updateAxes();
         }
 
-        else if (box1.entity().getTransform().hasMoved())
+        else if (box1.getEntity().getTransform().hasMoved())
         {
             box1.updateVertices();
         }
 
-        if (box2.entity().getTransform().hasRotated())
+        if (box2.getEntity().getTransform().hasRotated())
         {
             box2.updateAxes();
         }
 
-        else if (box2.entity().getTransform().hasMoved())
+        else if (box2.getEntity().getTransform().hasMoved())
         {
             box2.updateVertices();
         }
@@ -84,7 +84,7 @@ public abstract class Collider extends Component
             }
         }
 
-        return (smallest != null) ? new Collision(box2.entity(), smallest, overlap) : null;
+        return (smallest != null) ? new Collision(box2.getEntity(), smallest, overlap) : null;
     }
 
     public static Collision aabb(AABBCollider box1, AABBCollider box2)
@@ -105,11 +105,11 @@ public abstract class Collider extends Component
 
             if (Math.abs(y) < Math.abs(x))
             {
-                return new Collision(box2.entity(), new Vector2(0, 1), y);
+                return new Collision(box2.getEntity(), new Vector2(0, 1), y);
             }
             else
             {
-                return new Collision(box2.entity(), new Vector2(1, 0), x);
+                return new Collision(box2.getEntity(), new Vector2(1, 0), x);
             }
         }
 
@@ -118,8 +118,8 @@ public abstract class Collider extends Component
 
     public static Collision circle(CircleCollider circle1, CircleCollider circle2)
     {
-        Vector2 position1 = circle1.entity().getTransform().getPosition();
-        Vector2 position2 = circle2.entity().getTransform().getPosition();
+        Vector2 position1 = circle1.getEntity().getTransform().getPosition();
+        Vector2 position2 = circle2.getEntity().getTransform().getPosition();
 
         Vector2 displace = buf.set(position1).sub(position2);
         float distanceSqrt = displace.sqrLen();
@@ -130,7 +130,7 @@ public abstract class Collider extends Component
         if (distanceSqrt <= radiusSqrt)
         {
             float length = (float) (radiusSum - Math.sqrt(distanceSqrt));
-            return new Collision(circle2.entity(), displace.nor(), length);
+            return new Collision(circle2.getEntity(), displace.nor(), length);
         }
 
         return null;
@@ -161,7 +161,7 @@ public abstract class Collider extends Component
     // AABB-Circle
     public static Collision aabbCircle(AABBCollider aabb, CircleCollider circle)
     {
-        Vector2 circleCenter = circle.entity().getTransform().getPosition();
+        Vector2 circleCenter = circle.getEntity().getTransform().getPosition();
 
 		/* if in corner */
         if (circleCenter.x > aabb.getRight() && circleCenter.y > aabb.getTop() ||
