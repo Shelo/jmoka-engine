@@ -22,7 +22,7 @@ public class LookAt extends Component
 		Pools.vec2.put(buffer);
 	}
 
-	@ComponentAttribute(value = "target", required = true)
+	@ComponentAttribute(value = "Target", required = true)
 	public void setTarget(Entity target)
 	{
 		this.target = target;

@@ -39,7 +39,7 @@ public class Interval extends Component
      *
      * @param time the time in seconds.
      */
-    @ComponentAttribute("time")
+    @ComponentAttribute("Time")
     public void setTime(double time)
     {
         this.time = time;
@@ -51,7 +51,7 @@ public class Interval extends Component
      *
      * @param trigger the trigger to be called.
      */
-    @ComponentAttribute(value = "trigger", required = true)
+    @ComponentAttribute(value = "Trigger", required = true)
     public void setTrigger(Trigger<StopWatch> trigger)
     {
         this.trigger = trigger;

@@ -30,26 +30,26 @@ public class AABBCollider extends Collider
 		}
 	}
 
-	@ComponentAttribute("offsetX")
+	@ComponentAttribute("OffsetX")
 	public void setOffsetX(float offx)
 	{
 		this.offsetX = offx;
 	}
 
-	@ComponentAttribute("offsetY")
+	@ComponentAttribute("OffsetY")
 	public void setOffsetY(float offy)
 	{
 		this.offsetY = offy;
 	}
 
-	@ComponentAttribute("width")
+	@ComponentAttribute("Width")
 	public void setWith(float width)
 	{
 		shouldInitWidth = false;
 		this.width = width;
 	}
 
-	@ComponentAttribute("height")
+	@ComponentAttribute("Height")
 	public void setHeight(float height)
 	{
 		shouldInitHeight = false;

@@ -12,15 +12,10 @@ import com.moka.utils.JMokaException;
 import com.shelodev.oping.OpingParser;
 import com.shelodev.oping.structure.Branch;
 import com.shelodev.oping.structure.Leaf;
-import net.sourceforge.jeval.EvaluationException;
-import net.sourceforge.jeval.Evaluator;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class OpingPrefabReader extends PrefabReader
 {
@@ -160,7 +155,7 @@ public class OpingPrefabReader extends PrefabReader
                 namespace = NameManager.DEFAULT_NAMESPACE;
             }
 
-            Class<? extends Component> componentClass = Moka.getNameManager().findClass(namespace, name);
+            Class<? extends Component> componentClass = Moka.getNameManager().findComponent(namespace, name);
             Prefab.ComponentAttrs attrs = new Prefab.ComponentAttrs();
 
             ArrayList<Method> methods = getQualifiedMethods(componentClass);

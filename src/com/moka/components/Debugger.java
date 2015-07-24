@@ -58,13 +58,13 @@ public class Debugger extends Component
         }
     }
 
-    @ComponentAttribute("option")
+    @ComponentAttribute("Option")
     public void setSelection(Options selection)
     {
         this.selection = selection;
     }
 
-    @ComponentAttribute("frequency")
+    @ComponentAttribute("Frequency")
     public void setFrequency(double frequency)
     {
         this.frequency = frequency;

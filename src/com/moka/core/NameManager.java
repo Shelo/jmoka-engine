@@ -19,17 +19,17 @@ public class NameManager extends SubEngine
     /**
      * Tells the engine that you will be using a package by the name of <i>name</i>.
      *
-     * @param name          handy name for the package.
-     * @param container     path to the Java package.
+     * @param name         handy name for the package. If null, use the common package name.
+     * @param location     path to the Java package.
      */
-    public void usePackage(String name, String container)
+    public void usePackage(String name, String location)
     {
         try
         {
-            Class<?> manifest = Class.forName(container + ".PackageManifest");
+            Class<?> manifest = Class.forName(location + ".PackageManifest");
             Package instance = (Package) manifest.newInstance();
             instance.register();
-            packages.put(name, instance);
+            packages.put(name == null ? instance.getCommonName() : name, instance);
         }
         catch (ClassNotFoundException e)
         {
@@ -45,22 +45,66 @@ public class NameManager extends SubEngine
         }
     }
 
-    public Class<? extends Component> findClass(String namespace, String name)
+    /**
+     * Tells the engine that you will be using a package.
+     *
+     * @param manifest     manifest of the package.
+     */
+    public void usePackage(Package manifest)
     {
-        if (!packages.containsKey(namespace))
+        usePackage(manifest.getCommonName(), manifest);
+    }
+
+    /**
+     * Tells the engine that you will be using a package by the name of <i>name</i>.
+     *
+     * @param name         handy name for the package. If null, use the common package name.
+     * @param manifest     manifest of the package.
+     */
+    public void usePackage(String name, Package manifest)
+    {
+        manifest.register();
+        packages.put(name == null ? manifest.getCommonName() : name, manifest);
+    }
+
+    /**
+     * Use a package with the common package name.
+     *
+     * @param location  the location of the package.
+     */
+    public void usePackage(String location)
+    {
+        usePackage(null, location);
+    }
+
+    /**
+     * Finds a component class inside the given package with the given name.
+     *
+     * @param packageName   the package name.
+     * @param name          the name of the component.
+     * @return              the component class.
+     */
+    public Class<? extends Component> findComponent(String packageName, String name)
+    {
+        if (!packages.containsKey(packageName))
         {
-            throw new JMokaException("The package " + namespace + " does not exists.");
+            throw new JMokaException("The package " + packageName + " does not exists.");
         }
 
-        Package manifest = packages.get(namespace);
+        Package manifest = packages.get(packageName);
 
         Class<? extends Component> component = manifest.getComponent(name);
 
         if (component == null)
         {
-            throw new JMokaException("The package " + namespace + " does not contains the component " + name);
+            throw new JMokaException("The package " + packageName + " does not contains the component " + name);
         }
 
         return component;
+    }
+
+    public HashMap<String, Package> getPackages()
+    {
+        return packages;
     }
 }

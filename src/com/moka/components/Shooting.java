@@ -40,19 +40,19 @@ public class Shooting extends Component
         }
     }
 
-    @ComponentAttribute("trigger")
+    @ComponentAttribute("Trigger")
     public final void setTrigger(Trigger<Prefab> trigger)
     {
         this.trigger = trigger;
     }
 
-    @ComponentAttribute(value = "bulletPrefab", required = true)
+    @ComponentAttribute(value = "BulletPrefab", required = true)
     public final void setBulletPrefab(Prefab bulletPrefab)
     {
         this.bulletPrefab = bulletPrefab;
     }
 
-    @ComponentAttribute(value = "button", required = true)
+    @ComponentAttribute(value = "Button", required = true)
     public void setButton(String button)
     {
         this.button = button;

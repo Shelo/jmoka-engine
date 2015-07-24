@@ -282,7 +282,7 @@ public abstract class PrefabReader
      * @param componentClass    the component class to inspect.
      * @return                  qualified methods of the component.
      */
-    public ArrayList<Method> getQualifiedMethods(Class<? extends Component> componentClass)
+    public static ArrayList<Method> getQualifiedMethods(Class<? extends Component> componentClass)
     {
         ArrayList<Method> qualified = new ArrayList<>();
 

@@ -45,5 +45,11 @@ public abstract class Package
         return null;
     }
 
+    public abstract String getCommonName();
     public abstract void registerComponents(LinkedList<Class<? extends Component>> components);
+
+    public LinkedList<Class<? extends Component>> getComponents()
+    {
+        return components;
+    }
 }

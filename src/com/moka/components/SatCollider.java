@@ -150,7 +150,7 @@ public class SatCollider extends Collider
 		return tVertices;
 	}
 
-	@ComponentAttribute("vertices")
+	@ComponentAttribute("Vertices")
 	public void setVertices(String path)
 	{
 		

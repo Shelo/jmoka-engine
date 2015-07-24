@@ -100,31 +100,31 @@ public class Controllable extends Component
 		getTransform().move(vx, vy);
 	}
 
-	@ComponentAttribute("topSpeed")
+	@ComponentAttribute("TopSpeed")
 	public void setTopSpeed(int topSpeed)
 	{
 		this.topSpeed = topSpeed;
 	}
 
-	@ComponentAttribute("acceleration")
+	@ComponentAttribute("Acceleration")
 	public void setAcceleration(int acceleration)
 	{
 		this.acceleration = acceleration;
 	}
 
-	@ComponentAttribute("constrainX")
+	@ComponentAttribute("ConstrainX")
 	public void setConstrainX(boolean constrainX)
 	{
 		this.constrainX = constrainX;
 	}
 
-	@ComponentAttribute("constrainY")
+	@ComponentAttribute("ConstrainY")
 	public void setConstrainY(boolean constrainY)
 	{
 		this.constrainY = constrainY;
 	}
 
-	@ComponentAttribute("impulse")
+	@ComponentAttribute("Impulse")
 	public void setImpulse(float impulse)
 	{
 		this.impulse = impulse;

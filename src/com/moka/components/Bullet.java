@@ -32,7 +32,7 @@ public class Bullet extends Component
 		Pools.vec2.put(buffer);
 	}
 
-	@ComponentAttribute("speed")
+	@ComponentAttribute("Speed")
 	public void setSpeed(int speed)
 	{
 		this.speed = speed;

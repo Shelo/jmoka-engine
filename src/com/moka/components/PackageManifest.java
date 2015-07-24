@@ -8,6 +8,12 @@ import java.util.LinkedList;
 public class PackageManifest extends Package
 {
     @Override
+    public String getCommonName()
+    {
+        return "Moka";
+    }
+
+    @Override
     public void registerComponents(LinkedList<Class<? extends Component>> components)
     {
         components.add(AABBCollider.class);

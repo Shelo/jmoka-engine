@@ -41,7 +41,7 @@ public class CircleCollider extends Collider
 		getTransform().move(collision.getMovement());
 	}
 
-	@ComponentAttribute("radius")
+	@ComponentAttribute("Radius")
 	public void setRadius(float radius)
 	{
 		this.radius = radius;
