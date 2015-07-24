@@ -6,11 +6,6 @@ import com.moka.core.MokaResources;
 
 public class Resources extends MokaResources
 {
-    public Resources(String root)
-    {
-        super(root);
-    }
-
     public static class axes
     {
         public static final String HORIZONTAL = "horizontal";
@@ -34,11 +29,21 @@ public class Resources extends MokaResources
         public static Prefab player;
     }
 
+    public static class integers
+    {
+        public static int someValue = 90;
+    }
+
+    public Resources(String root)
+    {
+        super(root);
+    }
+
     @Override
     public void load()
     {
-        textures.player = texture("img/ship_kl103.png");
-        textures.playerShooting = texture("img/ship_kl103-shooting.png");
+        textures.player = texture("img/kl103.png");
+        textures.playerShooting = texture("img/kl103_shooting.png");
 
         prefabs.player = prefab("prefabs/player.oping");
     }

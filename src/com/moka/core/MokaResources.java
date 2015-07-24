@@ -52,6 +52,18 @@ public abstract class MokaResources
         throw new JMokaException("Resources inner class " + name + " does not exists.");
     }
 
+    public Object findResource(String reference)
+    {
+        String[] parts = reference.split("\\.");
+
+        if (parts.length != 2)
+        {
+            throw new JMokaException("The reference must be of the format: innerClass.valueName.");
+        }
+
+        return findResource(parts[0], parts[1]);
+    }
+
     public Object findResource(String innerClassName, String name)
     {
         Class<?> innerClass = getInnerClass(innerClassName);
@@ -63,8 +75,7 @@ public abstract class MokaResources
         }
         catch (NoSuchFieldException e)
         {
-            e.printStackTrace();
-            throw new JMokaException("Resource name inside " + innerClassName + " does not exists.");
+            throw new JMokaException("Resource " + name + " inside " + innerClassName + " does not exists.");
         }
         catch (IllegalAccessException e)
         {
@@ -72,6 +83,14 @@ public abstract class MokaResources
         }
     }
 
+    /**
+     * This is the place to load all things. Remember that the order does matters, if a prefab needs some
+     * resource that has not been initialized at the time, the resources will be null.
+     */
     public abstract void load();
+
+    /**
+     * Dispose everything you want.
+     */
     public abstract void dispose();
 }

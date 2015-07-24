@@ -32,7 +32,7 @@ public class Camera extends Component
 		projection.toOrthographic(left, right, bottom, top);
 	}
 
-	public void setAsCurrent()
+	public void setAsMain()
 	{
 		Moka.getRenderer().setCamera(this);
 	}

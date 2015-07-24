@@ -46,7 +46,7 @@ public class OpingPrefabReader extends PrefabReader
         }
         catch (IOException e)
         {
-            throw new JMokaException("Error while reading the prefab file.");
+            throw new JMokaException("[Prefab Error] " + e.getMessage());
         }
 
         return prefab;
@@ -95,7 +95,7 @@ public class OpingPrefabReader extends PrefabReader
             throw new JMokaException("The group attribute is just one string value.");
         }
 
-        return group.getValue(0);
+        return getTestedValue(String.class, group.getValue(0));
     }
 
     private Vector2 forSize(Leaf size)
@@ -105,8 +105,8 @@ public class OpingPrefabReader extends PrefabReader
             throw new JMokaException("The size attribute should have 2 values.");
         }
 
-        float width = Float.parseFloat(size.getValue(0));
-        float height = Float.parseFloat(size.getValue(1));
+        float width = getTestedValue(Float.class, size.getValue(0));
+        float height = getTestedValue(Float.class, size.getValue(1));
 
         return new Vector2(width, height);
     }
@@ -118,7 +118,7 @@ public class OpingPrefabReader extends PrefabReader
             throw new JMokaException("The layer attribute is just one integer value.");
         }
 
-        return Integer.parseInt(layer.getValue(0));
+        return getTestedValue(Integer.class, layer.getValue(0));
     }
 
     private float forRotation(Leaf rotation)
@@ -129,7 +129,8 @@ public class OpingPrefabReader extends PrefabReader
             throw new JMokaException("The rotation attribute is just one float value.");
         }
 
-        return (float) Math.toRadians(Float.parseFloat(rotation.getValue(0)));
+        Float value = getTestedValue(Float.class, rotation.getValue(0));
+        return (float) Math.toRadians(value);
     }
 
     private Vector2 forPosition(Leaf position)
@@ -139,8 +140,8 @@ public class OpingPrefabReader extends PrefabReader
             throw new JMokaException("The position attribute should have 2 values.");
         }
 
-        float x = Float.parseFloat(position.getValue(0));
-        float y = Float.parseFloat(position.getValue(1));
+        float x = getTestedValue(Float.class, position.getValue(0));
+        float y = getTestedValue(Float.class, position.getValue(1));
 
         return new Vector2(x, y);
     }

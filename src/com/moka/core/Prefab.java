@@ -147,6 +147,11 @@ public final class Prefab
                 {
                     Object attr = componentAttrs.getValue(method);
 
+                    if (attr == null)
+                    {
+                        throw new JMokaException("Some error happened... Maybe the resource is null at this time?");
+                    }
+
                     // if the attr is an instance of a trigger, then get a new instance of that trigger
                     // in order to pass it to the setter method.
                     if (attr.getClass().isAssignableFrom(TriggerPromise.class))
@@ -188,7 +193,7 @@ public final class Prefab
 
     public void setGroup(String group)
     {
-
+        this.group = group;
     }
 
     /**

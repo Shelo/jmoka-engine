@@ -11,6 +11,8 @@ public class MainScene extends Scene
     {
         newCamera("MainCamera", true);
         Resources.prefabs.player.newEntity("Player");
+
+        // setup scene.
         Moka.getRenderer().setClearColor(1, 1, 1);
     }
 

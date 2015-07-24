@@ -2,14 +2,12 @@ package com.moka.prefabs;
 
 import com.moka.core.ComponentAttribute;
 import com.moka.core.Moka;
-import com.moka.core.MokaResources;
 import com.moka.core.Prefab;
 import com.moka.core.entity.Component;
 import com.moka.utils.JMokaException;
 import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -55,6 +53,8 @@ public abstract class PrefabReader
     {
         if (value.charAt(0) == getReferenceChar())
         {
+            Object result;
+
             // in case that this is a resources (marked with the resource char), then grab the resource name
             // and find it in the resources specified by the user.
             String resource = value.substring(1);
@@ -68,47 +68,66 @@ public abstract class PrefabReader
             String innerClass = parts[0];
             String name = parts[1];
 
-            return (T) Moka.getResources().findResource(innerClass, name);
-        }
-        else if (value.charAt(0) == getExpressionChar())
-        {
-            String expression = replaceReferences(value.substring(2, value.length() - 1));
-            String expValue;
+            result = Moka.getResources().findResource(innerClass, name);
 
-            try
+            if (param == int.class || param == Integer.class)
             {
-                expValue = evaluator.evaluate(expression);
+                result = ((Number) result).intValue();
             }
-            catch (EvaluationException e)
+            else if (param == float.class || param == Float.class)
             {
-                throw new JMokaException("[JEval] " + e.toString());
+                result = ((Number) result).floatValue();
+            }
+            else if (param == double.class || param == Double.class)
+            {
+                result = ((Number) result).doubleValue();
             }
 
-            return getTestedValue(param, expValue);
+            return (T) result;
         }
         else
         {
             Object result = null;
 
-            if (param == int.class || param == Integer.class)
+            try
             {
-                result = Integer.parseInt(value);
+                if (param == int.class || param == Integer.class)
+                {
+                    result = Integer.parseInt(value);
+                }
+                else if (param == float.class || param == Float.class)
+                {
+                    result = Float.parseFloat(value);
+                }
+                else if (param == double.class || param == Double.class)
+                {
+                    result = Double.parseDouble(value);
+                }
+                else if (param == boolean.class || param == Boolean.class)
+                {
+                    result = Boolean.parseBoolean(value);
+                }
+                else if (param == String.class)
+                {
+                    result = value;
+                }
             }
-            else if (param == float.class || param == Float.class)
+            catch (NumberFormatException eFormat)
             {
-                result = Float.parseFloat(value);
-            }
-            else if (param == double.class || param == Double.class)
-            {
-                result = Double.parseDouble(value);
-            }
-            else if (param == boolean.class || param == Boolean.class)
-            {
-                result = Boolean.parseBoolean(value);
-            }
-            else if (param == String.class)
-            {
-                result = value;
+                // if the value is not parsable, then try to evaluate it.
+                String expression = replaceReferences(value);
+                String expValue;
+
+                try
+                {
+                    expValue = evaluator.evaluate(expression);
+                }
+                catch (EvaluationException e)
+                {
+                    throw new JMokaException("[JEval] " + e.toString());
+                }
+
+                result = getTestedValue(param, expValue);
             }
 
             return (T) result;
@@ -135,13 +154,13 @@ public abstract class PrefabReader
             {
                 if (curReference.length() == 0)
                 {
-                    if (Character.isLetter(c))
+                    if (Character.isLetter(c) || c == '.')
                     {
                         curReference.append(c);
                     }
                     else
                     {
-                        throw new JMokaException("Malformed reference.");
+                        throw new JMokaException("Malformed reference in: " + expression);
                     }
                 }
                 else
@@ -160,9 +179,10 @@ public abstract class PrefabReader
             }
             else
             {
-                if (c == getReferenceChar())
+                if (Character.isLetter(c))
                 {
                     rRef = true;
+                    curReference.append(c);
                 }
             }
         }
@@ -176,8 +196,7 @@ public abstract class PrefabReader
         StringBuilder result = new StringBuilder(expression);
         for (String reference : references)
         {
-            // TODO: change this.
-//            replaceAll(result, getReferenceChar() + reference, Moka.getResources().get(reference).toString());
+            replaceAll(result, reference, String.valueOf(Moka.getResources().findResource(reference)));
         }
 
         return result.toString();
@@ -256,6 +275,13 @@ public abstract class PrefabReader
         return true;
     }
 
+    /**
+     * Returns a list of all qualified methods (methods that have the ComponentAttribute annotation) of
+     * a given component class.
+     *
+     * @param componentClass    the component class to inspect.
+     * @return                  qualified methods of the component.
+     */
     public ArrayList<Method> getQualifiedMethods(Class<? extends Component> componentClass)
     {
         ArrayList<Method> qualified = new ArrayList<>();
@@ -301,10 +327,5 @@ public abstract class PrefabReader
     public char getReferenceChar()
     {
         return '@';
-    }
-
-    public char getExpressionChar()
-    {
-        return '$';
     }
 }

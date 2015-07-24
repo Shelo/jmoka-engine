@@ -1,6 +1,6 @@
 + Prefab
-    - Position: 200, 200
-    - Rotation: 0
+    - Position: 200, 200 / 2
+    - Rotation: @integers.someValue
     - Group: Player
     - Size: 64, 64
 
