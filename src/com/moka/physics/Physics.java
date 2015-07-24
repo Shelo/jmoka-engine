@@ -23,8 +23,13 @@ public class Physics extends SubEngine
                 Collider pCollider = pivot.getCollider();
 
                 // TODO: think if this is right.
-                for (int j = i + 1; j < size; j++)
+                for (int j = 0; j < size; j++)
                 {
+                    if (i == j)
+                    {
+                        continue;
+                    }
+
                     Entity test = entities.get(j);
 
                     if (test.hasCollider() && test.getCollider().isEnabled())

@@ -1,0 +1,6 @@
++ Prefab
+    - Group: Enemy
+    - Size: 64, 64
+
+    + Sprite
+        - Texture: @textures.enemy02

@@ -3,9 +3,14 @@
     - Rotation: 0
     - Group: Player
     - Size: 64, 64
+    - Layer: 1
 
     + Sprite
         - Texture: @textures.player
 
     + SpaceShooter:Movement
-        - Speed: 500
+        - Speed: 200
+
+    + AABBCollider
+        - Width: 64
+        - Height: 64

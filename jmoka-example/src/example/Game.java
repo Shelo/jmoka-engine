@@ -4,7 +4,6 @@ import com.moka.core.Application;
 import com.moka.input.Input;
 import com.moka.core.Moka;
 import example.scenes.MainScene;
-import example.scenes.SecondScene;
 
 public class Game
 {
@@ -32,7 +31,6 @@ public class Game
 
         // set up scenes.
         Moka.getContext().addScene(new MainScene());
-        Moka.getContext().addScene(new SecondScene());
 
         Moka.getContext().setMainScene(MainScene.class);
 

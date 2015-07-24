@@ -71,12 +71,12 @@ public class Texture
         glBindTexture(GL_TEXTURE_2D, textureId);
     }
 
-    public float getWidth()
+    public int getWidth()
     {
         return width;
     }
 
-    public float getHeight()
+    public int getHeight()
     {
         return height;
     }
