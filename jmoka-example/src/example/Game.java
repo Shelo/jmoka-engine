@@ -13,16 +13,16 @@ public class Game
      */
     public static void main(String[] args)
     {
-        Application app = new Application(new Resources("jmoka-example/assets/"));
+        Application app = new Application(new Res("jmoka-example/assets/"));
 
         // set some inputs.
-        Moka.getInput().bindKey(Resources.buttons.FIRE_1, Input.KEY_Z);
-        Moka.getInput().bindKey(Resources.buttons.FIRE_2, Input.KEY_X);
-        Moka.getInput().bindAxes(Resources.axes.HORIZONTAL, Input.KEY_LEFT, Input.KEY_RIGHT);
-        Moka.getInput().bindAxes(Resources.axes.VERTICAL, Input.KEY_DOWN, Input.KEY_UP);
+        Moka.getInput().bindKey(Res.buttons.FIRE_1, Input.KEY_Z);
+        Moka.getInput().bindKey(Res.buttons.FIRE_2, Input.KEY_X);
+        Moka.getInput().bindAxes(Res.axes.HORIZONTAL, Input.KEY_LEFT, Input.KEY_RIGHT);
+        Moka.getInput().bindAxes(Res.axes.VERTICAL, Input.KEY_DOWN, Input.KEY_UP);
 
         // set display options.
-        Moka.getDisplay().createDisplay(800, 450, "JMoka Engine");
+        Moka.getDisplay().createDisplay(Res.integers.screenWidth, Res.integers.screenHeight, "JMoka Engine");
 
         // set renderer options.
         Moka.getRenderer().setClearColor(0, 0, 0);

@@ -2,7 +2,7 @@ package example.scenes;
 
 import com.moka.core.Moka;
 import com.moka.core.Scene;
-import example.Resources;
+import example.Res;
 
 public class MainScene extends Scene
 {
@@ -10,7 +10,7 @@ public class MainScene extends Scene
     public void onCreate()
     {
         newCamera("MainCamera", true);
-        Resources.prefabs.player.newEntity("Player");
+        Res.prefabs.player.newEntity("Player");
 
         // setup scene.
         Moka.getRenderer().setClearColor(1, 1, 1);

@@ -4,7 +4,7 @@ import com.moka.core.Prefab;
 import com.moka.graphics.Texture;
 import com.moka.core.MokaResources;
 
-public class Resources extends MokaResources
+public class Res extends MokaResources
 {
     public static class axes
     {
@@ -31,10 +31,11 @@ public class Resources extends MokaResources
 
     public static class integers
     {
-        public static int someValue = 90;
+        public static int screenWidth = 800;
+        public static int screenHeight = 450;
     }
 
-    public Resources(String root)
+    public Res(String root)
     {
         super(root);
     }

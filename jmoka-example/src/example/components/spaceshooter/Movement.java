@@ -7,7 +7,7 @@ import com.moka.math.Vector2;
 import com.moka.time.TimeOut;
 import com.moka.triggers.Trigger;
 import com.moka.utils.Pools;
-import example.Resources;
+import example.Res;
 
 public class Movement extends Component
 {
@@ -19,7 +19,7 @@ public class Movement extends Component
         @Override
         public Object onTrigger()
         {
-            getEntity().getSprite().setTexture(Resources.textures.player);
+            getEntity().getSprite().setTexture(Res.textures.player);
 
             return null;
         }
@@ -28,16 +28,16 @@ public class Movement extends Component
     @Override
     public void onUpdate()
     {
-        float x = Moka.getInput().getAxes(Resources.axes.HORIZONTAL);
-        float y = Moka.getInput().getAxes(Resources.axes.VERTICAL);
+        float x = Moka.getInput().getAxes(Res.axes.HORIZONTAL);
+        float y = Moka.getInput().getAxes(Res.axes.VERTICAL);
 
         Vector2 distance = Pools.vec2.take(x, y).nor().mul(speed * Moka.getTime().getDelta());
         getTransform().move(distance);
         Pools.vec2.put(distance);
 
-        if (Moka.getInput().getButtonDown(Resources.buttons.FIRE_1))
+        if (Moka.getInput().getButtonDown(Res.buttons.FIRE_1))
         {
-            getEntity().getSprite().setTexture(Resources.textures.playerShooting);
+            getEntity().getSprite().setTexture(Res.textures.playerShooting);
 
             if (currentTimeOut != null)
             {
