@@ -96,47 +96,47 @@ public class Application
     }
 
     // GETTERS AND SETTERS.
-    protected Context getContext()
+    public Context getContext()
     {
         return context;
     }
 
-    protected Core getCore()
+    public Core getCore()
     {
         return core;
     }
 
-    protected Display getDisplay()
+    public Display getDisplay()
     {
         return display;
     }
 
-    protected Time getTime()
+    public Time getTime()
     {
         return time;
     }
 
-    protected Renderer getRenderer()
+    public Renderer getRenderer()
     {
         return renderer;
     }
 
-    protected Physics getPhysics()
+    public Physics getPhysics()
     {
         return physics;
     }
 
-    protected Input getInput()
+    public Input getInput()
     {
         return input;
     }
 
-    protected NameManager getNameManager()
+    public NameManager getNameManager()
     {
         return nameManager;
     }
 
-    protected MokaResources getResources()
+    public MokaResources getResources()
     {
         return resources;
     }

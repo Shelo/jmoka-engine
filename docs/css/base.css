@@ -19,7 +19,8 @@ html, body
 
 article
 {
-	padding: 10px;
+	padding: 10px 15px 10px 15px;
+
 	margin: 10px;
 	background-color: #FFFFFF;
 	border: 1px #E7E7E7 solid;
