@@ -79,11 +79,11 @@ public abstract class Trigger<T>
      */
     public static <T> Trigger<T> getStaticTrigger(String path, Class<T> generic)
     {
-        return getNewTriggerInstance(getStaticTriggerClass(path, generic));
+        return newTriggerInstance(getStaticTriggerClass(path, generic));
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> Trigger<T> getNewTriggerInstance(Class<?> triggerClass)
+    public static <T> Trigger<T> newTriggerInstance(Class<?> triggerClass)
     {
         Object instance = null;
 

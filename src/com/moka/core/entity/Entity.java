@@ -139,7 +139,6 @@ public class Entity
     {
         for (Component component : components)
         {
-            System.out.println(component);
             if (componentClass.isInstance(component))
             {
                 return componentClass.cast(component);

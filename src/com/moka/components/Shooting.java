@@ -2,7 +2,7 @@ package com.moka.components;
 
 import com.moka.core.Moka;
 import com.moka.core.entity.Component;
-import com.moka.core.Prefab;
+import com.moka.prefabs.Prefab;
 import com.moka.core.ComponentAttribute;
 import com.moka.triggers.Trigger;
 

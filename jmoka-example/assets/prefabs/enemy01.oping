@@ -1,7 +1,16 @@
 + Prefab
-    - Group: Enemy
+    - Group: Enemies
     - Size: 64, 64
     - Rotation: 180
 
     + Sprite
         - Texture: @textures.enemy03
+
+    + AABBCollider
+        - OffsetX: 16
+        - Width: 48
+
+    + SpaceShooter:Health
+        - HealthPoints: 40
+        - Armor: 0
+        - OnDeath: example.EnemyTriggers.OnDeathEnemy

@@ -4,6 +4,8 @@ import com.moka.core.Moka;
 import com.moka.core.entity.Component;
 import com.moka.core.ComponentAttribute;
 import com.moka.math.Vector2;
+import com.moka.physics.Collision;
+import com.moka.triggers.Trigger;
 import com.moka.utils.Pools;
 
 public class Bullet extends Component
@@ -18,11 +20,22 @@ public class Bullet extends Component
     private float lifeTime;
     private float maxDistance;
     private byte destroyCondition = NONE;
+    private float damage;
 
-	public Bullet()
+    public Bullet()
 	{
 
 	}
+
+    public static class OnCollisionTrigger extends Trigger<Collision>
+    {
+        @Override
+        public Object onTrigger()
+        {
+
+            return null;
+        }
+    }
 
 	@Override
 	public void onCreate()
@@ -84,6 +97,12 @@ public class Bullet extends Component
         }
     }
 
+    @ComponentAttribute("Damage")
+    public void setDamage(float damage)
+    {
+        this.damage = damage;
+    }
+
     @ComponentAttribute("Speed")
 	public void setSpeed(float speed)
 	{
@@ -102,5 +121,10 @@ public class Bullet extends Component
     {
         destroyCondition |= MAX_DISTANCE;
         this.maxDistance = maxDistance;
+    }
+
+    public float getDamage()
+    {
+        return damage;
     }
 }

@@ -1,6 +1,6 @@
 package com.moka.core;
 
-import com.moka.core.Prefab;
+import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
 import com.moka.utils.JMokaException;
 

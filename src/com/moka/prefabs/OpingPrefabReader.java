@@ -3,7 +3,6 @@ package com.moka.prefabs;
 import com.moka.core.ComponentAttribute;
 import com.moka.core.Moka;
 import com.moka.core.NameManager;
-import com.moka.core.Prefab;
 import com.moka.core.entity.Component;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
@@ -170,30 +169,37 @@ public class OpingPrefabReader extends PrefabReader
                     continue;
                 }
 
-                String value = leaf.getValue(0);
-                if (validateAttribute(attribute, value, componentClass.getSimpleName()))
+                if (validateAttribute(attribute, leaf, method, componentClass.getSimpleName()))
                 {
-                    Class<?> param = getParamFor(method);
+                    Class<?>[] params = getParamsFor(method);
 
-                    Object casted;
+                    Object[] castedValues = new Object[params.length];
 
-                    // we have to take different paths with different types, as we have to act differently when
-                    // instantiating.
-                    if (param.isAssignableFrom(Trigger.class))
+                    for (int i = 0; i < params.length; i++)
                     {
-                        casted = new TriggerPromise(Trigger.getStaticTriggerClass(value,
-                                getTriggerGenericClass(method)));
-                    }
-                    else if (param.isEnum())
-                    {
-                        casted = castEnumType(param, value);
-                    }
-                    else
-                    {
-                        casted = getTestedValue(param, value);
+                        String value = leaf.getValue(i);
+                        Object casted;
+
+                        // we have to take different paths with different types, as we have to act differently when
+                        // instantiating.
+                        if (params[i].isAssignableFrom(Trigger.class))
+                        {
+                            casted = new TriggerPromise(Trigger.getStaticTriggerClass(value,
+                                    getTriggerGenericClass(method)));
+                        }
+                        else if (params[i].isEnum())
+                        {
+                            casted = castEnumType(params[i], value);
+                        }
+                        else
+                        {
+                            casted = getTestedValue(params[i], value);
+                        }
+
+                        castedValues[i] = casted;
                     }
 
-                    attrs.addMethodValue(method, casted);
+                    attrs.addMethodValues(method, castedValues);
                 }
             }
 

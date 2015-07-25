@@ -5,6 +5,11 @@
     + Sprite
         - Texture: @textures.bullet01
 
+    + AABBCollider
+        - OnCollision: example.BulletTriggers.BulletCollisionTrigger
+        - IgnoreGroup: Player
+
     + Bullet
         - Speed: 500
         - LifeTime: 1
+        - Damage: 10

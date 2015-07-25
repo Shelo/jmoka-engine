@@ -7,6 +7,7 @@ import com.moka.core.entity.Component;
 import com.moka.core.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
+import com.moka.utils.Pools;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,8 +15,8 @@ import java.util.Collections;
 public abstract class Collider extends Component
 {
     private boolean trigger = false;
-    private static Vector2 buf = new Vector2();
 
+    private ArrayList<String> ignoreGroups = new ArrayList<>();
     private Trigger<Collision> collisionTrigger;
 
     public void onCollide(Collision collision)
@@ -121,11 +122,13 @@ public abstract class Collider extends Component
         Vector2 position1 = circle1.getEntity().getTransform().getPosition();
         Vector2 position2 = circle2.getEntity().getTransform().getPosition();
 
-        Vector2 displace = buf.set(position1).sub(position2);
+        Vector2 displace = Pools.vec2.take(position1).sub(position2);
         float distanceSqrt = displace.sqrLen();
 
         float radiusSum = circle1.getRadius() + circle2.getRadius();
         float radiusSqrt = radiusSum * radiusSum;
+
+        Pools.vec2.put(displace);
 
         if (distanceSqrt <= radiusSqrt)
         {
@@ -182,13 +185,13 @@ public abstract class Collider extends Component
         return aabbCircle(aabb, circle);
     }
 
-    @ComponentAttribute("collisionTrigger")
+    @ComponentAttribute("OnCollision")
     public void setCollisionTrigger(Trigger<Collision> collisionTrigger)
     {
         this.collisionTrigger = collisionTrigger;
     }
 
-    @ComponentAttribute("isTrigger")
+    @ComponentAttribute("IsTrigger")
     public void setTrigger(boolean trigger)
     {
         this.trigger = trigger;
@@ -199,6 +202,32 @@ public abstract class Collider extends Component
         return trigger;
     }
 
-    public abstract void response(Collision collision);
+    public void addIgnoreGroup(String group)
+    {
+        ignoreGroups.add(group);
+    }
+
+    @ComponentAttribute("IgnoreGroup")
+    public void setIgnoreGroup(String group)
+    {
+        ignoreGroups.add(group);
+    }
+
+    public Collision internalCollides(Collider other)
+    {
+        if (ignoreGroups.contains(other.getEntity().getGroup()) || other.ignoresThis(getEntity().getGroup()))
+        {
+            return null;
+        }
+
+        return collidesWith(other);
+    }
+
+    private boolean ignoresThis(String group)
+    {
+        return ignoreGroups.contains(group);
+    }
+
     public abstract Collision collidesWith(Collider other);
+    public abstract void response(Collision collision);
 }

@@ -5,6 +5,7 @@
 
     + Sprite
         - Texture: @textures.tileDirt01
+        - ClipRect: 0, 0, 13, 1
 
     + AABBCollider
         - Height: 32

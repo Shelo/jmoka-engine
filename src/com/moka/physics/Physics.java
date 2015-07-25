@@ -35,7 +35,7 @@ public class Physics extends SubEngine
                     if (test.hasCollider() && test.getCollider().isEnabled())
                     {
                         Collider tCollider = test.getCollider();
-                        Collision collision = pCollider.collidesWith(tCollider);
+                        Collision collision = pCollider.internalCollides(tCollider);
 
                         if (collision != null)
                         {

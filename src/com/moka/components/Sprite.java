@@ -113,12 +113,14 @@ public class Sprite extends Component
         setTexture(new Texture(path));
     }
 
+    @ComponentAttribute("ClipRectPixels")
     public void setClipRectPixels(float left, float top, float width, float height)
     {
         this.clipRect = new Rectangle(left / texture.getWidth(), top / texture.getHeight(),
                 width / texture.getWidth(), height / texture.getHeight());
     }
 
+    @ComponentAttribute("ClipRect")
     public void setClipRect(float left, float top, float width, float height)
     {
         this.clipRect = new Rectangle(left, top, width, height);
@@ -130,50 +132,10 @@ public class Sprite extends Component
         this.texture = texture;
     }
 
-    @ComponentAttribute("TintR")
-    public void setTintR(float value)
+    @ComponentAttribute("Tint")
+    public void setTint(float r, float g, float b, float a)
     {
-        tint.r = value;
-    }
-
-    @ComponentAttribute("TintG")
-    public void setTintG(float value)
-    {
-        tint.g = value;
-    }
-
-    @ComponentAttribute("TintB")
-    public void setTintB(float value)
-    {
-        tint.b = value;
-    }
-
-    @ComponentAttribute("TintA")
-    public void setTintA(float value)
-    {
-        tint.a = value;
-    }
-
-    @ComponentAttribute("Width")
-    public void setWidth(float value)
-    {
-        if (size == null)
-        {
-            size = new Vector2();
-        }
-
-        size.x = value;
-    }
-
-    @ComponentAttribute("Height")
-    public void setHeight(float value)
-    {
-        if (size == null)
-        {
-            size = new Vector2();
-        }
-
-        size.y = value;
+        tint.set(r, g, b, a);
     }
 
     public Vector2 getSize()
@@ -189,10 +151,5 @@ public class Sprite extends Component
     public Quad getMesh()
     {
         return quad;
-    }
-
-    public void setTint(float r, float g, float b, float a)
-    {
-        tint.set(r, g, b, a);
     }
 }

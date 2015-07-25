@@ -2,9 +2,9 @@ package com.moka.prefabs;
 
 import com.moka.core.ComponentAttribute;
 import com.moka.core.Moka;
-import com.moka.core.Prefab;
 import com.moka.core.entity.Component;
 import com.moka.utils.JMokaException;
+import com.shelodev.oping.structure.Leaf;
 import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;
 
@@ -226,20 +226,9 @@ public abstract class PrefabReader
      * @param method the method.
      * @return the parameter's class.
      */
-    public Class<?> getParamFor(Method method)
+    public Class<?>[] getParamsFor(Method method)
     {
-        Class<?>[] params = method.getParameterTypes();
-
-        // so, if the quantity of parameters is not equal to one, there's an error in the
-        // definition of the method.
-        if (params.length != 1)
-        {
-            throw new JMokaException(String.format("Method %s for component %s has more or less" +
-                            "than one parameter, this is not allowed.", method.getName(),
-                    method.getDeclaringClass().getName()));
-        }
-
-        return params[0];
+        return method.getParameterTypes();
     }
 
     public Class<?> getTriggerGenericClass(Method method)
@@ -259,9 +248,9 @@ public abstract class PrefabReader
         return metaType.getClass();
     }
 
-    public boolean validateAttribute(ComponentAttribute attribute, String value, String simpleName)
+    public boolean validateAttribute(ComponentAttribute attribute, Leaf leaf, Method method, String simpleName)
     {
-        if (value == null)
+        if (leaf == null)
         {
             if (attribute.required())
             {
@@ -270,6 +259,19 @@ public abstract class PrefabReader
             }
 
             return false;
+        }
+        else if (leaf.size() != method.getParameterCount())
+        {
+            // check if the type is an array
+            Class<?>[] params = method.getParameterTypes();
+
+            if (params.length != 0 & params[0].isArray())
+            {
+                return true;
+            }
+
+            throw new JMokaException("The attribute " + attribute.value() + " needs " + method.getParameterCount()
+                + " values.");
         }
 
         return true;

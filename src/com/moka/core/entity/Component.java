@@ -62,6 +62,16 @@ public abstract class Component
         return enabled;
     }
 
+    public Object callTrigger(Trigger<Object> trigger)
+    {
+        if (trigger != null)
+        {
+            return trigger.trigger(this, null);
+        }
+
+        return null;
+    }
+
     public <T> Object callTrigger(Trigger<T> trigger, T meta)
     {
         if (trigger != null)

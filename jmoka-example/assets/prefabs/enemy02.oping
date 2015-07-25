@@ -1,5 +1,5 @@
 + Prefab
-    - Group: Enemy
+    - Group: Enemies
     - Size: 64, 64
 
     + Sprite
