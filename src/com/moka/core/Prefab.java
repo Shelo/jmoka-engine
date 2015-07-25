@@ -96,7 +96,20 @@ public final class Prefab
     }
 
     /**
-     * Sets the position of the prefab to the x, y values and the instantiates.
+     * Sets the position of the prefab to the position vector and then instantiates.
+     *
+     * @param name          unique name for the new instance.
+     * @param position      position for the new instance.
+     * @return              the new getEntity.
+     */
+    public Entity newEntity(String name, Vector2 position)
+    {
+        setPosition(position);
+        return newEntity(name);
+    }
+
+    /**
+     * Sets the position of the prefab to the x, y values and then instantiates.
      *
      * @param name  unique name for the new instance.
      * @param x     x position on the world.

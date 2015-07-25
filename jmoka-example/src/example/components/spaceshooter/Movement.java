@@ -12,18 +12,6 @@ import example.Res;
 public class Movement extends Component
 {
     private float speed = 100;
-    private TimeOut currentTimeOut;
-
-    private Trigger switchTextureBack = new Trigger()
-    {
-        @Override
-        public Object onTrigger()
-        {
-            getEntity().getSprite().setTexture(Res.textures.player);
-
-            return null;
-        }
-    };
 
     @Override
     public void onUpdate()
@@ -34,27 +22,6 @@ public class Movement extends Component
         Vector2 distance = Pools.vec2.take(x, y).nor().mul(speed * Moka.getTime().getDelta());
         getTransform().move(distance);
         Pools.vec2.put(distance);
-
-        if (Moka.getInput().getButtonDown(Res.buttons.FIRE_1))
-        {
-            getEntity().getSprite().setTexture(Res.textures.playerShooting);
-
-            if (currentTimeOut != null)
-            {
-                currentTimeOut.cancel();
-            }
-
-            currentTimeOut = Moka.getTime().newTimeOut(this, 0.1f, switchTextureBack);
-        }
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        if (currentTimeOut != null)
-        {
-            currentTimeOut.cancel();
-        }
     }
 
     @ComponentAttribute("Speed")

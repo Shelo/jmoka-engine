@@ -1,0 +1,10 @@
++ Prefab
+    - Group: Bullets
+    - Size: 32, 12
+
+    + Sprite
+        - Texture: @textures.bullet01
+
+    + Bullet
+        - Speed: 500
+        - LifeTime: 1

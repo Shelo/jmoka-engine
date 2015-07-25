@@ -28,6 +28,11 @@ public class Pools
             return object.set(x, y);
         }
 
+        public static Vector2 take(Vector2 value)
+        {
+            return take(value.x, value.y);
+        }
+
         public static Vector2 take()
         {
             return take(0, 0);
