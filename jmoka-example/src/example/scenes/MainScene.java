@@ -1,6 +1,8 @@
 package example.scenes;
 
 import com.moka.core.Scene;
+import com.moka.core.entity.Entity;
+import com.moka.math.Rectangle;
 import example.Res;
 
 public class MainScene extends Scene
@@ -15,16 +17,14 @@ public class MainScene extends Scene
         Res.prefabs.enemy02.newEntity("Enemy02_01", 500, Res.integers.screenHeight / 2);
         Res.prefabs.enemy03.newEntity("Enemy03_01", 532, Res.integers.screenHeight / 3);
 
-        for (int i = 0; i < 13; i++)
-        {
-            Res.prefabs.tileDirt01.newEntity(null, 32 + i * 64, Res.integers.screenHeight - 32);
-        }
+        Entity tileTop
+                = Res.prefabs.tileDirt01.newEntity(null, Res.integers.screenWidth / 2, Res.integers.screenHeight - 32);
+        tileTop.getSprite().setClipRect(0, 0, 13, 1);
 
-        Res.prefabs.tileDirt01.setRotation((float) Math.toRadians(180));
-        for (int i = 0; i < 13; i++)
-        {
-            Res.prefabs.tileDirt01.newEntity(null, 32 + i * 64, 32);
-        }
+        Entity tileBottom
+                = Res.prefabs.tileDirt01.newEntity(null, Res.integers.screenWidth / 2, 32);
+        tileBottom.getTransform().setRotation((float) Math.toRadians(180f));
+        tileBottom.getSprite().setClipRect(0, 0, 13, 1);
     }
 
     @Override

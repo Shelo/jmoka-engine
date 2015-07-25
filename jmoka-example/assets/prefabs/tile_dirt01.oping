@@ -1,11 +1,10 @@
 + Prefab
     - Group: Tiles
-    - Size: 64, 64
+    - Size: 64 * 13, 64
     - Layer: 0
 
     + Sprite
         - Texture: @textures.tileDirt01
 
     + AABBCollider
-        - Width: 64
         - Height: 32

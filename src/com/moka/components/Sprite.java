@@ -7,6 +7,7 @@ import com.moka.graphics.Quad;
 import com.moka.graphics.Shader;
 import com.moka.graphics.Texture;
 import com.moka.math.Vector2;
+import com.moka.math.Rectangle;
 import com.moka.utils.JMokaException;
 
 /**
@@ -16,7 +17,7 @@ import com.moka.utils.JMokaException;
  */
 public class Sprite extends Component
 {
-
+    private Rectangle clipRect;
     private Texture texture;
     private Vector2 size;
     private Color tint;
@@ -61,12 +62,12 @@ public class Sprite extends Component
     @Override
     public void onCreate()
     {
-        Vector2 clipTopRight = new Vector2();
+        if (clipRect == null)
+        {
+            clipRect = new Rectangle(0, 0, 1, 1);
+        }
 
-        clipTopRight.x = texture.getTexCoordX();
-        clipTopRight.y = texture.getTexCoordY();
-
-        quad = new Quad(null, clipTopRight);
+        quad = new Quad(clipRect);
     }
 
     public void render(Shader shader)
@@ -107,15 +108,26 @@ public class Sprite extends Component
         return tint;
     }
 
+    public void setTexture(String path)
+    {
+        setTexture(new Texture(path));
+    }
+
+    public void setClipRectPixels(float left, float top, float width, float height)
+    {
+        this.clipRect = new Rectangle(left / texture.getWidth(), top / texture.getHeight(),
+                width / texture.getWidth(), height / texture.getHeight());
+    }
+
+    public void setClipRect(float left, float top, float width, float height)
+    {
+        this.clipRect = new Rectangle(left, top, width, height);
+    }
+
     @ComponentAttribute("Texture")
     public void setTexture(Texture texture)
     {
         this.texture = texture;
-    }
-
-    public void setTexture(String path)
-    {
-        setTexture(new Texture(path));
     }
 
     @ComponentAttribute("TintR")

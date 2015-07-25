@@ -1,6 +1,7 @@
 + Prefab
     - Group: Enemy
     - Size: 64, 64
+    - Rotation: 180
 
     + Sprite
         - Texture: @textures.enemy03

@@ -1,6 +1,7 @@
 package com.moka.graphics;
 
 import com.moka.math.Vector2;
+import com.moka.math.Rectangle;
 import com.moka.utils.CoreUtil;
 
 import java.nio.FloatBuffer;
@@ -24,7 +25,12 @@ public class Quad
     private int vao;
     private int ibo;
 
-    public Quad(Vector2 bottomLeftTexCoord, Vector2 topRightTexCoord)
+    /**
+     * A clipping rectangle in the form of left, top, width, height.
+     *
+     * @param clipRect  the clipping rectangle.
+     */
+    public Quad(Rectangle clipRect)
     {
         // create and bind the buffer.
         vao = glGenVertexArrays();
@@ -37,10 +43,10 @@ public class Quad
         // generate vertices.
         // texture is drawn flipped on porpoise.
         vertices = new Vertex[]{
-                new Vertex(-0.5f, -0.5f,    0,          topRightTexCoord.y),
-                new Vertex(-0.5f, 0.5f,     0,          0),
-                new Vertex(0.5f, 0.5f,      topRightTexCoord.x,  0),
-                new Vertex(0.5f, -0.5f,     topRightTexCoord.x,  topRightTexCoord.y)
+                new Vertex(-0.5f, -0.5f, clipRect.left, clipRect.top + clipRect.height),
+                new Vertex(-0.5f, 0.5f, clipRect.left, clipRect.top),
+                new Vertex(0.5f, 0.5f, clipRect.left + clipRect.width, clipRect.top),
+                new Vertex(0.5f, -0.5f, clipRect.left + clipRect.width, clipRect.top + clipRect.height)
         };
 
         // populate vertexBuffer.
