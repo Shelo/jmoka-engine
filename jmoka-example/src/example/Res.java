@@ -28,11 +28,13 @@ public class Res extends MokaResources
         public static Texture enemy03;
 
         public static Texture tileDirt01;
-        public static Texture tileDirt02;
 
         public static Texture bullet01;
 
         public static Texture space01;
+
+        public static Texture explosion01;
+        public static Texture explosion02;
     }
 
     public static class prefabs
@@ -44,9 +46,13 @@ public class Res extends MokaResources
         public static Prefab enemy03;
 
         public static Prefab tileDirt01;
-        public static Prefab tileDirt02;
+
         public static Prefab bullet01;
+
         public static Prefab space01;
+
+        public static Prefab explosion01;
+        public static Prefab explosion02;
     }
 
     public static class integers
@@ -74,13 +80,16 @@ public class Res extends MokaResources
 
         // Textures - tiles
         textures.tileDirt01 = texture("img/tiles/dirt01.png");
-        textures.tileDirt02 = texture("img/tiles/dirt02.png");
 
         // Textures - bullets
         textures.bullet01 = texture("img/bullet01.png");
 
         // Textures - space
         textures.space01 = texture("img/space01.png");
+
+        // Textures - explosion.
+        textures.explosion01 = texture("img/explosion01.png");
+        textures.explosion02 = texture("img/explosion02.png");
 
 
         // Prefabs - bullets
@@ -99,6 +108,10 @@ public class Res extends MokaResources
 
         // Prefabs - space
         prefabs.space01 = prefab("prefabs/space01.oping");
+
+        // Prefabs - explosion
+        prefabs.explosion01 = prefab("prefabs/explosion01.oping");
+        prefabs.explosion02 = prefab("prefabs/explosion02.oping");
     }
 
     @Override

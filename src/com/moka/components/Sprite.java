@@ -10,6 +10,8 @@ import com.moka.math.Vector2;
 import com.moka.math.Rectangle;
 import com.moka.utils.JMokaException;
 
+import static org.lwjgl.opengl.GL11.*;
+
 /**
  * Sprite class, this draws a Texture on a Quad given the transform specifications.
  *
@@ -22,6 +24,13 @@ public class Sprite extends Component
     private Vector2 size;
     private Color tint;
     private Quad quad;
+    private BLEND blend = BLEND.NORMAL;
+
+    public enum BLEND
+    {
+        NORMAL,
+        ADDITIVE,
+    }
 
     public Sprite()
     {
@@ -80,6 +89,17 @@ public class Sprite extends Component
         // render.
         texture.bind();
         shader.update(getTransform(), this);
+
+        switch (blend)
+        {
+            case NORMAL:
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                break;
+            case ADDITIVE:
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+                break;
+        }
+
         quad.draw();
     }
 
@@ -136,6 +156,12 @@ public class Sprite extends Component
     public void setTint(float r, float g, float b, float a)
     {
         tint.set(r, g, b, a);
+    }
+
+    @ComponentAttribute("Blend")
+    public void setBlend(BLEND blend)
+    {
+        this.blend = blend;
     }
 
     public Vector2 getSize()

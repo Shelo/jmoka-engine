@@ -1,0 +1,8 @@
++ Prefab
+    - Size: 48, 48
+
+    + Sprite
+        - Texture: @textures.explosion01
+        - Blend: ADDITIVE
+
+    + SpaceShooter:Explosion

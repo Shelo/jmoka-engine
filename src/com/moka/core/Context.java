@@ -335,4 +335,9 @@ public class Context extends SubEngine
     {
         return created;
     }
+
+    public int getEntitiesCount()
+    {
+        return allEntities.size();
+    }
 }

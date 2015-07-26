@@ -13,8 +13,6 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public final class Core extends SubEngine
 {
-    private static final String TAG = "CORE";
-
     private boolean experimental;
     private float frameTime;
     private boolean daemon;
@@ -32,7 +30,7 @@ public final class Core extends SubEngine
         }
         else
         {
-            JMokaLog.o(TAG, "GLFW initialized.");
+            log("GLFW initialized.");
         }
 
         runtime = Runtime.getRuntime();
@@ -60,7 +58,7 @@ public final class Core extends SubEngine
     {
         try
         {
-            JMokaLog.o(TAG, "Stabilizing for 500ms...");
+            log("Stabilizing for 500ms...");
             Thread.sleep(500);
         }
         catch (InterruptedException e)
@@ -142,7 +140,8 @@ public final class Core extends SubEngine
             if (accSeconds >= 1)
             {
                 float usedMemory = ((runtime.totalMemory() - runtime.freeMemory()) / (1024.0f * 1024.0f));
-                JMokaLog.o(TAG, renderFrames + " fps, " + updateFrames + " ups. Used Memory: " + usedMemory + "MB");
+                log(renderFrames + " fps, " + updateFrames + " ups. Used Memory: " + usedMemory + "MB. Entities: "
+                        + getContext().getEntitiesCount());
                 accSeconds = renderFrames = updateFrames = 0;
             }
         }
@@ -152,7 +151,7 @@ public final class Core extends SubEngine
 
     public void stop()
     {
-        JMokaLog.o(TAG, "Stopping JMoka Engine.");
+        log("Stopping JMoka Engine.");
         daemon = false;
         getContext().dispose();
         glfwTerminate();

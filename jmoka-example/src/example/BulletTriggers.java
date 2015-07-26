@@ -23,6 +23,7 @@ public class BulletTriggers
                     health.takeDamage(bullet.getDamage());
                 }
 
+                Res.prefabs.explosion02.newEntity(null, getEntity().getTransform().getPosition());
                 getEntity().destroy();
             }
 

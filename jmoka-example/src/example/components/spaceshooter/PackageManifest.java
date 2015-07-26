@@ -14,6 +14,7 @@ public class PackageManifest extends Package
         components.add(Movement.class);
         components.add(SimpleShooter.class);
         components.add(Health.class);
+        components.add(Explosion.class);
     }
 
     @Override

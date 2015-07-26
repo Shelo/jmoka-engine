@@ -270,4 +270,9 @@ public class Transform
         Pools.vec2.put(position);
         Pools.vec2.put(size);
     }
+
+    public void scale(float value)
+    {
+        size.mul(value);
+    }
 }
