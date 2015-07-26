@@ -56,8 +56,9 @@ public class CircleCollider extends Collider
 	{
 		if (boundingBox == null)
 		{
-			boundingBox = new AABBCollider();
+            boundingBox = new AABBCollider();
 			boundingBox.setEntity(getEntity());
+            boundingBox.setCollisionTrigger(getCollisionTrigger());
 			boundingBox.setWith(radius * 2);
 			boundingBox.setHeight(radius * 2);
 		}

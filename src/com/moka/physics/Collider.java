@@ -5,6 +5,7 @@ import com.moka.components.CircleCollider;
 import com.moka.components.SatCollider;
 import com.moka.core.entity.Component;
 import com.moka.core.ComponentAttribute;
+import com.moka.core.entity.Entity;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 import com.moka.utils.Pools;
@@ -21,8 +22,14 @@ public abstract class Collider extends Component
 
     public void onCollide(Collision collision)
     {
+        onCollide(collision.getEntity(), collision);
+    }
+
+    public void onCollide(Entity other, Collision collision)
+    {
         if (collisionTrigger != null)
         {
+            collision.setEntity(other);
             collisionTrigger.trigger(this, collision);
         }
     }
@@ -33,7 +40,6 @@ public abstract class Collider extends Component
         {
             box1.updateAxes();
         }
-
         else if (box1.getEntity().getTransform().hasMoved())
         {
             box1.updateVertices();
@@ -43,7 +49,6 @@ public abstract class Collider extends Component
         {
             box2.updateAxes();
         }
-
         else if (box2.getEntity().getTransform().hasMoved())
         {
             box2.updateVertices();
@@ -95,7 +100,6 @@ public abstract class Collider extends Component
                 box1.getLeft() >= box2.getRight() ||
                 box1.getRight() <= box2.getLeft()))
         {
-
             float top = box2.getTop() - box1.getBottom();
             float bot = box1.getTop() - box2.getBottom();
             float left = box1.getRight() - box2.getLeft();
@@ -166,7 +170,7 @@ public abstract class Collider extends Component
     {
         Vector2 circleCenter = circle.getEntity().getTransform().getPosition();
 
-		/* if in corner */
+        // if in corner.
         if (circleCenter.x > aabb.getRight() && circleCenter.y > aabb.getTop() ||
                 circleCenter.x < aabb.getLeft() && circleCenter.y > aabb.getTop() ||
                 circleCenter.x > aabb.getRight() && circleCenter.y < aabb.getBottom() ||
@@ -226,6 +230,11 @@ public abstract class Collider extends Component
     private boolean ignoresThis(String group)
     {
         return ignoreGroups.contains(group);
+    }
+
+    public Trigger<Collision> getCollisionTrigger()
+    {
+        return collisionTrigger;
     }
 
     public abstract Collision collidesWith(Collider other);

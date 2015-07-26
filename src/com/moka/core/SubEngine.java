@@ -67,6 +67,11 @@ public abstract class SubEngine
         return application.getNameManager();
     }
 
+    public void log(Object message)
+    {
+        JMokaLog.o(this.getClass().getSimpleName(), message.toString());
+    }
+
     public void log(String message)
     {
         JMokaLog.o(this.getClass().getSimpleName(), message);

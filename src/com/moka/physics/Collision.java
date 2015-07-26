@@ -5,10 +5,10 @@ import com.moka.math.Vector2;
 
 public final class Collision
 {
-    private final Vector2 direction;
-    private final float magnitude;
-    private final boolean guilty;
-    private final Entity entity;
+    private Vector2 direction;
+    private float magnitude;
+    private boolean guilty;
+    private Entity entity;
 
     /**
      * Creates a new collision information wrapper.
@@ -62,5 +62,10 @@ public final class Collision
     public float getMagnitude()
     {
         return magnitude;
+    }
+
+    public void setEntity(Entity entity)
+    {
+        this.entity = entity;
     }
 }

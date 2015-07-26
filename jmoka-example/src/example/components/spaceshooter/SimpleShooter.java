@@ -12,6 +12,8 @@ public class SimpleShooter extends Component
     private float bulletOffsetX;
     private float bulletOffsetY;
 
+    private static int i;
+
     private Trigger switchTextureBack = new Trigger()
     {
         @Override
@@ -39,8 +41,8 @@ public class SimpleShooter extends Component
 
             float x = getTransform().getPosition().x + bulletOffsetX;
 
-            Res.prefabs.bullet01.newEntity(null, x, getTransform().getPosition().y + bulletOffsetY);
-            Res.prefabs.bullet01.newEntity(null, x, getTransform().getPosition().y - bulletOffsetY);
+            Res.prefabs.bullet01.newEntity("B" + (i++), x, getTransform().getPosition().y + bulletOffsetY);
+            Res.prefabs.bullet01.newEntity("B" + (i++), x, getTransform().getPosition().y - bulletOffsetY);
 
             // switch the texture.
             if (currentTimeOut != null)

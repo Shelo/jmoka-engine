@@ -1,0 +1,7 @@
++ Prefab
+    - Size: @integers.screenWidth, @integers.screenHeight
+    - Position: integers.screenWidth / 2, integers.screenHeight / 2
+
+    + Sprite
+        - Texture: @textures.space01
+        - ClipRect: 0, 0, integers.screenWidth / 320, integers.screenHeight / 320

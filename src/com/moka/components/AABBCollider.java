@@ -85,7 +85,7 @@ public class AABBCollider extends Collider
 		}
 		else if (other instanceof CircleCollider)
 		{
-			return Collider.aabbCircle(this, (CircleCollider) other);
+            return Collider.aabbCircle(this, (CircleCollider) other);
 		}
 
 		return null;
@@ -101,9 +101,10 @@ public class AABBCollider extends Collider
 	{
 		if (boundingCircle == null)
 		{
-			boundingCircle = new CircleCollider();
+            boundingCircle = new CircleCollider();
 			boundingCircle.setEntity(getEntity());
-			boundingCircle.setRadius((float) Math.sqrt(width * width + height * height) / 2);
+            boundingCircle.setRadius((float) Math.sqrt(width * width + height * height) / 2);
+			boundingCircle.setCollisionTrigger(getCollisionTrigger());
 		}
 
 		return boundingCircle;

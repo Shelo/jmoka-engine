@@ -74,7 +74,7 @@ public class Sprite extends Component
     {
         if (texture == null)
         {
-            throw new JMokaException("Sprite: there no texture to draw.");
+            throw new JMokaException("Sprite: there's no texture to draw.");
         }
 
         // render.
@@ -126,7 +126,7 @@ public class Sprite extends Component
         this.clipRect = new Rectangle(left, top, width, height);
     }
 
-    @ComponentAttribute("Texture")
+    @ComponentAttribute(value = "Texture", required = true)
     public void setTexture(Texture texture)
     {
         this.texture = texture;

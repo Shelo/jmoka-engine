@@ -45,7 +45,7 @@ public class Physics extends SubEngine
                                 pCollider.response(collision);
                             }
 
-                            pCollider.onCollide(collision);
+                            pCollider.onCollide(tCollider.getEntity(), collision);
                             tCollider.onCollide(new Collision(pivot, collision));
                         }
                     }

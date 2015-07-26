@@ -4,3 +4,11 @@
 
     + Sprite
         - Texture: @textures.enemy02
+
+    + CircleCollider
+        - Radius: 32
+
+    + SpaceShooter:Health
+        - HealthPoints: 60
+        - Armor: 0
+        - OnDeath: example.EnemyTriggers.OnDeathEnemy

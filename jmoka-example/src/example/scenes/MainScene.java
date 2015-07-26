@@ -16,6 +16,8 @@ public class MainScene extends Scene
         newCamera("MainCamera", true);
         Res.prefabs.player.newEntity("Player");
 
+        Res.prefabs.space01.newEntity("Space01_01");
+
         Res.prefabs.enemy01.newEntity("Enemy01_01", 532, Res.integers.screenHeight / 3 * 2);
         Res.prefabs.enemy02.newEntity("Enemy02_01", 500, Res.integers.screenHeight / 2);
         Res.prefabs.enemy03.newEntity("Enemy03_01", 532, Res.integers.screenHeight / 3);

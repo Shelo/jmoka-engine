@@ -164,11 +164,6 @@ public class OpingPrefabReader extends PrefabReader
                 ComponentAttribute attribute = method.getAnnotation(ComponentAttribute.class);
                 Leaf leaf = componentBranch.getLeaf(attribute.value());
 
-                if (leaf == null)
-                {
-                    continue;
-                }
-
                 if (validateAttribute(attribute, leaf, method, componentClass.getSimpleName()))
                 {
                     Class<?>[] params = getParamsFor(method);
