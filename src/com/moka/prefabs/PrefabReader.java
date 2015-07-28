@@ -60,15 +60,12 @@ public abstract class PrefabReader
             String resource = value.substring(1);
             String[] parts = resource.split("\\.");
 
-            if (parts.length != 2)
+            if (parts.length < 2)
             {
-                throw new JMokaException("The resource name must have two values.");
+                throw new JMokaException("The resource name must have at least two values.");
             }
 
-            String innerClass = parts[0];
-            String name = parts[1];
-
-            result = Moka.getResources().findResource(innerClass, name);
+            result = Moka.getResources().findResource(resource);
 
             if (param == int.class || param == Integer.class)
             {

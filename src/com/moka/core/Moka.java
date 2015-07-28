@@ -1,6 +1,7 @@
 package com.moka.core;
 
 import com.moka.input.Input;
+import com.moka.resources.Resources;
 import com.moka.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
@@ -66,7 +67,7 @@ public class Moka
         return application.getNameManager();
     }
 
-    public static MokaResources getResources()
+    public static Resources getResources()
     {
         return application.getResources();
     }

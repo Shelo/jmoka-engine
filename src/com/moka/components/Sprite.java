@@ -83,7 +83,7 @@ public class Sprite extends Component
     {
         if (texture == null)
         {
-            throw new JMokaException("Sprite: there's no texture to draw.");
+            raise("there's no texture to draw.");
         }
 
         // render.
@@ -128,9 +128,15 @@ public class Sprite extends Component
         return tint;
     }
 
-    public void setTexture(String path)
+    @ComponentAttribute(value = "Texture", required = true)
+    public void setTexture(Texture texture)
     {
-        setTexture(new Texture(path));
+        if (texture == null)
+        {
+            throw new JMokaException("Texture cannot be null. [" + getEntity().getName() + "]");
+        }
+
+        this.texture = texture;
     }
 
     @ComponentAttribute("ClipRectPixels")
@@ -144,12 +150,6 @@ public class Sprite extends Component
     public void setClipRect(float left, float top, float width, float height)
     {
         this.clipRect = new Rectangle(left, top, width, height);
-    }
-
-    @ComponentAttribute(value = "Texture", required = true)
-    public void setTexture(Texture texture)
-    {
-        this.texture = texture;
     }
 
     @ComponentAttribute("Tint")

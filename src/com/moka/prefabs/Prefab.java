@@ -172,7 +172,7 @@ public final class Prefab
                     {
                         // if the attr[i] is an instance of a trigger, then get a new instance of that trigger
                         // in order to pass it to the setter method.
-                        if (attr[i].getClass().isAssignableFrom(TriggerPromise.class))
+                        if (attr[i] != null && attr[i].getClass().isAssignableFrom(TriggerPromise.class))
                         {
                             attr[i] = Trigger.newTriggerInstance(((TriggerPromise) attr[i]).getTriggerClass());
                         }
@@ -184,11 +184,11 @@ public final class Prefab
                     }
                     catch (InvocationTargetException e)
                     {
-                        throw new JMokaException("Cannot set the attribute "
-                                + method.getAnnotation(ComponentAttribute.class).value());
+                        throw new JMokaException("Cannot set the attribute '"
+                                + method.getAnnotation(ComponentAttribute.class).value() + "' because: "
+                                + e.getTargetException().getMessage());
                     }
                 }
-
             }
             catch (InstantiationException e)
             {

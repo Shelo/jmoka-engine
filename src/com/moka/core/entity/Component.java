@@ -102,6 +102,16 @@ public abstract class Component
     }
 
     /**
+     * Throws a descriptive {@link JMokaException}.
+     * @param message   the message for the exception.
+     */
+    public void raise(String message)
+    {
+        String tag = getEntity().getName() + " -> " + this.getClass().getSimpleName();
+        throw new JMokaException("[" + tag + "] " + message);
+    }
+
+    /**
      * Called at the creation time.
      */
     public void onCreate()

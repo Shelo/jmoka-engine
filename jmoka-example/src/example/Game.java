@@ -21,7 +21,7 @@ public class Game
         Moka.getInput().bindAxes(Res.axes.VERTICAL, Input.KEY_DOWN, Input.KEY_UP);
 
         // set display options.
-        Moka.getDisplay().createDisplay(Res.integers.screenWidth, Res.integers.screenHeight, "JMoka Engine");
+        Moka.getDisplay().createDisplay(Res.screen.width, Res.screen.height, "JMoka Engine");
 
         // set renderer options.
         Moka.getRenderer().setClearColor(0, 0, 0);

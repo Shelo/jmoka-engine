@@ -1,6 +1,7 @@
 package com.moka.core;
 
 import com.moka.input.Input;
+import com.moka.resources.Resources;
 import com.moka.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
@@ -17,7 +18,7 @@ public class Application
 {
     private static final String TAG = "Application";
 
-    private MokaResources resources;
+    private Resources resources;
     private NameManager nameManager;
     private Renderer renderer;
     private Context context;
@@ -29,7 +30,7 @@ public class Application
 
     private boolean created;
 
-    public Application(MokaResources resources)
+    public Application(Resources resources)
     {
         this.resources = resources;
 
@@ -57,7 +58,7 @@ public class Application
         input.create();
 
         // load resources.
-        resources.load();
+        resources.internalLoad();
 
         created = true;
 
@@ -136,7 +137,7 @@ public class Application
         return nameManager;
     }
 
-    public MokaResources getResources()
+    public Resources getResources()
     {
         return resources;
     }

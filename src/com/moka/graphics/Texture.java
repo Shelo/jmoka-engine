@@ -3,6 +3,7 @@ package com.moka.graphics;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
+import com.moka.utils.JMokaException;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBImage;
 
@@ -29,6 +30,11 @@ public class Texture
             IntBuffer components = BufferUtils.createIntBuffer(1);
 
             ByteBuffer imageBuffer = STBImage.stbi_load(filePath, width, height, components, 4);
+
+            if (imageBuffer == null)
+            {
+                throw new JMokaException("Image " + filePath + " does not exists.");
+            }
 
             textureId = glGenTextures();
             glBindTexture(GL_TEXTURE_2D, textureId);

@@ -1,10 +1,11 @@
 package example;
 
+import com.moka.resources.BindLoad;
 import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
-import com.moka.core.MokaResources;
+import com.moka.resources.Resources;
 
-public class Res extends MokaResources
+public class Res extends Resources
 {
     public static class axes
     {
@@ -18,6 +19,13 @@ public class Res extends MokaResources
         public static final String FIRE_2 = "fire2";
     }
 
+    public static class screen
+    {
+        public static int width = 800;
+        public static int height = 450;
+    }
+
+    @BindLoad(path = "img/", extension = "png", loader = BindLoad.Loader.TEXTURE)
     public static class textures
     {
         public static Texture player;
@@ -27,16 +35,20 @@ public class Res extends MokaResources
         public static Texture enemy02;
         public static Texture enemy03;
 
-        public static Texture tileDirt01;
-
         public static Texture bullet01;
-
         public static Texture space01;
 
         public static Texture explosion01;
         public static Texture explosion02;
+
+        @BindLoad(path = "tiles/", extension = "png", loader = BindLoad.Loader.TEXTURE)
+        public static class tiles
+        {
+            public static Texture dirt01;
+        }
     }
 
+    @BindLoad(skip = true, path = "prefabs/", extension = "oping", loader = BindLoad.Loader.PREFAB)
     public static class prefabs
     {
         public static Prefab player;
@@ -45,20 +57,18 @@ public class Res extends MokaResources
         public static Prefab enemy02;
         public static Prefab enemy03;
 
-        public static Prefab tileDirt01;
-
         public static Prefab bullet01;
 
         public static Prefab space01;
 
         public static Prefab explosion01;
         public static Prefab explosion02;
-    }
 
-    public static class integers
-    {
-        public static int screenWidth = 800;
-        public static int screenHeight = 450;
+        @BindLoad(path = "tiles/", extension = "oping", loader = BindLoad.Loader.PREFAB)
+        public static class tiles
+        {
+            public static Prefab dirt01;
+        }
     }
 
     public Res(String root)
@@ -69,54 +79,6 @@ public class Res extends MokaResources
     @Override
     public void load()
     {
-        // Textures - player
-        textures.player = texture("img/kl103.png");
-        textures.playerShooting = texture("img/kl103_shooting.png");
-
-        // Textures - enemies
-        textures.enemy01 = texture("img/al01.png");
-        textures.enemy02 = texture("img/al02.png");
-        textures.enemy03 = texture("img/al03.png");
-
-        // Textures - tiles
-        textures.tileDirt01 = texture("img/tiles/dirt01.png");
-
-        // Textures - bullets
-        textures.bullet01 = texture("img/bullet01.png");
-
-        // Textures - space
-        textures.space01 = texture("img/space01.png");
-
-        // Textures - explosion.
-        textures.explosion01 = texture("img/explosion01.png");
-        textures.explosion02 = texture("img/explosion02.png");
-
-
-        // Prefabs - bullets
-        prefabs.bullet01 = prefab("prefabs/bullet01.oping");
-
-        // Prefabs - players
-        prefabs.player = prefab("prefabs/player.oping");
-
-        // Prefabs - enemies
-        prefabs.enemy01 = prefab("prefabs/enemy01.oping");
-        prefabs.enemy02 = prefab("prefabs/enemy02.oping");
-        prefabs.enemy03 = prefab("prefabs/enemy03.oping");
-
-        // Prefabs - tiles
-        prefabs.tileDirt01 = prefab("prefabs/tile_dirt01.oping");
-
-        // Prefabs - space
-        prefabs.space01 = prefab("prefabs/space01.oping");
-
-        // Prefabs - explosion
-        prefabs.explosion01 = prefab("prefabs/explosion01.oping");
-        prefabs.explosion02 = prefab("prefabs/explosion02.oping");
-    }
-
-    @Override
-    public void dispose()
-    {
-
+        bindLoad(prefabs.class);
     }
 }
