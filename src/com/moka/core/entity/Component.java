@@ -1,7 +1,6 @@
 package com.moka.core.entity;
 
 import com.moka.core.*;
-import com.moka.physics.Collider;
 import com.moka.triggers.Trigger;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
@@ -82,16 +81,6 @@ public abstract class Component
         return null;
     }
 
-    public boolean hasCollider()
-    {
-        return entity.hasCollider();
-    }
-
-    public Collider getCollider()
-    {
-        return entity.getCollider();
-    }
-
     /**
      * Logs a descriptive message.
      */
@@ -131,6 +120,11 @@ public abstract class Component
      * Called just after the physics system resolved every collision.
      */
     public void onPostUpdate()
+    {
+
+    }
+
+    public void onFixedUpdate()
     {
 
     }

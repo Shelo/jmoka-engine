@@ -1,56 +1,84 @@
 package com.moka.physics;
 
-import com.moka.core.entity.Entity;
 import com.moka.core.SubEngine;
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
+import org.jbox2d.collision.Manifold;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.contacts.Contact;
 
 import java.util.ArrayList;
 
-public class Physics extends SubEngine
+public class Physics extends SubEngine implements ContactListener
 {
-    public void checkCollisions()
+    private World world;
+    private Vec2 gravity = new Vec2(0, - 10.0f);
+    private ArrayList<PhysicsBody> physicsBodies;
+
+    public void create()
     {
-        ArrayList<Entity> entities = getContext().getAllEntities();
+        world = new World(gravity);
+        world.setAllowSleep(true);
 
-        int size = entities.size();
+        physicsBodies = new ArrayList<>();
+    }
 
-        for (int i = 0; i < size; i++)
+    public void simulate()
+    {
+        world.step(getTime().getFixedDelta(), 6, 3);
+        world.setContactListener(this);
+
+        for (PhysicsBody physicsBody : physicsBodies)
         {
-            Entity pivot = entities.get(i);
-
-            // TODO: optimize CircleCollider rotation.
-            if (pivot.hasCollider() && pivot.getCollider().isEnabled() && pivot.getTransform().hasChanged())
-            {
-                Collider pCollider = pivot.getCollider();
-
-                // TODO: think if this is right.
-                for (int j = 0; j < size; j++)
-                {
-                    if (i == j)
-                    {
-                        continue;
-                    }
-
-                    Entity test = entities.get(j);
-
-                    if (test.hasCollider() && test.getCollider().isEnabled())
-                    {
-                        Collider tCollider = test.getCollider();
-                        Collision collision = pCollider.internalCollides(tCollider);
-
-                        if (collision != null)
-                        {
-                            // collision.
-                            if (!pCollider.isTrigger())
-                            {
-                                pCollider.response(collision);
-                            }
-
-                            pCollider.onCollide(tCollider.getEntity(), collision);
-                            tCollider.onCollide(new Collision(pivot, collision));
-                        }
-                    }
-                }
-            }
+            physicsBody.fixedUpdate();
         }
+    }
+
+    public void setGravity(float x, float y)
+    {
+        gravity.set(x, y);
+    }
+
+    public Vec2 getGravity()
+    {
+        return gravity;
+    }
+
+    public Body add(PhysicsBody physicsBody)
+    {
+        physicsBodies.add(physicsBody);
+        Body body = world.createBody(physicsBody.getBodyDefinition());
+        body.createFixture(physicsBody.getFixture());
+        return body;
+    }
+
+    @Override
+    public void beginContact(Contact contact)
+    {
+        PhysicsBody bodyA = (PhysicsBody) contact.getFixtureA().getUserData();
+        PhysicsBody bodyB = (PhysicsBody) contact.getFixtureB().getUserData();
+
+        bodyA.onCollide(bodyB.getEntity(), contact);
+        bodyB.onCollide(bodyA.getEntity(), contact);
+    }
+
+    @Override
+    public void endContact(Contact contact)
+    {
+
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold manifold)
+    {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse contactImpulse)
+    {
+
     }
 }

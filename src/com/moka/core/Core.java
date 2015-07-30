@@ -1,8 +1,6 @@
 package com.moka.core;
 
 import com.moka.utils.JMokaException;
-import com.moka.utils.JMokaLog;
-import org.xml.sax.SAXParseException;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -100,7 +98,7 @@ public final class Core extends SubEngine
 
                 getTime().update(delta);
                 getContext().update();
-                getPhysics().checkCollisions();
+                getPhysics().simulate();
                 getContext().postUpdate();
                 getContext().clean();
                 getInput().update();

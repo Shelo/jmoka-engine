@@ -36,6 +36,11 @@ public class Time extends SubEngine
 		return (float) delta;
 	}
 
+	public float getFixedDelta()
+	{
+		return (float) delta;
+	}
+
 	public double getElapsed()
 	{
 		return elapsed;

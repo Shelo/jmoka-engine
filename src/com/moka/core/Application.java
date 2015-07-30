@@ -62,6 +62,9 @@ public class Application
 
         created = true;
 
+        // create the physics.
+        physics.create();
+
         // create the context.
         context.create();
 

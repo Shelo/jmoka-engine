@@ -14,9 +14,9 @@ public class BulletTriggers
         {
             Bullet bullet = getEntity().getComponent(Bullet.class);
 
-            if (!meta().getEntity().getGroup().equals("Player"))
+            if (!meta().getOther().getGroup().equals("Player"))
             {
-                Health health = meta().getEntity().getComponent(Health.class);
+                Health health = meta().getOther().getComponent(Health.class);
 
                 if (health != null)
                 {
@@ -27,6 +27,16 @@ public class BulletTriggers
                 getEntity().destroy();
             }
 
+            return null;
+        }
+    }
+
+    public static class TestTrigger extends Trigger<Collision>
+    {
+        @Override
+        public Object onTrigger()
+        {
+            log(meta().getOther().getName());
             return null;
         }
     }

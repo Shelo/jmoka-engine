@@ -1,5 +1,6 @@
 package example;
 
+import com.moka.resources.BindConfig;
 import com.moka.resources.BindLoad;
 import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
@@ -63,6 +64,9 @@ public class Res extends Resources
 
         public static Prefab explosion01;
         public static Prefab explosion02;
+
+        public static Prefab physics1;
+        public static Prefab physics2;
 
         @BindLoad(path = "tiles/", extension = "oping", loader = BindLoad.Loader.PREFAB)
         public static class tiles

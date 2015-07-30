@@ -5,7 +5,7 @@ import com.moka.core.Context;
 import com.moka.core.Transform;
 import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
-import com.moka.physics.Collider;
+import com.moka.physics.PhysicsBody;
 import com.moka.utils.CalcUtil;
 import com.moka.utils.Pools;
 
@@ -18,7 +18,6 @@ public class Entity
     private final String name;
 
     private boolean destroyed;
-    private Collider collider;
     private Context context;
     private Sprite sprite;
     private String group;
@@ -40,10 +39,6 @@ public class Entity
         {
             sprite = (Sprite) component;
         }
-        else if (component instanceof Collider)
-        {
-            collider = (Collider) component;
-        }
         else
         {
             components.add(component);
@@ -59,11 +54,6 @@ public class Entity
             sprite.onCreate();
         }
 
-        if (hasCollider())
-        {
-            collider.onCreate();
-        }
-
         for (Component component : components)
         {
             if (component.isEnabled())
@@ -76,11 +66,6 @@ public class Entity
     public void update()
     {
         transform.update();
-
-        if (hasCollider())
-        {
-            getCollider().onUpdate();
-        }
 
         if (hasSprite())
         {
@@ -98,11 +83,6 @@ public class Entity
 
     public void postUpdate()
     {
-        if (hasCollider())
-        {
-            getCollider().onPostUpdate();
-        }
-
         if (hasSprite())
         {
             getSprite().onPostUpdate();
@@ -151,11 +131,6 @@ public class Entity
     public Transform getTransform()
     {
         return transform;
-    }
-
-    public Collider getCollider()
-    {
-        return collider;
     }
 
     public Sprite getSprite()
@@ -210,11 +185,6 @@ public class Entity
     public boolean hasSprite()
     {
         return sprite != null;
-    }
-
-    public boolean hasCollider()
-    {
-        return collider != null;
     }
 
     public boolean isDestroyed()

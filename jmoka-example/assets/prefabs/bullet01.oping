@@ -5,9 +5,8 @@
     + Sprite
         - Texture: @textures.bullet01
 
-    + AABBCollider
-        - OnCollision: example.BulletTriggers.BulletCollisionTrigger
-        - IgnoreGroup: Player
+    + KinematicBody
+        - OnCollide: example.BulletTriggers.BulletCollisionTrigger
 
     + Bullet
         - Speed: 500

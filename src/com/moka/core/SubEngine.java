@@ -11,7 +11,7 @@ import com.moka.utils.JMokaLog;
  * Class designed for internal inheritance, it will give shortcut methods to access other
  * sub engines around the application.
  *
- * @author shelo
+ * @author Shelo
  */
 public abstract class SubEngine
 {
