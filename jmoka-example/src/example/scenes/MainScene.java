@@ -1,6 +1,12 @@
 package example.scenes;
 
+import com.moka.components.Area;
 import com.moka.core.Scene;
+import com.moka.core.entity.Entity;
+import com.moka.physics.Collision;
+import com.moka.physics.PhysicsBody;
+import com.moka.triggers.Trigger;
+import example.EnemyTriggers;
 import example.Res;
 
 public class MainScene extends Scene

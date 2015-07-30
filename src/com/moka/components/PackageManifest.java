@@ -28,5 +28,6 @@ public class PackageManifest extends Package
         components.add(RigidBody.class);
         components.add(StaticBody.class);
         components.add(KinematicBody.class);
+        components.add(Area.class);
     }
 }

@@ -46,7 +46,6 @@ public abstract class PhysicsBody extends Component
         bodyDefinition = new BodyDef();
         bodyDefinition.position = new Vec2(toPos(getTransform().getPosition().x),
                 toPos(getTransform().getPosition().y));
-        bodyDefinition.type = getBodyType();
         bodyDefinition.angle = getTransform().getLookAngle();
         defineBody(bodyDefinition);
 
@@ -59,9 +58,12 @@ public abstract class PhysicsBody extends Component
         fixture.userData = this;
         fixture.filter.maskBits = maskBits;
         fixture.filter.categoryBits = categoryBits;
+        defineFixture(fixture);
 
         body = Moka.getApplication().getPhysics().add(this);
     }
+
+    protected abstract void defineFixture(FixtureDef fixture);
 
     protected abstract void defineBody(BodyDef bodyDefinition);
 
@@ -76,6 +78,11 @@ public abstract class PhysicsBody extends Component
         if (size == null)
         {
             raise("The body needs dimensions.");
+        }
+
+        if (shapeType == null)
+        {
+            raise("Shape Type missing.");
         }
 
         switch (shapeType)
@@ -136,18 +143,47 @@ public abstract class PhysicsBody extends Component
         body.setLinearVelocity(new Vec2(x, y));
     }
 
-    @ComponentAttribute(value = "Shape", required = true)
-    public void setShape(Shapes shapeType)
+    /**
+     * Sets the current angular velocity of this body.
+     *
+     * @param radians   the radius in radians.
+     */
+    public void setAngularVelocity(float radians)
     {
-        this.shapeType = shapeType;
+        body.setAngularVelocity(radians);
     }
 
+    /**
+     * Sets the shape of this body.
+     * BOX: a simple rectangle.
+     * CIRCLE: a simple circle.
+     * POLYGON: any polygon.
+     *
+     * @param shape the type of the shape.
+     */
+    @ComponentAttribute(value = "Shape", required = true)
+    public void setShape(Shapes shape)
+    {
+        this.shapeType = shape;
+    }
+
+    /**
+     * Used in case this body is a box.
+     *
+     * @param width     width of the box.
+     * @param height    height of the box.
+     */
     @ComponentAttribute("Size")
     public void setSize(float width, float height)
     {
         this.size = new Vector2(width, height);
     }
 
+    /**
+     * Used in case this body is a circle.
+     *
+     * @param radius    radius of the circle.
+     */
     @ComponentAttribute("Radius")
     public void setRadius(float radius)
     {
@@ -195,6 +231,4 @@ public abstract class PhysicsBody extends Component
     {
         Moka.getPhysics().destroy(this);
     }
-
-    public abstract BodyType getBodyType();
 }

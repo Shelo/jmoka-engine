@@ -1,5 +1,6 @@
 package com.moka.physics;
 
+import com.moka.components.Area;
 import com.moka.core.SubEngine;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -60,14 +61,41 @@ public class Physics extends SubEngine implements ContactListener
         PhysicsBody bodyA = (PhysicsBody) contact.getFixtureA().getUserData();
         PhysicsBody bodyB = (PhysicsBody) contact.getFixtureB().getUserData();
 
-        bodyA.onCollide(bodyB.getEntity(), contact);
-        bodyB.onCollide(bodyA.getEntity(), contact);
+        boolean areaA = bodyA instanceof Area;
+        boolean areaB = bodyB instanceof Area;
+
+        if (areaA || areaB)
+        {
+            if (areaA)
+            {
+                ((Area) bodyA).onEnter(bodyB.getEntity());
+            }
+            else
+            {
+                ((Area) bodyB).onEnter(bodyA.getEntity());
+            }
+        }
+        else
+        {
+            bodyA.onCollide(bodyB.getEntity(), contact);
+            bodyB.onCollide(bodyA.getEntity(), contact);
+        }
     }
 
     @Override
     public void endContact(Contact contact)
     {
+        PhysicsBody bodyA = (PhysicsBody) contact.getFixtureA().getUserData();
+        PhysicsBody bodyB = (PhysicsBody) contact.getFixtureB().getUserData();
 
+        if (bodyA instanceof Area)
+        {
+            ((Area) bodyA).onExit(bodyB.getEntity());
+        }
+        else if (bodyB instanceof Area)
+        {
+            ((Area) bodyB).onExit(bodyA.getEntity());
+        }
     }
 
     @Override

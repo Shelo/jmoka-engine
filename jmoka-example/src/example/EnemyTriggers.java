@@ -1,5 +1,6 @@
 package example;
 
+import com.moka.core.entity.Entity;
 import com.moka.triggers.Trigger;
 
 public class EnemyTriggers
@@ -11,6 +12,16 @@ public class EnemyTriggers
         {
             getEntity().destroy();
             Res.prefabs.explosion01.newEntity(null, getEntity().getTransform().getPosition());
+            return null;
+        }
+    }
+
+    public static class OnEnterArea extends Trigger<Entity>
+    {
+        @Override
+        public Object onTrigger()
+        {
+            System.out.println(1);
             return null;
         }
     }

@@ -13,5 +13,4 @@
 
     + SpaceShooter:Health
         - HealthPoints: 60
-        - Armor: 0
         - OnDeath: example.EnemyTriggers.OnDeathEnemy

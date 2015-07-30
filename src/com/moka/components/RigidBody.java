@@ -4,6 +4,7 @@ import com.moka.core.ComponentAttribute;
 import com.moka.physics.PhysicsBody;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
 
 public class RigidBody extends PhysicsBody
 {
@@ -11,9 +12,9 @@ public class RigidBody extends PhysicsBody
     private boolean fixedRotation;
 
     @Override
-    public BodyType getBodyType()
+    protected void defineFixture(FixtureDef fixture)
     {
-        return BodyType.DYNAMIC;
+
     }
 
     @Override
@@ -21,6 +22,7 @@ public class RigidBody extends PhysicsBody
     {
         bodyDefinition.gravityScale = gravityScale;
         bodyDefinition.fixedRotation = fixedRotation;
+        bodyDefinition.type = BodyType.DYNAMIC;
     }
 
     @ComponentAttribute("GravityScale")

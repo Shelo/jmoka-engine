@@ -4,7 +4,7 @@
     - Rotation: 180
 
     + Sprite
-        - Texture: @textures.enemy01
+        - Texture: @textures.enemy03
 
     + KinematicBody
         - Shape: BOX
@@ -14,5 +14,4 @@
 
     + SpaceShooter:Health
         - HealthPoints: 80
-        - Armor: 0
         - OnDeath: example.EnemyTriggers.OnDeathEnemy

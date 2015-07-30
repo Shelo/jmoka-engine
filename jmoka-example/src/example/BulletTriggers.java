@@ -14,18 +14,20 @@ public class BulletTriggers
         {
             Bullet bullet = getEntity().getComponent(Bullet.class);
 
-            if (!meta().getOther().getGroup().equals("Player"))
+            String group = meta().getOther().getGroup();
+            if (group != null && !group.equals("Player"))
             {
+                System.out.println(meta().getOther().getName());
                 Health health = meta().getOther().getComponent(Health.class);
 
                 if (health != null)
                 {
                     health.takeDamage(bullet.getDamage());
                 }
-
-                Res.prefabs.explosion02.newEntity(null, getEntity().getTransform().getPosition());
-                getEntity().destroy();
             }
+
+            Res.prefabs.explosion02.newEntity(null, getEntity().getTransform().getPosition());
+            getEntity().destroy();
 
             return null;
         }
