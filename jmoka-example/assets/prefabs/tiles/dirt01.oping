@@ -7,5 +7,6 @@
         - Texture: @textures.tiles.dirt01
         - ClipRect: 0, 0, 13, 1
 
-    + AABBCollider
-        - Height: 32
+    + StaticBody
+        - Shape: BOX
+        - Size: 64 * 13, 64

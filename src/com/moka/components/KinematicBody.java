@@ -1,7 +1,7 @@
 package com.moka.components;
 
 import com.moka.physics.PhysicsBody;
-import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 
 public class KinematicBody extends PhysicsBody
@@ -13,10 +13,8 @@ public class KinematicBody extends PhysicsBody
     }
 
     @Override
-    public void onUpdate()
+    protected void defineBody(BodyDef bodyDefinition)
     {
-        getBodyDefinition().position = new Vec2(toPos(getTransform().getPosition().x),
-                toPos(getTransform().getPosition().y));
-        getBodyDefinition().angle = getTransform().getLookAngle();
+
     }
 }

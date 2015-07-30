@@ -5,8 +5,14 @@
     + Sprite
         - Texture: @textures.bullet01
 
-    + KinematicBody
+    + RigidBody
+        - Shape: BOX
+        - Size: 32, 12
         - OnCollide: example.BulletTriggers.BulletCollisionTrigger
+        - GravityScale: 0
+        - FixedRotation: true
+        - CategoryBits: 8
+        - MaskBits: 5
 
     + Bullet
         - Speed: 500

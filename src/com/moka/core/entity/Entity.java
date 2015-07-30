@@ -105,14 +105,6 @@ public class Entity
         }
 
         destroyed = true;
-
-        for (Component component : components)
-        {
-            if (component.isEnabled())
-            {
-                component.onDestroy();
-            }
-        }
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass)
@@ -201,5 +193,16 @@ public class Entity
     public String toString()
     {
         return name;
+    }
+
+    public void onDestroy()
+    {
+        for (Component component : components)
+        {
+            if (component.isEnabled())
+            {
+                component.onDestroy();
+            }
+        }
     }
 }

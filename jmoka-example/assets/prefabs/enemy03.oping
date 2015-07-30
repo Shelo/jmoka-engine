@@ -6,9 +6,11 @@
     + Sprite
         - Texture: @textures.enemy01
 
-    + AABBCollider
-        - OffsetX: 16
-        - Width: 48
+    + KinematicBody
+        - Shape: BOX
+        - Size: 64, 64
+        - CategoryBits: 4
+        - MaskBits: 11
 
     + SpaceShooter:Health
         - HealthPoints: 80

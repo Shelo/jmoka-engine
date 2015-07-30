@@ -11,8 +11,12 @@
     + SpaceShooter:Movement
         - Speed: 200
 
-    + AABBCollider
-        - Width: 64
-        - Height: 64
+    + RigidBody
+        - Shape: BOX
+        - Size: 64, 64
+        - GravityScale: 0
+        - FixedRotation: true
+        - CategoryBits: 2
+        - MaskBits: 5
 
     + SpaceShooter:SimpleShooter

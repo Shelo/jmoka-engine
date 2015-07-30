@@ -65,9 +65,6 @@ public class Res extends Resources
         public static Prefab explosion01;
         public static Prefab explosion02;
 
-        public static Prefab physics1;
-        public static Prefab physics2;
-
         @BindLoad(path = "tiles/", extension = "oping", loader = BindLoad.Loader.PREFAB)
         public static class tiles
         {

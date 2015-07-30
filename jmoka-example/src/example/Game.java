@@ -4,7 +4,6 @@ import com.moka.core.Application;
 import com.moka.input.Input;
 import com.moka.core.Moka;
 import example.scenes.MainScene;
-import example.scenes.PhysicsScene;
 
 public class Game
 {
@@ -31,9 +30,11 @@ public class Game
         Moka.getNameManager().usePackage("example.components.spaceshooter");
 
         // set up scenes.
-        Moka.getContext().addScene(new PhysicsScene());
+        Moka.getContext().addScene(new MainScene());
 
-        Moka.getContext().setMainScene(PhysicsScene.class);
+        Moka.getContext().setMainScene(MainScene.class);
+
+        Moka.getPhysics().setGravity(0, 0);
 
         // create and start the application.
         app.create().start(60);

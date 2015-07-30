@@ -26,6 +26,8 @@ public abstract class PhysicsBody extends Component
     private float friction = 0.3f;
     private float density = 1;
     private float restitution = 0;
+    private int maskBits = '\uffff';
+    private int categoryBits = 1;
 
     public enum Shapes
     {
@@ -46,6 +48,7 @@ public abstract class PhysicsBody extends Component
                 toPos(getTransform().getPosition().y));
         bodyDefinition.type = getBodyType();
         bodyDefinition.angle = getTransform().getLookAngle();
+        defineBody(bodyDefinition);
 
         // create the fixture.
         fixture = new FixtureDef();
@@ -54,9 +57,13 @@ public abstract class PhysicsBody extends Component
         fixture.friction = friction;
         fixture.restitution = restitution;
         fixture.userData = this;
+        fixture.filter.maskBits = maskBits;
+        fixture.filter.categoryBits = categoryBits;
 
         body = Moka.getApplication().getPhysics().add(this);
     }
+
+    protected abstract void defineBody(BodyDef bodyDefinition);
 
     public void fixedUpdate()
     {
@@ -124,7 +131,12 @@ public abstract class PhysicsBody extends Component
         return fixture;
     }
 
-    @ComponentAttribute("Shape")
+    public void setLinearVelocity(float x, float y)
+    {
+        body.setLinearVelocity(new Vec2(x, y));
+    }
+
+    @ComponentAttribute(value = "Shape", required = true)
     public void setShape(Shapes shapeType)
     {
         this.shapeType = shapeType;
@@ -164,6 +176,24 @@ public abstract class PhysicsBody extends Component
     public void setOnCollide(Trigger<Collision> trigger)
     {
         this.collisionTrigger = trigger;
+    }
+
+    @ComponentAttribute("MaskBits")
+    public void setMaskBits(int maskBits)
+    {
+        this.maskBits = maskBits;
+    }
+
+    @ComponentAttribute("CategoryBits")
+    public void setCategoryBits(int categoryBits)
+    {
+        this.categoryBits = categoryBits;
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        Moka.getPhysics().destroy(this);
     }
 
     public abstract BodyType getBodyType();

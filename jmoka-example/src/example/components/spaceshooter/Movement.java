@@ -1,5 +1,7 @@
 package example.components.spaceshooter;
 
+import com.moka.components.KinematicBody;
+import com.moka.components.RigidBody;
 import com.moka.core.ComponentAttribute;
 import com.moka.core.Moka;
 import com.moka.core.entity.Component;
@@ -12,6 +14,13 @@ import example.Res;
 public class Movement extends Component
 {
     private float speed = 100;
+    private RigidBody body;
+
+    @Override
+    public void onCreate()
+    {
+        body = getComponent(RigidBody.class);
+    }
 
     @Override
     public void onUpdate()
@@ -20,7 +29,7 @@ public class Movement extends Component
         float y = Moka.getInput().getAxes(Res.axes.VERTICAL);
 
         Vector2 distance = Pools.vec2.take(x, y).nor().mul(speed * Moka.getTime().getDelta());
-        getTransform().move(distance);
+        body.setLinearVelocity(distance.x, distance.y);
         Pools.vec2.put(distance);
     }
 

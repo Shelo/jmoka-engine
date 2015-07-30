@@ -5,8 +5,11 @@
     + Sprite
         - Texture: @textures.enemy02
 
-    + CircleCollider
+    + KinematicBody
+        - Shape: CIRCLE
         - Radius: 32
+        - CategoryBits: 4
+        - MaskBits: 11
 
     + SpaceShooter:Health
         - HealthPoints: 60

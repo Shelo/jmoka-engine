@@ -1,5 +1,6 @@
 package com.moka.core;
 
+import com.moka.core.entity.Component;
 import com.moka.core.entity.Entity;
 import com.moka.graphics.Shader;
 import com.moka.prefabs.OpingPrefabReader;
@@ -19,7 +20,6 @@ public class Context extends SubEngine
     /**
      * Used to store all layers.
      */
-    private final ArrayList<Entity> allEntities = new ArrayList<>();
     private final ArrayList<Entity> groupEntities = new ArrayList<>();
 
     /**
@@ -102,6 +102,7 @@ public class Context extends SubEngine
 
                 if (entity.isDestroyed())
                 {
+                    entity.onDestroy();
                     layer.remove(i);
                 }
             }
@@ -273,26 +274,6 @@ public class Context extends SubEngine
     }
 
     /**
-     * Gets all entities across all layers.
-     *
-     * @return all entities as an array list.
-     */
-    public ArrayList<Entity> getAllEntities()
-    {
-        allEntities.clear();
-
-        for (ArrayList<Entity> layer : layers)
-        {
-            for (Entity entity : layer)
-            {
-                allEntities.add(entity);
-            }
-        }
-
-        return allEntities;
-    }
-
-    /**
      * Gets all entities from a group.
      *
      * @return all entities from that group as an array list or null if the list is empty.
@@ -312,7 +293,7 @@ public class Context extends SubEngine
             }
         }
 
-        return groupEntities.isEmpty()? null : (List<Entity>) groupEntities.clone();
+        return groupEntities.isEmpty()? null : groupEntities;
     }
 
     public void dispose()
@@ -338,6 +319,6 @@ public class Context extends SubEngine
 
     public int getEntitiesCount()
     {
-        return allEntities.size();
+        return nameRelations.size();
     }
 }

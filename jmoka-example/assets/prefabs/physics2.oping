@@ -1,9 +1,0 @@
-+ Prefab
-    - Size: 100, 100
-
-    + Sprite
-        - Texture: @textures.tiles.dirt01
-
-    + StaticBody
-        - Shape: CIRCLE
-        - Radius: 50

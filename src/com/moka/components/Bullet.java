@@ -13,8 +13,8 @@ public class Bullet extends Component
     public static final byte NONE = 0x0;
     public static final byte LIFE_TIME = 0x1;
     public static final byte MAX_DISTANCE = 0x2;
-    public static final byte LIFE_TIME_AND_MAX_DISTANCE = 0x3;
 
+    private RigidBody rigidBody;
     private Vector2 origin;
 	private float speed = 300;
     private float lifeTime;
@@ -27,22 +27,19 @@ public class Bullet extends Component
 
 	}
 
-    public static class OnCollisionTrigger extends Trigger<Collision>
-    {
-        @Override
-        public Object onTrigger()
-        {
-
-            return null;
-        }
-    }
-
 	@Override
 	public void onCreate()
 	{
         if ((destroyCondition & MAX_DISTANCE) != 0)
         {
             origin = getTransform().getPosition().cpy();
+        }
+
+        rigidBody = getComponent(RigidBody.class);
+
+        if (rigidBody == null)
+        {
+            raise("RigidBody component missing.");
         }
 	}
 
@@ -51,14 +48,16 @@ public class Bullet extends Component
 	{
 		Vector2 buffer = Pools.vec2.take(0, 0);
 
-		buffer.set(getTransform().getFront(buffer)).mul(speed * Moka.getTime().getDelta());
-		getTransform().move(buffer);
+		getTransform().getFront(buffer).mul(speed * Moka.getTime().getDelta());
+
+        rigidBody.setLinearVelocity(buffer.x, buffer.y);
 
         if ((destroyCondition & LIFE_TIME) != 0)
         {
             checkLifeTime();
         }
-        else if ((destroyCondition & MAX_DISTANCE) != 0)
+
+        if ((destroyCondition & MAX_DISTANCE) != 0)
         {
             checkMaxDistance();
         }

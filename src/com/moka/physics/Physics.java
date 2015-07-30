@@ -81,4 +81,9 @@ public class Physics extends SubEngine implements ContactListener
     {
 
     }
+
+    public void destroy(PhysicsBody physicsBody)
+    {
+        world.destroyBody(physicsBody.getBody());
+    }
 }
