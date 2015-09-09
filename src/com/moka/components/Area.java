@@ -9,11 +9,22 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.contacts.Contact;
+import org.jbox2d.common.Vec2;
 
 public class Area extends PhysicsBody
 {
     private Trigger<Entity> onEnterTrigger;
     private Trigger<Entity> onExitTrigger;
+
+    @Override
+    public void sync()
+    {
+        float newX = toPos(getTransform().getPosition().x);
+        float newY = toPos(getTransform().getPosition().y);
+
+        getBody().setLinearVelocity(new Vec2(1, 1));
+        getBody().setTransform(new Vec2(newX, newY), 0);
+    }
 
     @Override
     protected void defineFixture(FixtureDef fixture)

@@ -1,0 +1,9 @@
++ Prefab
+    - Size: 64, 64
+
+    + Sprite
+        - Texture: @textures.blank
+
+    + RigidBody
+        - Shape: BOX
+        - Size: 64, 64

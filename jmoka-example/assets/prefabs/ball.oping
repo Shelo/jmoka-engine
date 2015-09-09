@@ -1,0 +1,9 @@
++ Prefab
+    - Size: 32, 32
+
+    + Sprite
+        - Texture: @textures.enemy02
+
+    + RigidBody
+        - Shape: CIRCLE
+        - Radius: 16

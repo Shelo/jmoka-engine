@@ -67,6 +67,11 @@ public abstract class PhysicsBody extends Component
 
     protected abstract void defineBody(BodyDef bodyDefinition);
 
+    public void sync()
+    {
+
+    }
+
     public void fixedUpdate()
     {
         getTransform().setPosition(toPixel(body.getPosition().x), toPixel(body.getPosition().y));

@@ -22,14 +22,19 @@ public class Physics extends SubEngine implements ContactListener
     {
         world = new World(gravity);
         world.setAllowSleep(true);
+        world.setContactListener(this);
 
         physicsBodies = new ArrayList<>();
     }
 
     public void simulate()
     {
+        for (PhysicsBody physicsBody : physicsBodies)
+        {
+            physicsBody.sync();
+        }
+
         world.step(getTime().getFixedDelta(), 6, 3);
-        world.setContactListener(this);
 
         for (PhysicsBody physicsBody : physicsBodies)
         {

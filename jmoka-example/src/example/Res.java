@@ -42,6 +42,8 @@ public class Res extends Resources
         public static Texture explosion01;
         public static Texture explosion02;
 
+        public static Texture blank;
+
         @BindLoad(path = "tiles/", extension = "png", loader = BindLoad.Loader.TEXTURE)
         public static class tiles
         {
@@ -64,6 +66,9 @@ public class Res extends Resources
 
         public static Prefab explosion01;
         public static Prefab explosion02;
+
+        public static Prefab blocky;
+        public static Prefab ball;
 
         @BindLoad(path = "tiles/", extension = "oping", loader = BindLoad.Loader.PREFAB)
         public static class tiles
