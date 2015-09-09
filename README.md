@@ -39,7 +39,7 @@ repeated a lot, and with Java you can do them with simple loop.
 The jMoka Engine offers a nice way to handle your assets in the most optimal way, without repeating yourself,
 you have to simply extend a class and you get some helper methods for loading textures, prefabs, sounds, etc.
 
-¿What is a prefab?, A prefab is simply a definition of an entity in your game, the engine offers this because
+What is a prefab?, A prefab is simply a definition of an entity in your game, the engine offers this because
 there's no need to waste java code in doing this, since is a very, very repetitive and easy task, shouldn't we
 leave it to a easy, readable text file?.
 
@@ -52,10 +52,10 @@ Components are a part of the behaviour of an entity. The engine is built around 
 
 Components are distributed in extensions, that way you can create a very common, let's say, platformer extensions,
 and put there all sorts of components to help you in any platformer-like game, and reuse them in all projects!.
-
 ## The Prefab Scheme
 
 In construction...
+
 
 # The Architecture of the Engine
 
