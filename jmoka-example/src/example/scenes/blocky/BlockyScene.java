@@ -1,4 +1,4 @@
-package example.scenes;
+package example.scenes.blocky;
 
 import com.moka.components.Area;
 import com.moka.components.Interval;
@@ -6,11 +6,9 @@ import com.moka.components.RigidBody;
 import com.moka.components.StaticBody;
 import com.moka.core.Scene;
 import com.moka.core.entity.Entity;
-import com.moka.physics.Collision;
 import com.moka.physics.PhysicsBody;
 import com.moka.triggers.CursorTriggers;
 import com.moka.triggers.Trigger;
-import example.Game;
 import example.Res;
 
 public class BlockyScene extends Scene

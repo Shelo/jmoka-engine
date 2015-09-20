@@ -1,6 +1,5 @@
 package example;
 
-import com.moka.resources.BindConfig;
 import com.moka.resources.BindLoad;
 import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;

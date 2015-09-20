@@ -126,15 +126,21 @@ public final class Prefab
     }
 
     /**
-     * Creates a new instance with using this prefab rules and states. The instance will
-     * be automatically added to the stage.
+     * Creates a new instance with using this prefab states.
      *
-     * @param name  unique name for the new instance.
-     * @return      the getEntity.
+     * @param name          unique name for the new instance.
+     * @param addToScene    should the entity be added to the scene automatically.
+     * @return              the getEntity.
      */
-    public Entity newEntity(String name)
+    public Entity newEntity(String name, boolean addToScene)
     {
-        Entity entity = Moka.getContext().newEntity(name, layer);
+        Entity entity;
+
+        if (addToScene)
+            entity = Moka.getContext().newEntity(name, layer);
+        else
+            entity = new Entity(name);
+
         entity.setGroup(group);
 
         // set transform values for this getEntity.
@@ -208,6 +214,18 @@ public final class Prefab
         }
 
         return entity;
+    }
+
+    /**
+     * Creates a new instance with using this prefab states. The instance will
+     * be automatically added to the stage.
+     *
+     * @param name  unique name for the new instance.
+     * @return      the getEntity.
+     */
+    public Entity newEntity(String name)
+    {
+        return newEntity(name, true);
     }
 
     public void setGroup(String group)

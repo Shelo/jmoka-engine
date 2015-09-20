@@ -1,6 +1,5 @@
 package example.components.spaceshooter;
 
-import com.moka.components.Bullet;
 import com.moka.core.Package;
 import com.moka.core.entity.Component;
 

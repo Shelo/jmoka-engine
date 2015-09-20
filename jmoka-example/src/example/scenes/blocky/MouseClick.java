@@ -1,4 +1,4 @@
-package example.scenes;
+package example.scenes.blocky;
 
 import com.moka.core.Moka;
 import com.moka.core.entity.Component;

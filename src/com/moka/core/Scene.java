@@ -34,11 +34,6 @@ public abstract class Scene
      */
     public abstract void onExit();
 
-    public void setContext(Context context)
-    {
-        this.context = context;
-    }
-
     /**
      * Creates a new {@link Entity} with a camera on it.
      *
@@ -91,5 +86,15 @@ public abstract class Scene
     public boolean isCreated()
     {
         return created;
+    }
+
+    public void setContext(Context context)
+    {
+        this.context = context;
+    }
+
+    public Context getContext()
+    {
+        return context;
     }
 }

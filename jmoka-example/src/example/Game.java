@@ -3,7 +3,8 @@ package example;
 import com.moka.core.Application;
 import com.moka.input.Input;
 import com.moka.core.Moka;
-import example.scenes.BlockyScene;
+import example.scenes.MainScene;
+import example.scenes.blocky.BlockyScene;
 
 public class Game
 {
@@ -31,8 +32,9 @@ public class Game
 
         // set up scenes.
         Moka.getContext().addScene(new BlockyScene());
+        Moka.getContext().addScene(new MainScene());
 
-        Moka.getContext().setMainScene(BlockyScene.class);
+        Moka.getContext().setMainScene(MainScene.class);
 
         Moka.getPhysics().setGravity(0, -9.8f);
 

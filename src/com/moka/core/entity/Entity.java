@@ -22,6 +22,14 @@ public class Entity
     private Sprite sprite;
     private String group;
 
+    public Entity(String name)
+    {
+        this.name = name;
+
+        components = new ArrayList<>();
+        transform = new Transform(this);
+    }
+
     public Entity(String name, Context context)
     {
         this.context = context;
