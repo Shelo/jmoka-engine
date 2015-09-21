@@ -11,7 +11,7 @@ public class EnemyTriggers
         public Object onTrigger()
         {
             getEntity().destroy();
-            Res.prefabs.explosion01.newEntity(null, getEntity().getTransform().getPosition());
+            R.prefabs.explosion01.newEntity(null, getEntity().getTransform().getPosition());
             return null;
         }
     }

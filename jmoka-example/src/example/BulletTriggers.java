@@ -26,7 +26,7 @@ public class BulletTriggers
                 }
             }
 
-            Res.prefabs.explosion02.newEntity(null, getEntity().getTransform().getPosition());
+            R.prefabs.explosion02.newEntity(null, getEntity().getTransform().getPosition());
             getEntity().destroy();
 
             return null;

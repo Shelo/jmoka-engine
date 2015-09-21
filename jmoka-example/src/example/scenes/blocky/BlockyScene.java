@@ -9,7 +9,7 @@ import com.moka.core.entity.Entity;
 import com.moka.physics.PhysicsBody;
 import com.moka.triggers.CursorTriggers;
 import com.moka.triggers.Trigger;
-import example.Res;
+import example.R;
 
 public class BlockyScene extends Scene
 {
@@ -21,26 +21,26 @@ public class BlockyScene extends Scene
         newCamera("MainCamera", true);
 
         // create the floor.
-        Entity entity = newEntity("Floor", Res.textures.blank, 0);
+        Entity entity = newEntity("Floor", R.textures.blank, 0);
         entity.getSprite().setTint(0.5f, 0.1f, 0.1f, 1);
         StaticBody staticBody = new StaticBody();
         entity.addComponent(staticBody);
-        staticBody.setSize(Res.screen.width, 64);
+        staticBody.setSize(R.screen.width, 64);
         staticBody.setShape(PhysicsBody.Shapes.BOX);
-        entity.getTransform().setSize(Res.screen.width, 64);
-        entity.getTransform().setPosition(Res.screen.width / 2, 32);
+        entity.getTransform().setSize(R.screen.width, 64);
+        entity.getTransform().setPosition(R.screen.width / 2, 32);
 
-        Entity blocky1 = Res.prefabs.blocky.newEntity("Block1", 400, 96);
-        Entity blocky2 = Res.prefabs.blocky.newEntity("Block2", 400, 160);
-        Entity blocky3 = Res.prefabs.blocky.newEntity("Block3", 300, 128);
+        Entity blocky1 = R.prefabs.blocky.newEntity("Block1", 400, 96);
+        Entity blocky2 = R.prefabs.blocky.newEntity("Block2", 400, 160);
+        Entity blocky3 = R.prefabs.blocky.newEntity("Block3", 300, 128);
         blocky3.getComponent(RigidBody.class).setSize(64, 128);
         blocky3.getTransform().setSize(64, 128);
 
-        Entity blocky4 = Res.prefabs.blocky.newEntity("Block4", 350, 224);
+        Entity blocky4 = R.prefabs.blocky.newEntity("Block4", 350, 224);
         blocky4.getComponent(RigidBody.class).setSize(192, 64);
         blocky4.getTransform().setSize(192, 64);
 
-        Res.prefabs.ball.newEntity("Ball", 350, 272);
+        R.prefabs.ball.newEntity("Ball", 350, 272);
 
         // mouse follower.
         Entity cursor = newEntity("Cursor", 0);

@@ -6,7 +6,7 @@ import com.moka.core.Moka;
 import com.moka.core.entity.Component;
 import com.moka.math.Vector2;
 import com.moka.utils.Pools;
-import example.Res;
+import example.R;
 
 public class Movement extends Component
 {
@@ -22,8 +22,8 @@ public class Movement extends Component
     @Override
     public void onUpdate()
     {
-        float x = Moka.getInput().getAxes(Res.axes.HORIZONTAL);
-        float y = Moka.getInput().getAxes(Res.axes.VERTICAL);
+        float x = Moka.getInput().getAxes(R.axes.HORIZONTAL);
+        float y = Moka.getInput().getAxes(R.axes.VERTICAL);
 
         Vector2 distance = Pools.vec2.take(x, y).nor().mul(speed * Moka.getTime().getDelta());
         body.setLinearVelocity(distance.x, distance.y);

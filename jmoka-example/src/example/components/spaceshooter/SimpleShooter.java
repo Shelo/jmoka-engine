@@ -4,7 +4,7 @@ import com.moka.core.Moka;
 import com.moka.core.entity.Component;
 import com.moka.time.TimeOut;
 import com.moka.triggers.Trigger;
-import example.Res;
+import example.R;
 
 public class SimpleShooter extends Component
 {
@@ -19,7 +19,7 @@ public class SimpleShooter extends Component
         @Override
         public Object onTrigger()
         {
-            getEntity().getSprite().setTexture(Res.textures.player);
+            getEntity().getSprite().setTexture(R.textures.player);
 
             return null;
         }
@@ -28,21 +28,21 @@ public class SimpleShooter extends Component
     @Override
     public void onCreate()
     {
-        bulletOffsetX = Res.textures.player.getWidth() / 2;
+        bulletOffsetX = R.textures.player.getWidth() / 2;
         bulletOffsetY = 20;
     }
 
     @Override
     public void onUpdate()
     {
-        if (Moka.getInput().getButtonDown(Res.buttons.FIRE_1))
+        if (Moka.getInput().getButtonDown(R.buttons.FIRE_1))
         {
-            getEntity().getSprite().setTexture(Res.textures.playerShooting);
+            getEntity().getSprite().setTexture(R.textures.playerShooting);
 
             float x = getTransform().getPosition().x + bulletOffsetX;
 
-            Res.prefabs.bullet01.newEntity("B" + (i++), x, getTransform().getPosition().y + bulletOffsetY);
-            Res.prefabs.bullet01.newEntity("B" + (i++), x, getTransform().getPosition().y - bulletOffsetY);
+            R.prefabs.bullet01.newEntity(null, x, getTransform().getPosition().y + bulletOffsetY);
+            R.prefabs.bullet01.newEntity(null, x, getTransform().getPosition().y - bulletOffsetY);
 
             // switch the texture.
             if (currentTimeOut != null)

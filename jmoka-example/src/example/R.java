@@ -5,7 +5,7 @@ import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
 import com.moka.resources.Resources;
 
-public class Res extends Resources
+public class R extends Resources
 {
     public static class axes
     {
@@ -76,7 +76,7 @@ public class Res extends Resources
         }
     }
 
-    public Res(String root)
+    public R(String root)
     {
         super(root);
     }

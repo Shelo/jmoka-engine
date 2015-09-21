@@ -108,9 +108,7 @@ public class Entity
     public void destroy()
     {
         if (destroyed)
-        {
             return;
-        }
 
         destroyed = true;
     }

@@ -104,6 +104,7 @@ public class Context extends SubEngine
                 {
                     entity.onDestroy();
                     layer.remove(i);
+                    nameRelations.remove(entity.getName());
                 }
             }
         }
@@ -248,9 +249,7 @@ public class Context extends SubEngine
 
         // register the name only if it has a name.
         if (name != null)
-        {
             nameRelations.put(name, entity);
-        }
 
         return entity;
     }
