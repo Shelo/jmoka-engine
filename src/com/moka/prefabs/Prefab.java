@@ -137,7 +137,7 @@ public final class Prefab
         Entity entity;
 
         if (addToScene)
-            entity = Moka.getContext().newEntity(name, layer);
+            entity = Moka.getContext().getCurrentScene().newEntity(name, layer);
         else
             entity = new Entity(name);
 
@@ -149,9 +149,7 @@ public final class Prefab
         transform.setRotation(rotation);
 
         if (useOwnSize)
-        {
             transform.setSize(size.cpy());
-        }
 
         // creates every component and adds it to the getEntity.
         for (Class<?> cClass : components.keySet())
@@ -170,18 +168,14 @@ public final class Prefab
                     Object[] attr = componentAttrs.getValue(method);
 
                     if (attr == null)
-                    {
                         throw new JMokaException("Some error happened... Maybe the resource is null at this time?");
-                    }
 
                     for (int i = 0; i < attr.length; i++)
                     {
                         // if the attr[i] is an instance of a trigger, then get a new instance of that trigger
                         // in order to pass it to the setter method.
                         if (attr[i] != null && attr[i].getClass().isAssignableFrom(TriggerPromise.class))
-                        {
                             attr[i] = Trigger.newTriggerInstance(((TriggerPromise) attr[i]).getTriggerClass());
-                        }
                     }
 
                     try
@@ -208,10 +202,8 @@ public final class Prefab
         }
 
         // after this we should call the onCreate method on the components.
-        if (Moka.getContext().isCreated())
-        {
+        if (Moka.getContext().getCurrentScene().isCreated())
             entity.create();
-        }
 
         return entity;
     }

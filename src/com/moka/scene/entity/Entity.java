@@ -4,6 +4,7 @@ import com.moka.components.Sprite;
 import com.moka.scene.Context;
 import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
+import com.moka.scene.Scene;
 import com.moka.utils.CalcUtil;
 import com.moka.utils.Pools;
 
@@ -16,9 +17,9 @@ public class Entity
     private final String name;
 
     private boolean destroyed;
-    private Context context;
     private Sprite sprite;
     private String group;
+    private Scene scene;
 
     public Entity(String name)
     {
@@ -28,9 +29,9 @@ public class Entity
         transform = new Transform(this);
     }
 
-    public Entity(String name, Context context)
+    public Entity(String name, Scene scene)
     {
-        this.context = context;
+        this.scene = scene;
         this.name = name;
 
         components = new ArrayList<>();
@@ -188,9 +189,9 @@ public class Entity
         return destroyed;
     }
 
-    public Context getContext()
+    public Scene getScene()
     {
-        return context;
+        return scene;
     }
 
     @Override

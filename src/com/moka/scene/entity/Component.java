@@ -16,11 +16,6 @@ public abstract class Component
     private boolean enabled = true;
     private Entity entity;
 
-    public Component()
-    {
-
-    }
-
     public final void setEntity(final Entity entity)
     {
         if (this.entity != null)
@@ -38,7 +33,7 @@ public abstract class Component
 
     public final Entity findEntity(String tag)
     {
-        return Moka.getContext().findEntity(tag);
+        return entity.getScene().findEntity(tag);
     }
 
     public Transform getTransform()

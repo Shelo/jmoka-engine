@@ -11,11 +11,9 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public final class Core extends SubEngine
 {
-    private boolean experimental;
     private float frameTime;
     private boolean daemon;
     private Runtime runtime;
-    private boolean watch;
 
     /**
      * Creates a new instance of the engine.
@@ -150,8 +148,13 @@ public final class Core extends SubEngine
     public void stop()
     {
         log("Stopping JMoka Engine.");
+
         daemon = false;
+
         getContext().dispose();
+
         glfwTerminate();
+
+        log("JMoka Engine stopped. Have a good day.");
     }
 }

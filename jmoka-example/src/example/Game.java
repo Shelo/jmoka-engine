@@ -33,12 +33,12 @@ public class Game
         // set up scenes.
         Moka.getContext().addScene(new BlockyScene());
         Moka.getContext().addScene(new MainScene());
-
         Moka.getContext().setMainScene(MainScene.class);
 
+        // set up physics engine.
         Moka.getPhysics().setGravity(0, -9.8f);
 
-        // create and start the application.
+        // create and start the application at 60 fps.
         app.create().start(60);
     }
 }
