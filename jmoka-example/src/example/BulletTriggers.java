@@ -17,13 +17,10 @@ public class BulletTriggers
             String group = meta().getOther().getGroup();
             if (group != null && !group.equals("Player"))
             {
-                System.out.println(meta().getOther().getName());
                 Health health = meta().getOther().getComponent(Health.class);
 
                 if (health != null)
-                {
                     health.takeDamage(bullet.getDamage());
-                }
             }
 
             R.prefabs.explosion02.newEntity(null, getEntity().getTransform().getPosition());

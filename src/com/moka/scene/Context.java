@@ -93,7 +93,7 @@ public class Context extends SubEngine
                 log("Loading scene: " + scene.getClass().getSimpleName());
 
                 // unload the previous scene.
-                Scene previousScene = scenes.get(currentScene);
+                Scene previousScene = getCurrentScene();
                 exitScene(previousScene, exitPrevious);
 
                 // switch to the new scene.
@@ -123,6 +123,8 @@ public class Context extends SubEngine
         if (exit)
         {
             scene.onExit();
+            scene.dispose();
+            scene.destroy();
             scene.setCreated(false);
         }
         else

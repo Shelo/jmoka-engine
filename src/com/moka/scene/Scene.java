@@ -105,11 +105,6 @@ public abstract class Scene
         }
     }
 
-    public void hardReset()
-    {
-        entities.clear();
-    }
-
     /**
      * Constructs a new {@link Entity} and add it to the hierarchy.
      *
@@ -221,6 +216,12 @@ public abstract class Scene
     {
         for (Entity entity : entities)
             entity.dispose();
+    }
+
+    public void destroy()
+    {
+        entities.clear();
+        layers.clear();
     }
 
     public void setCreated(boolean created)
