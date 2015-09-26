@@ -4,8 +4,8 @@ import com.moka.components.Area;
 import com.moka.components.Interval;
 import com.moka.components.RigidBody;
 import com.moka.components.StaticBody;
-import com.moka.core.Scene;
-import com.moka.core.entity.Entity;
+import com.moka.scene.Scene;
+import com.moka.scene.entity.Entity;
 import com.moka.physics.PhysicsBody;
 import com.moka.triggers.CursorTriggers;
 import com.moka.triggers.Trigger;
@@ -21,7 +21,7 @@ public class BlockyScene extends Scene
         newCamera("MainCamera", true);
 
         // create the floor.
-        Entity entity = newEntity("Floor", R.textures.blank, 0);
+        Entity entity = newEntity("Floor", 0, R.textures.blank);
         entity.getSprite().setTint(0.5f, 0.1f, 0.1f, 1);
         StaticBody staticBody = new StaticBody();
         entity.addComponent(staticBody);
@@ -48,6 +48,7 @@ public class BlockyScene extends Scene
         cursor.addComponent(setAtMouse);
         cursor.addComponent(new MouseClick());
         setAtMouse.setTrigger(new CursorTriggers.MoveToCursor());
+
         Area area = new Area();
         area.setShape(PhysicsBody.Shapes.CIRCLE);
         area.setRadius(5);
@@ -60,6 +61,7 @@ public class BlockyScene extends Scene
                 return null;
             }
         });
+
         area.setOnExitTrigger(new Trigger<Entity>()
         {
             @Override

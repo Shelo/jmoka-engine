@@ -1,8 +1,8 @@
 package example.scenes.blocky;
 
 import com.moka.core.Moka;
-import com.moka.core.entity.Component;
-import com.moka.core.entity.Entity;
+import com.moka.scene.entity.Component;
+import com.moka.scene.entity.Entity;
 import com.moka.input.Input;
 
 public class MouseClick extends Component

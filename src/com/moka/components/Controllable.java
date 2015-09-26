@@ -1,8 +1,8 @@
 package com.moka.components;
 
 import com.moka.core.Moka;
-import com.moka.core.entity.Component;
-import com.moka.core.ComponentAttribute;
+import com.moka.scene.entity.Component;
+import com.moka.scene.entity.ComponentAttribute;
 import org.lwjgl.glfw.GLFW;
 
 public class Controllable extends Component

@@ -1,6 +1,6 @@
 package com.moka.core.threading;
 
-import com.moka.core.entity.Entity;
+import com.moka.scene.entity.Entity;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;

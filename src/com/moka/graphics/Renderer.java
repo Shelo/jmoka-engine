@@ -1,10 +1,8 @@
 package com.moka.graphics;
 
 import com.moka.components.Camera;
-import com.moka.core.Moka;
 import com.moka.core.SubEngine;
 import com.moka.utils.JMokaException;
-import com.moka.utils.JMokaLog;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -44,14 +42,12 @@ public final class Renderer extends SubEngine
             "void main() {\n" +
             "\tvec4 baseColor = texture(u_texture, texCoord);\n" +
             "\n" +
-            "\tif(baseColor.a == 0)\n" +
-            "\t\tdiscard;\n" +
-            "\telse\n" +
-            "\t\tfragColor = baseColor * u_color;\n" +
+            "\tfragColor = baseColor * u_color;\n" +
             "}\n";
 
-    private Camera camera;
+    private Shader defaultShader;
     private Shader shader;
+    private Camera camera;
 
     private Color clearColor = new Color(0, 0, 0, 1);
 
@@ -61,7 +57,8 @@ public final class Renderer extends SubEngine
     public void create()
     {
         // create shader.
-        shader = new Shader(VERTEX_CODE, FRAGMENT_CODE);
+        defaultShader = new Shader(VERTEX_CODE, FRAGMENT_CODE);
+        setShader(null);
 
         // initialize OpenGL stuff.
         updateClearColor();
@@ -90,9 +87,7 @@ public final class Renderer extends SubEngine
         shader.bind();
 
         if (camera == null)
-        {
             throw new JMokaException("There's no camera attached to the renderer.");
-        }
 
         shader.setUniform("u_projectedView", camera.getProjectedView());
 
@@ -145,9 +140,7 @@ public final class Renderer extends SubEngine
     public void setCamera(Camera camera)
     {
         if (camera == null)
-        {
             throw new JMokaException("Renderer.setCurrentCamera: the given camera cannot be null.");
-        }
 
         this.camera = camera;
     }
@@ -163,14 +156,15 @@ public final class Renderer extends SubEngine
     }
 
     /**
-     * Sets the shader to use.
+     * Sets the shader to use. If the shader is null, this restores to the default shader.
      *
      * @param shader the shader program.
-     *
-     * @deprecated  currently this will not work.
      */
     public void setShader(Shader shader)
     {
-        this.shader = shader;
+        if (shader == null)
+            this.shader = defaultShader;
+        else
+            this.shader = shader;
     }
 }

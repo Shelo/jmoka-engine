@@ -1,9 +1,9 @@
 package example.components.spaceshooter;
 
 import com.moka.components.RigidBody;
-import com.moka.core.ComponentAttribute;
+import com.moka.scene.entity.ComponentAttribute;
 import com.moka.core.Moka;
-import com.moka.core.entity.Component;
+import com.moka.scene.entity.Component;
 import com.moka.math.Vector2;
 import com.moka.utils.Pools;
 import example.R;

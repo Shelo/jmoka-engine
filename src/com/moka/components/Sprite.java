@@ -1,7 +1,7 @@
 package com.moka.components;
 
-import com.moka.core.entity.Component;
-import com.moka.core.ComponentAttribute;
+import com.moka.scene.entity.Component;
+import com.moka.scene.entity.ComponentAttribute;
 import com.moka.graphics.Color;
 import com.moka.graphics.Quad;
 import com.moka.graphics.Shader;

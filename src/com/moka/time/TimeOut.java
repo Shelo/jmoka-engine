@@ -1,6 +1,6 @@
 package com.moka.time;
 
-import com.moka.core.entity.Component;
+import com.moka.scene.entity.Component;
 import com.moka.triggers.Trigger;
 
 /**

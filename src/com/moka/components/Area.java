@@ -1,8 +1,7 @@
 package com.moka.components;
 
-import com.moka.core.ComponentAttribute;
-import com.moka.core.entity.Entity;
-import com.moka.physics.Collision;
+import com.moka.scene.entity.ComponentAttribute;
+import com.moka.scene.entity.Entity;
 import com.moka.physics.PhysicsBody;
 import com.moka.triggers.Trigger;
 import org.jbox2d.dynamics.BodyDef;

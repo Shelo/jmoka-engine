@@ -1,4 +1,5 @@
 + Prefab
+    - Layer: 0
     - Size: @integers.screen.width, @integers.screen.height
     - Position: integers.screen.width / 2, integers.screen.height / 2
 

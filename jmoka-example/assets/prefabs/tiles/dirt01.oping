@@ -1,7 +1,7 @@
 + Prefab
     - Group: Tiles
     - Size: 64 * 13, 64
-    - Layer: 0
+    - Layer: 1
 
     + Sprite
         - Texture: @textures.tiles.dirt01

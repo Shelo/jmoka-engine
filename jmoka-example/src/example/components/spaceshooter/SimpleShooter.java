@@ -1,7 +1,7 @@
 package example.components.spaceshooter;
 
 import com.moka.core.Moka;
-import com.moka.core.entity.Component;
+import com.moka.scene.entity.Component;
 import com.moka.time.TimeOut;
 import com.moka.triggers.Trigger;
 import example.R;

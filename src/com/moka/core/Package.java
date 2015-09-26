@@ -1,6 +1,6 @@
 package com.moka.core;
 
-import com.moka.core.entity.Component;
+import com.moka.scene.entity.Component;
 
 import java.util.LinkedList;
 

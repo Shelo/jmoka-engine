@@ -1,26 +1,20 @@
-package com.moka.core;
+package com.moka.scene;
 
-import com.moka.core.entity.Component;
-import com.moka.core.entity.Entity;
+import com.moka.core.SubEngine;
+import com.moka.scene.entity.Entity;
 import com.moka.graphics.Shader;
 import com.moka.prefabs.OpingPrefabReader;
 import com.moka.prefabs.PrefabReader;
 import com.moka.utils.JMokaException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Context extends SubEngine
 {
-    private HashMap<String, Entity> nameRelations;
-    private ArrayList<ArrayList<Entity>> layers;
-    private PrefabReader prefabReader;
-
-    /**
-     * Used to store all layers.
-     */
-    private final ArrayList<Entity> groupEntities = new ArrayList<>();
+    private ArrayList<Integer> layers = new ArrayList<>();
+    private ArrayList<Entity> entities = new ArrayList<>();
+    private PrefabReader prefabReader = new OpingPrefabReader();
 
     /**
      * Store all scenes.
@@ -29,27 +23,11 @@ public class Context extends SubEngine
     private int currentScene;
     private boolean created;
 
-    public Context()
-    {
-        prefabReader = new OpingPrefabReader();
-        nameRelations = new HashMap<>();
-        layers = new ArrayList<>();
-    }
-
     public final void update()
     {
-        for (int l = layers.size() - 1; l >= 0; l--)
+        for (int i = entities.size() - 1; i >= 0; i--)
         {
-            ArrayList<Entity> layer = layers.get(l);
-
-            for (int i = layer.size() - 1; i >= 0; i--)
-            {
-                /*
-                Runnable runnable = Threading.runnable(ActionDelegator.update, layer.get(i));
-                service.execute(runnable);
-                */
-                layer.get(i).update();
-            }
+            entities.get(i).update();
         }
     }
 
@@ -57,63 +35,42 @@ public class Context extends SubEngine
     {
         createScene(scenes.get(currentScene));
 
-        for (ArrayList<Entity> layer : layers)
+        for (Entity entity : entities)
         {
-            // iterate over entities.
-            for (int i = layer.size() - 1; i >= 0; i--)
-            {
-                layer.get(i).create();
-            }
+            entity.create();
         }
     }
 
     public final void render(Shader shader)
     {
-        for (ArrayList<Entity> layer : layers)
-        {
-            for (Entity entity : layer)
-            {
-                if (entity.hasSprite() && entity.getSprite().isEnabled())
-                {
-                    entity.getSprite().render(shader);
-                }
-            }
-        }
+        for (Entity entity : entities)
+            if (entity.hasSprite() && entity.getSprite().isEnabled())
+                entity.getSprite().render(shader);
     }
 
     public void postUpdate()
     {
-        for (ArrayList<Entity> layer : layers)
+        for (Entity entity : entities)
         {
-            for (Entity entity : layer)
-            {
-                entity.postUpdate();
-            }
+            entity.postUpdate();
         }
     }
 
     public void clean()
     {
-        for (ArrayList<Entity> layer : layers)
+        for (int i = entities.size() - 1; i >= 0; i--)
         {
-            for (int i = layer.size() - 1; i >= 0; i--)
+            if (entities.get(i).isDestroyed())
             {
-                Entity entity = layer.get(i);
-
-                if (entity.isDestroyed())
-                {
-                    entity.onDestroy();
-                    layer.remove(i);
-                    nameRelations.remove(entity.getName());
-                }
+                entities.get(i).onDestroy();
+                entities.remove(i);
             }
         }
     }
 
     public void hardReset()
     {
-        layers.clear();
-        nameRelations.clear();
+        entities.clear();
     }
 
     public void addScene(Scene scene)
@@ -220,13 +177,17 @@ public class Context extends SubEngine
      */
     public final Entity addEntity(Entity entity, int layer)
     {
-        // if the layer doesn't exists...
-        while (layers.size() <= layer)
-        {
-            layers.add(new ArrayList<>());
-        }
+        if (layer == layers.size())
+            layers.add(entities.size());
+        else if (layer > layers.size())
+            throw new JMokaException("Cannot skip layer values.");
 
-        layers.get(layer).add(entity);
+        int ptr = layers.get(layer);
+        entities.add(ptr, entity);
+
+        for (int i = layer + 1; i < layers.size(); i++)
+            layers.set(i, layers.get(i) + 1);
+
         return entity;
     }
 
@@ -237,39 +198,33 @@ public class Context extends SubEngine
      */
     public final Entity newEntity(String name, int layer)
     {
-        // throw exception if the name already exists.
-        if (nameRelations.containsKey(name))
-        {
-            throw new JMokaException("Entity with name " + name + " already exists.");
-        }
-
         // create and add the getEntity to the game.
         Entity entity = new Entity(name, this);
         addEntity(entity, layer);
-
-        // register the name only if it has a name.
-        if (name != null)
-            nameRelations.put(name, entity);
-
         return entity;
     }
 
     /**
-     * Finds an Entity on the game. Raises an exception if it is not found.
+     * Finds an Entity on the game. This method should always return something that is not null,
+     * otherwise it will throw an exception.
      *
-     * @param name getEntity's unique tag.
-     * @return the getEntity if found.
+     * @param name getEntity's name.
+     * @return the entity if found.
      */
     public final Entity findEntity(String name)
     {
-        Entity entity = nameRelations.get(name);
+        if (name == null)
+            throw new JMokaException("The name cannot be null.");
 
-        if (entity == null)
+        for (Entity entity : entities)
         {
-            throw new JMokaException("There's no entity with name " + name + ".");
+            if (entity.getName().equals(name))
+            {
+                return entity;
+            }
         }
 
-        return entity;
+        throw new JMokaException("There's no entity with name " + name + ".");
     }
 
     /**
@@ -279,30 +234,20 @@ public class Context extends SubEngine
      */
     public List<Entity> getEntitiesFromGroup(String group)
     {
-        groupEntities.clear();
+        ArrayList<Entity> groupEntities = new ArrayList<>();
 
-        for (ArrayList<Entity> layer : layers)
-        {
-            for (Entity entity : layer)
-            {
-                if (entity.belongsTo(group))
-                {
-                    groupEntities.add(entity);
-                }
-            }
-        }
+        for (Entity entity : entities)
+            if (entity.belongsTo(group))
+                groupEntities.add(entity);
 
         return groupEntities.isEmpty()? null : groupEntities;
     }
 
     public void dispose()
     {
-        for (ArrayList<Entity> layer : layers)
+        for (Entity entity : entities)
         {
-            for (Entity entity : layer)
-            {
-                entity.dispose();
-            }
+            entity.dispose();
         }
     }
 
@@ -318,6 +263,6 @@ public class Context extends SubEngine
 
     public int getEntitiesCount()
     {
-        return nameRelations.size();
+        return entities.size();
     }
 }

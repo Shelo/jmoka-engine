@@ -1,4 +1,4 @@
-package com.moka.core;
+package com.moka.scene.entity;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

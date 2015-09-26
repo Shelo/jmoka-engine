@@ -1,6 +1,6 @@
 package example;
 
-import com.moka.core.entity.Entity;
+import com.moka.scene.entity.Entity;
 import com.moka.triggers.Trigger;
 
 public class EnemyTriggers

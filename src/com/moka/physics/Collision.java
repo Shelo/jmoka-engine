@@ -1,7 +1,6 @@
 package com.moka.physics;
 
-import com.moka.core.entity.Entity;
-import com.moka.math.Vector2;
+import com.moka.scene.entity.Entity;
 import org.jbox2d.dynamics.contacts.Contact;
 
 public final class Collision

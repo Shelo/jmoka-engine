@@ -1,6 +1,6 @@
 package com.moka.core;
 
-import com.moka.core.entity.Component;
+import com.moka.scene.entity.Component;
 import com.moka.utils.JMokaException;
 
 import java.util.HashMap;
@@ -87,18 +87,14 @@ public class NameManager extends SubEngine
     public Class<? extends Component> findComponent(String packageName, String name)
     {
         if (!packages.containsKey(packageName))
-        {
             throw new JMokaException("The package " + packageName + " does not exists.");
-        }
 
         Package manifest = packages.get(packageName);
 
         Class<? extends Component> component = manifest.getComponent(name);
 
         if (component == null)
-        {
             throw new JMokaException("The package " + packageName + " does not contains the component " + name);
-        }
 
         return component;
     }

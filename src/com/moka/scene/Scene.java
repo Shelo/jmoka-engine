@@ -1,8 +1,8 @@
-package com.moka.core;
+package com.moka.scene;
 
 import com.moka.components.Camera;
 import com.moka.components.Sprite;
-import com.moka.core.entity.Entity;
+import com.moka.scene.entity.Entity;
 import com.moka.graphics.Texture;
 
 /**
@@ -49,9 +49,7 @@ public abstract class Scene
         entity.addComponent(camera);
 
         if (main)
-        {
             camera.setAsMain();
-        }
 
         return entity;
     }
@@ -61,7 +59,7 @@ public abstract class Scene
      *
      * @return the new {@link Entity} with a sprite.
      */
-    public final Entity newEntity(String name, Texture texture, int layer)
+    public final Entity newEntity(String name, int layer, Texture texture)
     {
         Entity entity = context.newEntity(name, layer);
         entity.addComponent(new Sprite(texture));

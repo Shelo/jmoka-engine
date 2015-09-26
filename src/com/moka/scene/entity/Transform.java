@@ -1,6 +1,5 @@
-package com.moka.core;
+package com.moka.scene.entity;
 
-import com.moka.core.entity.Entity;
 import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
 import com.moka.utils.CalcUtil;
@@ -50,11 +49,11 @@ public class Transform
     /**
      * This constructor is used internally to create a previous state transform.
      */
-    private Transform()
+    public Transform()
     {
         this.entity = null;
 
-        rotation = new Matrix3();
+        rotation = new Matrix3().toIdentity();
         position = new Vector2();
         size = new Vector2();
 

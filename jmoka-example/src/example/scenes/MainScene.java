@@ -1,6 +1,6 @@
 package example.scenes;
 
-import com.moka.core.Scene;
+import com.moka.scene.Scene;
 import example.R;
 
 public class MainScene extends Scene

@@ -1,7 +1,7 @@
 package example.components.spaceshooter;
 
-import com.moka.core.ComponentAttribute;
-import com.moka.core.entity.Component;
+import com.moka.scene.entity.ComponentAttribute;
+import com.moka.scene.entity.Component;
 import com.moka.triggers.Trigger;
 
 public class Health extends Component

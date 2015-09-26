@@ -1,7 +1,7 @@
 package example.components.spaceshooter;
 
 import com.moka.core.Package;
-import com.moka.core.entity.Component;
+import com.moka.scene.entity.Component;
 
 import java.util.LinkedList;
 

@@ -1,10 +1,10 @@
 package com.moka.prefabs;
 
-import com.moka.core.ComponentAttribute;
+import com.moka.scene.entity.ComponentAttribute;
 import com.moka.core.Moka;
-import com.moka.core.Transform;
-import com.moka.core.entity.Component;
-import com.moka.core.entity.Entity;
+import com.moka.scene.entity.Transform;
+import com.moka.scene.entity.Component;
+import com.moka.scene.entity.Entity;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 import com.moka.triggers.TriggerPromise;
@@ -29,7 +29,7 @@ public final class Prefab
     private boolean useOwnSize = false;
     private float rotation;
     private String group;
-    private int layer;
+    private int layer = 1;
 
     /**
      * Creates a new Prefab for a given context with given components.

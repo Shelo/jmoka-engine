@@ -1,9 +1,9 @@
 package com.moka.physics;
 
-import com.moka.core.ComponentAttribute;
+import com.moka.scene.entity.ComponentAttribute;
 import com.moka.core.Moka;
-import com.moka.core.entity.Component;
-import com.moka.core.entity.Entity;
+import com.moka.scene.entity.Component;
+import com.moka.scene.entity.Entity;
 import com.moka.math.Vector2;
 import com.moka.triggers.Trigger;
 import org.jbox2d.collision.shapes.CircleShape;

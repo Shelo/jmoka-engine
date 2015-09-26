@@ -1,8 +1,7 @@
 package com.moka.components;
 
 import com.moka.core.Package;
-import com.moka.core.entity.Component;
-import com.moka.physics.PhysicsBody;
+import com.moka.scene.entity.Component;
 
 import java.util.LinkedList;
 

@@ -2,6 +2,7 @@ package com.moka.core;
 
 import com.moka.input.Input;
 import com.moka.resources.Resources;
+import com.moka.scene.Context;
 import com.moka.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;

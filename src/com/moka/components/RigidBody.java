@@ -1,6 +1,6 @@
 package com.moka.components;
 
-import com.moka.core.ComponentAttribute;
+import com.moka.scene.entity.ComponentAttribute;
 import com.moka.physics.PhysicsBody;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;

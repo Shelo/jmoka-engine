@@ -1,8 +1,8 @@
 package com.moka.components;
 
-import com.moka.core.entity.Component;
-import com.moka.core.entity.Entity;
-import com.moka.core.ComponentAttribute;
+import com.moka.scene.entity.Component;
+import com.moka.scene.entity.Entity;
+import com.moka.scene.entity.ComponentAttribute;
 import com.moka.math.Vector2;
 import com.moka.utils.Pools;
 
