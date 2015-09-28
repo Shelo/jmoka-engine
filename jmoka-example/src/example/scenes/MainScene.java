@@ -31,6 +31,7 @@ public class MainScene extends Scene
         R.prefabs.tiles.dirt01.newEntity(null, R.screen.width / 2, 32)
                 .getTransform().setRotation((float) Math.toRadians(180f));
 
+        // Testing the DataConfigFile "user".
         Branch user1 = R.save.user.getRoot().getBranch(0);
         System.out.println(user1.getSingleString("Name"));
 

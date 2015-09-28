@@ -33,6 +33,11 @@ public class ConfigDataFile
         parser.render(root, fileHandle.getFile());
     }
 
+    public boolean exists()
+    {
+        return fileHandle.exists();
+    }
+
     @Override
     public String toString()
     {
