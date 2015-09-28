@@ -3,19 +3,18 @@ package com.moka.scene;
 import com.moka.components.Camera;
 import com.moka.components.Sprite;
 import com.moka.graphics.Shader;
-import com.moka.prefabs.OpingPrefabReader;
-import com.moka.prefabs.PrefabReader;
 import com.moka.scene.entity.Entity;
 import com.moka.graphics.Texture;
 import com.moka.utils.JMokaException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * The scene is the element of your game that will actually show something.
  */
-public abstract class Scene
+public abstract class Scene implements Iterable<Entity>
 {
     private Context context;
     private ArrayList<Integer> layers = new ArrayList<>();
@@ -76,13 +75,6 @@ public abstract class Scene
 
             created = true;
         }
-    }
-
-    public final void render(Shader shader)
-    {
-        for (Entity entity : entities)
-            if (entity.hasSprite() && entity.getSprite().isEnabled())
-                entity.getSprite().render(shader);
     }
 
     public void postUpdate()
@@ -247,5 +239,11 @@ public abstract class Scene
     public int getEntitiesCount()
     {
         return entities.size();
+    }
+
+    @Override
+    public Iterator<Entity> iterator()
+    {
+        return entities.iterator();
     }
 }

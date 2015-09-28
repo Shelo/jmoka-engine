@@ -1,6 +1,7 @@
 package com.moka.graphics;
 
 import com.moka.components.Sprite;
+import com.moka.core.Moka;
 import com.moka.scene.entity.Transform;
 import com.moka.math.Matrix3;
 import com.moka.math.Matrix4;
@@ -23,15 +24,14 @@ public class Shader
     public static final String TAG = "SHADER";
 
     private HashMap<String, Integer> uniformLocations;
-    private int fragment;
+    private boolean bound;
     private int program;
-    private int vertex;
 
     public Shader(String vertexCode, String fragmentCode)
     {
         program = glCreateProgram();
-        vertex = createShader(vertexCode, GL_VERTEX_SHADER);
-        fragment = createShader(fragmentCode, GL_FRAGMENT_SHADER);
+        createShader(vertexCode, GL_VERTEX_SHADER);
+        createShader(fragmentCode, GL_FRAGMENT_SHADER);
 
         // Link and check errors.
         glLinkProgram(program);
@@ -51,9 +51,7 @@ public class Shader
         glValidateProgram(program);
 
         if (glGetProgrami(program, GL_VALIDATE_STATUS) == 0)
-        {
             throw new JMokaException(glGetProgramInfoLog(program, 1024));
-        }
 
         uniformLocations = new HashMap<>();
 
@@ -71,6 +69,7 @@ public class Shader
     public void bind()
     {
         glUseProgram(program);
+        Moka.getRenderer().setBound(this);
     }
 
     private int createShader(String code, int type)
@@ -78,17 +77,13 @@ public class Shader
         int shader = glCreateShader(type);
 
         if (shader == 0)
-        {
             throw new JMokaException("Shader creation failed.");
-        }
 
         glShaderSource(shader, code);
         glCompileShader(shader);
 
         if (glGetShaderi(shader, GL_COMPILE_STATUS) == 0)
-        {
             throw new JMokaException("Shader compile error: " + glGetShaderInfoLog(shader, 1024));
-        }
 
         glAttachShader(program, shader);
 
@@ -99,21 +94,15 @@ public class Shader
     {
         // if location is contained, return it.
         if (uniformLocations.containsKey(uniform))
-        {
             return uniformLocations.get(uniform);
-        }
 
         // if not, we ask openGL for the uniform location, store it and return it.
         int location = glGetUniformLocation(program, uniform);
 
         if (location == -1)
-        {
             throw new JMokaException("No uniform with name " + uniform);
-        }
         else
-        {
             uniformLocations.put(uniform, location);
-        }
 
         JMokaLog.o(TAG, "New uniform: " + uniform + ", at location " + location);
         return location;
@@ -160,5 +149,10 @@ public class Shader
     private void setUniform(String uniform, Color color)
     {
         glUniform4f(getUniformLocation(uniform), color.r, color.g, color.b, color.a);
+    }
+
+    public boolean isBound()
+    {
+        return Moka.getRenderer().isBound(this);
     }
 }

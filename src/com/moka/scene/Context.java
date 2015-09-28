@@ -37,11 +37,6 @@ public class Context extends SubEngine
         getCurrentScene().postUpdate();
     }
 
-    public void render(Shader shader)
-    {
-        getCurrentScene().render(shader);
-    }
-
     /**
      * Clean destroyed objects.
      */

@@ -3,12 +3,14 @@ package com.moka.resources;
 import com.moka.core.Moka;
 import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
+import com.moka.utils.FileHandle;
 import com.moka.utils.JMokaException;
 
 import java.lang.reflect.Field;
 
 public abstract class Resources
 {
+
     // Define all built-in resource loaders.
     public static class TextureLoader extends ResourceLoader
     {
@@ -28,11 +30,22 @@ public abstract class Resources
         }
     }
 
+    public static class FileHandleLoader extends ResourceLoader
+    {
+        @Override
+        public Object load(String path)
+        {
+            return new FileHandle(path);
+        }
+    }
+
     private String root;
 
     // Loaders.
     private TextureLoader textureLoader = new TextureLoader();
     private PrefabLoader prefabLoader = new PrefabLoader();
+    private ResourceLoader fileHandleLoader = new FileHandleLoader();
+
 
     public Resources(String root)
     {
@@ -151,22 +164,8 @@ public abstract class Resources
             return;
         }
 
-        ResourceLoader loader = null;
-
-        switch (bind.loader())
-        {
-            case TEXTURE:
-                loader = textureLoader;
-                break;
-            case PREFAB:
-                loader = prefabLoader;
-                break;
-        }
-
         for (Field field : res.getDeclaredFields())
-        {
-            bindResource(root, field, loader, bind);
-        }
+            bindResource(root, field, bind);
 
         // Inspect sub classes.
         for (Class<?> innerClass : res.getDeclaredClasses())
@@ -189,7 +188,7 @@ public abstract class Resources
         return config.extension().isEmpty() ? bind.extension() : config.extension();
     }
 
-    private void bindResource(String root, Field field, ResourceLoader loader, BindLoad bind)
+    private void bindResource(String root, Field field, BindLoad bind)
     {
         BindConfig config = field.getAnnotation(BindConfig.class);
 
@@ -205,13 +204,30 @@ public abstract class Resources
 
         try
         {
-            field.set(this, loader.load(file));
+            ResourceLoader loader = getLoader(field.getType());
+
+            if (loader != null)
+                field.set(this, loader.load(file));
+            else
+                throw new JMokaException("Not supported loader for type: " + field.getType());
         }
         catch (IllegalAccessException e)
         {
             throw new JMokaException("Error while trying to load " + field.getName()
                     + ", maybe the field is not accessible?");
         }
+    }
+
+    private ResourceLoader getLoader(Class<?> type)
+    {
+        if (type == Texture.class)
+            return textureLoader;
+        else if (type == Prefab.class)
+            return prefabLoader;
+        else if (type == FileHandle.class)
+            return fileHandleLoader;
+
+        return null;
     }
 
     private String getPath(BindLoad bind, BindConfig config)

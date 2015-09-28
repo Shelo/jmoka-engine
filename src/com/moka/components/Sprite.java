@@ -82,9 +82,7 @@ public class Sprite extends Component
     public void render(Shader shader)
     {
         if (texture == null)
-        {
             raise("there's no texture to draw.");
-        }
 
         // render.
         texture.bind();

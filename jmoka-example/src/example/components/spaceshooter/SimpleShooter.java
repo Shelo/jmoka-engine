@@ -12,8 +12,6 @@ public class SimpleShooter extends Component
     private float bulletOffsetX;
     private float bulletOffsetY;
 
-    private static int i;
-
     private Trigger switchTextureBack = new Trigger()
     {
         @Override
@@ -46,9 +44,7 @@ public class SimpleShooter extends Component
 
             // switch the texture.
             if (currentTimeOut != null)
-            {
                 currentTimeOut.cancel();
-            }
 
             currentTimeOut = Moka.getTime().newTimeOut(this, 0.1f, switchTextureBack);
         }

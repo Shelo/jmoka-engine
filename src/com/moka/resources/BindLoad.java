@@ -9,14 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface BindLoad
 {
-    enum Loader
-    {
-        TEXTURE,
-        PREFAB,
-    }
-
     boolean skip() default false;
     String path();
     String extension();
-    Loader loader();
 }

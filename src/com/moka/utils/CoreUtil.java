@@ -46,19 +46,14 @@ public class CoreUtil
 
     public static String readFile(String filePath)
     {
-        BufferedReader reader;
-        StringBuilder builder;
-
         try
         {
-            reader = new BufferedReader(new FileReader(filePath));
-            builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
+            FileReader reader = new FileReader(filePath);
 
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                builder.append(line).append("\n");
-            }
+            int c;
+            while ((c = reader.read()) != -1)
+                builder.append((char) c);
 
             reader.close();
             return builder.toString();

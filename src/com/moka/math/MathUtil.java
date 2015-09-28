@@ -67,4 +67,9 @@ public class MathUtil
 
         return delta;
     }
+
+    public static float lerp(int target, float value, float f)
+    {
+        return (target - value) * f;
+    }
 }

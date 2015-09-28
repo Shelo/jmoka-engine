@@ -4,6 +4,9 @@ import com.moka.resources.BindLoad;
 import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
 import com.moka.resources.Resources;
+import com.moka.utils.FileHandle;
+
+import java.io.File;
 
 public class R extends Resources
 {
@@ -25,7 +28,7 @@ public class R extends Resources
         public static int height = 450;
     }
 
-    @BindLoad(path = "img/", extension = "png", loader = BindLoad.Loader.TEXTURE)
+    @BindLoad(path = "img/", extension = "png")
     public static class textures
     {
         public static Texture player;
@@ -43,14 +46,20 @@ public class R extends Resources
 
         public static Texture blank;
 
-        @BindLoad(path = "tiles/", extension = "png", loader = BindLoad.Loader.TEXTURE)
+        @BindLoad(path = "tiles/", extension = "png")
         public static class tiles
         {
             public static Texture dirt01;
         }
     }
 
-    @BindLoad(skip = true, path = "prefabs/", extension = "oping", loader = BindLoad.Loader.PREFAB)
+    @BindLoad(path = "", extension = "txt")
+    public static class config
+    {
+        public static FileHandle someFile;
+    }
+
+    @BindLoad(skip = true, path = "prefabs/", extension = "oping")
     public static class prefabs
     {
         public static Prefab player;
@@ -69,7 +78,7 @@ public class R extends Resources
         public static Prefab blocky;
         public static Prefab ball;
 
-        @BindLoad(path = "tiles/", extension = "oping", loader = BindLoad.Loader.PREFAB)
+        @BindLoad(path = "tiles/", extension = "oping")
         public static class tiles
         {
             public static Prefab dirt01;

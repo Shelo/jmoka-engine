@@ -1,7 +1,10 @@
 package com.moka.graphics;
 
 import com.moka.components.Camera;
+import com.moka.components.Sprite;
 import com.moka.core.SubEngine;
+import com.moka.math.MathUtil;
+import com.moka.scene.entity.Entity;
 import com.moka.utils.JMokaException;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -24,8 +27,6 @@ public final class Renderer extends SubEngine
             "void main() {\n" +
             "\tvec3 position = u_projectedView * (u_model * vec3(a_position, 1.0));\n" +
             "\tgl_Position = vec4(position.xy, 0, position.z);\n" +
-            "\n" +
-            "\t// out.\n" +
             "\ttexCoord = a_texCoord;\n" +
             "}";
 
@@ -48,6 +49,8 @@ public final class Renderer extends SubEngine
     private Shader defaultShader;
     private Shader shader;
     private Camera camera;
+    private Shader boundShader;
+    private float pixp = 100;
 
     private Color clearColor = new Color(0, 0, 0, 1);
 
@@ -84,14 +87,23 @@ public final class Renderer extends SubEngine
     public void render()
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        shader.bind();
 
         if (camera == null)
             throw new JMokaException("There's no camera attached to the renderer.");
 
+        shader.bind();
         shader.setUniform("u_projectedView", camera.getProjectedView());
 
-        getContext().render(shader);
+        for (Entity entity : getContext().getCurrentScene())
+        {
+            if (entity.hasSprite())
+            {
+                Sprite sprite = entity.getSprite();
+
+                if (sprite.isEnabled())
+                    sprite.render(shader);
+            }
+        }
     }
 
     /**
@@ -109,9 +121,7 @@ public final class Renderer extends SubEngine
         this.clearColor.b = b;
 
         if (getApplication().isCreated())
-        {
             updateClearColor();
-        }
     }
 
     /**
@@ -166,5 +176,15 @@ public final class Renderer extends SubEngine
             this.shader = defaultShader;
         else
             this.shader = shader;
+    }
+
+    public void setBound(Shader shader)
+    {
+        boundShader = shader;
+    }
+
+    public boolean isBound(Shader shader)
+    {
+        return boundShader == shader;
     }
 }
