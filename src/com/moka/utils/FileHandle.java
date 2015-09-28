@@ -98,4 +98,14 @@ public class FileHandle
             throw new JMokaException(e.getMessage());
         }
     }
+
+    public boolean exists()
+    {
+        return file.exists();
+    }
+
+    public File getFile()
+    {
+        return file;
+    }
 }

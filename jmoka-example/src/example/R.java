@@ -4,6 +4,7 @@ import com.moka.resources.BindLoad;
 import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
 import com.moka.resources.Resources;
+import com.moka.utils.ConfigDataFile;
 import com.moka.utils.FileHandle;
 
 import java.io.File;
@@ -56,7 +57,8 @@ public class R extends Resources
     @BindLoad(path = "", extension = "txt")
     public static class config
     {
-        public static FileHandle someFile;
+        public static FileHandle some_file;
+        public static ConfigDataFile some_config_file;
     }
 
     @BindLoad(skip = true, path = "prefabs/", extension = "oping")

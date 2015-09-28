@@ -1,9 +1,10 @@
 package example.scenes;
 
-import com.moka.core.Moka;
 import com.moka.graphics.Shader;
 import com.moka.scene.Scene;
 import com.moka.utils.CoreUtil;
+import com.shelodev.oping2.structure.Branch;
+import com.shelodev.oping2.structure.Leaf;
 import example.R;
 
 public class MainScene extends Scene
@@ -29,8 +30,9 @@ public class MainScene extends Scene
         R.prefabs.tiles.dirt01.newEntity(null, R.screen.width / 2, 32)
                 .getTransform().setRotation((float) Math.toRadians(180f));
 
-        R.config.someFile.append("Hello2");
-        R.config.someFile.save();
+        R.config.some_config_file.getRoot().setNamespace("Hello");
+        R.config.some_config_file.getRoot().addLeaf(new Leaf("SecondValue", "Value1", "2"));
+        R.config.some_config_file.save();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.moka.resources;
 import com.moka.core.Moka;
 import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
+import com.moka.utils.ConfigDataFile;
 import com.moka.utils.FileHandle;
 import com.moka.utils.JMokaException;
 
@@ -39,13 +40,22 @@ public abstract class Resources
         }
     }
 
+    public static class ConfigDataFileLoader extends ResourceLoader
+    {
+        @Override
+        public Object load(String path)
+        {
+            return new ConfigDataFile(path);
+        }
+    }
+
     private String root;
 
     // Loaders.
     private TextureLoader textureLoader = new TextureLoader();
     private PrefabLoader prefabLoader = new PrefabLoader();
     private ResourceLoader fileHandleLoader = new FileHandleLoader();
-
+    private ConfigDataFileLoader configDataFileLoader = new ConfigDataFileLoader();
 
     public Resources(String root)
     {
@@ -226,6 +236,8 @@ public abstract class Resources
             return prefabLoader;
         else if (type == FileHandle.class)
             return fileHandleLoader;
+        else if (type == ConfigDataFile.class)
+            return configDataFileLoader;
 
         return null;
     }

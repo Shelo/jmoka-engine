@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="jmoka-engine" />
     <orderEntry type="library" name="org.jbox2d:jbox2d-library:2.2.1.1" level="project" />
+    <orderEntry type="module" module-name="oping" />
   </component>
 </module>
