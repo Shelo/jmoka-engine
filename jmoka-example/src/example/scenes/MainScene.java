@@ -3,6 +3,7 @@ package example.scenes;
 import com.moka.graphics.Shader;
 import com.moka.scene.Scene;
 import com.moka.utils.CoreUtil;
+import com.moka.utils.JMokaLog;
 import com.shelodev.oping2.structure.Branch;
 import com.shelodev.oping2.structure.Leaf;
 import example.R;
@@ -30,9 +31,15 @@ public class MainScene extends Scene
         R.prefabs.tiles.dirt01.newEntity(null, R.screen.width / 2, 32)
                 .getTransform().setRotation((float) Math.toRadians(180f));
 
-        R.config.some_config_file.getRoot().setNamespace("Hello");
-        R.config.some_config_file.getRoot().addLeaf(new Leaf("SecondValue", "Value1", "2"));
-        R.config.some_config_file.save();
+        Branch user1 = R.save.user.getRoot().getBranch(0);
+        System.out.println(user1.getSingleString("Name"));
+
+        int timesPlayed = user1.getSingleInt("TimesPlayed");
+        System.out.println("TimesPlayed: " + timesPlayed);
+
+        user1.getLeaf("TimesPlayed").setValue(0, String.valueOf(timesPlayed + 1));
+
+        R.save.user.save();
     }
 
     @Override

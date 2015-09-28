@@ -1,4 +1,0 @@
-
-+ Hello:MyBranch
-   - MyLeaf: SomeValue2
-   - SecondValue: Value1, 2

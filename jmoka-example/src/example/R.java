@@ -54,11 +54,10 @@ public class R extends Resources
         }
     }
 
-    @BindLoad(path = "", extension = "txt")
-    public static class config
+    @BindLoad(path = "save/", extension = "txt")
+    public static class save
     {
-        public static FileHandle some_file;
-        public static ConfigDataFile some_config_file;
+        public static ConfigDataFile user;
     }
 
     @BindLoad(skip = true, path = "prefabs/", extension = "oping")
