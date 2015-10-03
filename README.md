@@ -6,7 +6,7 @@ programmer a fast way of getting things done. The engine features a strong java 
 hand in hand with file definitions for prefabs, since we know that creating an entity and adding components to it
 is nothing out of the world, why should we use java code for this?
 
-Documentation pages: [http://shelo.github.io/jmoka-docs/](http://shelo.github.io/jmoka-docs/)
+For documentation refeer to the Wiki.
 
 ## Project Structure.
 
