@@ -4,7 +4,7 @@ import com.moka.scene.entity.ComponentAttribute;
 import com.moka.core.Moka;
 import com.moka.scene.entity.Component;
 import com.moka.utils.JMokaException;
-import com.shelodev.oping.structure.Leaf;
+import com.shelodev.oping2.structure.Leaf;
 import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;
 
@@ -186,15 +186,11 @@ public abstract class PrefabReader
 
         // if a reference was the last thing of the expression then append it to the reference list.
         if (rRef)
-        {
             references.add(curReference.toString());
-        }
 
         StringBuilder result = new StringBuilder(expression);
         for (String reference : references)
-        {
             replaceAll(result, reference, String.valueOf(Moka.getResources().findResource(reference)));
-        }
 
         return result.toString();
     }
@@ -245,6 +241,7 @@ public abstract class PrefabReader
         return metaType.getClass();
     }
 
+    // TODO: this method shouldn't receive a leaf...
     public boolean validateAttribute(ComponentAttribute attribute, Leaf leaf, Method method, String simpleName)
     {
         if (leaf == null)
@@ -263,9 +260,7 @@ public abstract class PrefabReader
             Class<?>[] params = method.getParameterTypes();
 
             if (params.length != 0 & params[0].isArray())
-            {
                 return true;
-            }
 
             throw new JMokaException("The attribute " + attribute.value() + " needs " + method.getParameterCount()
                 + " values.");

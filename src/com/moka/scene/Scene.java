@@ -27,6 +27,13 @@ public abstract class Scene implements Iterable<Entity>
     public abstract void onCreate();
 
     /**
+     * Called every frame just before updating every entity.
+     * This is intended to be used for managing resources and create custom
+     * managers and systems.
+     */
+    public abstract void onUpdate();
+
+    /**
      * Called when the game decides that it will show another scene, but not totally exiting the game nor
      * destroying this particular scene.
      */

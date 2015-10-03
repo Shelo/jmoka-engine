@@ -12,7 +12,7 @@ import java.util.HashMap;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * Input manager of the engine, this manager is intended to be used as a static method class.
+ * Input manager of the engine.
  *
  * @author Shelo
  */
@@ -184,31 +184,24 @@ public final class Input extends SubEngine
     public void update()
     {
         for (int i = 0; i < KEY_COUNT; i++)
-        {
             activeKeys[i] = getKey(i);
-        }
 
         for (int i = 0; i < MOUSE_COUNT; i++)
-        {
             activeMouse[i] = getMouse(i);
-        }
 
         cursorPosX.rewind();
         cursorPosY.rewind();
         glfwGetCursorPos(getWindow(), cursorPosX, cursorPosY);
+        cursorPosition.set(getCursorPosX(), getCursorPosY());
     }
 
     public Input bindKey(String button, int keyCode)
     {
         if (button == null)
-        {
             throw new JMokaException("Button name cannot be null.");
-        }
 
         if (buttonsMouse.containsKey(button))
-        {
             throw new JMokaException("Button is already set for mouse.");
-        }
 
         buttonsKeys.put(button, keyCode);
 
@@ -223,14 +216,10 @@ public final class Input extends SubEngine
     public Input bindMouse(String button, int keyCode)
     {
         if (button == null)
-        {
             throw new JMokaException("Button name cannot be null.");
-        }
 
         if (buttonsKeys.containsKey(button))
-        {
             throw new JMokaException("Button is already set for keyboard.");
-        }
 
         buttonsMouse.put(button, keyCode);
 
@@ -240,9 +229,7 @@ public final class Input extends SubEngine
     public int getButtonKeyCode(String button)
     {
         if (!buttonsKeys.containsKey(button))
-        {
             throw new JMokaException("Keyboard button " + button + " is not set.");
-        }
 
         return buttonsKeys.get(button);
     }
@@ -250,9 +237,7 @@ public final class Input extends SubEngine
     public int getButtonMouseCode(String button)
     {
         if (!buttonsMouse.containsKey(button))
-        {
             throw new JMokaException("Mouse button " + button + " is not set.");
-        }
 
         return buttonsMouse.get(button);
     }
@@ -260,13 +245,9 @@ public final class Input extends SubEngine
     public boolean getButton(String button)
     {
         if (buttonsKeys.containsKey(button))
-        {
             return getKey(getButtonKeyCode(button));
-        }
         else
-        {
             return getMouse(getButtonMouseCode(button));
-        }
     }
 
     /**
@@ -280,21 +261,15 @@ public final class Input extends SubEngine
         int value = 0;
 
         if (!axes.containsKey(name))
-        {
             throw new JMokaException("The axes with name " + name + " does not exists.");
-        }
 
         Axes found = axes.get(name);
 
         if (getKey(found.getPositive()))
-        {
             value += 1;
-        }
 
         if (getKey(found.getNegative()))
-        {
             value -= 1;
-        }
 
         return value;
     }
@@ -302,25 +277,17 @@ public final class Input extends SubEngine
     public boolean getButtonDown(String button)
     {
         if (buttonsKeys.containsKey(button))
-        {
             return getKeyDown(getButtonKeyCode(button));
-        }
         else
-        {
             return getMouseDown(getButtonMouseCode(button));
-        }
     }
 
     public boolean getButtonUp(String button)
     {
         if (buttonsKeys.containsKey(button))
-        {
             return getKeyUp(getButtonKeyCode(button));
-        }
         else
-        {
             return getMouseUp(getButtonMouseCode(button));
-        }
     }
 
     public boolean getKey(int keyCode)
@@ -329,9 +296,7 @@ public final class Input extends SubEngine
         boolean result = glfwGetKey(getWindow(), keyCode) == GLFW.GLFW_PRESS;
 
         if (result && !getDisplay().hasFocus())
-        {
             getDisplay().fixFocus();
-        }
 
         return result;
     }
@@ -354,9 +319,7 @@ public final class Input extends SubEngine
         boolean result = glfwGetMouseButton(getWindow(), button) == GLFW.GLFW_PRESS;
 
         if (result && !getDisplay().hasFocus())
-        {
             getDisplay().fixFocus();
-        }
 
         return result;
     }
@@ -373,14 +336,14 @@ public final class Input extends SubEngine
         return !getMouse(buttonCode) && activeMouse[buttonCode];
     }
 
-    public synchronized int getCursorPosX()
+    public int getCursorPosX()
     {
         int x = (int) cursorPosX.get();
         cursorPosX.rewind();
         return x;
     }
 
-    public synchronized int getCursorPosY()
+    public int getCursorPosY()
     {
         int y = (int) cursorPosY.get();
         cursorPosY.rewind();
@@ -390,9 +353,7 @@ public final class Input extends SubEngine
     private void validate()
     {
         if (getWindow() == 0)
-        {
             throw new JMokaException("Window not defined in input.");
-        }
     }
 
     private long getWindow()
@@ -400,8 +361,15 @@ public final class Input extends SubEngine
         return getDisplay().getWindow();
     }
 
-    public synchronized Vector2 getCursorPos()
+    /**
+     * Returns the position vector for the cursor. This vector is
+     * updated every frame, so you can store and use it to get the
+     * position of the mouse without needing to call this method anymore.
+     *
+     * @return the mouse's position vector
+     */
+    public Vector2 getCursorPos()
     {
-        return cursorPosition.set(getCursorPosX(), getCursorPosY());
+        return cursorPosition;
     }
 }

@@ -3,7 +3,9 @@ package com.moka.core;
 import com.moka.scene.entity.Component;
 import com.moka.utils.JMokaException;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class NameManager extends SubEngine
 {
@@ -68,13 +70,77 @@ public class NameManager extends SubEngine
     }
 
     /**
-     * Use a package with the common package name.
+     * Tells the engine that you will be using a package by the name of <i>name</i>.
      *
      * @param location  the location of the package.
      */
     public void usePackage(String location)
     {
         usePackage(null, location);
+    }
+
+    /**
+     * Use a package with the common package name.
+     *
+     * ** NOTE: ONLY USE IN DEVELOPMENT.
+     *
+     * @param location  the location of the package.
+     */
+    @SuppressWarnings("unchecked")
+    public void usePackage(String name, String location, String dir)
+    {
+        // construct full path.
+        StringBuilder builder = new StringBuilder();
+        builder.append(dir);
+
+        if (builder.charAt(builder.length() - 1) == File.separator.charAt(0))
+            builder.deleteCharAt(builder.length() - 1);
+
+        String[] parts = location.split("\\.");
+        for (String part : parts)
+            builder.append(File.separator).append(part);
+
+        String path = builder.toString();
+        File directory = new File(path);
+
+        if (!directory.exists())
+            throw new JMokaException("Directory " + path + " for package " + name + " does not exists.");
+
+        String[] classes = directory.list();
+
+        Package manifest = new Package()
+        {
+            @Override
+            public void registerComponents(LinkedList<Class<? extends Component>> components)
+            {
+                for (String className : classes)
+                {
+                    if (className.endsWith(".java"))
+                    {
+                        try
+                        {
+                            Class<?> component = Class.forName(location + "." + className.substring(0,
+                                    className.length() - 5));
+
+                            if (Component.class.isAssignableFrom(component))
+                                components.add((Class<? extends Component>) component);
+                        }
+                        catch (ClassNotFoundException e)
+                        {
+                            throw new JMokaException("Undefined error while running automatic package explorer.");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public String getCommonName()
+            {
+                return name;
+            }
+        };
+
+        usePackage(manifest);
     }
 
     /**

@@ -16,6 +16,8 @@ public class ConfigDataFile
 
         if (fileHandle.exists())
             root = parser.parse(fileHandle.read().toCharArray());
+        else
+            root = new Branch();
     }
 
     public void setRoot(Branch branch)

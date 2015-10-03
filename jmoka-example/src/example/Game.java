@@ -3,8 +3,8 @@ package example;
 import com.moka.core.Application;
 import com.moka.input.Input;
 import com.moka.core.Moka;
+import example.scenes.HotlineMiamiClone;
 import example.scenes.MainScene;
-import example.scenes.blocky.BlockyScene;
 
 public class Game
 {
@@ -18,25 +18,23 @@ public class Game
         // set some inputs.
         Moka.getInput().bindKey(R.buttons.FIRE_1, Input.KEY_Z);
         Moka.getInput().bindKey(R.buttons.FIRE_2, Input.KEY_X);
-        Moka.getInput().bindAxes(R.axes.HORIZONTAL, Input.KEY_LEFT, Input.KEY_RIGHT);
-        Moka.getInput().bindAxes(R.axes.VERTICAL, Input.KEY_DOWN, Input.KEY_UP);
+        Moka.getInput().bindAxes(R.axes.HORIZONTAL, Input.KEY_A, Input.KEY_D);
+        Moka.getInput().bindAxes(R.axes.VERTICAL, Input.KEY_S, Input.KEY_W);
 
         // set display options.
-        Moka.getDisplay().createDisplay(R.screen.width, R.screen.height, "JMoka Engine");
+        Moka.getDisplay().createDisplay(R.screen.WIDTH, R.screen.HEIGHT, "JMoka Engine");
 
         // set renderer options.
         Moka.getRenderer().setClearColor(0, 0, 0);
 
         // set up packages.
         Moka.getNameManager().usePackage("example.components.spaceshooter");
+        Moka.getNameManager().usePackage("Hotline", "example.components.hotline", "jmoka-example/src/");
 
         // set up scenes.
-        Moka.getContext().addScene(new BlockyScene());
+        Moka.getContext().addScene(new HotlineMiamiClone());
         Moka.getContext().addScene(new MainScene());
-        Moka.getContext().setMainScene(MainScene.class);
-
-        // set up physics engine.
-        Moka.getPhysics().setGravity(0, -9.8f);
+        Moka.getContext().setMainScene(HotlineMiamiClone.class);
 
         // create and start the application at 60 fps.
         app.create().start(60);

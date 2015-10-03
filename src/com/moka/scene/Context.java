@@ -29,6 +29,7 @@ public class Context extends SubEngine
 
     public void update()
     {
+        getCurrentScene().onUpdate();
         getCurrentScene().update();
     }
 

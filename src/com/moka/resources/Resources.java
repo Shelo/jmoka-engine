@@ -9,6 +9,10 @@ import com.moka.utils.JMokaException;
 
 import java.lang.reflect.Field;
 
+/**
+ * Extend this class to use resource references into Prefab files, also this gives
+ * a nice way for loading resources easily.
+ */
 public abstract class Resources
 {
 
@@ -86,14 +90,19 @@ public abstract class Resources
         {
             Class[] classes = container.getDeclaredClasses();
 
+            boolean found = false;
             for (Class innerClass : classes)
             {
                 if (innerClass.getSimpleName().equals(parts[i]))
                 {
+                    found = true;
                     container = innerClass;
                     break;
                 }
             }
+
+            if (!found)
+                throw new JMokaException("Cannot find resource: " + reference);
         }
 
         try

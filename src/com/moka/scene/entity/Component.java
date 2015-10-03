@@ -95,6 +95,11 @@ public abstract class Component
         throw new JMokaException("[" + tag + "] " + message);
     }
 
+    public float getDelta()
+    {
+        return Moka.getTime().getDelta();
+    }
+
     /**
      * Called at the creation time.
      */

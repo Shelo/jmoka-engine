@@ -1,5 +1,6 @@
 package com.moka.scene.entity;
 
+import com.moka.core.Moka;
 import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
 import com.moka.utils.CalcUtil;
@@ -273,5 +274,14 @@ public class Transform
     public void scale(float value)
     {
         size.mul(value);
+    }
+
+    public void lookAt(Vector2 target)
+    {
+        Vector2 buffer = Pools.vec2.take(0, 0);
+        buffer.set(target);
+        buffer.sub(position);
+        setRotation(buffer.angle());
+        Pools.vec2.put(buffer);
     }
 }

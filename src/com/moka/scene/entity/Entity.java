@@ -43,13 +43,9 @@ public class Entity
         component.setEntity(this);
 
         if (component instanceof Sprite)
-        {
             sprite = (Sprite) component;
-        }
         else
-        {
             components.add(component);
-        }
 
         return this;
     }
@@ -57,16 +53,12 @@ public class Entity
     public void create()
     {
         if (hasSprite())
-        {
             sprite.onCreate();
-        }
 
         for (Component component : components)
         {
             if (component.isEnabled())
-            {
                 component.onCreate();
-            }
         }
     }
 
@@ -82,25 +74,19 @@ public class Entity
         for (Component component : components)
         {
             if (component.isEnabled())
-            {
                 component.onUpdate();
-            }
         }
     }
 
     public void postUpdate()
     {
         if (hasSprite())
-        {
             getSprite().onPostUpdate();
-        }
 
         for (Component component : components)
         {
             if (component.isEnabled())
-            {
                 component.onPostUpdate();
-            }
         }
     }
 
@@ -150,20 +136,6 @@ public class Entity
         }
     }
 
-    public Vector2[] transformVertices(final Vector2[] vertices)
-    {
-        Vector2[] res = new Vector2[vertices.length];
-        Matrix3 model = CalcUtil.calcModelMatrix(getTransform());
-
-        for (int i = 0; i < vertices.length; i++)
-        {
-            res[i] = Pools.vec2.take();
-            model.mul(vertices[i], res[i]);
-        }
-
-        return res;
-    }
-
     public void setGroup(String group)
     {
         this.group = group;
@@ -194,12 +166,6 @@ public class Entity
         return scene;
     }
 
-    @Override
-    public String toString()
-    {
-        return name;
-    }
-
     public void onDestroy()
     {
         for (Component component : components)
@@ -209,5 +175,16 @@ public class Entity
                 component.onDestroy();
             }
         }
+    }
+
+    public boolean isNamed(String name)
+    {
+        return this.name.equals(name);
+    }
+
+    @Override
+    public String toString()
+    {
+        return name;
     }
 }

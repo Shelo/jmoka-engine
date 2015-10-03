@@ -1,5 +1,5 @@
 + Prefab
-    - Position: 200, integers.screen.height / 2
+    - Position: 200, screen.HEIGHT / 2
     - Rotation: 0
     - Group: Player
     - Size: 64, 64

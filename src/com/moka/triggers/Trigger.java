@@ -79,7 +79,7 @@ public abstract class Trigger<T>
      */
     public static <T> Trigger<T> getStaticTrigger(String path, Class<T> generic)
     {
-        return newTriggerInstance(getStaticTriggerClass(path, generic));
+        return newTriggerInstance(getStaticTriggerClass(path));
     }
 
     @SuppressWarnings("unchecked")
@@ -103,13 +103,11 @@ public abstract class Trigger<T>
         return (Trigger<T>) instance;
     }
 
-    public static <T> Class<?> getStaticTriggerClass(String path, Class<T> generic)
+    public static Class<?> getStaticTriggerClass(String path)
     {
         int divider = path.lastIndexOf('.');
         String classPath = path.substring(0, divider);
         String triggerName = path.substring(divider + 1);
-
-        Class<?> trigger = null;
 
         try
         {
@@ -117,10 +115,7 @@ public abstract class Trigger<T>
             for (Class<?> innerClass : triggerClass.getDeclaredClasses())
             {
                 if (innerClass.getSimpleName().equals(triggerName))
-                {
-                    trigger = innerClass;
-                    break;
-                }
+                    return innerClass;
             }
         }
         catch (ClassNotFoundException e)
@@ -128,11 +123,6 @@ public abstract class Trigger<T>
             e.printStackTrace();
         }
 
-        if (trigger == null)
-        {
-            throw new JMokaException("Could not find the trigger " + triggerName + " in " + classPath);
-        }
-
-        return trigger;
+        throw new JMokaException("Could not find the trigger " + triggerName + " in " + classPath);
     }
 }

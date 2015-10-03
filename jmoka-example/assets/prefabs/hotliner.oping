@@ -1,0 +1,19 @@
++ Prefab
+    - Position: screen.WIDTH / 2, screen.HEIGHT / 2
+    - Rotation: 0
+    - Group: Player
+    - Size: 32, 32
+    - Layer: 1
+
+    + Sprite
+        - Texture: @textures.player
+
+    + Controllable
+        - TopSpeed: 500
+        - Acceleration: 1200
+        - Drag: 2000
+        - AxisVertical: @axes.VERTICAL
+        - AxisHorizontal: @axes.HORIZONTAL
+
+    + LookAt
+        - Target: @objects.mousePosition

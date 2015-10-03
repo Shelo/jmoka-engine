@@ -1,106 +1,39 @@
 package com.moka.components;
 
 import com.moka.core.Moka;
+import com.moka.math.MathUtil;
+import com.moka.math.Vector2;
 import com.moka.scene.entity.Component;
 import com.moka.scene.entity.ComponentAttribute;
-import org.lwjgl.glfw.GLFW;
+import com.moka.utils.Pools;
 
 public class Controllable extends Component
 {
-	public static final float TOLERANCE = 0.03f;
+	private float acceleration = 600;
+    private float drag = 1000;
+	private float topSpeed = 500;
+	private String axisHorizontal;
+    private String axisVertical;
 
-	// Xml Attributes.
-	private boolean constrainX	= false;
-	private boolean constrainY	= false;
-	private int acceleration	= 600;
-	private int topSpeed		= 500;
-
-	private float tx, ty;
-	private float impulse = 2;
-
-	public Controllable()
-	{
-
-	}
-
-	@Override
-	public void onCreate()
-	{
-		
-	}
+    private Vector2 currentSpeed = new Vector2();
 
 	@Override
 	public void onUpdate()
 	{
-		float ltx = tx;
-		float lty = ty;
+        float dx = Moka.getInput().getAxes(axisHorizontal);
+        float dy = Moka.getInput().getAxes(axisVertical);
 
-		if (Moka.getInput().getKey(GLFW.GLFW_KEY_D))
-		{
-			tx += Moka.getTime().getDelta() * impulse;
-		}
+        currentSpeed.x -= drag / topSpeed * currentSpeed.x * getDelta();
+        currentSpeed.y -= drag / topSpeed * currentSpeed.y * getDelta();
 
-		if (Moka.getInput().getKey(GLFW.GLFW_KEY_A))
-		{
-			tx -= Moka.getTime().getDelta() * impulse;
-		}
+        currentSpeed.x += acceleration * dx * getDelta();
+        currentSpeed.y += acceleration * dy * getDelta();
 
-		if (!(Moka.getInput().getKey(GLFW.GLFW_KEY_D) || Moka.getInput().getKey(GLFW.GLFW_KEY_A)))
-		{
-			if (tx > -TOLERANCE && tx < TOLERANCE)
-			{
-				tx = 0;
-			}
-			else
-			{
-				tx += (tx < 0) ? Moka.getTime().getDelta() : 0 - Moka.getTime().getDelta();
-			}
-		}
+        currentSpeed.clampXY(- topSpeed, topSpeed, - topSpeed, topSpeed);
+        getTransform().move(currentSpeed.x * getDelta(), currentSpeed.y * getDelta());
+    }
 
-		if (Moka.getInput().getKey(GLFW.GLFW_KEY_W))
-		{
-			ty += Moka.getTime().getDelta() * impulse;
-		}
-
-		if (Moka.getInput().getKey(GLFW.GLFW_KEY_S))
-		{
-			ty -= Moka.getTime().getDelta() * impulse;
-		}
-
-		if (!(Moka.getInput().getKey(GLFW.GLFW_KEY_W) || Moka.getInput().getKey(GLFW.GLFW_KEY_S)))
-		{
-			if (ty > -TOLERANCE && ty < TOLERANCE)
-			{
-				ty = 0;
-			}
-			else
-			{
-				ty += (ty < 0) ? Moka.getTime().getDelta() : 0 - Moka.getTime().getDelta();
-			}
-		}
-
-		float vx = acceleration * tx;
-		float vy = acceleration * ty;
-
-		if (Math.abs(vx) > topSpeed)
-		{
-			vx = (vx < 0) ? 0 - topSpeed : topSpeed;
-			tx = ltx;
-		}
-
-		if (Math.abs(vy) > topSpeed)
-		{
-			vy = (vy < 0) ? 0 - topSpeed : topSpeed;
-			ty = lty;
-		}
-
-		vx *= Moka.getTime().getDelta();
-		vy *= Moka.getTime().getDelta();
-
-		getTransform().move(vx, vy);
-	}
-
-	@ComponentAttribute("TopSpeed")
+    @ComponentAttribute("TopSpeed")
 	public void setTopSpeed(int topSpeed)
 	{
 		this.topSpeed = topSpeed;
@@ -112,21 +45,21 @@ public class Controllable extends Component
 		this.acceleration = acceleration;
 	}
 
-	@ComponentAttribute("ConstrainX")
-	public void setConstrainX(boolean constrainX)
-	{
-		this.constrainX = constrainX;
-	}
+    @ComponentAttribute(value = "AxisHorizontal", required = true)
+    public void setAxisHorizontal(String axisHorizontal)
+    {
+        this.axisHorizontal = axisHorizontal;
+    }
 
-	@ComponentAttribute("ConstrainY")
-	public void setConstrainY(boolean constrainY)
-	{
-		this.constrainY = constrainY;
-	}
+    @ComponentAttribute(value = "AxisVertical", required = true)
+    public void setAxisVertical(String axisVertical)
+    {
+        this.axisVertical = axisVertical;
+    }
 
-	@ComponentAttribute("Impulse")
-	public void setImpulse(float impulse)
-	{
-		this.impulse = impulse;
-	}
+    @ComponentAttribute("Drag")
+    public void setDrag(float drag)
+    {
+        this.drag = drag;
+    }
 }

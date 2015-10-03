@@ -1,11 +1,12 @@
 package example;
 
+import com.moka.math.Vector2;
 import com.moka.resources.BindLoad;
 import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
 import com.moka.resources.Resources;
+import com.moka.resources.utils.EntityBuffer;
 import com.moka.utils.ConfigDataFile;
-import com.moka.utils.FileHandle;
 
 import java.io.File;
 
@@ -23,10 +24,15 @@ public class R extends Resources
         public static final String FIRE_2 = "fire2";
     }
 
+    public static class objects
+    {
+        public static Vector2 mousePosition = new Vector2();
+    }
+
     public static class screen
     {
-        public static int width = 800;
-        public static int height = 450;
+        public static int WIDTH = 800;
+        public static int HEIGHT = 450;
     }
 
     @BindLoad(path = "img/", extension = "png")
@@ -76,8 +82,7 @@ public class R extends Resources
         public static Prefab explosion01;
         public static Prefab explosion02;
 
-        public static Prefab blocky;
-        public static Prefab ball;
+        public static Prefab hotliner;
 
         @BindLoad(path = "tiles/", extension = "oping")
         public static class tiles

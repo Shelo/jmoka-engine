@@ -15,14 +15,4 @@ public class EnemyTriggers
             return null;
         }
     }
-
-    public static class OnEnterArea extends Trigger<Entity>
-    {
-        @Override
-        public Object onTrigger()
-        {
-            System.out.println(1);
-            return null;
-        }
-    }
 }

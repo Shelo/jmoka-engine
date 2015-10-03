@@ -71,6 +71,13 @@ public class Vector2
         return this;
     }
 
+    public Vector2 mul(float x, float y)
+    {
+        this.x *= x;
+        this.y *= y;
+        return this;
+    }
+
     public Vector2 mul(Vector2 o)
     {
         this.x *= o.x;
@@ -161,6 +168,30 @@ public class Vector2
     {
         result.x = (int) x;
         result.y = (int) y;
+    }
+
+    /**
+     * Clamps the x and y values.
+     *
+     * @param minX      the minimum x value.
+     * @param maxX      the maximum x value.
+     * @param minY      the minimum y value.
+     * @param maxY      the maximum y value.
+     */
+    public void clampXY(float minX, float maxX, float minY, float maxY)
+    {
+        clampX(minX, maxX);
+        clampY(minY, maxY);
+    }
+
+    public void clampX(float min, float max)
+    {
+        x = MathUtil.clamp(x, min, max);
+    }
+
+    public void clampY(float min, float max)
+    {
+        y = MathUtil.clamp(y, min, max);
     }
 
     @Override
