@@ -1,6 +1,5 @@
 package example.scenes;
 
-import com.moka.components.LookAt;
 import com.moka.core.Moka;
 import com.moka.scene.Scene;
 import com.moka.scene.entity.Entity;
@@ -49,6 +48,10 @@ public class HotlineMiamiClone extends Scene
     @Override
     public void onExit()
     {
-
+        Entity entity = findEntity("Player");
+        Leaf position = R.save.player.getRoot().getLeaf("Position");
+        position.setValue(0, entity.getTransform().getPosition().x);
+        position.setValue(1, entity.getTransform().getPosition().y);
+        R.save.player.save();
     }
 }
