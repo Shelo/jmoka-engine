@@ -60,9 +60,10 @@ public class R extends Resources
         }
     }
 
-    @BindLoad(path = "save/", extension = "txt")
+    @BindLoad(path = "save/", extension = "oping")
     public static class save
     {
+        public static ConfigDataFile player;
         public static ConfigDataFile user;
     }
 

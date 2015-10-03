@@ -5,8 +5,7 @@ import java.nio.channels.FileChannel;
 
 public class FileHandle
 {
-    private static StringBuilder builder = new StringBuilder();
-
+    private StringBuilder builder = new StringBuilder();
     private StringBuilder append = new StringBuilder();
     private File file;
 
