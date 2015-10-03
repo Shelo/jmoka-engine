@@ -44,30 +44,6 @@ public class CoreUtil
         return (IntBuffer) buffer.flip();
     }
 
-    public static String readFile(String filePath)
-    {
-        try
-        {
-            StringBuilder builder = new StringBuilder();
-            FileReader reader = new FileReader(filePath);
-
-            int c;
-            while ((c = reader.read()) != -1)
-                builder.append((char) c);
-
-            reader.close();
-            return builder.toString();
-        }
-        catch (FileNotFoundException e)
-        {
-            throw new JMokaException("File " + filePath + " not found.");
-        }
-        catch (IOException e)
-        {
-            throw new JMokaException("IOException when reading file " + filePath + ".");
-        }
-    }
-
     public static FloatBuffer genBuffer(Matrix4 matrix)
     {
         FloatBuffer buffer = BufferUtils.createFloatBuffer(4 * 4);
@@ -98,6 +74,30 @@ public class CoreUtil
         return (FloatBuffer) buffer.flip();
     }
 
+    public static String readFile(String filePath)
+    {
+        try
+        {
+            StringBuilder builder = new StringBuilder();
+            FileReader reader = new FileReader(filePath);
+
+            int c;
+            while ((c = reader.read()) != -1)
+                builder.append((char) c);
+
+            reader.close();
+            return builder.toString();
+        }
+        catch (FileNotFoundException e)
+        {
+            throw new JMokaException("File " + filePath + " not found.");
+        }
+        catch (IOException e)
+        {
+            throw new JMokaException("IOException when reading file " + filePath + ".");
+        }
+    }
+
     public static String getExtensionFrom(String filePath)
     {
         String[] s = filePath.split("\\.(?=[^\\.]+$)");
@@ -118,64 +118,11 @@ public class CoreUtil
         return newBuffer;
     }
 
-    public static ByteBuffer ioResourceToByteBuffer(String resource, int bufferSize) throws IOException
+    public static void overrideFileWith(String filePath, String text)
     {
-        ByteBuffer buffer;
-
-        File file = new File(resource);
-        if (file.isFile())
-        {
-            FileChannel fc = new FileInputStream(file).getChannel();
-            buffer = createByteBuffer((int) fc.size() + 1);
-
-            while (fc.read(buffer) != -1)
-            {
-
-            }
-
-            fc.close();
-        }
-        else
-        {
-            buffer = createByteBuffer(bufferSize);
-
-            InputStream source = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
-            if (source == null)
-            {
-                throw new FileNotFoundException(resource);
-            }
-
-            try
-            {
-                ReadableByteChannel rbc = Channels.newChannel(source);
-                try
-                {
-                    while (true)
-                    {
-                        int bytes = rbc.read(buffer);
-                        if (bytes == -1)
-                        {
-                            break;
-                        }
-
-                        if (buffer.remaining() == 0)
-                        {
-                            buffer = resizeBuffer(buffer, buffer.capacity() * 2);
-                        }
-                    }
-                }
-                finally
-                {
-                    rbc.close();
-                }
-            }
-            finally
-            {
-                source.close();
-            }
-        }
-
-        buffer.flip();
-        return buffer;
+        FileHandle fileHandle = new FileHandle(filePath);
+        fileHandle.truncate();
+        fileHandle.append(text);
+        fileHandle.save();
     }
 }

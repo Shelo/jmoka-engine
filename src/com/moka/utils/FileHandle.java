@@ -22,12 +22,13 @@ public class FileHandle
         try
         {
             FileReader reader = new FileReader(file);
-
-            int c;
-            while ((c = reader.read()) != -1)
-                builder.append((char) c);
-
+            {
+                int c;
+                while ((c = reader.read()) != -1)
+                    builder.append((char) c);
+            }
             reader.close();
+
             return builder.toString();
         }
         catch (FileNotFoundException e)

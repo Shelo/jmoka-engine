@@ -1,4 +1,4 @@
-package example.components.spaceshooter;
+package example.components.hotline;
 
 import com.moka.core.Package;
 import com.moka.scene.entity.Component;
@@ -10,16 +10,12 @@ public class PackageManifest extends Package
     @Override
     public void registerComponents(LinkedList<Class<? extends Component>> components)
     {
-        components.add(Explosion.class);
-        components.add(Health.class);
-        components.add(Movement.class);
-        components.add(SimpleShooter.class);
 
     }
 
     @Override
     public String getCommonName()
     {
-        return "SpaceShooter";
+        return "Hotline";
     }
 }

@@ -28,8 +28,9 @@ public class Game
         Moka.getRenderer().setClearColor(0, 0, 0);
 
         // set up packages.
-        Moka.getNameManager().usePackage("example.components.spaceshooter");
-        Moka.getNameManager().usePackage("Hotline", "example.components.hotline", "jmoka-example/src/");
+        Moka.getNameManager().usePackage("SpaceShooter", "jmoka-example/src/",
+                "example.components.spaceshooter", true);
+        Moka.getNameManager().usePackage("Hotline", "jmoka-example/src/", "example.components.hotline", true);
 
         // set up scenes.
         Moka.getContext().addScene(new HotlineMiamiClone());

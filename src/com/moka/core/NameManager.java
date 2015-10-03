@@ -1,6 +1,7 @@
 package com.moka.core;
 
 import com.moka.scene.entity.Component;
+import com.moka.utils.CoreUtil;
 import com.moka.utils.JMokaException;
 
 import java.io.File;
@@ -84,10 +85,13 @@ public class NameManager extends SubEngine
      *
      * ** NOTE: ONLY USE IN DEVELOPMENT.
      *
-     * @param location  the location of the package.
+     * @param name              name for the package.
+     * @param dir               src directory of the project.
+     * @param location          the location of the package (ex: com.moka...).
+     * @param exportManifest    should this export a manifest for this package.
      */
     @SuppressWarnings("unchecked")
-    public void usePackage(String name, String location, String dir)
+    public void usePackage(String name, String dir, String location, boolean exportManifest)
     {
         // construct full path.
         StringBuilder builder = new StringBuilder();
@@ -107,30 +111,35 @@ public class NameManager extends SubEngine
             throw new JMokaException("Directory " + path + " for package " + name + " does not exists.");
 
         String[] classes = directory.list();
+        LinkedList<Class<? extends Component>> components = new LinkedList<>();
+
+        for (String className : classes)
+        {
+            if (className.endsWith(".java"))
+            {
+                try
+                {
+                    Class<?> component = Class.forName(location + "." + className.substring(0,
+                            className.length() - 5));
+
+                    if (Component.class.isAssignableFrom(component))
+                    {
+                        components.add((Class<? extends Component>) component);
+                    }
+                }
+                catch (ClassNotFoundException e)
+                {
+                    throw new JMokaException("Undefined error while running automatic package explorer.");
+                }
+            }
+        }
 
         Package manifest = new Package()
         {
             @Override
-            public void registerComponents(LinkedList<Class<? extends Component>> components)
+            public void registerComponents(LinkedList<Class<? extends Component>> c)
             {
-                for (String className : classes)
-                {
-                    if (className.endsWith(".java"))
-                    {
-                        try
-                        {
-                            Class<?> component = Class.forName(location + "." + className.substring(0,
-                                    className.length() - 5));
-
-                            if (Component.class.isAssignableFrom(component))
-                                components.add((Class<? extends Component>) component);
-                        }
-                        catch (ClassNotFoundException e)
-                        {
-                            throw new JMokaException("Undefined error while running automatic package explorer.");
-                        }
-                    }
-                }
+                c.addAll(components);
             }
 
             @Override
@@ -139,6 +148,39 @@ public class NameManager extends SubEngine
                 return name;
             }
         };
+
+        if (exportManifest)
+        {
+            String template = "package " + location + ";\n" +
+                    "\n" +
+                    "import com.moka.core.Package;\n" +
+                    "import com.moka.scene.entity.Component;\n" +
+                    "\n" +
+                    "import java.util.LinkedList;\n" +
+                    "\n" +
+                    "public class PackageManifest extends Package\n" +
+                    "{\n" +
+                    "    @Override\n" +
+                    "    public void registerComponents(LinkedList<Class<? extends Component>> components)\n" +
+                    "    {\n" +
+                    "%s\n" +
+                    "    }\n" +
+                    "\n" +
+                    "    @Override\n" +
+                    "    public String getCommonName()\n" +
+                    "    {\n" +
+                    "        return \"%s\";\n" +
+                    "    }\n" +
+                    "}\n";
+
+            StringBuilder listOfComponents = new StringBuilder();
+            for (Class<? extends Component> component : components)
+                listOfComponents.append("        components.add(")
+                        .append(component.getSimpleName()).append(".class);\n");
+
+            CoreUtil.overrideFileWith(path + File.separator + "PackageManifest.java",
+                    String.format(template, listOfComponents.toString(), name));
+        }
 
         usePackage(manifest);
     }
