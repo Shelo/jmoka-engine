@@ -56,18 +56,22 @@ public class MathUtil
         float delta = end - start;
 
         if (delta >= round / 2)
-        {
             delta = delta - round;
-        }
 
         if (delta <= - round / 2)
-        {
             delta = delta + round;
-        }
 
         return delta;
     }
 
+    /**
+     * Linear interpolation between two values and a given factor.
+     *
+     * @param target    the final value.
+     * @param value     the initial value.
+     * @param f         the factor.
+     * @return          the interpolated value.
+     */
     public static float lerp(int target, float value, float f)
     {
         return (target - value) * f;

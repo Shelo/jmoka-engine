@@ -43,9 +43,7 @@ public class Sprite extends Component
         this.tint = tint;
 
         if (size != null)
-        {
             this.size.set(size);
-        }
     }
 
     public Sprite(Texture texture, Color tint)
@@ -72,9 +70,7 @@ public class Sprite extends Component
     public void onCreate()
     {
         if (clipRect == null)
-        {
             clipRect = new Rectangle(0, 0, 1, 1);
-        }
 
         quad = new Quad(clipRect);
     }
@@ -84,7 +80,6 @@ public class Sprite extends Component
         if (texture == null)
             raise("there's no texture to draw.");
 
-        // render.
         texture.bind();
         shader.update(getTransform(), this);
 
@@ -126,13 +121,17 @@ public class Sprite extends Component
         return tint;
     }
 
+    @Override
+    public void onDestroy()
+    {
+        quad.dispose();
+    }
+
     @ComponentAttribute(value = "Texture", required = true)
     public void setTexture(Texture texture)
     {
         if (texture == null)
-        {
             throw new JMokaException("Texture cannot be null. [" + getEntity().getName() + "]");
-        }
 
         this.texture = texture;
     }
@@ -165,9 +164,7 @@ public class Sprite extends Component
     public Vector2 getSize()
     {
         if (size == null)
-        {
             size = new Vector2(texture.getWidth(), texture.getHeight());
-        }
 
         return size;
     }

@@ -35,7 +35,7 @@ public class Game
         // set up scenes.
         Moka.getContext().addScene(new HotlineMiamiClone());
         Moka.getContext().addScene(new MainScene());
-        Moka.getContext().setMainScene(HotlineMiamiClone.class);
+        Moka.getContext().setMainScene(MainScene.class);
 
         // create and start the application at 60 fps.
         app.create().start(60);

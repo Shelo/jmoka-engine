@@ -32,13 +32,9 @@ public class Debugger extends Component
     public void onUpdate()
     {
         if (stopWatch.isGreaterThan(frequency))
-        {
             stopWatch.restart();
-        }
         else
-        {
             return;
-        }
 
         switch (selection)
         {

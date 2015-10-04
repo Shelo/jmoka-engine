@@ -33,9 +33,7 @@ public class Texture
             ByteBuffer imageBuffer = STBImage.stbi_load(filePath, width, height, components, 4);
 
             if (imageBuffer == null)
-            {
                 throw new JMokaException("Image " + filePath + " does not exists.");
-            }
 
             textureId = glGenTextures();
             glBindTexture(GL_TEXTURE_2D, textureId);
@@ -54,6 +52,10 @@ public class Texture
 
             STBImage.stbi_image_free(imageBuffer);
         }
+        else
+        {
+            throw new JMokaException("The image's filePath cannot be null.");
+        }
     }
 
     public Texture(String filePath)
@@ -64,13 +66,9 @@ public class Texture
     private int getFilter(Filter filter)
     {
         if (filter == Filter.NEAREST)
-        {
             return GL_NEAREST;
-        }
         else
-        {
             return GL_LINEAR;
-        }
     }
 
     public void bind()

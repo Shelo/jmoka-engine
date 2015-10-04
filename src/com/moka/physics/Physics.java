@@ -30,16 +30,12 @@ public class Physics extends SubEngine implements ContactListener
     public void simulate()
     {
         for (PhysicsBody physicsBody : physicsBodies)
-        {
             physicsBody.sync();
-        }
 
         world.step(getTime().getFixedDelta(), 6, 3);
 
         for (PhysicsBody physicsBody : physicsBodies)
-        {
             physicsBody.fixedUpdate();
-        }
     }
 
     public void setGravity(float x, float y)
@@ -72,13 +68,9 @@ public class Physics extends SubEngine implements ContactListener
         if (areaA || areaB)
         {
             if (areaA)
-            {
                 ((Area) bodyA).onEnter(bodyB.getEntity());
-            }
             else
-            {
                 ((Area) bodyB).onEnter(bodyA.getEntity());
-            }
         }
         else
         {
@@ -94,13 +86,9 @@ public class Physics extends SubEngine implements ContactListener
         PhysicsBody bodyB = (PhysicsBody) contact.getFixtureB().getUserData();
 
         if (bodyA instanceof Area)
-        {
             ((Area) bodyA).onExit(bodyB.getEntity());
-        }
         else if (bodyB instanceof Area)
-        {
             ((Area) bodyB).onExit(bodyA.getEntity());
-        }
     }
 
     @Override

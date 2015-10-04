@@ -40,9 +40,7 @@ public class Shader
         glBindAttribLocation(program, 1, "a_texCoord");
 
         if (glGetProgrami(program, GL_LINK_STATUS) == 0)
-        {
             throw new JMokaException(glGetShaderInfoLog(program, 1024));
-        }
 
         int vao = glGenVertexArrays();
         glBindVertexArray(vao);

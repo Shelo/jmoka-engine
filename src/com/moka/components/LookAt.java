@@ -7,7 +7,7 @@ import com.moka.utils.Pools;
 
 public class LookAt extends Component
 {
-	private Vector2 target = Vector2.ZERO.cpy();
+	private Vector2 target = Vector2.ZERO;
 
 	@Override
 	public void onUpdate()

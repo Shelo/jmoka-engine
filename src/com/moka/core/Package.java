@@ -19,9 +19,7 @@ public abstract class Package
         for (Class<? extends Component> component : components)
         {
             if (component.getSimpleName().equals(name))
-            {
                 return true;
-            }
         }
 
         return false;
@@ -37,19 +35,17 @@ public abstract class Package
         for (Class<? extends Component> component : components)
         {
             if (component.getSimpleName().equals(name))
-            {
                 return component;
-            }
         }
 
         return null;
     }
 
-    public abstract String getCommonName();
-    public abstract void registerComponents(LinkedList<Class<? extends Component>> components);
-
     public LinkedList<Class<? extends Component>> getComponents()
     {
         return components;
     }
+
+    public abstract String getCommonName();
+    public abstract void registerComponents(LinkedList<Class<? extends Component>> components);
 }

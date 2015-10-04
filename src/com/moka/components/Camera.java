@@ -10,14 +10,8 @@ import com.moka.utils.Pools;
 public class Camera extends Component
 {
 	private Matrix3 projection;
-
 	private Matrix3 transBuffer = new Matrix3();
 	private Matrix3 buffer = new Matrix3();
-
-	public Camera()
-	{
-
-	}
 
 	@Override
 	public void onCreate()
@@ -40,9 +34,7 @@ public class Camera extends Component
 	public Matrix3 getProjectedView()
 	{
 		if(projection == null)
-		{
 			throw new JMokaException("Camera: " + getEntity().getName() + "'s projection is null.");
-		}
 
 		Vector2 position = Pools.vec2.take();
 		getTransform().getPosition().floor(position);
@@ -62,8 +54,9 @@ public class Camera extends Component
 	 * @param result	the resulting vector (just so we don't create a new one).
 	 * @return the transformed point.
 	 */
-	public Vector2 moveToWorldCoords(Vector2 point, Vector2 result)
+	public Vector2 toWorldCoords(Vector2 point, Vector2 result)
 	{
+        // TODO: this is not ready for rotation.
 		result.set(point);
 		result.add(getTransform().getPosition());
 		return result;

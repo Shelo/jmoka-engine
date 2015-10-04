@@ -12,11 +12,6 @@ public class Shooting extends Component
     private Prefab bulletPrefab;
     private String button;
 
-    public Shooting()
-    {
-        // XML Support.
-    }
-
     @Override
     public void onUpdate()
     {
@@ -31,13 +26,9 @@ public class Shooting extends Component
     protected void onFire()
     {
         if (trigger != null)
-        {
             trigger.trigger(this, bulletPrefab);
-        }
         else
-        {
             bulletPrefab.newEntity(null);
-        }
     }
 
     @ComponentAttribute("Trigger")

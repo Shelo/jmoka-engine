@@ -11,6 +11,28 @@ import java.util.LinkedList;
 public class NameManager extends SubEngine
 {
     public static final String DEFAULT_NAMESPACE = "Moka";
+    private static final String MANIFEST_TEMPLATE =
+            "package %s;\n" +
+            "\n" +
+            "import com.moka.core.Package;\n" +
+            "import com.moka.scene.entity.Component;\n" +
+            "\n" +
+            "import java.util.LinkedList;\n" +
+            "\n" +
+            "public class PackageManifest extends Package\n" +
+            "{\n" +
+            "    @Override\n" +
+            "    public void registerComponents(LinkedList<Class<? extends Component>> components)\n" +
+            "    {\n" +
+            "%s\n" +
+            "    }\n" +
+            "\n" +
+            "    @Override\n" +
+            "    public String getCommonName()\n" +
+            "    {\n" +
+            "        return \"%s\";\n" +
+            "    }\n" +
+            "}\n";;
 
     private HashMap<String, Package> packages = new HashMap<>();
 
@@ -97,16 +119,18 @@ public class NameManager extends SubEngine
         StringBuilder builder = new StringBuilder();
         builder.append(dir);
 
+        // remove last separator if the dir contains one.
         if (builder.charAt(builder.length() - 1) == File.separator.charAt(0))
             builder.deleteCharAt(builder.length() - 1);
 
+        // construct the full path with the dir and location.
         String[] parts = location.split("\\.");
         for (String part : parts)
             builder.append(File.separator).append(part);
-
         String path = builder.toString();
-        File directory = new File(path);
 
+        // open the directory and check that exists.
+        File directory = new File(path);
         if (!directory.exists())
             throw new JMokaException("Directory " + path + " for package " + name + " does not exists.");
 
@@ -123,9 +147,7 @@ public class NameManager extends SubEngine
                             className.length() - 5));
 
                     if (Component.class.isAssignableFrom(component))
-                    {
                         components.add((Class<? extends Component>) component);
-                    }
                 }
                 catch (ClassNotFoundException e)
                 {
@@ -149,37 +171,17 @@ public class NameManager extends SubEngine
             }
         };
 
+        // if the exportManifest boolean is set to true then construct the package manifest file and save
+        // it to the location specified.
         if (exportManifest)
         {
-            String template = "package " + location + ";\n" +
-                    "\n" +
-                    "import com.moka.core.Package;\n" +
-                    "import com.moka.scene.entity.Component;\n" +
-                    "\n" +
-                    "import java.util.LinkedList;\n" +
-                    "\n" +
-                    "public class PackageManifest extends Package\n" +
-                    "{\n" +
-                    "    @Override\n" +
-                    "    public void registerComponents(LinkedList<Class<? extends Component>> components)\n" +
-                    "    {\n" +
-                    "%s\n" +
-                    "    }\n" +
-                    "\n" +
-                    "    @Override\n" +
-                    "    public String getCommonName()\n" +
-                    "    {\n" +
-                    "        return \"%s\";\n" +
-                    "    }\n" +
-                    "}\n";
-
             StringBuilder listOfComponents = new StringBuilder();
             for (Class<? extends Component> component : components)
                 listOfComponents.append("        components.add(")
                         .append(component.getSimpleName()).append(".class);\n");
 
             CoreUtil.overrideFileWith(path + File.separator + "PackageManifest.java",
-                    String.format(template, listOfComponents.toString(), name));
+                    String.format(MANIFEST_TEMPLATE, location, listOfComponents.toString(), name));
         }
 
         usePackage(manifest);

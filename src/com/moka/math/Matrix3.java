@@ -109,9 +109,7 @@ public class Matrix3
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
-            {
                 res.set(i, j, values[i][0] * r.get(0, j) + values[i][1] * r.get(1, j) + values[i][2] * r.get(2, j));
-            }
         }
 
         return res;
@@ -120,9 +118,7 @@ public class Matrix3
     public Vector2 mul(final Vector2 r, Vector2 result)
     {
         if (result == null)
-        {
             throw new JMokaException("The result vector given is null.");
-        }
 
         result.x = values[0][0] * r.x + values[0][1] * r.y + values[0][2];
         result.y = values[1][0] * r.x + values[1][1] * r.y + values[1][2];
@@ -148,9 +144,7 @@ public class Matrix3
         for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)
-            {
                 builder.append(get(x, y)).append(" ");
-            }
 
             builder.append("\n");
         }
@@ -170,9 +164,7 @@ public class Matrix3
                 for (int y = 0; y < 3; y++)
                 {
                     if (values[x][y] != other.get(x, y))
-                    {
                         return false;
-                    }
                 }
             }
 

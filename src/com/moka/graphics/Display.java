@@ -18,8 +18,6 @@ public final class Display extends SubEngine
 {
     private static final String TAG = "DISPLAY";
 
-    private WindowsFocusCallback windowsFocusCallback;
-
     private boolean focus;
     private String title;
     private long window;
@@ -32,7 +30,7 @@ public final class Display extends SubEngine
         this.width = width;
         this.title = title;
 
-        glfwWindowHint(GLFW_SAMPLES, 4);
+        glfwWindowHint(GLFW_SAMPLES, 0);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -41,13 +39,9 @@ public final class Display extends SubEngine
         window = glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
 
         if (window == 0)
-        {
             throw new JMokaException("Window could not be created.");
-        }
         else
-        {
             JMokaLog.o(TAG, "Window created.");
-        }
 
         // center window.
         ByteBuffer vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
@@ -60,8 +54,8 @@ public final class Display extends SubEngine
         GLContext.createFromCurrent();
 
         // set the focus gain or lose callback.
-        windowsFocusCallback = new WindowsFocusCallback();
-        glfwSetWindowFocusCallback(window, windowsFocusCallback);
+        WindowFocusCallback windowFocusCallback = new WindowFocusCallback();
+        glfwSetWindowFocusCallback(window, windowFocusCallback);
     }
 
     public void start()
@@ -127,7 +121,7 @@ public final class Display extends SubEngine
     /**
      * Callback for windows focus.
      */
-    private class WindowsFocusCallback extends GLFWWindowFocusCallback
+    private class WindowFocusCallback extends GLFWWindowFocusCallback
     {
         @Override
         public void invoke(long l, int i)

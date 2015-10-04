@@ -115,9 +115,7 @@ public abstract class PhysicsBody extends Component
     public void onCollide(Entity other, Contact contact)
     {
         if (collisionTrigger != null)
-        {
             callTrigger(collisionTrigger, new Collision(other, contact));
-        }
     }
 
     protected static float toPixel(float v)

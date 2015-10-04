@@ -50,6 +50,8 @@ public class Context extends SubEngine
      */
     public void dispose()
     {
+        getCurrentScene().onExit();
+
         for (Scene scene : scenes)
             scene.dispose();
     }

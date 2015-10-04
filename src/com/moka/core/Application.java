@@ -51,9 +51,7 @@ public class Application
     {
         // do nothing if this was already created.
         if (created)
-        {
             return this;
-        }
 
         renderer.create();
         input.create();

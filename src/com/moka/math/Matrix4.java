@@ -65,17 +65,17 @@ public class Matrix4
         m[0][0] = 2 / width;
         m[0][1] = 0;
         m[0][2] = 0;
-        m[0][3] = -(right + left) / width;
+        m[0][3] = - (right + left) / width;
 
         m[1][0] = 0;
         m[1][1] = 2 / height;
         m[1][2] = 0;
-        m[1][3] = -(top + bottom) / height;
+        m[1][3] = - (top + bottom) / height;
 
         m[2][0] = 0;
         m[2][1] = 0;
-        m[2][2] = -2 / depth;
-        m[2][3] = -(far + near) / depth;
+        m[2][2] = - 2 / depth;
+        m[2][3] = - (far + near) / depth;
 
         m[3][0] = 0;
         m[3][1] = 0;
@@ -159,9 +159,7 @@ public class Matrix4
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
-            {
                 res[i][j] = m[i][j];
-            }
         }
 
         return res;
@@ -190,9 +188,7 @@ public class Matrix4
         for (int x = 0; x < 4; x++)
         {
             for (int y = 0; y < 4; y++)
-            {
                 builder.append(get(x, y)).append(" ");
-            }
 
             builder.append("\n");
         }

@@ -68,17 +68,11 @@ public abstract class PrefabReader
             result = Moka.getResources().findResource(resource);
 
             if (param == int.class || param == Integer.class)
-            {
                 result = ((Number) result).intValue();
-            }
             else if (param == float.class || param == Float.class)
-            {
                 result = ((Number) result).floatValue();
-            }
             else if (param == double.class || param == Double.class)
-            {
                 result = ((Number) result).doubleValue();
-            }
 
             return (T) result;
         }
@@ -89,25 +83,15 @@ public abstract class PrefabReader
             try
             {
                 if (param == int.class || param == Integer.class)
-                {
                     result = Integer.parseInt(value);
-                }
                 else if (param == float.class || param == Float.class)
-                {
                     result = Float.parseFloat(value);
-                }
                 else if (param == double.class || param == Double.class)
-                {
                     result = Double.parseDouble(value);
-                }
                 else if (param == boolean.class || param == Boolean.class)
-                {
                     result = Boolean.parseBoolean(value);
-                }
                 else if (param == String.class)
-                {
                     result = value;
-                }
             }
             catch (NumberFormatException eFormat)
             {
@@ -152,13 +136,9 @@ public abstract class PrefabReader
                 if (curReference.length() == 0)
                 {
                     if (Character.isLetter(c) || c == '.')
-                    {
                         curReference.append(c);
-                    }
                     else
-                    {
                         throw new JMokaException("Malformed reference in: " + expression);
-                    }
                 }
                 else
                 {
@@ -202,9 +182,7 @@ public abstract class PrefabReader
         for (Object constant : constants)
         {
             if (constant.toString().equals(value))
-            {
                 return constant;
-            }
         }
 
         // if we get here, the value given for the enum is simply not valid.
@@ -247,10 +225,8 @@ public abstract class PrefabReader
         if (leaf == null)
         {
             if (attribute.required())
-            {
                 throw new JMokaException("Component " + simpleName + " requires the '" + attribute.value()
                         + "' attribute.");
-            }
 
             return false;
         }
@@ -289,9 +265,7 @@ public abstract class PrefabReader
             // if the attribute annotation is not null, then the method is Xml Qualified,
             // so it can be added to the resulting list.
             if (attribute != null)
-            {
                 qualified.add(method);
-            }
         }
 
         return qualified;

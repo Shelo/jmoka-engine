@@ -21,13 +21,9 @@ public final class Core extends SubEngine
     public Core()
     {
         if (glfwInit() == 0)
-        {
             throw new JMokaException("Error initializing GLFW.");
-        }
         else
-        {
             log("GLFW initialized.");
-        }
 
         runtime = Runtime.getRuntime();
     }
@@ -35,16 +31,12 @@ public final class Core extends SubEngine
     public void start(int maxFrameRate)
     {
         if (maxFrameRate == 0)
-        {
             throw new JMokaException("MaxFrameTime cannot be zero.");
-        }
 
         frameTime = 1.0f / maxFrameRate;
 
         if (daemon)
-        {
             return;
-        }
 
         daemon = true;
         run();
@@ -103,9 +95,7 @@ public final class Core extends SubEngine
 
                 // check if user closed the window.
                 if (getDisplay().isCloseRequested())
-                {
                     daemon = false;
-                }
 
                 // subtract used delta time and add it to the game time.
                 accumulator -= delta;

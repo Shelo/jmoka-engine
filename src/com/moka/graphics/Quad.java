@@ -93,18 +93,4 @@ public class Quad
     {
         return vertices;
     }
-
-    public Vector2[] getVerticesAsVector2()
-    {
-        // TODO: optimize vertices because they are all the same every time.
-        Vector2[] res = new Vector2[vertices.length];
-
-        for (int i = 0; i < res.length; i++)
-        {
-            res[i] = new Vector2();
-            res[i].set(vertices[i].getXY());
-        }
-
-        return res;
-    }
 }

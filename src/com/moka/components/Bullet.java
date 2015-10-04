@@ -20,25 +20,16 @@ public class Bullet extends Component
     private byte destroyCondition = NONE;
     private float damage;
 
-    public Bullet()
-	{
-
-	}
-
 	@Override
 	public void onCreate()
 	{
         if ((destroyCondition & MAX_DISTANCE) != 0)
-        {
             origin = getTransform().getPosition().cpy();
-        }
 
         rigidBody = getComponent(RigidBody.class);
 
         if (rigidBody == null)
-        {
             raise("RigidBody component missing.");
-        }
 	}
 
 	@Override
@@ -51,14 +42,10 @@ public class Bullet extends Component
         rigidBody.setLinearVelocity(buffer.x, buffer.y);
 
         if ((destroyCondition & LIFE_TIME) != 0)
-        {
             checkLifeTime();
-        }
 
         if ((destroyCondition & MAX_DISTANCE) != 0)
-        {
             checkMaxDistance();
-        }
 
 		Pools.vec2.put(buffer);
 	}
@@ -70,9 +57,7 @@ public class Bullet extends Component
         Pools.vec2.put(position);
 
         if (distanceSqr > maxDistance * maxDistance)
-        {
             getEntity().destroy();
-        }
     }
 
     private void checkLifeTime()
@@ -80,18 +65,14 @@ public class Bullet extends Component
         lifeTime -= Moka.getTime().getDelta();
 
         if (lifeTime <= 0)
-        {
             getEntity().destroy();
-        }
     }
 
     @Override
     public void onDestroy()
     {
         if (origin != null)
-        {
             Pools.vec2.put(origin);
-        }
     }
 
     @ComponentAttribute("Damage")

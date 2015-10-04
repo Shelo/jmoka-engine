@@ -15,7 +15,7 @@ public class CursorTriggers
             Vector2 buffer = Pools.vec2.take();
 
             Camera camera = Moka.getRenderer().getCamera();
-            transform().setPosition(camera.moveToWorldCoords(Moka.getInput().getCursorPos(), buffer));
+            transform().setPosition(camera.toWorldCoords(Moka.getInput().getCursorPos(), buffer));
 
             Pools.vec2.put(buffer);
             return true;
