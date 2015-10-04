@@ -50,7 +50,7 @@ public final class Renderer extends SubEngine
     private Shader defaultShader;
     private Shader shader;
     private Camera camera;
-    private int currentShaderProgram;
+    private int currentShaderProgram = -1;
     private int currentTextureId = -1;
 
     private Color clearColor = new Color(0, 0, 0, 1);
