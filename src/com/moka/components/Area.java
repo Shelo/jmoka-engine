@@ -1,14 +1,14 @@
 package com.moka.components;
 
+import com.moka.physics.PhysicsBody;
 import com.moka.scene.entity.ComponentAttribute;
 import com.moka.scene.entity.Entity;
-import com.moka.physics.PhysicsBody;
 import com.moka.triggers.Trigger;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.contacts.Contact;
-import org.jbox2d.common.Vec2;
 
 public class Area extends PhysicsBody
 {

@@ -2,8 +2,8 @@ package com.moka.components;
 
 import com.moka.core.Moka;
 import com.moka.scene.entity.Component;
-import com.moka.time.StopWatch;
 import com.moka.scene.entity.ComponentAttribute;
+import com.moka.time.StopWatch;
 import com.moka.triggers.Trigger;
 
 /**

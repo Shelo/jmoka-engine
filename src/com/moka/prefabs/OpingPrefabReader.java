@@ -1,10 +1,10 @@
 package com.moka.prefabs;
 
-import com.moka.scene.entity.ComponentAttribute;
 import com.moka.core.Moka;
 import com.moka.core.NameManager;
-import com.moka.scene.entity.Component;
 import com.moka.math.Vector2;
+import com.moka.scene.entity.Component;
+import com.moka.scene.entity.ComponentAttribute;
 import com.moka.triggers.Trigger;
 import com.moka.triggers.TriggerPromise;
 import com.moka.utils.CoreUtil;
@@ -14,7 +14,6 @@ import com.shelodev.oping2.OpingParserException;
 import com.shelodev.oping2.structure.Branch;
 import com.shelodev.oping2.structure.Leaf;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 

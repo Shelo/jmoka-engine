@@ -1,12 +1,11 @@
 package com.moka.core;
 
-import com.moka.graphics.Shader;
-import com.moka.input.Input;
-import com.moka.scene.Context;
-import com.moka.time.Time;
 import com.moka.graphics.Display;
 import com.moka.graphics.Renderer;
+import com.moka.input.Input;
 import com.moka.physics.Physics;
+import com.moka.scene.Context;
+import com.moka.time.Time;
 import com.moka.utils.JMokaLog;
 
 /**
@@ -72,10 +71,5 @@ public abstract class SubEngine
     public void log(Object message)
     {
         JMokaLog.o(this.getClass().getSimpleName(), message.toString());
-    }
-
-    public void log(String message)
-    {
-        JMokaLog.o(this.getClass().getSimpleName(), message);
     }
 }

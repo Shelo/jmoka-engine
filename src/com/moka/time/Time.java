@@ -1,7 +1,7 @@
 package com.moka.time;
 
-import com.moka.scene.entity.Component;
 import com.moka.core.SubEngine;
+import com.moka.scene.entity.Component;
 import com.moka.triggers.Trigger;
 
 import java.util.ArrayList;

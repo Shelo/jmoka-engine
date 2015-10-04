@@ -1,6 +1,6 @@
 package com.moka.scene.entity;
 
-import com.moka.core.*;
+import com.moka.core.Moka;
 import com.moka.triggers.Trigger;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;

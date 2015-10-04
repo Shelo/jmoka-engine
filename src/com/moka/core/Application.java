@@ -1,12 +1,12 @@
 package com.moka.core;
 
+import com.moka.graphics.Display;
+import com.moka.graphics.Renderer;
 import com.moka.input.Input;
+import com.moka.physics.Physics;
 import com.moka.resources.Resources;
 import com.moka.scene.Context;
 import com.moka.time.Time;
-import com.moka.graphics.Display;
-import com.moka.graphics.Renderer;
-import com.moka.physics.Physics;
 import com.moka.utils.JMokaLog;
 
 /**

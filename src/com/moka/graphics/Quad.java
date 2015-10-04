@@ -1,7 +1,7 @@
 package com.moka.graphics;
 
-import com.moka.math.Vector2;
 import com.moka.math.Rectangle;
+import com.moka.math.Vector2;
 import com.moka.utils.CoreUtil;
 
 import java.nio.FloatBuffer;

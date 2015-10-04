@@ -1,16 +1,18 @@
 package com.moka.physics;
 
-import com.moka.scene.entity.ComponentAttribute;
 import com.moka.core.Moka;
-import com.moka.scene.entity.Component;
-import com.moka.scene.entity.Entity;
 import com.moka.math.Vector2;
+import com.moka.scene.entity.Component;
+import com.moka.scene.entity.ComponentAttribute;
+import com.moka.scene.entity.Entity;
 import com.moka.triggers.Trigger;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.contacts.Contact;
 
 public abstract class PhysicsBody extends Component

@@ -1,12 +1,12 @@
 package com.moka.graphics;
 
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-
 import com.moka.core.Moka;
 import com.moka.utils.JMokaException;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBImage;
+
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 

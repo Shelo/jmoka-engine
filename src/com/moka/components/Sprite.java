@@ -1,13 +1,13 @@
 package com.moka.components;
 
-import com.moka.scene.entity.Component;
-import com.moka.scene.entity.ComponentAttribute;
 import com.moka.graphics.Color;
 import com.moka.graphics.Quad;
 import com.moka.graphics.Shader;
 import com.moka.graphics.Texture;
-import com.moka.math.Vector2;
 import com.moka.math.Rectangle;
+import com.moka.math.Vector2;
+import com.moka.scene.entity.Component;
+import com.moka.scene.entity.ComponentAttribute;
 import com.moka.utils.JMokaException;
 
 import static org.lwjgl.opengl.GL11.*;

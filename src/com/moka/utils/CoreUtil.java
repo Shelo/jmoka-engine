@@ -5,15 +5,12 @@ import com.moka.math.Matrix3;
 import com.moka.math.Matrix4;
 import org.lwjgl.BufferUtils;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
-
-import static org.lwjgl.BufferUtils.createByteBuffer;
 
 public class CoreUtil
 {

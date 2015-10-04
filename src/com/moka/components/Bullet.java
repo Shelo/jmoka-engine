@@ -1,9 +1,9 @@
 package com.moka.components;
 
 import com.moka.core.Moka;
+import com.moka.math.Vector2;
 import com.moka.scene.entity.Component;
 import com.moka.scene.entity.ComponentAttribute;
-import com.moka.math.Vector2;
 import com.moka.utils.Pools;
 
 public class Bullet extends Component

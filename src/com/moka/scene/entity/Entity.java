@@ -1,12 +1,7 @@
 package com.moka.scene.entity;
 
 import com.moka.components.Sprite;
-import com.moka.scene.Context;
-import com.moka.math.Matrix3;
-import com.moka.math.Vector2;
 import com.moka.scene.Scene;
-import com.moka.utils.CalcUtil;
-import com.moka.utils.Pools;
 
 import java.util.ArrayList;
 

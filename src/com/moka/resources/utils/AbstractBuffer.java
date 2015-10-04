@@ -1,7 +1,5 @@
 package com.moka.resources.utils;
 
-import com.moka.scene.entity.Entity;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;

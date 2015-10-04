@@ -1,8 +1,8 @@
 package com.moka.components;
 
 import com.moka.core.Moka;
-import com.moka.scene.entity.Component;
 import com.moka.prefabs.Prefab;
+import com.moka.scene.entity.Component;
 import com.moka.scene.entity.ComponentAttribute;
 import com.moka.triggers.Trigger;
 

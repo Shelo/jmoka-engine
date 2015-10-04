@@ -3,7 +3,6 @@ package com.moka.graphics;
 import com.moka.components.Camera;
 import com.moka.components.Sprite;
 import com.moka.core.SubEngine;
-import com.moka.math.MathUtil;
 import com.moka.scene.entity.Entity;
 import com.moka.utils.JMokaException;
 
@@ -12,8 +11,6 @@ import static org.lwjgl.opengl.GL20.glUseProgram;
 
 public final class Renderer extends SubEngine
 {
-    private static final String TAG = "RENDERER";
-
     public static final String VERTEX_CODE =
             "#version 330 core\n" +
             "\n" +

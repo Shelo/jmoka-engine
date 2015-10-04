@@ -1,10 +1,10 @@
 package com.moka.scene;
 
 import com.moka.core.SubEngine;
-import com.moka.scene.entity.Entity;
 import com.moka.graphics.Shader;
 import com.moka.prefabs.OpingPrefabReader;
 import com.moka.prefabs.PrefabReader;
+import com.moka.scene.entity.Entity;
 import com.moka.utils.JMokaException;
 
 import java.util.ArrayList;

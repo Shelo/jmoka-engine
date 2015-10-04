@@ -2,9 +2,8 @@ package com.moka.scene;
 
 import com.moka.components.Camera;
 import com.moka.components.Sprite;
-import com.moka.graphics.Shader;
-import com.moka.scene.entity.Entity;
 import com.moka.graphics.Texture;
+import com.moka.scene.entity.Entity;
 import com.moka.utils.JMokaException;
 
 import java.util.ArrayList;

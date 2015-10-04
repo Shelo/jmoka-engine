@@ -1,8 +1,8 @@
 package com.moka.resources;
 
 import com.moka.core.Moka;
-import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
+import com.moka.prefabs.Prefab;
 import com.moka.utils.ConfigDataFile;
 import com.moka.utils.FileHandle;
 import com.moka.utils.JMokaException;

@@ -1,8 +1,8 @@
 package com.moka.prefabs;
 
-import com.moka.scene.entity.ComponentAttribute;
 import com.moka.core.Moka;
 import com.moka.scene.entity.Component;
+import com.moka.scene.entity.ComponentAttribute;
 import com.moka.utils.JMokaException;
 import com.shelodev.oping2.structure.Leaf;
 import net.sourceforge.jeval.EvaluationException;

@@ -1,11 +1,11 @@
 package com.moka.prefabs;
 
-import com.moka.scene.entity.ComponentAttribute;
 import com.moka.core.Moka;
-import com.moka.scene.entity.Transform;
-import com.moka.scene.entity.Component;
-import com.moka.scene.entity.Entity;
 import com.moka.math.Vector2;
+import com.moka.scene.entity.Component;
+import com.moka.scene.entity.ComponentAttribute;
+import com.moka.scene.entity.Entity;
+import com.moka.scene.entity.Transform;
 import com.moka.triggers.Trigger;
 import com.moka.triggers.TriggerPromise;
 import com.moka.utils.JMokaException;
