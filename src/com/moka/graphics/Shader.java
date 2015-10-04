@@ -68,8 +68,7 @@ public class Shader
 
     public void bind()
     {
-        glUseProgram(program);
-        Moka.getRenderer().setBound(this);
+        Moka.getRenderer().bindShader(program);
     }
 
     private int createShader(String code, int type)
@@ -149,10 +148,5 @@ public class Shader
     private void setUniform(String uniform, Color color)
     {
         glUniform4f(getUniformLocation(uniform), color.r, color.g, color.b, color.a);
-    }
-
-    public boolean isBound()
-    {
-        return Moka.getRenderer().isBound(this);
     }
 }

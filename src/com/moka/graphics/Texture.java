@@ -3,6 +3,7 @@ package com.moka.graphics;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
+import com.moka.core.Moka;
 import com.moka.utils.JMokaException;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBImage;
@@ -74,7 +75,7 @@ public class Texture
 
     public void bind()
     {
-        glBindTexture(GL_TEXTURE_2D, textureId);
+        Moka.getRenderer().bindTexture(textureId);
     }
 
     public int getWidth()

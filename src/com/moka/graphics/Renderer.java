@@ -8,6 +8,7 @@ import com.moka.scene.entity.Entity;
 import com.moka.utils.JMokaException;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.glUseProgram;
 
 public final class Renderer extends SubEngine
 {
@@ -49,8 +50,8 @@ public final class Renderer extends SubEngine
     private Shader defaultShader;
     private Shader shader;
     private Camera camera;
-    private Shader boundShader;
-    private float pixp = 100;
+    private int currentShaderProgram;
+    private int currentTextureId = -1;
 
     private Color clearColor = new Color(0, 0, 0, 1);
 
@@ -178,13 +179,21 @@ public final class Renderer extends SubEngine
             this.shader = shader;
     }
 
-    public void setBound(Shader shader)
+    public void bindTexture(int textureId)
     {
-        boundShader = shader;
+        if (currentTextureId != textureId)
+        {
+            glBindTexture(GL_TEXTURE_2D, textureId);
+            currentTextureId = textureId;
+        }
     }
 
-    public boolean isBound(Shader shader)
+    public void bindShader(int shaderProgram)
     {
-        return boundShader == shader;
+        if (shaderProgram != currentShaderProgram)
+        {
+            glUseProgram(shaderProgram);
+            currentShaderProgram = shaderProgram;
+        }
     }
 }
