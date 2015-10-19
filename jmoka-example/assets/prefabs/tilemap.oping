@@ -1,0 +1,17 @@
++ Prefab
+    - Group: Enemies
+    - Size: 64, 64
+    - Rotation: 180
+
+    + Sprite
+        - Texture: @textures.enemy01
+
+    + KinematicBody
+        - Shape: BOX
+        - Size: 48, 48
+        - CategoryBits: 4
+        - MaskBits: 11
+
+    + SpaceShooter:Health
+        - HealthPoints: 40
+        - OnDeath: example.EnemyTriggers.OnDeathEnemy
