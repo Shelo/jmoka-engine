@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL30.*;
 public class SpriteBatch
 {
     private static final int COMPONENTS_PER_VERTEX = 8;
-    private static final int MAX_SPRITES = 10;
+    private static final int MAX_SPRITES = 200;
     private static final int MAX_VERTICES = 4 * MAX_SPRITES;
     private static final int VERTEX_BUFFER_SIZE = COMPONENTS_PER_VERTEX * MAX_VERTICES;
     private static final int INDEX_BUFFER_SIZE = MAX_SPRITES * 6;
@@ -30,10 +30,13 @@ public class SpriteBatch
     private FloatBuffer vertexBuffer;
     private IntBuffer indexBuffer;
 
-    // current vertex counter.
+    // current vertex buffer counter.
     private int vc;
 
-    // current index counter.
+    // current vertex index.
+    private int vi;
+
+    // current index buffer counter.
     private int ic;
 
     public SpriteBatch()
@@ -75,6 +78,7 @@ public class SpriteBatch
         if (vc >= VERTEX_BUFFER_SIZE)
             render();
 
+        // put every vertex in the buffer.
         vertices[vc++] = x;
         vertices[vc++] = y;
         vertices[vc++] = 0;
@@ -111,13 +115,14 @@ public class SpriteBatch
         vertices[vc++] = color.b;
         vertices[vc++] = color.a;
 
-        int cic = ic;
-        indices[ic++] = cic;
-        indices[ic++] = cic + 1;
-        indices[ic++] = cic + 2;
-        indices[ic++] = cic;
-        indices[ic++] = cic + 2;
-        indices[ic++] = cic + 3;
+        indices[ic++] = vi;
+        indices[ic++] = vi + 1;
+        indices[ic++] = vi + 2;
+        indices[ic++] = vi;
+        indices[ic++] = vi + 2;
+        indices[ic++] = vi + 3;
+
+        vi += 4;
     }
 
     private void setTexture(Texture texture)
@@ -131,17 +136,17 @@ public class SpriteBatch
     private void clean()
     {
         texture = null;
-        vc = ic = 0;
+        vc = ic = vi = 0;
     }
 
     public void render()
     {
         vertexBuffer.clear();
-        indexBuffer.clear();
-
         vertexBuffer.put(vertices);
-        indexBuffer.put(indices);
         vertexBuffer.flip();
+
+        indexBuffer.clear();
+        indexBuffer.put(indices);
         indexBuffer.flip();
 
         texture.bind();

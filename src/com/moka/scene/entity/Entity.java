@@ -1,6 +1,6 @@
 package com.moka.scene.entity;
 
-import com.moka.components.Sprite;
+import com.moka.graphics.Drawable;
 import com.moka.scene.Scene;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Entity
     private final String name;
 
     private boolean destroyed;
-    private Sprite sprite;
+    private Drawable drawable;
     private String group;
     private Scene scene;
 
@@ -37,8 +37,8 @@ public class Entity
     {
         component.setEntity(this);
 
-        if (component instanceof Sprite)
-            sprite = (Sprite) component;
+        if (component instanceof Drawable)
+            drawable = (Drawable) component;
         else
             components.add(component);
 
@@ -47,8 +47,8 @@ public class Entity
 
     public void create()
     {
-        if (hasSprite())
-            sprite.onCreate();
+        if (hasDrawable())
+            drawable.onCreate();
 
         for (Component component : components)
         {
@@ -61,10 +61,8 @@ public class Entity
     {
         transform.update();
 
-        if (hasSprite())
-        {
-            getSprite().onUpdate();
-        }
+        if (hasDrawable())
+            drawable.onUpdate();
 
         for (Component component : components)
         {
@@ -75,8 +73,8 @@ public class Entity
 
     public void postUpdate()
     {
-        if (hasSprite())
-            getSprite().onPostUpdate();
+        if (hasDrawable())
+            drawable.onPostUpdate();
 
         for (Component component : components)
         {
@@ -111,9 +109,9 @@ public class Entity
         return transform;
     }
 
-    public Sprite getSprite()
+    public Drawable getDrawable()
     {
-        return sprite;
+        return drawable;
     }
 
     public String getName()
@@ -146,9 +144,9 @@ public class Entity
         return groupName.equals(group);
     }
 
-    public boolean hasSprite()
+    public boolean hasDrawable()
     {
-        return sprite != null;
+        return drawable != null;
     }
 
     public boolean isDestroyed()

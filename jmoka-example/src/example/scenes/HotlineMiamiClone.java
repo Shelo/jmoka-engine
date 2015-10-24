@@ -1,8 +1,11 @@
 package example.scenes;
 
+import com.moka.components.TileMap;
 import com.moka.core.Moka;
+import com.moka.math.Vector2;
 import com.moka.scene.Scene;
 import com.moka.scene.entity.Entity;
+import com.moka.utils.Pools;
 import com.shelodev.oping2.structure.Leaf;
 import example.R;
 
@@ -25,12 +28,25 @@ public class HotlineMiamiClone extends Scene
             R.save.player.getRoot().addLeaf(new Leaf("Position", "0", "0"));
             R.save.player.save();
         }
+
+        R.objects.tiles.add(R.prefabs.tiles.grass.newEntity(null));
+
+        Entity entity = R.prefabs.tilemap.newEntity("TileMap");
+        TileMap tileMap = (TileMap) entity.getDrawable();
+        tileMap.init();
+
+        tileMap.line(0, 0, 200, 7, (byte) 0);
     }
 
     @Override
     public void onUpdate()
     {
-        R.objects.mousePosition.set(Moka.getInput().getCursorPos());
+        Vector2 buffer = Pools.vec2.take();
+        {
+            R.objects.mousePosition.set(
+                    Moka.getRenderer().getCamera().toWorldCoords(Moka.getInput().getCursorPos(), buffer));
+        }
+        Pools.vec2.put(buffer);
     }
 
     @Override

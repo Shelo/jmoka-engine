@@ -4,6 +4,7 @@ import com.moka.components.Camera;
 import com.moka.components.Sprite;
 import com.moka.core.SubEngine;
 import com.moka.scene.entity.Entity;
+import com.moka.utils.CoreUtil;
 import com.moka.utils.JMokaException;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -52,6 +53,9 @@ public final class Renderer extends SubEngine
 
     private Color clearColor = new Color(0, 0, 0, 1);
 
+    private Shader batchShader;
+    private SpriteBatch batch;
+
     /**
      * Creates the Renderer. This will initialize some OpenGL constants and create the shader.
      */
@@ -77,6 +81,11 @@ public final class Renderer extends SubEngine
         glEnable(GL_TEXTURE_2D);
 
         log("Created correctly");
+
+        batch = new SpriteBatch();
+
+        batchShader = new Shader(CoreUtil.readFile("jmoka-example/assets/shaders/test_vertex_batch.glsl"),
+                CoreUtil.readFile("jmoka-example/assets/shaders/test_fragment_batch.glsl"));
     }
 
     /**
@@ -94,12 +103,12 @@ public final class Renderer extends SubEngine
 
         for (Entity entity : getContext().getCurrentScene())
         {
-            if (entity.hasSprite())
+            if (entity.hasDrawable())
             {
-                Sprite sprite = entity.getSprite();
+                Drawable drawable = entity.getDrawable();
 
-                if (sprite.isEnabled())
-                    sprite.render(shader);
+                if (drawable.isEnabled())
+                    drawable.render(shader);
             }
         }
     }

@@ -36,8 +36,14 @@ public class Shader
         // Link and check errors.
         glLinkProgram(program);
 
+        /*
         glBindAttribLocation(program, 0, "a_position");
         glBindAttribLocation(program, 1, "a_texCoord");
+
+        // TODO: bad solution, but will do for now.
+        if (color)
+            glBindAttribLocation(program, 2, "a_color");
+        */
 
         if (glGetProgrami(program, GL_LINK_STATUS) == 0)
             throw new JMokaException(glGetShaderInfoLog(program, 1024));

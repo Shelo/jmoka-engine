@@ -53,8 +53,7 @@ public abstract class Scene implements Iterable<Entity>
      */
     public final void update()
     {
-        for (int i = entities.size() - 1; i >= 0; i--)
-        {
+        for (int i = entities.size() - 1; i >= 0; i--) {
             entities.get(i).update();
         }
     }
@@ -65,12 +64,9 @@ public abstract class Scene implements Iterable<Entity>
      */
     public void load(Context context)
     {
-        if (created)
-        {
+        if (created) {
             onResume();
-        }
-        else
-        {
+        } else {
             this.context = context;
 
             onCreate();
@@ -85,22 +81,39 @@ public abstract class Scene implements Iterable<Entity>
 
     public void postUpdate()
     {
-        for (Entity entity : entities)
-        {
+        for (Entity entity : entities) {
             entity.postUpdate();
         }
     }
 
     public void clean()
     {
-        for (int i = entities.size() - 1; i >= 0; i--)
-        {
-            if (entities.get(i).isDestroyed())
-            {
+        for (int i = entities.size() - 1; i >= 0; i--) {
+            if (entities.get(i).isDestroyed()) {
                 entities.get(i).onDestroy();
                 entities.remove(i);
+
+                int layerId = findLayerFor(i);
+
+                for (int j = layerId + 1; j < layers.size(); j++) {
+                    layers.set(j, layers.get(j) - 1);
+                }
             }
         }
+    }
+
+    public int findLayerFor(int j)
+    {
+        int layerId = -1;
+        for (int i = 0; i < layers.size(); i++) {
+            if (layers.get(i) > j) {
+                return layerId;
+            } else {
+                layerId = i;
+            }
+        }
+
+        return layerId;
     }
 
     /**
@@ -125,9 +138,10 @@ public abstract class Scene implements Iterable<Entity>
     {
         ArrayList<Entity> groupEntities = new ArrayList<>();
 
-        for (Entity entity : entities)
+        for (Entity entity : entities) {
             if (entity.belongsTo(group))
                 groupEntities.add(entity);
+        }
 
         return groupEntities.isEmpty()? null : groupEntities;
     }
@@ -144,12 +158,9 @@ public abstract class Scene implements Iterable<Entity>
         if (name == null)
             throw new JMokaException("The name cannot be null.");
 
-        for (Entity entity : entities)
-        {
-            if (entity.getName().equals(name))
-            {
+        for (Entity entity : entities) {
+            if (entity.getName() != null && entity.getName().equals(name))
                 return entity;
-            }
         }
 
         throw new JMokaException("There's no entity with name " + name + ".");
@@ -188,7 +199,7 @@ public abstract class Scene implements Iterable<Entity>
     public Entity newCamera(String name, boolean main)
     {
         Entity entity = newEntity(name, 0);
-        Camera camera = new Camera(0, context.getDisplay().getWidth(),0, context.getDisplay().getHeight());
+        Camera camera = new Camera(0, context.getDisplay().getWidth(), 0, context.getDisplay().getHeight());
 
         entity.addComponent(camera);
 
@@ -251,5 +262,15 @@ public abstract class Scene implements Iterable<Entity>
     public Iterator<Entity> iterator()
     {
         return entities.iterator();
+    }
+
+    // TODO: remove this.
+    public void debug()
+    {
+        for (Entity entity : entities)
+            System.out.println(entity);
+
+        for (int i = 0; i < layers.size(); i++)
+            System.out.println(i + " - " + layers.get(i));
     }
 }

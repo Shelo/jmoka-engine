@@ -1,9 +1,6 @@
 package com.moka.components;
 
-import com.moka.graphics.Color;
-import com.moka.graphics.Quad;
-import com.moka.graphics.Shader;
-import com.moka.graphics.Texture;
+import com.moka.graphics.*;
 import com.moka.math.Rectangle;
 import com.moka.math.Vector2;
 import com.moka.scene.entity.Component;
@@ -17,7 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
  *
  * @author Shelo
  */
-public class Sprite extends Component
+public class Sprite extends Drawable
 {
     private Rectangle clipRect;
     private Texture texture;
@@ -75,6 +72,7 @@ public class Sprite extends Component
         quad = new Quad(clipRect);
     }
 
+    @Override
     public void render(Shader shader)
     {
         if (texture == null)

@@ -10,7 +10,7 @@ public class MainScene extends Scene
     public void onCreate()
     {
         newCamera("MainCamera", true);
-        R.prefabs.player.newEntity("Player").getSprite();
+        R.prefabs.player.newEntity("Player");
 
         R.prefabs.space01.newEntity("Space01_01");
 

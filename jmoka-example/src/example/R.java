@@ -27,6 +27,7 @@ public class R extends Resources
     public static class objects
     {
         public static Vector2 mousePosition = new Vector2();
+        public static EntityBuffer tiles = new EntityBuffer(1);
     }
 
     public static class screen
@@ -40,6 +41,8 @@ public class R extends Resources
     {
         public static Texture player;
         public static Texture playerShooting;
+
+        public static Texture grass_dirt;
 
         public static Texture enemy01;
         public static Texture enemy02;
@@ -84,10 +87,12 @@ public class R extends Resources
         public static Prefab explosion02;
 
         public static Prefab hotliner;
+        public static Prefab tilemap;
 
         @BindLoad(path = "tiles/", extension = "oping")
         public static class tiles
         {
+            public static Prefab grass;
             public static Prefab dirt01;
         }
     }

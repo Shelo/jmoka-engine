@@ -30,13 +30,13 @@ public final class Core extends SubEngine
 
     public void start(int maxFrameRate)
     {
-        if (maxFrameRate == 0)
-            throw new JMokaException("MaxFrameTime cannot be zero.");
-
-        frameTime = 1.0f / maxFrameRate;
-
         if (daemon)
             return;
+
+        if (maxFrameRate == 0)
+            throw new JMokaException("MaxFrameRate cannot be zero.");
+
+        frameTime = 1.0f / maxFrameRate;
 
         daemon = true;
         run();

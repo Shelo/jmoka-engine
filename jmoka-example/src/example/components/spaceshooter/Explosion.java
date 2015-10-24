@@ -1,5 +1,6 @@
 package example.components.spaceshooter;
 
+import com.moka.components.Sprite;
 import com.moka.core.Moka;
 import com.moka.scene.entity.Component;
 
@@ -11,11 +12,10 @@ public class Explosion extends Component
         getTransform().rotate(0.3925f * Moka.getTime().getDelta());
         getTransform().scale(1.01f);
 
-        getEntity().getSprite().getTint().a -= Moka.getTime().getDelta();
+        Sprite sprite = (Sprite) getEntity().getDrawable();
+        sprite.getTint().a -= Moka.getTime().getDelta();
 
-        if (getEntity().getSprite().getTint().a <= 0.05f)
-        {
+        if (sprite.getTint().a <= 0.05f)
             getEntity().destroy();
-        }
     }
 }

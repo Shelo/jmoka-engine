@@ -10,6 +10,7 @@ public class PackageManifest extends Package
     @Override
     public void registerComponents(LinkedList<Class<? extends Component>> components)
     {
+        components.add(CameraFollow.class);
 
     }
 

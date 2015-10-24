@@ -1,6 +1,9 @@
 package example;
 
 import com.moka.core.Application;
+import com.moka.graphics.Color;
+import com.moka.graphics.SpriteBatch;
+import com.moka.graphics.Texture;
 import com.moka.input.Input;
 import com.moka.core.Moka;
 import example.scenes.HotlineMiamiClone;
@@ -35,7 +38,7 @@ public class Game
         // set up scenes.
         Moka.getContext().addScene(new HotlineMiamiClone());
         Moka.getContext().addScene(new MainScene());
-        Moka.getContext().setMainScene(MainScene.class);
+        Moka.getContext().setMainScene(HotlineMiamiClone.class);
 
         // create and start the application at 60 fps.
         app.create().start(60);

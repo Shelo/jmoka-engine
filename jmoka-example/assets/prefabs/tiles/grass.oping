@@ -1,11 +1,10 @@
 + Prefab
     - Group: Tiles
-    - Size: 64 * 13, 64
+    - Size: 48, 48
     - Layer: 1
 
     + Sprite
-        - Texture: @textures.tiles.dirt01
-        - ClipRect: 0, 0, 13, 1
+        - Texture: @textures.grass_dirt
 
     + StaticBody
         - Shape: BOX

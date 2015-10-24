@@ -1,5 +1,6 @@
 package com.moka.scene.entity;
 
+import com.moka.components.Sprite;
 import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
 import com.moka.utils.CalcUtil;
@@ -186,14 +187,12 @@ public class Transform
 
         if (!useOwnSize)
         {
-            if (entity.hasSprite())
+            if (entity.hasDrawable() && entity.getDrawable() instanceof Sprite)
             {
-                rSize = entity.getSprite().getSize();
+                rSize = ((Sprite) entity.getDrawable()).getSize();
 
                 if (rSize == null)
-                {
                     throw new JMokaException("Entity has no dimensions!");
-                }
             }
             else
             {

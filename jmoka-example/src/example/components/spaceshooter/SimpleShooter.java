@@ -1,5 +1,6 @@
 package example.components.spaceshooter;
 
+import com.moka.components.Sprite;
 import com.moka.core.Moka;
 import com.moka.scene.entity.Component;
 import com.moka.time.TimeOut;
@@ -17,7 +18,7 @@ public class SimpleShooter extends Component
         @Override
         public Object onTrigger()
         {
-            getEntity().getSprite().setTexture(R.textures.player);
+            ((Sprite) getEntity().getDrawable()).setTexture(R.textures.player);
 
             return null;
         }
@@ -35,7 +36,7 @@ public class SimpleShooter extends Component
     {
         if (Moka.getInput().getButtonDown(R.buttons.FIRE_1))
         {
-            getEntity().getSprite().setTexture(R.textures.playerShooting);
+            ((Sprite) getEntity().getDrawable()).setTexture(R.textures.playerShooting);
 
             float x = getTransform().getPosition().x + bulletOffsetX;
 

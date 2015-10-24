@@ -17,3 +17,5 @@
 
     + LookAt
         - Target: @objects.mousePosition
+
+    + Hotline:CameraFollow

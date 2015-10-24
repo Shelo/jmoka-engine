@@ -101,7 +101,7 @@ public final class Prefab
     /**
      * Sets the position of the prefab to the position vector and then instantiates.
      *
-     * @param name          unique name for the new instance.
+     * @param name          name for the new instance.
      * @param position      position for the new instance.
      * @return              the new getEntity.
      */
@@ -114,15 +114,36 @@ public final class Prefab
     /**
      * Sets the position of the prefab to the x, y values and then instantiates.
      *
-     * @param name  unique name for the new instance.
+     * @param name  name for the new instance.
      * @param x     x position on the world.
      * @param y     y position on the world.
      * @return      the new getEntity.
      */
     public Entity newEntity(String name, float x, float y)
     {
+        float ox = position.x;
+        float oy = position.y;
+
         setPosition(x, y);
-        return newEntity(name);
+        Entity entity = newEntity(name);
+        setPosition(ox, oy);
+        return entity;
+    }
+
+    /**
+     * Sets the position of the prefab to the x, y values and then instantiates.
+     *
+     * @param name      name for the new instance.
+     * @param layer     layer for the new instance.
+     * @return          the new getEntity.
+     */
+    public Entity newEntity(String name, int layer)
+    {
+        int ol = this.layer;
+        setLayer(layer);
+        Entity entity = newEntity(name);
+        setLayer(ol);
+        return entity;
     }
 
     /**
