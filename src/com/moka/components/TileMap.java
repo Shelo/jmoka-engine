@@ -1,9 +1,9 @@
 package com.moka.components;
 
 import com.moka.graphics.Drawable;
+import com.moka.graphics.Renderer;
 import com.moka.graphics.Shader;
 import com.moka.graphics.SpriteBatch;
-import com.moka.graphics.Texture;
 import com.moka.resources.utils.EntityBuffer;
 import com.moka.scene.entity.ComponentAttribute;
 import com.moka.scene.entity.Entity;
@@ -40,7 +40,7 @@ public class TileMap extends Drawable
     }
 
     @Override
-    public void render(Shader shader)
+    public void render(Renderer renderer)
     {
         float offsetX = getTransform().getPosition().x;
         float offsetY = getTransform().getPosition().y;
@@ -58,7 +58,7 @@ public class TileMap extends Drawable
                     entity.getTransform().setPosition(x * cellWidth + offsetX,
                             y * cellHeight + offsetY);
                     entity.getTransform().setSize(cellWidth, cellHeight);
-                    entity.getDrawable().render(shader);
+                    entity.getDrawable().render(renderer);
                 }
             }
         }

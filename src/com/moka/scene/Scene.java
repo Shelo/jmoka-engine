@@ -15,10 +15,66 @@ import java.util.List;
  */
 public abstract class Scene implements Iterable<Entity>
 {
-    private Context context;
-    private ArrayList<Integer> layers = new ArrayList<>();
-    private ArrayList<Entity> entities = new ArrayList<>();
+    private static final int LAYERS = 16;
+
+    private ArrayList<List<Entity>> layers = new ArrayList<>(LAYERS);
     private boolean created;
+    private Context context;
+
+    public Scene()
+    {
+        for (int i = 0; i < LAYERS; i++)
+            layers.add(new ArrayList<>());
+    }
+
+    private class Iter implements Iterator<Entity>
+    {
+        private Iterator<Entity> iterator;
+        private int cursor = 0;
+
+        private Iterator<Entity> nextNonEmpty(boolean update)
+        {
+            for (int i = cursor + 1; i < layers.size(); i++)
+            {
+                if (update)
+                    cursor = i;
+
+                if (layers.get(i).size() != 0)
+                    return layers.get(i).iterator();
+            }
+
+            return null;
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            if (cursor == layers.size())
+                return false;
+
+            Iterator<Entity> tempIterator = iterator;
+
+            if (tempIterator == null)
+                tempIterator = layers.get(cursor).iterator();
+
+            if (!tempIterator.hasNext())
+                tempIterator = nextNonEmpty(false);
+
+            return tempIterator != null;
+        }
+
+        @Override
+        public Entity next()
+        {
+            if (iterator == null)
+                iterator = layers.get(cursor).iterator();
+
+            if (!iterator.hasNext())
+                iterator = nextNonEmpty(true);
+
+            return iterator.next();
+        }
+    }
 
     /**
      * Called the first time the scene is called to play it self.
@@ -53,8 +109,12 @@ public abstract class Scene implements Iterable<Entity>
      */
     public final void update()
     {
-        for (int i = entities.size() - 1; i >= 0; i--) {
-            entities.get(i).update();
+        for (int j = layers.size() - 1; j >= 0; j--)
+        {
+            List<Entity> entities = layers.get(j);
+
+            for (int i = entities.size() - 1; i >= 0; i--)
+                entities.get(i).update();
         }
     }
 
@@ -72,7 +132,7 @@ public abstract class Scene implements Iterable<Entity>
             onCreate();
 
             // create every entity.
-            for (Entity entity : entities)
+            for (Entity entity : this)
                 entity.create();
 
             created = true;
@@ -81,39 +141,24 @@ public abstract class Scene implements Iterable<Entity>
 
     public void postUpdate()
     {
-        for (Entity entity : entities) {
+        for (Entity entity : this) {
             entity.postUpdate();
         }
     }
 
     public void clean()
     {
-        for (int i = entities.size() - 1; i >= 0; i--) {
-            if (entities.get(i).isDestroyed()) {
-                entities.get(i).onDestroy();
-                entities.remove(i);
+        for (int j = layers.size() - 1; j >= 0; j--)
+        {
+            List<Entity> entities = layers.get(j);
 
-                int layerId = findLayerFor(i);
-
-                for (int j = layerId + 1; j < layers.size(); j++) {
-                    layers.set(j, layers.get(j) - 1);
+            for (int i = entities.size() - 1; i >= 0; i--) {
+                if (entities.get(i).isDestroyed()) {
+                    entities.get(i).onDestroy();
+                    entities.remove(i);
                 }
             }
         }
-    }
-
-    public int findLayerFor(int j)
-    {
-        int layerId = -1;
-        for (int i = 0; i < layers.size(); i++) {
-            if (layers.get(i) > j) {
-                return layerId;
-            } else {
-                layerId = i;
-            }
-        }
-
-        return layerId;
     }
 
     /**
@@ -138,10 +183,10 @@ public abstract class Scene implements Iterable<Entity>
     {
         ArrayList<Entity> groupEntities = new ArrayList<>();
 
-        for (Entity entity : entities) {
+        /*for (Entity entity : entities) {
             if (entity.belongsTo(group))
                 groupEntities.add(entity);
-        }
+        }*/
 
         return groupEntities.isEmpty()? null : groupEntities;
     }
@@ -158,7 +203,7 @@ public abstract class Scene implements Iterable<Entity>
         if (name == null)
             throw new JMokaException("The name cannot be null.");
 
-        for (Entity entity : entities) {
+        for (Entity entity : this) {
             if (entity.getName() != null && entity.getName().equals(name))
                 return entity;
         }
@@ -175,17 +220,7 @@ public abstract class Scene implements Iterable<Entity>
      */
     public final Entity addEntity(Entity entity, int layer)
     {
-        if (layer == layers.size())
-            layers.add(entities.size());
-        else if (layer > layers.size())
-            throw new JMokaException("Cannot skip layer values.");
-
-        int ptr = layers.get(layer);
-        entities.add(ptr, entity);
-
-        for (int i = layer + 1; i < layers.size(); i++)
-            layers.set(i, layers.get(i) + 1);
-
+        layers.get(layer).add(entity);
         return entity;
     }
 
@@ -223,14 +258,14 @@ public abstract class Scene implements Iterable<Entity>
 
     public void dispose()
     {
-        for (Entity entity : entities)
-            entity.dispose();
+        /*for (Entity entity : entities)
+            entity.dispose();*/
     }
 
     public void destroy()
     {
-        entities.clear();
         layers.clear();
+        // layers.clear();
     }
 
     public void setCreated(boolean created)
@@ -255,22 +290,16 @@ public abstract class Scene implements Iterable<Entity>
 
     public int getEntitiesCount()
     {
-        return entities.size();
+        int count = 0;
+        for (List<Entity> layer : layers)
+            count += layer.size();
+
+        return count;
     }
 
     @Override
     public Iterator<Entity> iterator()
     {
-        return entities.iterator();
-    }
-
-    // TODO: remove this.
-    public void debug()
-    {
-        for (Entity entity : entities)
-            System.out.println(entity);
-
-        for (int i = 0; i < layers.size(); i++)
-            System.out.println(i + " - " + layers.get(i));
+        return new Iter();
     }
 }

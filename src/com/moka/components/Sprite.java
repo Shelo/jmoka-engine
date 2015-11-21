@@ -3,7 +3,6 @@ package com.moka.components;
 import com.moka.graphics.*;
 import com.moka.math.Rectangle;
 import com.moka.math.Vector2;
-import com.moka.scene.entity.Component;
 import com.moka.scene.entity.ComponentAttribute;
 import com.moka.utils.JMokaException;
 
@@ -22,6 +21,7 @@ public class Sprite extends Drawable
     private Color tint;
     private Quad quad;
     private BLEND blend = BLEND.NORMAL;
+    private boolean batch = false;
 
     public enum BLEND
     {
@@ -73,13 +73,19 @@ public class Sprite extends Drawable
     }
 
     @Override
-    public void render(Shader shader)
+    public void render(Renderer renderer)
     {
         if (texture == null)
             raise("there's no texture to draw.");
 
+        // if batch option is enabled, just batch.
+        if (batch) {
+            renderBatch(renderer);
+            return;
+        }
+
         texture.bind();
-        shader.update(getTransform(), this);
+        renderer.getShader().update(getTransform(), this);
 
         switch (blend)
         {
@@ -92,6 +98,14 @@ public class Sprite extends Drawable
         }
 
         quad.draw();
+    }
+
+    public void renderBatch(Renderer renderer)
+    {
+        Vector2 position = getTransform().getPosition();
+        Vector2 size = getTransform().getSize();
+
+        renderer.batch(texture, position.x, position.y, (int) size.x, (int) size.y, tint);
     }
 
     public Texture getTexture()
@@ -157,6 +171,12 @@ public class Sprite extends Drawable
     public void setBlend(BLEND blend)
     {
         this.blend = blend;
+    }
+
+    @ComponentAttribute("Batch")
+    public void setBatch(boolean batch)
+    {
+        this.batch = batch;
     }
 
     public Vector2 getSize()

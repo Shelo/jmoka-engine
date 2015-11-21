@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL30.*;
 public class SpriteBatch
 {
     private static final int COMPONENTS_PER_VERTEX = 8;
-    private static final int MAX_SPRITES = 200;
+    private static final int MAX_SPRITES = 100;
     private static final int MAX_VERTICES = 4 * MAX_SPRITES;
     private static final int VERTEX_BUFFER_SIZE = COMPONENTS_PER_VERTEX * MAX_VERTICES;
     private static final int INDEX_BUFFER_SIZE = MAX_SPRITES * 6;
@@ -38,6 +38,9 @@ public class SpriteBatch
 
     // current index buffer counter.
     private int ic;
+
+    // debug.
+    private int renderCounter;
 
     public SpriteBatch()
     {
@@ -141,6 +144,10 @@ public class SpriteBatch
 
     public void render()
     {
+        // check if there's something to draw.
+        if (vc == 0)
+            return;
+
         vertexBuffer.clear();
         vertexBuffer.put(vertices);
         vertexBuffer.flip();
@@ -169,12 +176,25 @@ public class SpriteBatch
 
         glBindVertexArray(0);
 
+        renderCounter++;
+
         clean();
     }
 
-    public void debug()
+    public int getSpritesInBatch()
     {
-        System.out.println("Current vertex counter: " + vc);
-        System.out.println("Current index counter: " + ic);
+        return (int) (vc / COMPONENTS_PER_VERTEX * 0.25f);
+    }
+
+    public int getRenderCount()
+    {
+        int r = renderCounter;
+        renderCounter = 0;
+        return r;
+    }
+
+    public Texture getCurrentTexture()
+    {
+        return texture;
     }
 }

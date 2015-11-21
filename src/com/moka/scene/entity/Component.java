@@ -19,9 +19,7 @@ public abstract class Component
     public final void setEntity(final Entity entity)
     {
         if (this.entity != null)
-        {
             throw new JMokaException("This component already has an entity.");
-        }
 
         this.entity = entity;
     }
@@ -46,6 +44,7 @@ public abstract class Component
         return entity.getComponent(componentClass);
     }
 
+    @ComponentAttribute("Enabled")
     public void setEnabled(boolean enabled)
     {
         this.enabled = enabled;
@@ -59,9 +58,7 @@ public abstract class Component
     public Object callTrigger(Trigger<Object> trigger)
     {
         if (trigger != null)
-        {
             return trigger.trigger(this, null);
-        }
 
         return null;
     }
@@ -69,9 +66,7 @@ public abstract class Component
     public <T> Object callTrigger(Trigger<T> trigger, T meta)
     {
         if (trigger != null)
-        {
             return trigger.trigger(this, meta);
-        }
 
         return null;
     }

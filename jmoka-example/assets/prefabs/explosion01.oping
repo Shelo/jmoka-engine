@@ -4,5 +4,6 @@
     + Sprite
         - Texture: @textures.explosion01
         - Blend: ADDITIVE
+        - Batch: true
 
     + SpaceShooter:Explosion

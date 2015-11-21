@@ -1,7 +1,6 @@
 package com.moka.graphics;
 
 import com.moka.components.Camera;
-import com.moka.components.Sprite;
 import com.moka.core.SubEngine;
 import com.moka.scene.entity.Entity;
 import com.moka.utils.CoreUtil;
@@ -98,6 +97,9 @@ public final class Renderer extends SubEngine
         if (camera == null)
             throw new JMokaException("There's no camera attached to the renderer.");
 
+        // batchShader.bind();
+        // batchShader.setUniform("u_projectedView", camera.getProjectedView());
+
         shader.bind();
         shader.setUniform("u_projectedView", camera.getProjectedView());
 
@@ -108,9 +110,11 @@ public final class Renderer extends SubEngine
                 Drawable drawable = entity.getDrawable();
 
                 if (drawable.isEnabled())
-                    drawable.render(shader);
+                    drawable.render(this);
             }
         }
+
+        // batch.render();
     }
 
     /**
@@ -201,5 +205,10 @@ public final class Renderer extends SubEngine
             glUseProgram(shaderProgram);
             currentShaderProgram = shaderProgram;
         }
+    }
+
+    public void batch(Texture texture, float x, float y, int width, int height, Color color)
+    {
+        batch.draw(texture, x, y, width, height, color);
     }
 }

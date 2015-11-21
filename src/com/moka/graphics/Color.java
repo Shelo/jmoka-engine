@@ -29,5 +29,10 @@ public class Color
         this.a = a;
     }
 
+    public int toInt()
+    {
+        return (int) (r * 255) << 24 | (int) (g * 255) << 16 | (int) (b * 255) << 8 | (int) (a * 255);
+    }
+
     // TODO: expand this a little more.
 }

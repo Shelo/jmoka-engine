@@ -18,6 +18,7 @@ public final class Display extends SubEngine
 {
     private static final String TAG = "DISPLAY";
 
+    WindowFocusCallback windowFocusCallback;
     private boolean focus;
     private String title;
     private long window;
@@ -54,7 +55,7 @@ public final class Display extends SubEngine
         GLContext.createFromCurrent();
 
         // set the focus gain or lose callback.
-        WindowFocusCallback windowFocusCallback = new WindowFocusCallback();
+        windowFocusCallback = new WindowFocusCallback();
         glfwSetWindowFocusCallback(window, windowFocusCallback);
     }
 
