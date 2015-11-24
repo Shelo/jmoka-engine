@@ -15,7 +15,11 @@ public class BasePathFile extends File
     @Override
     public String toString()
     {
-        return getName();
+        if (isDirectory()) {
+            return getName() + "/";
+        } else {
+            return getName().replace(".oping", "");
+        }
     }
 
     public char[] read()

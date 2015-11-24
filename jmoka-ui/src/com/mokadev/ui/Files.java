@@ -1,17 +1,14 @@
 package com.mokadev.ui;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.nio.file.Path;
 
-public class Files extends JList
+public class Files extends JList<BasePathFile>
 {
     private final Main main;
-    private String directory;
 
     public Files(Main main)
     {
@@ -22,11 +19,15 @@ public class Files extends JList
 
     void setup()
     {
-        directory = "jmoka-example/assets/prefabs";
-
         setPreferredSize(new Dimension(150, 0));
-        loadFiles();
 
+        // load files.
+        loadFiles("jmoka-example/assets/prefabs");
+
+        // open the first file in the editor at startup.
+        main.getEditor().load(getModel().getElementAt(0));
+
+        // mouse listener to catch double-click on a file item.
         addMouseListener(new MouseAdapter()
         {
             @Override
@@ -34,14 +35,14 @@ public class Files extends JList
             {
                 if (e.getClickCount() == 2) {
                     int index = locationToIndex(e.getPoint());
-                    BasePathFile element = (BasePathFile) getModel().getElementAt(index);
+                    BasePathFile element = getModel().getElementAt(index);
                     main.getEditor().load(element);
                 }
             }
         });
     }
 
-    void loadFiles()
+    void loadFiles(String directory)
     {
         File[] files = new File(directory).listFiles();
 

@@ -19,7 +19,7 @@ public class Editor extends JTextPane
 
     public Editor()
     {
-        setMargin(new Insets(10, 10, 10, 10));
+        setMargin(new Insets(2, 2, 2, 2));
         setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
         document = getStyledDocument();
@@ -46,20 +46,14 @@ public class Editor extends JTextPane
             public void insertUpdate(DocumentEvent e)
             {
                 if (editable)
-                {
                     scheduleUpdate();
-                }
             }
 
             @Override
-            public void removeUpdate(DocumentEvent e)
-            {
-            }
+            public void removeUpdate(DocumentEvent e) {}
 
             @Override
-            public void changedUpdate(DocumentEvent e)
-            {
-            }
+            public void changedUpdate(DocumentEvent e) {}
         });
 
         timer = new Timer(50, e -> updateContent());

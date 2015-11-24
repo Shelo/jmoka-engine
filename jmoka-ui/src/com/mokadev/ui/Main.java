@@ -5,28 +5,33 @@ import java.awt.*;
 
 public class Main extends JFrame
 {
-    private Editor editor;
+    private Editor editor = new Editor();
 
     public Main()
     {
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panel.setBackground(Color.WHITE);
+        setContentPane(panel);
+
+        setLayout(new BorderLayout());
+        setComponents();
+        pack();
         setup();
+    }
+
+    private void setComponents()
+    {
+        add(editor, BorderLayout.CENTER);
+        add(new FileTree(this), BorderLayout.WEST);
+        setJMenuBar(new MenuBar(this));
     }
 
     void setup()
     {
-        setLayout(new BorderLayout());
-
-        editor = new Editor();
-        add(editor, BorderLayout.CENTER);
-
-        Files files = new Files(this);
-        add(files, BorderLayout.WEST);
-
-        pack();
-
         setTitle("jMoka Oping Editor");
         setMinimumSize(new Dimension(200, 200));
-        setSize(new Dimension(800, 600));
+        setSize(new Dimension(900, 600));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
