@@ -12,7 +12,9 @@ import java.util.HashMap;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * Input manager of the engine.
+ * Input engine. This can map input, from mouse, keys and axes to button names. This gives
+ * the facility to make settings for the game and change button maps without having to re work
+ * the actual input handler code.
  *
  * @author Shelo
  */
@@ -195,6 +197,14 @@ public final class Input extends SubEngine
         cursorPosition.set(getCursorPosX(), getCursorPosY());
     }
 
+    /**
+     * Binds a button name to a key. The button name has no restrictions as you can use
+     * whatever string you need.
+     *
+     * @param button    The button name.
+     * @param keyCode   The key code to be bound.
+     * @return          This class for chaining.
+     */
     public Input bindKey(String button, int keyCode)
     {
         if (button == null)
@@ -208,9 +218,22 @@ public final class Input extends SubEngine
         return this;
     }
 
-    public void bindAxes(String name, int negative, int positive)
+    /**
+     * Binds a button name to an axis. The button name has no restrictions as you can use
+     * whatever string you need. An axis interpolates between the negative and the positive given the
+     * user input. The value of the axis is always between -1 and 1, inclusive.
+     *
+     * Retrieve the value with {@link this#getAxes(String)}
+     *
+     * @param name      The button name.
+     * @param negative  The negative key code.
+     * @param positive  The positive key code.
+     * @return          This class for chaining.
+     */
+    public Input bindAxes(String name, int negative, int positive)
     {
         axes.put(name, new Axes(negative, positive));
+        return this;
     }
 
     public Input bindMouse(String button, int keyCode)
@@ -371,5 +394,28 @@ public final class Input extends SubEngine
     public Vector2 getCursorPos()
     {
         return cursorPosition;
+    }
+
+    /**
+     * Returns the position vector for the cursor related to the world coordinates.
+     * This gets the renderer current camera and uses the method
+     * {@link com.moka.components.Camera#toWorldCoords(Vector2, Vector2)} to translate.
+     *
+     * @param buffer    a buffer vector to store the position.
+     * @return          the position of the cursor relative to the screen.
+     */
+    public Vector2 getCursorWorldPos(Vector2 buffer)
+    {
+        return getRenderer().getCamera().toWorldCoords(getCursorPos(), buffer);
+    }
+
+    /**
+     * Clears all bindings inside the input, including: mouse, keys and axes.
+     */
+    public void clear()
+    {
+        buttonsMouse.clear();
+        buttonsKeys.clear();
+        axes.clear();
     }
 }

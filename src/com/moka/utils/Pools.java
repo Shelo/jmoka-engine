@@ -21,9 +21,7 @@ public class Pools
             Vector2 object = objects.poll();
 
             if (object == null)
-            {
                 object = new Vector2(x, y);
-            }
 
             return object.set(x, y);
         }

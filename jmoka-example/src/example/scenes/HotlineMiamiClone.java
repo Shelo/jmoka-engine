@@ -19,6 +19,8 @@ public class HotlineMiamiClone extends Scene
         newCamera("MainCamera", true);
         Entity player = R.prefabs.hotliner.newEntity("Player", 2);
 
+        Moka.getInput().clear();
+
         if (R.save.player.exists()) {
             Leaf position = R.save.player.getRoot().getLeaf("Position");
             player.getTransform().setPosition(position.getFloat(0), position.getFloat(1));
@@ -44,8 +46,7 @@ public class HotlineMiamiClone extends Scene
     {
         Vector2 buffer = Pools.vec2.take();
         {
-            R.objects.mousePosition.set(
-                    Moka.getRenderer().getCamera().toWorldCoords(Moka.getInput().getCursorPos(), buffer));
+            R.objects.mousePosition.set(Moka.getInput().getCursorWorldPos(buffer));
         }
         Pools.vec2.put(buffer);
     }
