@@ -23,13 +23,12 @@ public class MainScene extends Scene
                 .getTransform().setRotation((float) Math.toRadians(180f));
 
         // Testing the DataConfigFile "user".
-        Branch user1 = R.save.user.getRoot().getBranch(0);
-        System.out.println(user1.getSingleString("Name"));
+        System.out.println(R.save.user.getSingleString("Name"));
 
-        int timesPlayed = user1.getSingleInt("TimesPlayed");
+        int timesPlayed = R.save.user.getSingleInt("TimesPlayed");
         System.out.println("TimesPlayed: " + timesPlayed);
 
-        user1.getLeaf("TimesPlayed").setValue(0, timesPlayed + 1);
+        R.save.user.getLeaf("TimesPlayed").setValue(0, timesPlayed + 1);
 
         R.save.user.save();
     }

@@ -10,8 +10,8 @@ import com.moka.time.Time;
 import com.moka.utils.JMokaLog;
 
 /**
- * The Application is the general wrapper of a jMoka game. It contains all sub engines and
- * helper classes in one place.
+ * General wrapper and initializer of the jMoka Engine. It contains all sub engines and
+ * helper classes in one place and starts them all.
  *
  * @author shelo
  */

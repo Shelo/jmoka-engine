@@ -51,7 +51,7 @@ public class Camera extends Component
 	 * Converts the given point to world coordinates, applying the camera transformations.
 	 *
 	 * @param point		the point that will be translated.
-	 * @param result	the resulting vector (just so we don't create a new one).
+	 * @param result	the resulting vector (see {@link com.moka.utils.Pools.vec2})
 	 * @return the transformed point.
 	 */
 	public Vector2 toWorldCoords(Vector2 point, Vector2 result)

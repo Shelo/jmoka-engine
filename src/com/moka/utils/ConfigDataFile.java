@@ -2,39 +2,49 @@ package com.moka.utils;
 
 import com.shelodev.oping2.OpingParser;
 import com.shelodev.oping2.structure.Branch;
+import com.shelodev.oping2.structure.Leaf;
 
-public class ConfigDataFile
+/**
+ * Config that uses Oping markup files to load the data into this object, and also save data.
+ * This can be used as a Branch, just as any Oping Branch object.
+ *
+ * @author mijara
+ */
+public class ConfigDataFile extends Branch
 {
     private static OpingParser parser = new OpingParser();
 
     private FileHandle fileHandle;
-    private Branch root;
+    // private Branch root;
 
     public ConfigDataFile(String filePath)
     {
         fileHandle = new FileHandle(filePath);
 
+        Branch root;
         if (fileHandle.exists())
         {
+
             root = parser.parse(fileHandle.read().toCharArray());
         }
         else
             root = new Branch();
-    }
 
-    public void setRoot(Branch branch)
-    {
-        this.root = branch;
-    }
+        for (Leaf leaf : root.getLeafs())
+            addLeaf(leaf);
 
-    public Branch getRoot()
-    {
-        return root;
+        for (Branch branch : root.getBranches())
+            addBranch(branch);
+
+        setName(root.getName());
+
+        if (root.getNamespace() != null)
+            setNamespace(root.getNamespace());
     }
 
     public void save()
     {
-        parser.render(root, fileHandle.getFile());
+        parser.render(this, fileHandle.getFile());
     }
 
     public boolean exists()
@@ -45,6 +55,6 @@ public class ConfigDataFile
     @Override
     public String toString()
     {
-        return root.toString(0);
+        return toString(0);
     }
 }

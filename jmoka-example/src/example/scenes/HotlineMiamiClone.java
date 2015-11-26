@@ -22,11 +22,11 @@ public class HotlineMiamiClone extends Scene
         Moka.getInput().clear();
 
         if (R.save.player.exists()) {
-            Leaf position = R.save.player.getRoot().getLeaf("Position");
+            Leaf position = R.save.player.getLeaf("Position");
             player.getTransform().setPosition(position.getFloat(0), position.getFloat(1));
         } else {
-            R.save.player.getRoot().setName("Player");
-            R.save.player.getRoot().addLeaf(new Leaf("Position", "0", "0"));
+            R.save.player.setName("Player");
+            R.save.player.addLeaf(new Leaf("Position", "0", "0"));
             R.save.player.save();
         }
 
@@ -67,7 +67,7 @@ public class HotlineMiamiClone extends Scene
     public void onExit()
     {
         Entity entity = findEntity("Player");
-        Leaf position = R.save.player.getRoot().getLeaf("Position");
+        Leaf position = R.save.player.getLeaf("Position");
         position.setValue(0, entity.getTransform().getPosition().x);
         position.setValue(1, entity.getTransform().getPosition().y);
         R.save.player.save();

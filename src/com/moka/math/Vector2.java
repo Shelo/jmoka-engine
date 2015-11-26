@@ -1,23 +1,23 @@
 package com.moka.math;
 
 /**
- * 2D Vector used by the engine, this implementation will always return this vector but modified.
+ * 2D Vector, this implementation will always return this vector but modified.
  * This approach will help reduce the creation of new instances of vectors, is recommended to use
- * buffer vector objects.
+ * buffer vector objects (see {@link com.moka.utils.Pools.vec2}).
  *
  * @author Shelo
  */
 public class Vector2
 {
-    public static final Vector2 LEFT = new Vector2(-1, 0);
-    public static final Vector2 RIGHT = new Vector2(1, 0);
-    public static final Vector2 DOWN = new Vector2(0, -1);
-    public static final Vector2 UP = new Vector2(0, 1);
-    public static final Vector2 LEFT_UP    = new Vector2(-1, 1).nor();
-    public static final Vector2 LEFT_DOWN  = new Vector2(-1, -1).nor();
-    public static final Vector2 RIGHT_UP   = new Vector2(1, 1).nor();
-    public static final Vector2 RIGHT_DOWN = new Vector2(1, -1).nor();
-    public static final Vector2 ZERO       = new Vector2(0, 0);
+    public static final Vector2 LEFT        = new Vector2(-1, 0);
+    public static final Vector2 RIGHT       = new Vector2(1, 0);
+    public static final Vector2 DOWN        = new Vector2(0, -1);
+    public static final Vector2 UP          = new Vector2(0, 1);
+    public static final Vector2 LEFT_UP     = new Vector2(-1, 1).nor();
+    public static final Vector2 LEFT_DOWN   = new Vector2(-1, -1).nor();
+    public static final Vector2 RIGHT_UP    = new Vector2(1, 1).nor();
+    public static final Vector2 RIGHT_DOWN  = new Vector2(1, -1).nor();
+    public static final Vector2 ZERO        = new Vector2(0, 0);
 
     public float x;
     public float y;

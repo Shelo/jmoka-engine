@@ -223,7 +223,7 @@ public final class Input extends SubEngine
      * whatever string you need. An axis interpolates between the negative and the positive given the
      * user input. The value of the axis is always between -1 and 1, inclusive.
      *
-     * Retrieve the value with {@link this#getAxes(String)}
+     * Retrieve the value with {@link Input#getAxes(String)}
      *
      * @param name      The button name.
      * @param negative  The negative key code.
@@ -236,6 +236,16 @@ public final class Input extends SubEngine
         return this;
     }
 
+    /**
+     * Binds a button to a mouse button. The button cannot be previously defined in keyboard
+     * buttons as this causes a confusion when retrieving.
+     *
+     * Retrieve the value with {@link Input#getButton(String)}.
+     *
+     * @param button    the button name to be bound.
+     * @param keyCode   the mouse button.
+     * @return          this object for chaining.
+     */
     public Input bindMouse(String button, int keyCode)
     {
         if (button == null)
