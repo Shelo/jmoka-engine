@@ -20,3 +20,4 @@
         - MaskBits: 5
 
     + SpaceShooter:SimpleShooter
+    + SpaceShooter:CameraFollow

@@ -1,14 +1,9 @@
 package example;
 
-import com.moka.math.Vector2;
 import com.moka.resources.BindLoad;
 import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
 import com.moka.resources.Resources;
-import com.moka.resources.utils.EntityBuffer;
-import com.moka.utils.ConfigDataFile;
-
-import java.io.File;
 
 public class R extends Resources
 {
@@ -24,16 +19,10 @@ public class R extends Resources
         public static final String FIRE_2 = "fire2";
     }
 
-    public static class objects
-    {
-        public static Vector2 mousePosition = new Vector2();
-        public static EntityBuffer tiles = new EntityBuffer(1);
-    }
-
     public static class screen
     {
         public static int WIDTH = 800;
-        public static int HEIGHT = 450;
+        public static int HEIGHT = 600;
     }
 
     @BindLoad(path = "img/", extension = "png")
@@ -41,8 +30,6 @@ public class R extends Resources
     {
         public static Texture player;
         public static Texture playerShooting;
-
-        public static Texture grass_dirt;
 
         public static Texture enemy01;
         public static Texture enemy02;
@@ -55,19 +42,12 @@ public class R extends Resources
         public static Texture explosion02;
 
         public static Texture blank;
-
-        @BindLoad(path = "tiles/", extension = "png")
-        public static class tiles
-        {
-            public static Texture dirt01;
-        }
     }
 
     @BindLoad(path = "save/", extension = "oping")
     public static class save
     {
-        public static ConfigDataFile player;
-        public static ConfigDataFile user;
+
     }
 
     @BindLoad(skip = true, path = "prefabs/", extension = "oping")
@@ -81,20 +61,11 @@ public class R extends Resources
 
         public static Prefab bullet01;
 
-        public static Prefab space01;
+        public static Prefab space;
 
         public static Prefab explosion01;
         public static Prefab explosion02;
-
-        public static Prefab hotliner;
-        public static Prefab tilemap;
-
-        @BindLoad(path = "tiles/", extension = "oping")
-        public static class tiles
-        {
-            public static Prefab grass;
-            public static Prefab dirt01;
-        }
+        public static Prefab background;
     }
 
     public R(String root)

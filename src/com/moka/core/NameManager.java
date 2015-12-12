@@ -32,7 +32,7 @@ public class NameManager extends SubEngine
             "    {\n" +
             "        return \"%s\";\n" +
             "    }\n" +
-            "}\n";;
+            "}\n";
 
     private HashMap<String, Package> packages = new HashMap<>();
 
@@ -44,28 +44,21 @@ public class NameManager extends SubEngine
     /**
      * Tells the engine that you will be using a package by the name of <i>name</i>.
      *
-     * @param name         handy name for the package. If null, use the common package name.
-     * @param location     path to the Java package.
+     * @param name     handy name for the package. If null, use the common package name.
+     * @param location path to the Java package.
      */
     public void usePackage(String name, String location)
     {
-        try
-        {
+        try {
             Class<?> manifest = Class.forName(location + ".PackageManifest");
             Package instance = (Package) manifest.newInstance();
             instance.register();
             packages.put(name == null ? instance.getCommonName() : name, instance);
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             throw new JMokaException("Package does not exists or does not have a manifest.");
-        }
-        catch (InstantiationException e)
-        {
+        } catch (InstantiationException e) {
             throw new JMokaException("The manifest of the package cannot be instantiated.");
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             throw new JMokaException("Error while accessing the package manifest.");
         }
     }
@@ -73,7 +66,7 @@ public class NameManager extends SubEngine
     /**
      * Tells the engine that you will be using a package.
      *
-     * @param manifest     manifest of the package.
+     * @param manifest manifest of the package.
      */
     public void usePackage(Package manifest)
     {
@@ -83,8 +76,8 @@ public class NameManager extends SubEngine
     /**
      * Tells the engine that you will be using a package by the name of <i>name</i>.
      *
-     * @param name         handy name for the package. If null, use the common package name.
-     * @param manifest     manifest of the package.
+     * @param name     handy name for the package. If null, use the common package name.
+     * @param manifest manifest of the package.
      */
     public void usePackage(String name, Package manifest)
     {
@@ -95,7 +88,7 @@ public class NameManager extends SubEngine
     /**
      * Tells the engine that you will be using a package by the name of <i>name</i>.
      *
-     * @param location  the location of the package.
+     * @param location the location of the package.
      */
     public void usePackage(String location)
     {
@@ -104,13 +97,13 @@ public class NameManager extends SubEngine
 
     /**
      * Use a package with the common package name.
+     * <p>
+     * <b>NOTE: ONLY USE IN DEVELOPMENT.</b>
      *
-     * ** NOTE: ONLY USE IN DEVELOPMENT.
-     *
-     * @param name              name for the package.
-     * @param dir               src directory of the project.
-     * @param location          the location of the package (ex: com.moka...).
-     * @param exportManifest    should this export a manifest for this package.
+     * @param name           name for the package.
+     * @param dir            src directory of the project.
+     * @param location       the location of the package (ex: com.moka...).
+     * @param exportManifest should this export a manifest for this package.
      */
     @SuppressWarnings("unchecked")
     public void usePackage(String name, String dir, String location, boolean exportManifest)
@@ -127,6 +120,7 @@ public class NameManager extends SubEngine
         String[] parts = location.split("\\.");
         for (String part : parts)
             builder.append(File.separator).append(part);
+
         String path = builder.toString();
 
         // open the directory and check that exists.
@@ -137,20 +131,16 @@ public class NameManager extends SubEngine
         String[] classes = directory.list();
         LinkedList<Class<? extends Component>> components = new LinkedList<>();
 
-        for (String className : classes)
-        {
-            if (className.endsWith(".java"))
-            {
-                try
-                {
+        for (String className : classes) {
+            if (className.endsWith(".java")) {
+                try {
                     Class<?> component = Class.forName(location + "." + className.substring(0,
                             className.length() - 5));
 
                     if (Component.class.isAssignableFrom(component))
                         components.add((Class<? extends Component>) component);
-                }
-                catch (ClassNotFoundException e)
-                {
+
+                } catch (ClassNotFoundException e) {
                     throw new JMokaException("Undefined error while running automatic package explorer.");
                 }
             }
@@ -173,12 +163,12 @@ public class NameManager extends SubEngine
 
         // if the exportManifest boolean is set to true then construct the package manifest file and save
         // it to the location specified.
-        if (exportManifest)
-        {
+        if (exportManifest) {
             StringBuilder listOfComponents = new StringBuilder();
-            for (Class<? extends Component> component : components)
+            for (Class<? extends Component> component : components) {
                 listOfComponents.append("        components.add(")
                         .append(component.getSimpleName()).append(".class);\n");
+            }
 
             CoreUtil.overrideFileWith(path + File.separator + "PackageManifest.java",
                     String.format(MANIFEST_TEMPLATE, location, listOfComponents.toString(), name));
@@ -190,9 +180,9 @@ public class NameManager extends SubEngine
     /**
      * Finds a component class inside the given package with the given name.
      *
-     * @param packageName   the package name.
-     * @param name          the name of the component.
-     * @return              the component class.
+     * @param packageName the package name.
+     * @param name        the name of the component.
+     * @return the component class.
      */
     public Class<? extends Component> findComponent(String packageName, String name)
     {

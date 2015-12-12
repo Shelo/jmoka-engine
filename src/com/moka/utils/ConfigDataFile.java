@@ -22,13 +22,11 @@ public class ConfigDataFile extends Branch
         fileHandle = new FileHandle(filePath);
 
         Branch root;
-        if (fileHandle.exists())
-        {
-
+        if (fileHandle.exists()) {
             root = parser.parse(fileHandle.read().toCharArray());
-        }
-        else
+        } else {
             root = new Branch();
+        }
 
         for (Leaf leaf : root.getLeafs())
             addLeaf(leaf);
@@ -36,7 +34,8 @@ public class ConfigDataFile extends Branch
         for (Branch branch : root.getBranches())
             addBranch(branch);
 
-        setName(root.getName());
+        if (root.getName() != null)
+            setName(root.getName());
 
         if (root.getNamespace() != null)
             setNamespace(root.getNamespace());
@@ -56,5 +55,10 @@ public class ConfigDataFile extends Branch
     public String toString()
     {
         return toString(0);
+    }
+
+    public FileHandle getFileHandle()
+    {
+        return fileHandle;
     }
 }
