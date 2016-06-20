@@ -1,9 +1,9 @@
-package example.components.spaceshooter;
+package example.basic.spaceshooter;
 
 import com.moka.math.Vector2;
 import com.moka.scene.entity.Component;
 import com.moka.scene.entity.Transform;
-import example.R;
+import example.basic.R;
 
 public class CameraFollow extends Component
 {

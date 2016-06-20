@@ -6,6 +6,7 @@ import com.moka.input.Input;
 import com.moka.physics.Physics;
 import com.moka.resources.Resources;
 import com.moka.scene.Context;
+import com.moka.signals.Channel;
 import com.moka.time.Time;
 import com.moka.utils.JMokaException;
 
@@ -67,6 +68,11 @@ public class Moka
     public static Resources getResources()
     {
         return application.getResources();
+    }
+
+    public static Channel getChannel()
+    {
+        return application.getChannel();
     }
 
     public static Application getApplication()

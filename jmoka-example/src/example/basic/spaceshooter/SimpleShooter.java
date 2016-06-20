@@ -1,11 +1,11 @@
-package example.components.spaceshooter;
+package example.basic.spaceshooter;
 
 import com.moka.components.Sprite;
 import com.moka.core.Moka;
 import com.moka.scene.entity.Component;
 import com.moka.time.TimeOut;
 import com.moka.triggers.Trigger;
-import example.R;
+import example.basic.R;
 
 public class SimpleShooter extends Component
 {

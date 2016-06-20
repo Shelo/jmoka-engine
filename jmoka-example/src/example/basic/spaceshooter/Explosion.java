@@ -1,4 +1,4 @@
-package example.components.spaceshooter;
+package example.basic.spaceshooter;
 
 import com.moka.components.Sprite;
 import com.moka.core.Moka;

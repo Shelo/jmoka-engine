@@ -1,4 +1,4 @@
-package example.components.spaceshooter;
+package example.basic.spaceshooter;
 
 import com.moka.components.RigidBody;
 import com.moka.scene.entity.ComponentAttribute;
@@ -6,7 +6,7 @@ import com.moka.core.Moka;
 import com.moka.scene.entity.Component;
 import com.moka.math.Vector2;
 import com.moka.utils.Pools;
-import example.R;
+import example.basic.R;
 
 public class Movement extends Component
 {

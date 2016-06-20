@@ -1,4 +1,4 @@
-package example.components.spaceshooter;
+package example.basic.spaceshooter;
 
 import com.moka.scene.entity.ComponentAttribute;
 import com.moka.scene.entity.Component;

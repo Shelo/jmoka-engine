@@ -1,6 +1,7 @@
-+ Prefab
-    - Rotation: 0
++ OpingRoot
     - Position: 64 / 2, 64 / 2
+    - Rotation: 0
 
     + SpaceShooter:Background
         - Space: @prefabs.space
+

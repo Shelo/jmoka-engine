@@ -1,20 +1,21 @@
-+ Prefab
++ OpingRoot
     - Group: Bullets
     - Size: 32, 12
-
-    + Sprite
-        - Texture: @textures.bullet01
-
-    + RigidBody
-        - Shape: BOX
-        - Size: 32, 12
-        - OnCollide: example.BulletTriggers.BulletCollisionTrigger
-        - GravityScale: 0
-        - FixedRotation: true
-        - CategoryBits: 8
-        - MaskBits: 5
 
     + Bullet
         - Speed: 500
         - LifeTime: 1
         - Damage: 10
+
+    + Sprite
+        - Texture: @textures.bullet01
+
+    + RigidBody
+        - OnCollide: example.basic.BulletTriggers.BulletCollisionTrigger
+        - Shape: BOX
+        - MaskBits: 5
+        - Size: 32, 12
+        - GravityScale: 0
+        - FixedRotation: true
+        - CategoryBits: 8
+

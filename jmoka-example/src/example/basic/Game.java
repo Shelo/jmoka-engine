@@ -1,9 +1,9 @@
-package example;
+package example.basic;
 
 import com.moka.core.Application;
 import com.moka.input.Input;
 import com.moka.core.Moka;
-import example.scenes.MainScene;
+import example.basic.scenes.MainScene;
 
 public class Game
 {
@@ -15,8 +15,8 @@ public class Game
         Application app = new Application(new R("jmoka-example/assets/"));
 
         // set some inputs.
-        Moka.getInput().bindKey(R.buttons.FIRE_1, Input.KEY_Z);
-        Moka.getInput().bindKey(R.buttons.FIRE_2, Input.KEY_X);
+        Moka.getInput().bindButton(R.buttons.FIRE_1, Input.KEY_Z);
+        Moka.getInput().bindButton(R.buttons.FIRE_2, Input.KEY_X);
         Moka.getInput().bindAxes(R.axes.HORIZONTAL, Input.KEY_LEFT, Input.KEY_RIGHT);
         Moka.getInput().bindAxes(R.axes.VERTICAL, Input.KEY_DOWN, Input.KEY_UP);
 
@@ -28,7 +28,7 @@ public class Game
 
         // set up packages.
         Moka.getNameManager().usePackage("SpaceShooter", "jmoka-example/src/",
-                "example.components.spaceshooter", true);
+                "example.basic.spaceshooter", true);
 
         // set up scenes.
         Moka.getContext().addScene(new MainScene());

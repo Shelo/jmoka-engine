@@ -1,4 +1,4 @@
-package example.components.spaceshooter;
+package example.basic.spaceshooter;
 
 import com.moka.prefabs.Prefab;
 import com.moka.scene.entity.Component;

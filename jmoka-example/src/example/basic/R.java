@@ -1,4 +1,4 @@
-package example;
+package example.basic;
 
 import com.moka.resources.BindLoad;
 import com.moka.prefabs.Prefab;

@@ -8,6 +8,7 @@ import com.moka.utils.FileHandle;
 import com.moka.utils.JMokaException;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 /**
  * Extend this class to use resource references into Prefab files, also this gives
@@ -86,37 +87,30 @@ public abstract class Resources
         String[] parts = reference.split("\\.");
 
         Class<?> container = this.getClass();
-        for (int i = 0; i < parts.length - 1; i++)
-        {
+        for (int i = 0; i < parts.length - 1; i++) {
             Class[] classes = container.getDeclaredClasses();
 
             boolean found = false;
-            for (Class innerClass : classes)
-            {
-                if (innerClass.getSimpleName().equals(parts[i]))
-                {
+            for (Class innerClass : classes) {
+                if (innerClass.getSimpleName().equals(parts[i])) {
                     found = true;
                     container = innerClass;
                     break;
                 }
             }
 
-            if (!found)
+            if (!found) {
                 throw new JMokaException("Cannot find resource: " + reference);
+            }
         }
 
-        try
-        {
+        try {
             // retrieve the value (the last of the reference) inside the container.
             Field field = container.getField(parts[parts.length - 1]);
             return field.get(null);
-        }
-        catch (NoSuchFieldException e)
-        {
+        } catch (NoSuchFieldException e) {
             throw new JMokaException("Resource '" + reference + "' does not exists.");
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             throw new JMokaException("Resource '" + reference + "' is not accessible.");
         }
     }
@@ -146,61 +140,79 @@ public abstract class Resources
 
     private void inspectBindLoads()
     {
-        for (Class<?> innerClass : getClass().getDeclaredClasses())
-        {
+        bindLoad(root, getClass(), null, false);
+
+        /*
+        for (Class<?> innerClass : getClass().getDeclaredClasses()) {
             BindLoad bindLoad = innerClass.getAnnotation(BindLoad.class);
 
-            if (bindLoad != null)
-            {
+            if (bindLoad != null) {
                 bindLoad(root, innerClass, bindLoad, false);
             }
         }
+        */
     }
 
     /**
      * Loads an inner resource class. This is specially created to load bindings that where skipped
-     * due to dependencies (an example is when loading prefabs, which depends on textures and sounds to be loaded
-     * first).
-     *
+     * due to dependencies (an example is when loading prefabs, which depends on textures and sounds to
+     * be loaded first).
+     * <p>
      * A note: The class has to be an inner class.
      *
-     * @param res   the inner class.
+     * @param res the inner class.
      */
     public void bindLoad(Class<?> res)
     {
         BindLoad bindLoad = res.getAnnotation(BindLoad.class);
 
-        if (bindLoad != null)
-        {
+        if (bindLoad != null) {
             bindLoad(root, res, bindLoad, true);
         }
     }
 
     private void bindLoad(String root, Class<?> res, BindLoad bind, boolean noSkip)
     {
-        if (!noSkip && bind.skip())
-        {
-            return;
+        // the bind annotation can be null in case of the root object, even more,
+        // since this is a root object, it can't load direct fields neither.
+        if (bind != null) {
+            if (!noSkip && bind.skip()) {
+                return;
+            }
+
+            for (Field field : res.getDeclaredFields()) {
+                bindResource(root, field, bind);
+            }
         }
 
-        for (Field field : res.getDeclaredFields())
-            bindResource(root, field, bind);
+        ArrayList<Class<?>> delayed = new ArrayList<>();
 
         // Inspect sub classes.
-        for (Class<?> innerClass : res.getDeclaredClasses())
-        {
+        for (Class<?> innerClass : res.getDeclaredClasses()) {
             BindLoad subBind = innerClass.getAnnotation(BindLoad.class);
-            if (subBind != null)
-            {
-                bindLoad(root + bind.path(), innerClass, subBind, false);
+
+            // skip if this doesn't has the BindLoad annotation.
+            if (subBind != null) {
+                if (subBind.delay()) {
+                    delayed.add(innerClass);
+                } else {
+                    String path = root + (bind == null ? "" : bind.path());
+                    bindLoad(path, innerClass, subBind, false);
+                }
             }
+        }
+
+        // load delayed sub classes.
+        for (Class<?> delayedClass : delayed) {
+            BindLoad subBind = delayedClass.getAnnotation(BindLoad.class);
+            String path = root + (bind == null ? "" : bind.path());
+            bindLoad(path, delayedClass, subBind, false);
         }
     }
 
     private String getExtension(BindLoad bind, BindConfig config)
     {
-        if (config == null)
-        {
+        if (config == null) {
             return bind.extension();
         }
 
@@ -212,8 +224,7 @@ public abstract class Resources
         BindConfig config = field.getAnnotation(BindConfig.class);
 
         // do nothing if the user wants to skip this.
-        if (config != null && config.skip())
-        {
+        if (config != null && config.skip()) {
             return;
         }
 
@@ -221,17 +232,15 @@ public abstract class Resources
         String path = getPath(bind, config);
         String file = buildPath(root + path, field.getName(), extension);
 
-        try
-        {
+        try {
             ResourceLoader loader = getLoader(field.getType());
 
-            if (loader != null)
+            if (loader != null) {
                 field.set(this, loader.load(file));
-            else
+            } else {
                 throw new JMokaException("Not supported loader for type: " + field.getType());
-        }
-        catch (IllegalAccessException e)
-        {
+            }
+        } catch (IllegalAccessException e) {
             throw new JMokaException("Error while trying to load " + field.getName()
                     + ", maybe the field is not accessible?");
         }
@@ -239,22 +248,22 @@ public abstract class Resources
 
     private ResourceLoader getLoader(Class<?> type)
     {
-        if (type == Texture.class)
+        if (type == Texture.class) {
             return textureLoader;
-        else if (type == Prefab.class)
+        } else if (type == Prefab.class) {
             return prefabLoader;
-        else if (type == FileHandle.class)
+        } else if (type == FileHandle.class) {
             return fileHandleLoader;
-        else if (type == ConfigDataFile.class)
+        } else if (type == ConfigDataFile.class) {
             return configDataFileLoader;
+        }
 
         return null;
     }
 
     private String getPath(BindLoad bind, BindConfig config)
     {
-        if (config == null)
-        {
+        if (config == null) {
             return bind.path();
         }
 

@@ -15,7 +15,7 @@ public class InputTests
     public void addButtons()
     {
         Input input = new Input();
-        input.bindKey("up", GLFW.GLFW_KEY_W);
+        input.bindButton("up", GLFW.GLFW_KEY_W);
         int code = input.getButtonKeyCode("up");
         assertThat(code, is(equalTo(GLFW.GLFW_KEY_W)));
     }
@@ -24,7 +24,7 @@ public class InputTests
     public void failTwoButtons()
     {
         Input input = new Input();
-        input.bindKey("up", GLFW.GLFW_KEY_W);
+        input.bindButton("up", GLFW.GLFW_KEY_W);
         input.bindMouse("up", GLFW.GLFW_MOUSE_BUTTON_1);
     }
 

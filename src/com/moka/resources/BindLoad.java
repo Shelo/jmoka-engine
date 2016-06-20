@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 public @interface BindLoad
 {
     boolean skip() default false;
+    boolean delay() default false;
     String path();
     String extension();
 }

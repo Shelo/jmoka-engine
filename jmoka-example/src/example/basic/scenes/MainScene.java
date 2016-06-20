@@ -1,10 +1,10 @@
-package example.scenes;
+package example.basic.scenes;
 
 import com.moka.scene.Scene;
 import com.moka.scene.entity.Entity;
-import example.R;
-import example.components.spaceshooter.Background;
-import example.components.spaceshooter.CameraFollow;
+import example.basic.R;
+import example.basic.spaceshooter.Background;
+import example.basic.spaceshooter.CameraFollow;
 
 public class MainScene extends Scene
 {

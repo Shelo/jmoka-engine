@@ -21,7 +21,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class Shader
 {
-    public static final String TAG = "SHADER";
+    public static final String TAG = "Shader";
 
     private HashMap<String, Integer> uniformLocations;
     private boolean bound;

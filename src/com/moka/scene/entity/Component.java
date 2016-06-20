@@ -1,6 +1,7 @@
 package com.moka.scene.entity;
 
 import com.moka.core.Moka;
+import com.moka.signals.Receiver;
 import com.moka.triggers.Trigger;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
@@ -11,15 +12,16 @@ import com.moka.utils.JMokaLog;
  *
  * @author Shelo
  */
-public abstract class Component
+public abstract class Component implements Receiver
 {
     private boolean enabled = true;
     private Entity entity;
 
     public final void setEntity(final Entity entity)
     {
-        if (this.entity != null)
+        if (this.entity != null) {
             throw new JMokaException("This component already has an entity.");
+        }
 
         this.entity = entity;
     }
@@ -57,18 +59,30 @@ public abstract class Component
 
     public Object callTrigger(Trigger<Object> trigger)
     {
-        if (trigger != null)
+        if (trigger != null) {
             return trigger.trigger(this, null);
+        }
 
         return null;
     }
 
     public <T> Object callTrigger(Trigger<T> trigger, T meta)
     {
-        if (trigger != null)
+        if (trigger != null) {
             return trigger.trigger(this, meta);
+        }
 
         return null;
+    }
+
+    protected void registerAsReceiverFor(String signal)
+    {
+        Moka.getChannel().registerReceiver(signal, this);
+    }
+
+    protected void emit(String signal, Object value)
+    {
+        Moka.getChannel().broadcast(signal, value);
     }
 
     /**
@@ -82,7 +96,8 @@ public abstract class Component
 
     /**
      * Throws a descriptive {@link JMokaException}.
-     * @param message   the message for the exception.
+     *
+     * @param message the message for the exception.
      */
     public void raise(String message)
     {
@@ -95,6 +110,12 @@ public abstract class Component
         return Moka.getTime().getDelta();
     }
 
+
+    @Override
+    public void onSignal(String signal, Object value)
+    {
+
+    }
     /**
      * Called at the creation time.
      */

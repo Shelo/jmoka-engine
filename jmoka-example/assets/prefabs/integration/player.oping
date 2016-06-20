@@ -1,0 +1,12 @@
++ OpingRoot
+    - Position: screen.WIDTH / 2, screen.HEIGHT / 2
+    - Size: 64, 64
+
+    + Sprite
+        - Texture: @textures.player
+
+    + Integration:LookAtMouse
+        - Speed: 10
+
+    + Integration:Movement
+        - Speed: 100

@@ -6,6 +6,7 @@ import com.moka.input.Input;
 import com.moka.physics.Physics;
 import com.moka.resources.Resources;
 import com.moka.scene.Context;
+import com.moka.signals.Channel;
 import com.moka.time.Time;
 import com.moka.utils.JMokaLog;
 
@@ -25,6 +26,7 @@ public class Application
     private Context context;
     private Physics physics;
     private Display display;
+    private Channel channel;
     private Input input;
     private Core core;
     private Time time;
@@ -40,6 +42,7 @@ public class Application
         renderer = new Renderer();
         physics = new Physics();
         display = new Display();
+        channel = new Channel();
         input = new Input();
         core = new Core();
         time = new Time();
@@ -142,5 +145,10 @@ public class Application
     public Resources getResources()
     {
         return resources;
+    }
+
+    public Channel getChannel()
+    {
+        return channel;
     }
 }

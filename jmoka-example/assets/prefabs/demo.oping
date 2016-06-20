@@ -1,0 +1,12 @@
++ Prefab
+    - Position: screen.WIDTH / 2, screen.HEIGHT / 2
+    - Rotation: 0
+    - Group: Player
+    - Size: 64, 64
+    - Layer: 1
+
+    + Sprite
+        - Texture: @textures.demo
+
+    + Demo:DemoEmitter
+    + Demo:DemoReceiver

@@ -201,11 +201,11 @@ public final class Input extends SubEngine
      * Binds a button name to a key. The button name has no restrictions as you can use
      * whatever string you need.
      *
-     * @param button    The button name.
-     * @param keyCode   The key code to be bound.
-     * @return          This class for chaining.
+     * @param button  The button name.
+     * @param keyCode The key code to be bound.
+     * @return This class for chaining.
      */
-    public Input bindKey(String button, int keyCode)
+    public Input bindButton(String button, int keyCode)
     {
         if (button == null)
             throw new JMokaException("Button name cannot be null.");
@@ -222,13 +222,13 @@ public final class Input extends SubEngine
      * Binds a button name to an axis. The button name has no restrictions as you can use
      * whatever string you need. An axis interpolates between the negative and the positive given the
      * user input. The value of the axis is always between -1 and 1, inclusive.
-     *
+     * <p>
      * Retrieve the value with {@link Input#getAxes(String)}
      *
-     * @param name      The button name.
-     * @param negative  The negative key code.
-     * @param positive  The positive key code.
-     * @return          This class for chaining.
+     * @param name     The button name.
+     * @param negative The negative key code.
+     * @param positive The positive key code.
+     * @return This class for chaining.
      */
     public Input bindAxes(String name, int negative, int positive)
     {
@@ -239,12 +239,12 @@ public final class Input extends SubEngine
     /**
      * Binds a button to a mouse button. The button cannot be previously defined in keyboard
      * buttons as this causes a confusion when retrieving.
-     *
+     * <p>
      * Retrieve the value with {@link Input#getButton(String)}.
      *
-     * @param button    the button name to be bound.
-     * @param keyCode   the mouse button.
-     * @return          this object for chaining.
+     * @param button  the button name to be bound.
+     * @param keyCode the mouse button.
+     * @return this object for chaining.
      */
     public Input bindMouse(String button, int keyCode)
     {
@@ -275,19 +275,11 @@ public final class Input extends SubEngine
         return buttonsMouse.get(button);
     }
 
-    public boolean getButton(String button)
-    {
-        if (buttonsKeys.containsKey(button))
-            return getKey(getButtonKeyCode(button));
-        else
-            return getMouse(getButtonMouseCode(button));
-    }
-
     /**
-     * With the given axes, this tells which direction the player is pressing.
+     * With the given axes, this tells which direction the user is pressing.
      *
-     * @param name  the axes name.
-     * @return      -1, 0 or 1 depending on the axes.
+     * @param name the axes name.
+     * @return -1, 0 or 1 depending on the axes.
      */
     public float getAxes(String name)
     {
@@ -307,6 +299,43 @@ public final class Input extends SubEngine
         return value;
     }
 
+    /**
+     * Takes two axes and forms a pad, returning the direction the pad is taking.
+     * The result is normalized.
+     *
+     * @param buffer         the buffer vector to store the result into.
+     * @param horizontalAxis the horizontal axis name.
+     * @param verticalAxis   the vertical axis name.
+     * @return the updated and normalized buffer.
+     */
+    public Vector2 getPad(Vector2 buffer, String horizontalAxis, String verticalAxis)
+    {
+        float horizontal = getAxes(horizontalAxis);
+        float vertical = getAxes(verticalAxis);
+
+        return buffer.set(horizontal, vertical).nor();
+    }
+
+    /**
+     * Checks if the button is being pressed.
+     *
+     * @param button the button name.
+     * @return the state of the button.
+     */
+    public boolean getButton(String button)
+    {
+        if (buttonsKeys.containsKey(button))
+            return getKey(getButtonKeyCode(button));
+        else
+            return getMouse(getButtonMouseCode(button));
+    }
+
+    /**
+     * Checks if the button was just pressed.
+     *
+     * @param button the button name.
+     * @return the state of the button.
+     */
     public boolean getButtonDown(String button)
     {
         if (buttonsKeys.containsKey(button))
@@ -315,6 +344,12 @@ public final class Input extends SubEngine
             return getMouseDown(getButtonMouseCode(button));
     }
 
+    /**
+     * Checks if the button was just released.
+     *
+     * @param button the button name.
+     * @return the state of the button.
+     */
     public boolean getButtonUp(String button)
     {
         if (buttonsKeys.containsKey(button))
@@ -396,8 +431,8 @@ public final class Input extends SubEngine
 
     /**
      * Returns the position vector for the cursor. This vector is
-     * updated every frame, so you can store and use it to get the
-     * position of the mouse without needing to call this method anymore.
+     * updated every frame. It is safe to store and use it to get the
+     * position of the mouse.
      *
      * @return the mouse's position vector
      */
@@ -411,8 +446,8 @@ public final class Input extends SubEngine
      * This gets the renderer current camera and uses the method
      * {@link com.moka.components.Camera#toWorldCoords(Vector2, Vector2)} to translate.
      *
-     * @param buffer    a buffer vector to store the position.
-     * @return          the position of the cursor relative to the screen.
+     * @param buffer a buffer vector to store the position.
+     * @return the position of the cursor relative to the screen.
      */
     public Vector2 getCursorWorldPos(Vector2 buffer)
     {

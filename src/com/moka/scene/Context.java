@@ -63,11 +63,9 @@ public class Context extends SubEngine
 
     public void setMainScene(Class<? extends Scene> sceneClass)
     {
-        for (int i = 0; i < scenes.size(); i++)
-        {
+        for (int i = 0; i < scenes.size(); i++) {
             Scene scene = scenes.get(i);
-            if (sceneClass.isInstance(scene))
-            {
+            if (sceneClass.isInstance(scene)) {
                 log("Loading main scene: " + scene.getClass().getSimpleName());
 
                 // switch to the new scene.
@@ -82,11 +80,9 @@ public class Context extends SubEngine
         if (!application.isCreated())
             throw new JMokaException("Can't load scenes until the engine starts.");
 
-        for (int i = 0; i < scenes.size(); i++)
-        {
+        for (int i = 0; i < scenes.size(); i++) {
             Scene scene = scenes.get(i);
-            if (sceneClass.isInstance(scene))
-            {
+            if (sceneClass.isInstance(scene)) {
                 log("Loading scene: " + scene.getClass().getSimpleName());
 
                 // unload the previous scene.
@@ -117,22 +113,20 @@ public class Context extends SubEngine
 
     private void exitScene(Scene scene, boolean exit)
     {
-        if (exit)
-        {
+        if (exit) {
             scene.onExit();
             scene.dispose();
             scene.destroy();
             scene.setCreated(false);
-        }
-        else
-        {
+        } else {
             scene.onLeave();
         }
     }
 
     /**
      * Returns the current scene.
-     * @return  the current scene.
+     *
+     * @return the current scene.
      */
     public Scene getCurrentScene()
     {

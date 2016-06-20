@@ -1,6 +1,7 @@
 package com.moka.scene.entity;
 
 import com.moka.components.Sprite;
+import com.moka.core.Moka;
 import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
 import com.moka.utils.CalcUtil;
@@ -72,6 +73,17 @@ public class Transform
     public void move(float x, float y)
     {
         position.add(x, y);
+    }
+
+    /**
+     * Moves the transform multiplying the values by the delta time.
+     *
+     * @param x     the x's distance not multiplied by delta.
+     * @param y     the y's distance not multiplied by delta.
+     */
+    public void moveDelta(float x, float y)
+    {
+        move(x * Moka.getTime().getDelta(), y * Moka.getTime().getDelta());
     }
 
     public void move(Vector2 distance)
