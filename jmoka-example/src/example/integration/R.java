@@ -16,7 +16,6 @@ public class R extends Resources
     public static class buttons
     {
         public static final String FIRE_1 = "fire1";
-        public static final String FIRE_2 = "fire2";
     }
 
     public static class screen

@@ -8,9 +8,16 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * Manager of packages loaded for the game. Helps with translating prefab files to actual
+ * Java objects.
+ *
+ * @author Shelo
+ */
 public class NameManager extends SubEngine
 {
     public static final String DEFAULT_NAMESPACE = "Moka";
+
     private static final String MANIFEST_TEMPLATE =
             "package %s;\n" +
             "\n" +
@@ -97,13 +104,21 @@ public class NameManager extends SubEngine
 
     /**
      * Use a package with the common package name.
+     *
      * <p>
-     * <b>NOTE: ONLY USE IN DEVELOPMENT.</b>
+     * This method is a simplification for generating the manifest for the package,
+     * this will take the directory, create the java file, with the location, load
+     * all java files that extends the {@link Component} base class.
+     *
+     * Additionally, the manifest can be exported to the system directory.
+     *
+     * <p>
+     * <b>NOTE: USE ONLY IN DEVELOPMENT.</b>
      *
      * @param name           name for the package.
      * @param dir            src directory of the project.
      * @param location       the location of the package (ex: com.moka...).
-     * @param exportManifest should this export a manifest for this package.
+     * @param exportManifest should export a manifest for this package.
      */
     @SuppressWarnings("unchecked")
     public void usePackage(String name, String dir, String location, boolean exportManifest)
@@ -118,15 +133,17 @@ public class NameManager extends SubEngine
 
         // construct the full path with the dir and location.
         String[] parts = location.split("\\.");
-        for (String part : parts)
+        for (String part : parts) {
             builder.append(File.separator).append(part);
+        }
 
         String path = builder.toString();
 
         // open the directory and check that exists.
         File directory = new File(path);
-        if (!directory.exists())
+        if (!directory.exists()) {
             throw new JMokaException("Directory " + path + " for package " + name + " does not exists.");
+        }
 
         String[] classes = directory.list();
         LinkedList<Class<? extends Component>> components = new LinkedList<>();
@@ -137,9 +154,9 @@ public class NameManager extends SubEngine
                     Class<?> component = Class.forName(location + "." + className.substring(0,
                             className.length() - 5));
 
-                    if (Component.class.isAssignableFrom(component))
+                    if (Component.class.isAssignableFrom(component)) {
                         components.add((Class<? extends Component>) component);
-
+                    }
                 } catch (ClassNotFoundException e) {
                     throw new JMokaException("Undefined error while running automatic package explorer.");
                 }
@@ -199,6 +216,9 @@ public class NameManager extends SubEngine
         return component;
     }
 
+    /**
+     * @return all loaded packages.
+     */
     public HashMap<String, Package> getPackages()
     {
         return packages;

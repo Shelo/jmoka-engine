@@ -143,6 +143,8 @@ public final class Core extends SubEngine
 
         getContext().dispose();
 
+        getResources().dispose();
+
         glfwTerminate();
 
         log("JMoka Engine stopped. Have a good day.");

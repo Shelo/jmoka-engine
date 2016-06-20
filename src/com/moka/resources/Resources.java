@@ -57,6 +57,7 @@ public abstract class Resources
     private String root;
 
     // Loaders.
+    // TODO: support custom loaders.
     private TextureLoader textureLoader = new TextureLoader();
     private PrefabLoader prefabLoader = new PrefabLoader();
     private ResourceLoader fileHandleLoader = new FileHandleLoader();
@@ -122,8 +123,7 @@ public abstract class Resources
     }
 
     /**
-     * This is the place to load all things. Remember that the order does matters, if a prefab needs some
-     * resource that has not been initialized at the time, the resources will be null.
+     * Override if some resources needs a special way of loading.
      */
     public void load()
     {
@@ -131,7 +131,7 @@ public abstract class Resources
     }
 
     /**
-     * Dispose everything you want.
+     * Override to dispose loaded resources if needed.
      */
     public void dispose()
     {
