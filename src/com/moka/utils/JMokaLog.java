@@ -1,12 +1,12 @@
 package com.moka.utils;
 
 /**
- * JMoka Log manager. This static class allows to write easy logs with tags, also provides a way of
- * saving log to a file.
+ * JMoka Log manager. This static class allows to easily write logs with tags, also provides a way
+ * of saving the log to a file.
  */
 public final class JMokaLog
 {
-    private static String sharedTag = "JMokaClient";
+    private static String sharedTag = "JMokaGame";
     private static boolean active = true;
 
     /**
@@ -24,11 +24,18 @@ public final class JMokaLog
         System.out.println("[" + tag + "] " + m);
     }
 
+    /**
+     * @param sharedTag default tag, useful when logging general information about the game.
+     *                  The default value is <i>JMokaGame</i>.
+     */
     public static void setSharedTag(String sharedTag)
     {
         JMokaLog.sharedTag = sharedTag;
     }
 
+    /**
+     * @return returns the current shared tag. The default value is <i>JMokaGame</i>.
+     */
     public static String getSharedTag()
     {
         return sharedTag;

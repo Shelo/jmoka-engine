@@ -155,10 +155,13 @@ public abstract class Resources
 
     /**
      * Loads an inner resource class. This is specially created to load bindings that where skipped
-     * due to dependencies (an example is when loading prefabs, which depends on textures and sounds to
-     * be loaded first).
+     * due to dependencies (an example is when loading prefabs, which depends on textures and sounds
+     * to be loaded first).
      * <p>
      * A note: The class has to be an inner class.
+     *
+     * <p>
+     * See {@link BindLoad#delay()} for a more automated process.
      *
      * @param res the inner class.
      */
