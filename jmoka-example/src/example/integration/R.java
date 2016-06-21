@@ -4,6 +4,7 @@ import com.moka.graphics.Texture;
 import com.moka.prefabs.Prefab;
 import com.moka.resources.BindLoad;
 import com.moka.resources.Resources;
+import com.moka.utils.ConfigDataFile;
 
 public class R extends Resources
 {
@@ -28,18 +29,20 @@ public class R extends Resources
     public static class textures
     {
         public static Texture player;
+        public static Texture enemy02;
     }
 
-    @BindLoad(path = "save/", extension = "oping")
-    public static class save
+    @BindLoad(path = "data/", extension = "oping")
+    public static class data
     {
-
+        public static ConfigDataFile enemies;
     }
 
     @BindLoad(delay = true, path = "prefabs/integration/", extension = "oping")
     public static class prefabs
     {
         public static Prefab player;
+        public static Prefab enemy;
     }
 
     public R(String root)

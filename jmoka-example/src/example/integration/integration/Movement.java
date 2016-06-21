@@ -19,7 +19,7 @@ public class Movement extends Component
 
         Vector2 buffer = Pools.vec2.take();
         {
-            buffer.set(horizontal, vertical);
+            buffer.set(horizontal, vertical).nor();
             getTransform().move(buffer.mul(getDelta() * speed));
         }
         Pools.vec2.put(buffer);

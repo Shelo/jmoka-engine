@@ -164,6 +164,8 @@ public abstract class Scene implements Iterable<Entity>
     /**
      * Constructs a new {@link Entity} and add it to the hierarchy.
      *
+     * @param name name for the new entity.
+     * @param layer layer number for the new entity.
      * @return the new {@link Entity}.
      */
     public final Entity newEntity(String name, int layer)
@@ -247,7 +249,7 @@ public abstract class Scene implements Iterable<Entity>
     /**
      * Constructs a new {@link Entity} with a sprite component and add it to the hierarchy.
      *
-     * @return the new {@link Entity} with a sprite.
+     * @return the newly created {@link Entity}.
      */
     public final Entity newEntity(String name, int layer, Texture texture)
     {

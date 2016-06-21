@@ -12,6 +12,7 @@ public class PackageManifest extends Package
     {
         components.add(LookAtMouse.class);
         components.add(Movement.class);
+        components.add(Rotation.class);
 
     }
 

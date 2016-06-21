@@ -19,10 +19,11 @@ public class Moka
 
     protected Moka(Application application)
     {
-        if (Moka.application == null)
+        if (Moka.application == null) {
             Moka.application = application;
-        else
+        } else {
             throw new JMokaException("Can't create, the application already exists.");
+        }
     }
 
     public static Context getContext()

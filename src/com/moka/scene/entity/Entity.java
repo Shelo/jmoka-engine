@@ -50,8 +50,7 @@ public class Entity
         if (hasDrawable())
             drawable.onCreate();
 
-        for (Component component : components)
-        {
+        for (Component component : components) {
             if (component.isEnabled())
                 component.onCreate();
         }
@@ -64,8 +63,7 @@ public class Entity
         if (hasDrawable())
             drawable.onUpdate();
 
-        for (Component component : components)
-        {
+        for (Component component : components) {
             if (component.isEnabled())
                 component.onUpdate();
         }
@@ -76,8 +74,7 @@ public class Entity
         if (hasDrawable())
             drawable.onPostUpdate();
 
-        for (Component component : components)
-        {
+        for (Component component : components) {
             if (component.isEnabled())
                 component.onPostUpdate();
         }
@@ -93,10 +90,8 @@ public class Entity
 
     public <T extends Component> T getComponent(Class<T> componentClass)
     {
-        for (Component component : components)
-        {
-            if (componentClass.isInstance(component))
-            {
+        for (Component component : components) {
+            if (componentClass.isInstance(component)) {
                 return componentClass.cast(component);
             }
         }
@@ -123,8 +118,7 @@ public class Entity
     {
         getTransform().dispose();
 
-        for (Component component : components)
-        {
+        for (Component component : components) {
             component.onDispose();
         }
     }
@@ -161,10 +155,8 @@ public class Entity
 
     public void onDestroy()
     {
-        for (Component component : components)
-        {
-            if (component.isEnabled())
-            {
+        for (Component component : components) {
+            if (component.isEnabled()) {
                 component.onDestroy();
             }
         }

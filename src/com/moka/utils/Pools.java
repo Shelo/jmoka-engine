@@ -21,6 +21,11 @@ public class Pools
     {
         private static Queue<Vector2> objects = new LinkedBlockingQueue<>();
 
+        public interface UsingCallback<T>
+        {
+            void use(T buffer);
+        }
+
         /**
          * Takes a vector2 object from the pool setting x and y values.
          *
@@ -57,6 +62,18 @@ public class Pools
         public static Vector2 take()
         {
             return take(0, 0);
+        }
+
+        /**
+         * Takes a vector2 object from the pool setting x and y values to 0.
+         *
+         * @return          a zero vector2 object.
+         */
+        public static void with(UsingCallback<Vector2> callback)
+        {
+            Vector2 buffer = take();
+            callback.use(buffer);
+            put(buffer);
         }
 
         /**

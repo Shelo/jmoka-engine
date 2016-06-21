@@ -1,0 +1,10 @@
++ Enemies
+    + Enemy1
+        - Size: 32, 32
+        - Health: 100
+        - Strength: 100
+
+    + Enemy1
+        - Size: 64, 64
+        - Health: 100
+        - Strength: 100

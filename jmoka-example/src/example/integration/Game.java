@@ -13,6 +13,9 @@ public class Game extends Scene
         newCamera("Main Camera", true);
 
         R.prefabs.player.newEntity("Player");
+
+        EnemyFactory enemyFactory = new EnemyFactory(R.data.enemies);
+        enemyFactory.spawnHorde();
     }
 
     @Override

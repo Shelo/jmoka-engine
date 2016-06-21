@@ -1,0 +1,9 @@
++ OpingRoot
+    - Position: 0, 0
+    - Size: 64, 64
+
+    + Sprite
+        - Texture: @textures.enemy02
+
+    + Integration:Rotation
+        - Speed: 1

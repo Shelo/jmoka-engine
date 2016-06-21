@@ -4,6 +4,7 @@ import com.moka.resources.BindLoad;
 import com.moka.prefabs.Prefab;
 import com.moka.graphics.Texture;
 import com.moka.resources.Resources;
+import com.moka.utils.ConfigDataFile;
 
 public class R extends Resources
 {
@@ -44,10 +45,10 @@ public class R extends Resources
         public static Texture blank;
     }
 
-    @BindLoad(path = "save/", extension = "oping")
-    public static class save
+    @BindLoad(path = "data/", extension = "oping")
+    public static class data
     {
-
+        ConfigDataFile enemies;
     }
 
     @BindLoad(skip = true, path = "prefabs/", extension = "oping")

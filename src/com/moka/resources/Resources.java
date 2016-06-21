@@ -6,6 +6,7 @@ import com.moka.prefabs.Prefab;
 import com.moka.utils.ConfigDataFile;
 import com.moka.utils.FileHandle;
 import com.moka.utils.JMokaException;
+import com.moka.utils.JMokaLog;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -120,6 +121,7 @@ public abstract class Resources
     {
         inspectBindLoads();
         load();
+        JMokaLog.o("Resources", "All loaded.");
     }
 
     /**

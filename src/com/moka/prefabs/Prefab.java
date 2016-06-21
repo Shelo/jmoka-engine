@@ -139,11 +139,8 @@ public final class Prefab
      */
     public Entity newEntity(String name, int layer)
     {
-        int ol = this.layer;
         setLayer(layer);
-        Entity entity = newEntity(name);
-        setLayer(ol);
-        return entity;
+        return newEntity(name);
     }
 
     /**
@@ -157,10 +154,11 @@ public final class Prefab
     {
         Entity entity;
 
-        if (addToScene)
+        if (addToScene) {
             entity = Moka.getContext().getCurrentScene().newEntity(name, layer);
-        else
+        } else {
             entity = new Entity(name);
+        }
 
         entity.setGroup(group);
 
@@ -169,8 +167,9 @@ public final class Prefab
         transform.setPosition(position.cpy());
         transform.setRotation(rotation);
 
-        if (useOwnSize)
+        if (useOwnSize) {
             transform.setSize(size.cpy());
+        }
 
         // creates every component and adds it to the getEntity.
         for (Class<?> cClass : components.keySet())
@@ -188,8 +187,9 @@ public final class Prefab
                 {
                     Object[] attr = componentAttrs.getValue(method);
 
-                    if (attr == null)
+                    if (attr == null) {
                         throw new JMokaException("Some error happened... Maybe the resource is null at this time?");
+                    }
 
                     for (int i = 0; i < attr.length; i++)
                     {
