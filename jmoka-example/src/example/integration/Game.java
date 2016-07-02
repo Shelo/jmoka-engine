@@ -4,6 +4,7 @@ import com.moka.core.Application;
 import com.moka.core.Moka;
 import com.moka.input.Input;
 import com.moka.scene.Scene;
+import com.moka.scene.entity.Entity;
 
 public class Game extends Scene
 {
@@ -16,6 +17,9 @@ public class Game extends Scene
 
         EnemyFactory enemyFactory = new EnemyFactory(R.data.enemies);
         enemyFactory.spawnHorde();
+
+        Entity entity = R.prefabs.enemy.newEntity(null);
+        entity.getTransform().setPosition(0, 0);
     }
 
     @Override

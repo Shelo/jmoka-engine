@@ -4,6 +4,8 @@ import com.moka.utils.JMokaException;
 
 public class Matrix3
 {
+    public static final Matrix3 ROTATION_IDENTITY = new Matrix3().toIdentity();
+
     private float[][] values = new float[3][3];
 
     public Matrix3 toTranslation(float x, float y)
@@ -46,7 +48,7 @@ public class Matrix3
         values[1][0] = (float) Math.sin(radians);
         values[2][0] = 0;
 
-        values[0][1] = - values[1][0];
+        values[0][1] = -values[1][0];
         values[1][1] = values[0][0];
         values[2][1] = 0;
 
@@ -64,11 +66,11 @@ public class Matrix3
 
         values[0][0] = 2 / width;
         values[0][1] = 0;
-        values[0][2] = - (right + left) / width;
+        values[0][2] = -(right + left) / width;
 
         values[1][0] = 0;
         values[1][1] = 2 / height;
-        values[1][2] = - (top + bottom) / height;
+        values[1][2] = -(top + bottom) / height;
 
         values[2][0] = 0;
         values[2][1] = 0;
@@ -106,10 +108,13 @@ public class Matrix3
 
     public Matrix3 mul(Matrix3 r, Matrix3 res)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-                res.set(i, j, values[i][0] * r.get(0, j) + values[i][1] * r.get(1, j) + values[i][2] * r.get(2, j));
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                res.set(i, j,
+                        values[i][0] * r.get(0, j) +
+                        values[i][1] * r.get(1, j) +
+                        values[i][2] * r.get(2, j));
+            }
         }
 
         return res;
@@ -127,10 +132,8 @@ public class Matrix3
 
     public void set(Matrix3 other)
     {
-        for (int x = 0; x < 3; x++)
-        {
-            for (int y = 0; y < 3; y++)
-            {
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
                 set(x, y, other.get(x, y));
             }
         }
@@ -141,8 +144,7 @@ public class Matrix3
     {
         StringBuilder builder = new StringBuilder();
 
-        for (int x = 0; x < 3; x++)
-        {
+        for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++)
                 builder.append(get(x, y)).append(" ");
 
@@ -155,23 +157,18 @@ public class Matrix3
     @Override
     public boolean equals(Object obj)
     {
-        if (obj instanceof Matrix3)
-        {
+        if (obj instanceof Matrix3) {
             Matrix3 other = (Matrix3) obj;
 
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
+            for (int x = 0; x < 3; x++) {
+                for (int y = 0; y < 3; y++) {
                     if (values[x][y] != other.get(x, y))
                         return false;
                 }
             }
 
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

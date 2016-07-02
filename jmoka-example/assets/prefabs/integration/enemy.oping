@@ -4,6 +4,7 @@
 
     + Sprite
         - Texture: @textures.enemy02
+        - Batch: true
 
     + Integration:Rotation
         - Speed: 1

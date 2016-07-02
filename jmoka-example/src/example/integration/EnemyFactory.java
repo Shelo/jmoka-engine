@@ -17,7 +17,7 @@ public class EnemyFactory
 
     public void spawnHorde()
     {
-        for (int i = 100; i < R.screen.WIDTH; i += (R.screen.WIDTH - 100) / 10) {
+        for (int i = 32 * 4; i < R.screen.WIDTH - 32 * 4; i += 32 + 16) {
             Entity entity = R.prefabs.enemy.newEntity(null);
             entity.getTransform().setSize(enemy1.getLeaf("Size").getFloat(0),
                     enemy1.getLeaf("Size").getFloat(1));

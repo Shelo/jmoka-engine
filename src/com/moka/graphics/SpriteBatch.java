@@ -1,7 +1,10 @@
 package com.moka.graphics;
 
 import com.moka.components.Sprite;
+import com.moka.core.Moka;
+import com.moka.math.Matrix3;
 import com.moka.math.Vector2;
+import com.moka.utils.CoreUtil;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -72,18 +75,92 @@ public class SpriteBatch
         draw(texture, x, y, texture.getWidth(), texture.getHeight(), Color.WHITE);
     }
 
+    public void draw(Texture texture, float x, float y, int width, int height, Color color,
+                     Matrix3 rotation)
+    {
+        // set the texture.
+        setTexture(texture);
+
+        // too large batch, render all.
+        if (vc >= VERTEX_BUFFER_SIZE) {
+            render();
+        }
+
+        float minX = - width / 2;
+        float minY = - height / 2;
+        float maxX = width / 2;
+        float maxY = height / 2;
+
+        // put every vertex in the buffer.
+        // bottom left.
+        vertices[vc++] = minX * rotation.get(0, 0) + minY * rotation.get(0, 1) + x;
+        vertices[vc++] = minX * rotation.get(1, 0) + minY * rotation.get(1, 1) + y;
+        vertices[vc++] = 0;
+        vertices[vc++] = 0;
+        vertices[vc++] = color.r;
+        vertices[vc++] = color.g;
+        vertices[vc++] = color.b;
+        vertices[vc++] = color.a;
+
+        // top left.
+        vertices[vc++] = minX * rotation.get(0, 0) + maxY * rotation.get(0, 1) + x;
+        vertices[vc++] = minX * rotation.get(1, 0) + maxY * rotation.get(1, 1) + y;
+        vertices[vc++] = 0;
+        vertices[vc++] = 1;
+        vertices[vc++] = color.r;
+        vertices[vc++] = color.g;
+        vertices[vc++] = color.b;
+        vertices[vc++] = color.a;
+
+        // top right.
+        vertices[vc++] = maxX * rotation.get(0, 0) + maxY * rotation.get(0, 1) + x;
+        vertices[vc++] = maxX * rotation.get(1, 0) + maxY * rotation.get(1, 1) + y;
+        vertices[vc++] = 1;
+        vertices[vc++] = 1;
+        vertices[vc++] = color.r;
+        vertices[vc++] = color.g;
+        vertices[vc++] = color.b;
+        vertices[vc++] = color.a;
+
+        // bottom right.
+        vertices[vc++] = maxX * rotation.get(0, 0) + minY * rotation.get(0, 1) + x;
+        vertices[vc++] = maxX * rotation.get(1, 0) + minY * rotation.get(1, 1) + y;
+        vertices[vc++] = 1;
+        vertices[vc++] = 0;
+        vertices[vc++] = color.r;
+        vertices[vc++] = color.g;
+        vertices[vc++] = color.b;
+        vertices[vc++] = color.a;
+
+        indices[ic++] = vi;
+        indices[ic++] = vi + 1;
+        indices[ic++] = vi + 2;
+        indices[ic++] = vi;
+        indices[ic++] = vi + 2;
+        indices[ic++] = vi + 3;
+
+        vi += 4;
+    }
+
     public void draw(Texture texture, float x, float y, int width, int height, Color color)
     {
         // set the texture.
         setTexture(texture);
 
         // too large batch, render all.
-        if (vc >= VERTEX_BUFFER_SIZE)
+        if (vc >= VERTEX_BUFFER_SIZE) {
             render();
+        }
+
+        float minX = - width / 2;
+        float minY = - height / 2;
+        float maxX = width / 2;
+        float maxY = height / 2;
 
         // put every vertex in the buffer.
-        vertices[vc++] = x;
-        vertices[vc++] = y;
+        // bottom left.
+        vertices[vc++] = minX + x;
+        vertices[vc++] = minY + y;
         vertices[vc++] = 0;
         vertices[vc++] = 0;
         vertices[vc++] = color.r;
@@ -91,8 +168,9 @@ public class SpriteBatch
         vertices[vc++] = color.b;
         vertices[vc++] = color.a;
 
-        vertices[vc++] = x;
-        vertices[vc++] = y + height;
+        // top left.
+        vertices[vc++] = minX + x;
+        vertices[vc++] = maxY + y;
         vertices[vc++] = 0;
         vertices[vc++] = 1;
         vertices[vc++] = color.r;
@@ -100,8 +178,9 @@ public class SpriteBatch
         vertices[vc++] = color.b;
         vertices[vc++] = color.a;
 
-        vertices[vc++] = x + width;
-        vertices[vc++] = y + height;
+        // top right.
+        vertices[vc++] = maxX + x;
+        vertices[vc++] = maxY + y;
         vertices[vc++] = 1;
         vertices[vc++] = 1;
         vertices[vc++] = color.r;
@@ -109,8 +188,9 @@ public class SpriteBatch
         vertices[vc++] = color.b;
         vertices[vc++] = color.a;
 
-        vertices[vc++] = x + width;
-        vertices[vc++] = y;
+        // bottom right.
+        vertices[vc++] = maxX + x;
+        vertices[vc++] = minY + y;
         vertices[vc++] = 1;
         vertices[vc++] = 0;
         vertices[vc++] = color.r;
@@ -130,8 +210,9 @@ public class SpriteBatch
 
     private void setTexture(Texture texture)
     {
-        if (this.texture != null && texture != this.texture)
+        if (this.texture != null && texture != this.texture) {
             render();
+        }
 
         this.texture = texture;
     }
@@ -145,8 +226,9 @@ public class SpriteBatch
     public void render()
     {
         // check if there's something to draw.
-        if (vc == 0)
+        if (vc == 0) {
             return;
+        }
 
         vertexBuffer.clear();
         vertexBuffer.put(vertices);
@@ -184,13 +266,6 @@ public class SpriteBatch
     public int getSpritesInBatch()
     {
         return (int) (vc / COMPONENTS_PER_VERTEX * 0.25f);
-    }
-
-    public int getRenderCount()
-    {
-        int r = renderCounter;
-        renderCounter = 0;
-        return r;
     }
 
     public Texture getCurrentTexture()

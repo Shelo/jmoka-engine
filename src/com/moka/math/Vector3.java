@@ -3,6 +3,7 @@ package com.moka.math;
 public class Vector3
 {
     public static final Vector3 AXIS_Z = new Vector3(0, 0, 1);
+
     public float x;
     public float y;
     public float z;

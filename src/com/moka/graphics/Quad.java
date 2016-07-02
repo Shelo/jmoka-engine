@@ -18,15 +18,11 @@ public class Quad
     private static final int VERTICES_COUNT = 4;
     private static final int INDICES_COUNT = 6;
 
-    private FloatBuffer vertexBuffer;
-    private IntBuffer indexBuffer;
     private Vertex[] vertices;
-    private int vbo;
     private int vao;
-    private int ibo;
 
     /**
-     * A clipping rectangle in the form of left, top, width, height.
+     * Creates a new Quad with a clipping rectangle in the form of left, top, width, height.
      *
      * @param clipRect  the clipping rectangle.
      */
@@ -37,8 +33,8 @@ public class Quad
         glBindVertexArray(vao);
 
         // create sub buffers.
-        vbo = glGenBuffers();
-        ibo = glGenBuffers();
+        int vbo = glGenBuffers();
+        int ibo = glGenBuffers();
 
         // generate vertices.
         // texture is drawn flipped on porpoise.
@@ -50,10 +46,10 @@ public class Quad
         };
 
         // populate vertexBuffer.
-        vertexBuffer = CoreUtil.genBuffer(vertices);
+        FloatBuffer vertexBuffer = CoreUtil.genBuffer(vertices);
 
         // populate indexBuffer.
-        indexBuffer = CoreUtil.genBuffer(new int[]{
+        IntBuffer indexBuffer = CoreUtil.genBuffer(new int[]{
                 0, 1, 2, 0, 2, 3
         });
 

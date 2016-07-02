@@ -64,6 +64,12 @@ public class TileMap extends Drawable
         }
     }
 
+    @Override
+    public boolean shouldBatch()
+    {
+        return false;
+    }
+
     public void line(int x, int y, int width, int height, byte tile)
     {
         for (int i = x; i < x + width; i++)

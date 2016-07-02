@@ -2,8 +2,10 @@ package com.moka.scene.entity;
 
 import com.moka.graphics.Drawable;
 import com.moka.scene.Scene;
+import com.moka.utils.JMokaException;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Entity
 {
@@ -37,18 +39,20 @@ public class Entity
     {
         component.setEntity(this);
 
-        if (component instanceof Drawable)
+        if (component instanceof Drawable) {
             drawable = (Drawable) component;
-        else
+        } else {
             components.add(component);
+        }
 
         return this;
     }
 
     public void create()
     {
-        if (hasDrawable())
+        if (hasDrawable()) {
             drawable.onCreate();
+        }
 
         for (Component component : components) {
             if (component.isEnabled())
@@ -60,34 +64,58 @@ public class Entity
     {
         transform.update();
 
-        if (hasDrawable())
+        if (hasDrawable()) {
             drawable.onUpdate();
+        }
 
         for (Component component : components) {
-            if (component.isEnabled())
+            if (component.isEnabled()) {
                 component.onUpdate();
+            }
         }
     }
 
     public void postUpdate()
     {
-        if (hasDrawable())
+        if (hasDrawable()) {
             drawable.onPostUpdate();
+        }
 
         for (Component component : components) {
-            if (component.isEnabled())
+            if (component.isEnabled()) {
                 component.onPostUpdate();
+            }
         }
     }
 
+    /**
+     * Sets the entity as destroyed, although it will actually be destroyed in the next frame.
+     */
     public void destroy()
     {
-        if (destroyed)
-            return;
+        if (destroyed) {
+            throw new JMokaException("Can't destroy an already destroyed entity, possible" +
+                    "programming error.");
+        }
 
         destroyed = true;
     }
 
+    /**
+     * Finds a component by the given class.
+     *
+     * Usage
+     * <code>
+     * MyComponent myComponent = myEntity.getComponent(MyComponent.class);
+     *
+     * if (myComponent != null) {
+     *     // component found!
+     * }
+     * </code>
+     *
+     * @param componentClass the component class to be fetched.
+     * @return the component object or {@code null} if none.
+     */
     public <T extends Component> T getComponent(Class<T> componentClass)
     {
         for (Component component : components) {
@@ -99,16 +127,25 @@ public class Entity
         return null;
     }
 
+    /**
+     * @return this entity's transform.
+     */
     public Transform getTransform()
     {
         return transform;
     }
 
+    /**
+     * @return this entity's drawable implementation.
+     */
     public Drawable getDrawable()
     {
         return drawable;
     }
 
+    /**
+     * @return this entity's defined name (can be null).
+     */
     public String getName()
     {
         return name;
@@ -171,5 +208,38 @@ public class Entity
     public String toString()
     {
         return name;
+    }
+
+    /**
+     * Checks if the object is an entity with similar characteristics, given by:
+     * Entity name, component collection and group.
+     *
+     * @param obj the object to be tested for equality.
+     * @return {@code true} if the objects are equal.
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof Entity)) {
+            return false;
+        }
+
+        Entity other = (Entity) obj;
+
+        if (!Objects.equals(other.getName(), getName())) {
+            return false;
+        }
+
+        if (!Objects.equals(other.getGroup(), getGroup())) {
+            return false;
+        }
+
+        for (Component component : components) {
+            if (!other.components.contains(component)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

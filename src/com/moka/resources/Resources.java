@@ -17,7 +17,6 @@ import java.util.ArrayList;
  */
 public abstract class Resources
 {
-
     // Define all built-in resource loaders.
     public static class TextureLoader extends ResourceLoader
     {
@@ -161,7 +160,7 @@ public abstract class Resources
      * to be loaded first).
      * <p>
      * A note: The class has to be an inner class.
-     *
+     * <p>
      * <p>
      * See {@link BindLoad#delay()} for a more automated process.
      *

@@ -2,6 +2,7 @@ package com.moka.graphics;
 
 import com.moka.components.Camera;
 import com.moka.core.SubEngine;
+import com.moka.math.Matrix3;
 import com.moka.scene.entity.Entity;
 import com.moka.utils.CoreUtil;
 import com.moka.utils.JMokaException;
@@ -55,6 +56,8 @@ public final class Renderer extends SubEngine
     private Shader batchShader;
     private SpriteBatch batch;
 
+    private Shader usingShader;
+
     /**
      * Creates the Renderer. This will initialize some OpenGL constants and create the shader.
      */
@@ -83,7 +86,8 @@ public final class Renderer extends SubEngine
 
         batch = new SpriteBatch();
 
-        batchShader = new Shader(CoreUtil.readFile("jmoka-example/assets/shaders/test_vertex_batch.glsl"),
+        batchShader = new Shader(
+                CoreUtil.readFile("jmoka-example/assets/shaders/test_vertex_batch.glsl"),
                 CoreUtil.readFile("jmoka-example/assets/shaders/test_fragment_batch.glsl"));
     }
 
@@ -97,8 +101,8 @@ public final class Renderer extends SubEngine
         if (camera == null)
             throw new JMokaException("There's no camera attached to the renderer.");
 
-        // batchShader.bind();
-        // batchShader.setUniform("u_projectedView", camera.getProjectedView());
+        batchShader.bind();
+        batchShader.setUniform("u_projectedView", camera.getProjectedView());
 
         shader.bind();
         shader.setUniform("u_projectedView", camera.getProjectedView());
@@ -109,12 +113,19 @@ public final class Renderer extends SubEngine
             {
                 Drawable drawable = entity.getDrawable();
 
-                if (drawable.isEnabled())
+                if (drawable.isEnabled()) {
+                    if (drawable.shouldBatch()) {
+                        batchShader.bind();
+                    } else {
+                        shader.bind();
+                    }
+
                     drawable.render(this);
+                }
             }
         }
 
-        // batch.render();
+        batch.render();
     }
 
     /**
@@ -210,5 +221,10 @@ public final class Renderer extends SubEngine
     public void batch(Texture texture, float x, float y, int width, int height, Color color)
     {
         batch.draw(texture, x, y, width, height, color);
+    }
+
+    public void batch(Texture texture, float x, float y, int width, int height, Color color, Matrix3 rotation)
+    {
+        batch.draw(texture, x, y, width, height, color, rotation);
     }
 }

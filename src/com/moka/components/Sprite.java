@@ -1,6 +1,7 @@
 package com.moka.components;
 
 import com.moka.graphics.*;
+import com.moka.math.Matrix3;
 import com.moka.math.Rectangle;
 import com.moka.math.Vector2;
 import com.moka.scene.entity.ComponentAttribute;
@@ -66,8 +67,9 @@ public class Sprite extends Drawable
     @Override
     public void onCreate()
     {
-        if (clipRect == null)
+        if (clipRect == null) {
             clipRect = new Rectangle(0, 0, 1, 1);
+        }
 
         quad = new Quad(clipRect);
     }
@@ -75,8 +77,9 @@ public class Sprite extends Drawable
     @Override
     public void render(Renderer renderer)
     {
-        if (texture == null)
+        if (texture == null) {
             raise("there's no texture to draw.");
+        }
 
         // if batch option is enabled, just batch.
         if (batch) {
@@ -87,8 +90,7 @@ public class Sprite extends Drawable
         texture.bind();
         renderer.getShader().update(getTransform(), this);
 
-        switch (blend)
-        {
+        switch (blend) {
             case NORMAL:
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                 break;
@@ -100,12 +102,19 @@ public class Sprite extends Drawable
         quad.draw();
     }
 
+    @Override
+    public boolean shouldBatch()
+    {
+        return batch;
+    }
+
     public void renderBatch(Renderer renderer)
     {
         Vector2 position = getTransform().getPosition();
         Vector2 size = getTransform().getSize();
 
-        renderer.batch(texture, position.x, position.y, (int) size.x, (int) size.y, tint);
+        renderer.batch(texture, position.x, position.y, (int) size.x, (int) size.y, tint,
+                getTransform().getRotation());
     }
 
     public Texture getTexture()

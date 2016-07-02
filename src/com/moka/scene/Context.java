@@ -52,8 +52,9 @@ public class Context extends SubEngine
     {
         getCurrentScene().onExit();
 
-        for (Scene scene : scenes)
+        for (Scene scene : scenes) {
             scene.dispose();
+        }
     }
 
     public void addScene(Scene scene)

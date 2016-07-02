@@ -50,6 +50,12 @@ public class Vector2
         this(other.x, other.y);
     }
 
+    /**
+     * Adds another vector values to this one.
+     *
+     * @param o the other vector.
+     * @return this vector for chaining.
+     */
     public Vector2 add(Vector2 o)
     {
         this.x += o.x;
@@ -57,6 +63,13 @@ public class Vector2
         return this;
     }
 
+    /**
+     * Adds the given values to this vector.
+     *
+     * @param x the x value.
+     * @param y the y value.
+     * @return this vector for chaining.
+     */
     public Vector2 add(float x, float y)
     {
         this.x += x;

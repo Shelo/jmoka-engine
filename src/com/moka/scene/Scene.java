@@ -260,8 +260,11 @@ public abstract class Scene implements Iterable<Entity>
 
     public void dispose()
     {
-        /*for (Entity entity : entities)
-            entity.dispose();*/
+        for (List<Entity> layer : layers) {
+            for (Entity entity : layer) {
+                entity.dispose();
+            }
+        }
     }
 
     public void destroy()

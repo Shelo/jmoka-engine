@@ -24,6 +24,7 @@ public class Shader
     public static final String TAG = "Shader";
 
     private HashMap<String, Integer> uniformLocations;
+
     private boolean bound;
     private int program;
 
