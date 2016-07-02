@@ -4,6 +4,7 @@ import com.moka.graphics.Texture;
 import com.moka.prefabs.Prefab;
 import com.moka.resources.BindLoad;
 import com.moka.resources.Resources;
+import com.moka.resources.utils.EntityBuffer;
 import com.moka.utils.ConfigDataFile;
 
 public class R extends Resources
@@ -43,6 +44,12 @@ public class R extends Resources
     {
         public static Prefab player;
         public static Prefab enemy;
+        public static Prefab tileMap;
+    }
+
+    public static class entities
+    {
+        public static EntityBuffer tiles = new EntityBuffer(10);
     }
 
     public R(String root)

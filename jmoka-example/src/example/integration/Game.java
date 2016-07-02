@@ -1,5 +1,6 @@
 package example.integration;
 
+import com.moka.components.TileMap;
 import com.moka.core.Application;
 import com.moka.core.Moka;
 import com.moka.input.Input;
@@ -8,18 +9,29 @@ import com.moka.scene.entity.Entity;
 
 public class Game extends Scene
 {
+    private Entity tileMapEntity;
+
     @Override
     public void onCreate()
     {
         newCamera("Main Camera", true);
 
-        R.prefabs.player.newEntity("Player");
 
         EnemyFactory enemyFactory = new EnemyFactory(R.data.enemies);
         enemyFactory.spawnHorde();
 
-        Entity entity = R.prefabs.enemy.newEntity(null);
-        entity.getTransform().setPosition(0, 0);
+        R.entities.tiles.add(R.prefabs.enemy.newEntity(null, false));
+
+        tileMapEntity = R.prefabs.tileMap.newEntity("TileMap");
+
+        R.prefabs.player.newEntity("Player");
+    }
+
+    @Override
+    public void onPostCreate()
+    {
+        TileMap tileMap = tileMapEntity.getComponent(TileMap.class);
+        tileMap.line(0, 0, 10, 1, (byte) 0);
     }
 
     @Override

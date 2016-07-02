@@ -54,7 +54,10 @@ public class Context extends SubEngine
 
         for (Scene scene : scenes) {
             scene.dispose();
+            scene.destroy();
         }
+
+        log("Disposed.");
     }
 
     public void addScene(Scene scene)
@@ -118,7 +121,6 @@ public class Context extends SubEngine
             scene.onExit();
             scene.dispose();
             scene.destroy();
-            scene.setCreated(false);
         } else {
             scene.onLeave();
         }

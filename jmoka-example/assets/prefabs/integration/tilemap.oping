@@ -1,0 +1,9 @@
++ Prefab
+    - Position: 16, 16
+    - Size: 64, 64
+
+    + TileMap
+        - CellSize: 32, 32
+        - Size: 20, 20
+        - Tiles: @entities.tiles
+        - UpdateProcess: true

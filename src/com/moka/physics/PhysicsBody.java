@@ -84,12 +84,12 @@ public abstract class PhysicsBody extends Component
     {
         if (size == null)
         {
-            raise("The body needs dimensions.");
+            raiseError("The body needs dimensions.");
         }
 
         if (shapeType == null)
         {
-            raise("Shape Type missing.");
+            raiseError("Shape Type missing.");
         }
 
         switch (shapeType)
@@ -107,7 +107,7 @@ public abstract class PhysicsBody extends Component
                 this.shape = shape;
             } break;
             case POLYGON:
-                raise("Polygon not supported yet.");
+                raiseError("Polygon not supported yet.");
                 break;
         }
     }

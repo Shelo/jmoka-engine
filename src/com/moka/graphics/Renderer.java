@@ -14,36 +14,36 @@ public final class Renderer extends SubEngine
 {
     public static final String VERTEX_CODE =
             "#version 330 core\n" +
-            "\n" +
-            "layout (location = 0) in vec2 a_position;\n" +
-            "layout (location = 1) in vec2 a_texCoord;\n" +
-            "\n" +
-            "uniform mat3 u_projectedView;\n" +
-            "uniform mat3 u_model;\n" +
-            "\n" +
-            "out vec2 texCoord;\n" +
-            "\n" +
-            "void main() {\n" +
-            "\tvec3 position = u_projectedView * (u_model * vec3(a_position, 1.0));\n" +
-            "\tgl_Position = vec4(position.xy, 0, position.z);\n" +
-            "\ttexCoord = a_texCoord;\n" +
-            "}";
+                    "\n" +
+                    "layout (location = 0) in vec2 a_position;\n" +
+                    "layout (location = 1) in vec2 a_texCoord;\n" +
+                    "\n" +
+                    "uniform mat3 u_projectedView;\n" +
+                    "uniform mat3 u_model;\n" +
+                    "\n" +
+                    "out vec2 texCoord;\n" +
+                    "\n" +
+                    "void main() {\n" +
+                    "\tvec3 position = u_projectedView * (u_model * vec3(a_position, 1.0));\n" +
+                    "\tgl_Position = vec4(position.xy, 0, position.z);\n" +
+                    "\ttexCoord = a_texCoord;\n" +
+                    "}";
 
     public static final String FRAGMENT_CODE =
             "#version 330 core\n" +
-            "\n" +
-            "uniform sampler2D u_texture;\n" +
-            "uniform vec4 u_color;\n" +
-            "\n" +
-            "in vec2 texCoord;\n" +
-            "\n" +
-            "out vec4 fragColor;\n" +
-            "\n" +
-            "void main() {\n" +
-            "\tvec4 baseColor = texture(u_texture, texCoord);\n" +
-            "\n" +
-            "\tfragColor = baseColor * u_color;\n" +
-            "}\n";
+                    "\n" +
+                    "uniform sampler2D u_texture;\n" +
+                    "uniform vec4 u_color;\n" +
+                    "\n" +
+                    "in vec2 texCoord;\n" +
+                    "\n" +
+                    "out vec4 fragColor;\n" +
+                    "\n" +
+                    "void main() {\n" +
+                    "\tvec4 baseColor = texture(u_texture, texCoord);\n" +
+                    "\n" +
+                    "\tfragColor = baseColor * u_color;\n" +
+                    "}\n";
 
     private Shader defaultShader;
     private Shader shader;
@@ -98,8 +98,9 @@ public final class Renderer extends SubEngine
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        if (camera == null)
+        if (camera == null) {
             throw new JMokaException("There's no camera attached to the renderer.");
+        }
 
         batchShader.bind();
         batchShader.setUniform("u_projectedView", camera.getProjectedView());
@@ -107,11 +108,9 @@ public final class Renderer extends SubEngine
         shader.bind();
         shader.setUniform("u_projectedView", camera.getProjectedView());
 
-        for (Entity entity : getContext().getCurrentScene())
-        {
-            if (entity.hasDrawable())
-            {
-                Drawable drawable = entity.getDrawable();
+        for (Entity entity : getContext().getCurrentScene()) {
+            if (entity.hasDrawable()) {
+                DrawableComponent drawable = entity.getDrawable();
 
                 if (drawable.isEnabled()) {
                     if (drawable.shouldBatch()) {
@@ -125,12 +124,13 @@ public final class Renderer extends SubEngine
             }
         }
 
+        batchShader.bind();
         batch.render();
     }
 
     /**
      * Change the clear color. This will not work if the application was already created, in order
-     * to trigger a change after that use updateClearColor method.
+     * to trigger a change after that, use {@link #updateClearColor} after this one.
      *
      * @param r the red component of the color.
      * @param g the green component of the color.
@@ -142,8 +142,9 @@ public final class Renderer extends SubEngine
         this.clearColor.g = g;
         this.clearColor.b = b;
 
-        if (getApplication().isCreated())
+        if (getApplication().isCreated()) {
             updateClearColor();
+        }
     }
 
     /**
@@ -202,8 +203,7 @@ public final class Renderer extends SubEngine
 
     public void bindTexture(int textureId)
     {
-        if (currentTextureId != textureId)
-        {
+        if (currentTextureId != textureId) {
             glBindTexture(GL_TEXTURE_2D, textureId);
             currentTextureId = textureId;
         }
@@ -211,8 +211,7 @@ public final class Renderer extends SubEngine
 
     public void bindShader(int shaderProgram)
     {
-        if (shaderProgram != currentShaderProgram)
-        {
+        if (shaderProgram != currentShaderProgram) {
             glUseProgram(shaderProgram);
             currentShaderProgram = shaderProgram;
         }

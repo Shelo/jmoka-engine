@@ -16,6 +16,12 @@ public class Example2 extends Scene
     }
 
     @Override
+    public void onPostCreate()
+    {
+
+    }
+
+    @Override
     public void onUpdate()
     {
 

@@ -27,6 +27,19 @@ public class Time extends SubEngine
         }
     }
 
+    /**
+     * The delta is the time passed since the last frame. It is expressed in seconds and makes
+     * for a great way to synchronize events even with frame drops.
+     *
+     * Usage:
+     * <code>
+     * getTransform().move(100 * getDelta(), 0);
+     * </code>
+     *
+     * This will effectively move the entity 100 pixels to the right, per second.
+     *
+     * @return the current delta time.
+     */
     public float getDelta()
     {
         return (float) delta;

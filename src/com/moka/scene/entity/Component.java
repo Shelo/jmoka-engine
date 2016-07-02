@@ -2,6 +2,7 @@ package com.moka.scene.entity;
 
 import com.moka.core.Moka;
 import com.moka.signals.Receiver;
+import com.moka.time.Time;
 import com.moka.triggers.Trigger;
 import com.moka.utils.JMokaException;
 import com.moka.utils.JMokaLog;
@@ -91,25 +92,41 @@ public abstract class Component implements Receiver
     public void log(String message)
     {
         String tag = getEntity().getName() + " -> " + this.getClass().getSimpleName();
-        JMokaLog.o(tag, message);
+        JMokaLog.o("Component:" + tag, message);
     }
 
     /**
-     * Throws a descriptive {@link JMokaException}.
+     * Throws a descriptive {@link JMokaException}. This will crash the Engine in a graceful
+     * way.
      *
      * @param message the message for the exception.
      */
-    public void raise(String message)
+    public void raiseError(String message)
     {
-        String tag = getEntity().getName() + " -> " + this.getClass().getSimpleName();
-        throw new JMokaException("[" + tag + "] " + message);
+        String tag = getEntity().getName() + "->" + this.getClass().getSimpleName();
+        throw new JMokaException("[Component:" + tag + "] " + message);
     }
 
+    /**
+     * Logs an error silently (i.e. not crashing).
+     *
+     * @param message the message for the exception.
+     */
+    public void silentError(String message)
+    {
+        String tag = getEntity().getName() + "->" + this.getClass().getSimpleName();
+        System.err.println("[Component:" + tag + "] " + message);
+    }
+
+    /**
+     * Shortcut method to retrieve the delta time (see {@link Time#getDelta()}).
+     *
+     * @return the delta time.
+     */
     public float getDelta()
     {
         return Moka.getTime().getDelta();
     }
-
 
     @Override
     public void onSignal(String signal, Object value)

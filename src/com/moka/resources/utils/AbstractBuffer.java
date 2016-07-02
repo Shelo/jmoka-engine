@@ -38,4 +38,9 @@ public abstract class AbstractBuffer<T> implements Iterable<T>
     {
         return objects.iterator();
     }
+
+    public int size()
+    {
+        return objects.size();
+    }
 }

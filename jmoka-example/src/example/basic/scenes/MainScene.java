@@ -26,6 +26,12 @@ public class MainScene extends Scene
     }
 
     @Override
+    public void onPostCreate()
+    {
+
+    }
+
+    @Override
     public void onUpdate()
     {
 

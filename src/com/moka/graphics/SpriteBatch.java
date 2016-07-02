@@ -62,7 +62,9 @@ public class SpriteBatch
     public void draw(Sprite sprite)
     {
         Vector2 pos = sprite.getTransform().getPosition();
-        draw(sprite.getTexture(), pos.x, pos.y, (int) sprite.getWidth(), (int) sprite.getHeight(), sprite.getTint());
+
+        draw(sprite.getTexture(), pos.x, pos.y, (int) sprite.getWidth(), (int) sprite.getHeight(),
+                sprite.getTint(), sprite.getTransform().getRotation());
     }
 
     public void draw(Texture texture, float x, float y, Color color)
@@ -144,10 +146,12 @@ public class SpriteBatch
 
     public void draw(Texture texture, float x, float y, int width, int height, Color color)
     {
+        // Code duplicated to avoid non useful multiplication.
+
         // set the texture.
         setTexture(texture);
 
-        // too large batch, render all.
+        // batch overflow, render all.
         if (vc >= VERTEX_BUFFER_SIZE) {
             render();
         }

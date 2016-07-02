@@ -29,7 +29,7 @@ public class Bullet extends Component
         rigidBody = getComponent(RigidBody.class);
 
         if (rigidBody == null)
-            raise("RigidBody component missing.");
+            raiseError("RigidBody component missing.");
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package com.moka.components;
 
 import com.moka.graphics.*;
-import com.moka.math.Matrix3;
 import com.moka.math.Rectangle;
 import com.moka.math.Vector2;
 import com.moka.scene.entity.ComponentAttribute;
@@ -14,7 +13,7 @@ import static org.lwjgl.opengl.GL11.*;
  *
  * @author Shelo
  */
-public class Sprite extends Drawable
+public class Sprite extends DrawableComponent
 {
     private Rectangle clipRect;
     private Texture texture;
@@ -78,7 +77,7 @@ public class Sprite extends Drawable
     public void render(Renderer renderer)
     {
         if (texture == null) {
-            raise("there's no texture to draw.");
+            raiseError("there's no texture to draw.");
         }
 
         // if batch option is enabled, just batch.

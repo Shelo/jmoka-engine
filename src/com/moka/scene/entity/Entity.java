@@ -1,6 +1,6 @@
 package com.moka.scene.entity;
 
-import com.moka.graphics.Drawable;
+import com.moka.graphics.DrawableComponent;
 import com.moka.scene.Scene;
 import com.moka.utils.JMokaException;
 
@@ -14,7 +14,7 @@ public class Entity
     private final String name;
 
     private boolean destroyed;
-    private Drawable drawable;
+    private DrawableComponent drawable;
     private String group;
     private Scene scene;
 
@@ -39,8 +39,8 @@ public class Entity
     {
         component.setEntity(this);
 
-        if (component instanceof Drawable) {
-            drawable = (Drawable) component;
+        if (component instanceof DrawableComponent) {
+            drawable = (DrawableComponent) component;
         } else {
             components.add(component);
         }
@@ -55,8 +55,9 @@ public class Entity
         }
 
         for (Component component : components) {
-            if (component.isEnabled())
+            if (component.isEnabled()) {
                 component.onCreate();
+            }
         }
     }
 
@@ -98,6 +99,8 @@ public class Entity
                     "programming error.");
         }
 
+        onDestroy();
+
         destroyed = true;
     }
 
@@ -118,6 +121,10 @@ public class Entity
      */
     public <T extends Component> T getComponent(Class<T> componentClass)
     {
+        if (componentClass.isInstance(drawable)) {
+            return componentClass.cast(drawable);
+        }
+
         for (Component component : components) {
             if (componentClass.isInstance(component)) {
                 return componentClass.cast(component);
@@ -138,7 +145,7 @@ public class Entity
     /**
      * @return this entity's drawable implementation.
      */
-    public Drawable getDrawable()
+    public DrawableComponent getDrawable()
     {
         return drawable;
     }

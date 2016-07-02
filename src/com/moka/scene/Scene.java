@@ -5,6 +5,7 @@ import com.moka.components.Sprite;
 import com.moka.graphics.Texture;
 import com.moka.scene.entity.Entity;
 import com.moka.utils.JMokaException;
+import com.moka.utils.JMokaLog;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public abstract class Scene implements Iterable<Entity>
 {
-    private static final int LAYERS = 16;
+    public static final int LAYERS = 16;
 
     private ArrayList<List<Entity>> layers = new ArrayList<>(LAYERS);
     private boolean created;
@@ -23,8 +24,9 @@ public abstract class Scene implements Iterable<Entity>
 
     public Scene()
     {
-        for (int i = 0; i < LAYERS; i++)
+        for (int i = 0; i < LAYERS; i++) {
             layers.add(new ArrayList<>());
+        }
     }
 
     private class Iter implements Iterator<Entity>
@@ -34,8 +36,7 @@ public abstract class Scene implements Iterable<Entity>
 
         private Iterator<Entity> nextNonEmpty(boolean update)
         {
-            for (int i = cursor + 1; i < layers.size(); i++)
-            {
+            for (int i = cursor + 1; i < layers.size(); i++) {
                 if (update)
                     cursor = i;
 
@@ -82,6 +83,12 @@ public abstract class Scene implements Iterable<Entity>
     public abstract void onCreate();
 
     /**
+     * Called just after creating the scene, it is useful to set values
+     * to components but they need to be created in the first place.
+     */
+    public abstract void onPostCreate();
+
+    /**
      * Called every frame just before updating every entity.
      * This is intended to be used for managing resources and create custom
      * managers and systems.
@@ -89,13 +96,14 @@ public abstract class Scene implements Iterable<Entity>
     public abstract void onUpdate();
 
     /**
-     * Called when the game decides that it will show another scene, but not totally exiting the game nor
-     * destroying this particular scene.
+     * Called when the game decides that it will show another scene, but not totally exiting the
+     * game nor destroying this particular scene.
      */
     public abstract void onLeave();
 
     /**
-     * Called when the game shows this scene the first time or the scene is shown and it wasn't destroyed.
+     * Called when the game shows this scene the first time or the scene is shown and it wasn't
+     * destroyed.
      */
     public abstract void onResume();
 
@@ -109,8 +117,7 @@ public abstract class Scene implements Iterable<Entity>
      */
     public final void update()
     {
-        for (int j = layers.size() - 1; j >= 0; j--)
-        {
+        for (int j = layers.size() - 1; j >= 0; j--) {
             List<Entity> entities = layers.get(j);
 
             for (int i = entities.size() - 1; i >= 0; i--)
@@ -132,10 +139,13 @@ public abstract class Scene implements Iterable<Entity>
             onCreate();
 
             // create every entity.
-            for (Entity entity : this)
+            for (Entity entity : this) {
                 entity.create();
+            }
 
             created = true;
+
+            onPostCreate();
         }
     }
 
@@ -148,8 +158,7 @@ public abstract class Scene implements Iterable<Entity>
 
     public void clean()
     {
-        for (int j = layers.size() - 1; j >= 0; j--)
-        {
+        for (int j = layers.size() - 1; j >= 0; j--) {
             List<Entity> entities = layers.get(j);
 
             for (int i = entities.size() - 1; i >= 0; i--) {
@@ -164,7 +173,7 @@ public abstract class Scene implements Iterable<Entity>
     /**
      * Constructs a new {@link Entity} and add it to the hierarchy.
      *
-     * @param name name for the new entity.
+     * @param name  name for the new entity.
      * @param layer layer number for the new entity.
      * @return the new {@link Entity}.
      */
@@ -190,7 +199,7 @@ public abstract class Scene implements Iterable<Entity>
                 groupEntities.add(entity);
         }*/
 
-        return groupEntities.isEmpty()? null : groupEntities;
+        return groupEntities.isEmpty() ? null : groupEntities;
     }
 
     /**
@@ -229,9 +238,9 @@ public abstract class Scene implements Iterable<Entity>
     /**
      * Creates a new {@link Entity} with a camera on it.
      *
-     * @param name      name for the getEntity.
-     * @param main      sets this camera as the main one.
-     * @return          the entity.
+     * @param name name for the getEntity.
+     * @param main sets this camera as the main one.
+     * @return the entity.
      */
     public Entity newCamera(String name, boolean main)
     {
@@ -240,8 +249,9 @@ public abstract class Scene implements Iterable<Entity>
 
         entity.addComponent(camera);
 
-        if (main)
+        if (main) {
             camera.setAsMain();
+        }
 
         return entity;
     }
@@ -270,22 +280,15 @@ public abstract class Scene implements Iterable<Entity>
     public void destroy()
     {
         layers.clear();
-        // layers.clear();
-    }
 
-    public void setCreated(boolean created)
-    {
-        this.created = created;
+        created = false;
+
+        log("Scene destroyed.");
     }
 
     public boolean isCreated()
     {
         return created;
-    }
-
-    public void setContext(Context context)
-    {
-        this.context = context;
     }
 
     public Context getContext()
@@ -296,10 +299,21 @@ public abstract class Scene implements Iterable<Entity>
     public int getEntitiesCount()
     {
         int count = 0;
-        for (List<Entity> layer : layers)
+        for (List<Entity> layer : layers) {
             count += layer.size();
+        }
 
         return count;
+    }
+
+    /**
+     * Log a descriptive message from this scene.
+     *
+     * @param message message to log.
+     */
+    public void log(Object message)
+    {
+        JMokaLog.o("Scene:" + this.getClass().getSimpleName(), message.toString());
     }
 
     @Override
