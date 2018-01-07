@@ -48,7 +48,7 @@ public class R extends Resources
     @BindLoad(path = "data/", extension = "oping")
     public static class data
     {
-        ConfigDataFile enemies;
+        public static ConfigDataFile enemies;
     }
 
     @BindLoad(skip = true, path = "prefabs/", extension = "oping")

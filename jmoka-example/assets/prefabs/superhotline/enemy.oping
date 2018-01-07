@@ -1,0 +1,18 @@
++ Root
+    - Group: Enemies
+    - Size: 64, 64
+    - Position: 100, 100
+
+    + Sprite
+        - Texture: @textures.enemy02
+
+    + RigidBody
+        - Shape: BOX
+        - MaskBits: 5
+        - Size: 32, 12
+        - GravityScale: 0
+        - FixedRotation: true
+        - CategoryBits: 8
+
+    + Hotline:MoveTowards
+        - Target: @objects.player

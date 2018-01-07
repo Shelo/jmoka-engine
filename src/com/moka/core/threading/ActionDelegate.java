@@ -2,11 +2,11 @@ package com.moka.core.threading;
 
 import com.moka.scene.entity.Entity;
 
-public abstract class ActionDelegator
+public abstract class ActionDelegate
 {
     public abstract void execute(Entity entity, Runnable runnable);
 
-    public static ActionDelegator update = new ActionDelegator()
+    public static ActionDelegate update = new ActionDelegate()
     {
         @Override
         public void execute(Entity entity, Runnable runnable)

@@ -16,10 +16,10 @@ public abstract class Package
 
     public final boolean hasComponent(String name)
     {
-        for (Class<? extends Component> component : components)
-        {
-            if (component.getSimpleName().equals(name))
+        for (Class<? extends Component> component : components) {
+            if (component.getSimpleName().equals(name)) {
                 return true;
+            }
         }
 
         return false;
@@ -32,10 +32,10 @@ public abstract class Package
 
     public Class<? extends Component> getComponent(String name)
     {
-        for (Class<? extends Component> component : components)
-        {
-            if (component.getSimpleName().equals(name))
+        for (Class<? extends Component> component : components) {
+            if (component.getSimpleName().equals(name)) {
                 return component;
+            }
         }
 
         return null;
@@ -47,5 +47,6 @@ public abstract class Package
     }
 
     public abstract String getCommonName();
+
     public abstract void registerComponents(LinkedList<Class<? extends Component>> components);
 }

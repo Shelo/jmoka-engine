@@ -16,7 +16,7 @@ public class LookAt extends Component
 		{
 			buffer.set(target);
 			buffer.sub(getTransform().getPosition());
-			getTransform().setRotation(buffer.angle());
+			getTransform().setRotationRadians(buffer.angle());
 		}
 		Pools.vec2.put(buffer);
     }

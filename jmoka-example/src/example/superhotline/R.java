@@ -1,10 +1,12 @@
-package example.integration;
+package example.superhotline;
 
 import com.moka.graphics.Texture;
+import com.moka.math.Vector2;
 import com.moka.prefabs.Prefab;
 import com.moka.resources.BindLoad;
 import com.moka.resources.Resources;
 import com.moka.resources.utils.EntityBuffer;
+import com.moka.scene.entity.Entity;
 import com.moka.utils.ConfigDataFile;
 
 public class R extends Resources
@@ -22,7 +24,7 @@ public class R extends Resources
 
     public static class screen
     {
-        public static int WIDTH = 64 * 6;
+        public static int WIDTH = 64 * 16;
         public static int HEIGHT = 64 * 9;
     }
 
@@ -30,38 +32,21 @@ public class R extends Resources
     public static class textures
     {
         public static Texture player;
+        public static Texture bullet01;
         public static Texture enemy02;
-
-        @BindLoad(path = "tiles/", extension = "png")
-        public static class tiles
-        {
-            public static Texture dirt01;
-        }
     }
 
-    @BindLoad(path = "data/", extension = "oping")
-    public static class data
-    {
-        public static ConfigDataFile enemies;
-    }
-
-    @BindLoad(delay = true, path = "prefabs/integration/", extension = "oping")
+    @BindLoad(delay = true, path = "prefabs/superhotline/", extension = "oping")
     public static class prefabs
     {
+        public static Prefab bullet;
         public static Prefab player;
         public static Prefab enemy;
-        public static Prefab tileMap;
-
-        @BindLoad(path = "tiles/", extension = "oping")
-        public static class tiles
-        {
-            public static Prefab dirt01;
-        }
     }
 
-    public static class entities
-    {
-        public static EntityBuffer tiles = new EntityBuffer(10);
+    public static class objects {
+        public static Vector2 mousePosition = new Vector2();
+        public static EntityBuffer player = new EntityBuffer(1);
     }
 
     public R(String root)

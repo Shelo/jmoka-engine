@@ -1,0 +1,19 @@
++ OpingRoot
+    - Group: Bullets
+    - Size: 32, 12
+
+    + Bullet
+        - Speed: 500
+        - LifeTime: 1
+        - Damage: 10
+
+    + Sprite
+        - Texture: @textures.bullet01
+
+    + RigidBody
+        - Shape: BOX
+        - MaskBits: 5
+        - Size: 32, 12
+        - GravityScale: 0
+        - FixedRotation: true
+        - CategoryBits: 8

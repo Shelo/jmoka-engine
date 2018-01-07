@@ -20,9 +20,9 @@ public class MainScene extends Scene
         Entity background = R.prefabs.background.newEntity("Background");
         background.getComponent(Background.class).setPlayer(player.getTransform());
 
-        // R.prefabs.enemy01.newEntity("Enemy01_01", 532, R.screen.HEIGHT / 3 * 2);
-        // R.prefabs.enemy02.newEntity("Enemy02_01", 500, R.screen.HEIGHT / 2);
-        // R.prefabs.enemy03.newEntity("Enemy03_01", 532, R.screen.HEIGHT / 3);
+        R.prefabs.enemy01.newEntity("Enemy01_01", 532, R.screen.HEIGHT / 3 * 2);
+        R.prefabs.enemy02.newEntity("Enemy02_01", 500, R.screen.HEIGHT / 2);
+        R.prefabs.enemy03.newEntity("Enemy03_01", 532, R.screen.HEIGHT / 3);
     }
 
     @Override

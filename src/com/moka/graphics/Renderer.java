@@ -116,6 +116,9 @@ public final class Renderer extends SubEngine
                     if (drawable.shouldBatch()) {
                         batchShader.bind();
                     } else {
+                        batchShader.bind();
+                        batch.render();
+
                         shader.bind();
                     }
 

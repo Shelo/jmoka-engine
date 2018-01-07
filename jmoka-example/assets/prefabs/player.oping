@@ -21,3 +21,9 @@
 
     + SpaceShooter:SimpleShooter
     + SpaceShooter:CameraFollow
+    + Controllable
+            - TopSpeed: 500
+            - Acceleration: 1200
+            - Drag: 2000
+            - AxisVertical: @axes.VERTICAL
+            - AxisHorizontal: @axes.HORIZONTAL

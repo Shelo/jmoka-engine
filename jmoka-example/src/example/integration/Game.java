@@ -16,22 +16,32 @@ public class Game extends Scene
     {
         newCamera("Main Camera", true);
 
+        tileMapEntity = R.prefabs.tileMap.newEntity("TileMap");
+        populateTileMap();
 
         EnemyFactory enemyFactory = new EnemyFactory(R.data.enemies);
         enemyFactory.spawnHorde();
 
-        R.entities.tiles.add(R.prefabs.enemy.newEntity(null, false));
-
-        tileMapEntity = R.prefabs.tileMap.newEntity("TileMap");
-
         R.prefabs.player.newEntity("Player");
+    }
+
+    private void populateTileMap()
+    {
+        Entity leftDirt = R.prefabs.tiles.dirt01.newEntity(null, false);
+        Entity rightDirt = R.prefabs.tiles.dirt01.newEntity(null, false);
+
+        rightDirt.getTransform().setRotation(90);
+
+        R.entities.tiles.add(leftDirt);
+        R.entities.tiles.add(rightDirt);
     }
 
     @Override
     public void onPostCreate()
     {
         TileMap tileMap = tileMapEntity.getComponent(TileMap.class);
-        tileMap.line(0, 0, 10, 1, (byte) 0);
+        tileMap.line(0, 0, 1, 9, (byte) 0);
+        tileMap.line(5, 0, 1, 9, (byte) 1);
     }
 
     @Override
@@ -70,12 +80,16 @@ public class Game extends Scene
         // set display options.
         Moka.getDisplay().createDisplay(R.screen.WIDTH, R.screen.HEIGHT, "Integration");
 
+        // use and export the manifest.
         Moka.getNameManager().usePackage(
                 "Integration",
                 "jmoka-example/src/",
                 "example.integration.integration",
                 true
         );
+
+        // example production package.
+        // Moka.getNameManager().usePackage(example.integration.integration.PackageManifest.class);
 
         // set up scenes.
         Moka.getContext().addScene(new Game());

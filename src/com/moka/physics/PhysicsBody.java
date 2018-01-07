@@ -77,7 +77,7 @@ public abstract class PhysicsBody extends Component
     public void fixedUpdate()
     {
         getTransform().setPosition(toPixel(body.getPosition().x), toPixel(body.getPosition().y));
-        getTransform().setRotation(body.getAngle());
+        getTransform().setRotationRadians(body.getAngle());
     }
 
     private void shapeAs()

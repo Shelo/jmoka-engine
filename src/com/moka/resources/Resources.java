@@ -14,6 +14,69 @@ import java.util.ArrayList;
 /**
  * Extend this class to use resource references into Prefab files, also this gives
  * a nice way for loading resources easily.
+ * <p>
+ * Usage:
+ * <pre>
+ * {@code
+ * public class R extends Resources
+ * {
+ *      public static class axes
+ *      {
+ *          public static final String HORIZONTAL = "horizontal";
+ *          public static final String VERTICAL = "vertical";
+ *      }
+ *
+ *      public static class buttons
+ *      {
+ *          public static final String FIRE_1 = "fire1";
+ *      }
+ *
+ *      public static class screen
+ *      {
+ *          public static int WIDTH = 64 * 13;
+ *          public static int HEIGHT = 64 * 8;
+ *      }
+ *
+ *      \@BindLoad(path = "img/", extension = "png")
+ *      public static class textures
+ *      {
+ *          public static Texture hotline;
+ *          public static Texture enemy02;
+ *
+ *          \@BindLoad(path = "tiles/", extension = "png")
+ *          public static class tiles
+ *          {
+ *              public static Texture dirt01;
+ *          }
+ *      }
+ *
+ *      \@BindLoad(path = "data/", extension = "oping")
+ *      public static class data
+ *      {
+ *          public static ConfigDataFile enemies;
+ *      }
+ *
+ *      \@BindLoad(delay = true, path = "prefabs/integration/", extension = "oping")
+ *      public static class prefabs
+ *      {
+ *          public static Prefab hotline;
+ *          public static Prefab enemy;
+ *          public static Prefab tileMap;
+ *
+ *          \@BindLoad(path = "tiles/", extension = "oping")
+ *          public static class tiles
+ *          {
+ *              public static Prefab dirt01;
+ *          }
+ *      }
+ *
+ *      public R(String root)
+ *      {
+ *          super(root);
+ *      }
+ * }
+ * }
+ * </pre>
  */
 public abstract class Resources
 {
@@ -143,6 +206,7 @@ public abstract class Resources
     {
         bindLoad(root, getClass(), null, false);
 
+        // TODO: why is this commented-out ?
         /*
         for (Class<?> innerClass : getClass().getDeclaredClasses()) {
             BindLoad bindLoad = innerClass.getAnnotation(BindLoad.class);

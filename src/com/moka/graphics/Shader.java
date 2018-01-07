@@ -34,29 +34,22 @@ public class Shader
         createShader(vertexCode, GL_VERTEX_SHADER);
         createShader(fragmentCode, GL_FRAGMENT_SHADER);
 
-        // Link and check errors.
+        // link and check errors.
         glLinkProgram(program);
 
-        /*
-        glBindAttribLocation(program, 0, "a_position");
-        glBindAttribLocation(program, 1, "a_texCoord");
-
-        // TODO: bad solution, but will do for now.
-        if (color)
-            glBindAttribLocation(program, 2, "a_color");
-        */
-
-        if (glGetProgrami(program, GL_LINK_STATUS) == 0)
+        if (glGetProgrami(program, GL_LINK_STATUS) == 0) {
             throw new JMokaException(glGetShaderInfoLog(program, 1024));
+        }
 
         int vao = glGenVertexArrays();
         glBindVertexArray(vao);
 
-        // Validate and check errors.
+        // validate and check errors.
         glValidateProgram(program);
 
-        if (glGetProgrami(program, GL_VALIDATE_STATUS) == 0)
+        if (glGetProgrami(program, GL_VALIDATE_STATUS) == 0) {
             throw new JMokaException(glGetProgramInfoLog(program, 1024));
+        }
 
         uniformLocations = new HashMap<>();
 
@@ -80,14 +73,16 @@ public class Shader
     {
         int shader = glCreateShader(type);
 
-        if (shader == 0)
+        if (shader == 0) {
             throw new JMokaException("Shader creation failed.");
+        }
 
         glShaderSource(shader, code);
         glCompileShader(shader);
 
-        if (glGetShaderi(shader, GL_COMPILE_STATUS) == 0)
+        if (glGetShaderi(shader, GL_COMPILE_STATUS) == 0) {
             throw new JMokaException("Shader compile error: " + glGetShaderInfoLog(shader, 1024));
+        }
 
         glAttachShader(program, shader);
 
@@ -97,16 +92,18 @@ public class Shader
     public int getUniformLocation(String uniform)
     {
         // if location is contained, return it.
-        if (uniformLocations.containsKey(uniform))
+        if (uniformLocations.containsKey(uniform)) {
             return uniformLocations.get(uniform);
+        }
 
         // if not, we ask openGL for the uniform location, store it and return it.
         int location = glGetUniformLocation(program, uniform);
 
-        if (location == -1)
+        if (location == -1) {
             throw new JMokaException("No uniform with name " + uniform);
-        else
+        } else {
             uniformLocations.put(uniform, location);
+        }
 
         JMokaLog.o(TAG, "New uniform: " + uniform + ", at location " + location);
         return location;

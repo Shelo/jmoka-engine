@@ -33,7 +33,8 @@ public final class Prefab
 
     /**
      * Creates a new Prefab for a given context with given components.
-     * @param components    components.
+     *
+     * @param components components.
      */
     public Prefab(PreComponents components)
     {
@@ -101,9 +102,9 @@ public final class Prefab
     /**
      * Sets the position of the prefab to the position vector and then instantiates.
      *
-     * @param name          name for the new instance.
-     * @param position      position for the new instance.
-     * @return              the new getEntity.
+     * @param name     name for the new instance.
+     * @param position position for the new instance.
+     * @return the new getEntity.
      */
     public Entity newEntity(String name, Vector2 position)
     {
@@ -114,10 +115,10 @@ public final class Prefab
     /**
      * Sets the position of the prefab to the x, y values and then instantiates.
      *
-     * @param name  name for the new instance.
-     * @param x     x position on the world.
-     * @param y     y position on the world.
-     * @return      the new getEntity.
+     * @param name name for the new instance.
+     * @param x    x position on the world.
+     * @param y    y position on the world.
+     * @return the new getEntity.
      */
     public Entity newEntity(String name, float x, float y)
     {
@@ -133,9 +134,9 @@ public final class Prefab
     /**
      * Sets the position of the prefab to the x, y values and then instantiates.
      *
-     * @param name      name for the new instance.
-     * @param layer     layer for the new instance.
-     * @return          the new getEntity.
+     * @param name  name for the new instance.
+     * @param layer layer for the new instance.
+     * @return the new getEntity.
      */
     public Entity newEntity(String name, int layer)
     {
@@ -146,9 +147,9 @@ public final class Prefab
     /**
      * Creates a new instance with using this prefab states.
      *
-     * @param name          unique name for the new instance.
-     * @param addToScene    should the entity be added to the scene automatically.
-     * @return              the getEntity.
+     * @param name unique name for the new instance.
+     * @param addToScene should the entity be added to the scene automatically.
+     * @return the getEntity.
      */
     public Entity newEntity(String name, boolean addToScene)
     {
@@ -165,59 +166,48 @@ public final class Prefab
         // set transform values for this getEntity.
         Transform transform = entity.getTransform();
         transform.setPosition(position.cpy());
-        transform.setRotation(rotation);
+        transform.setRotationRadians(rotation);
 
         if (useOwnSize) {
             transform.setSize(size.cpy());
         }
 
         // creates every component and adds it to the getEntity.
-        for (Class<?> cClass : components.keySet())
-        {
+        for (Class<?> cClass : components.keySet()) {
             ComponentAttrs componentAttrs = components.get(cClass);
             Component component;
 
-            try
-            {
+            try {
                 component = (Component) cClass.newInstance();
                 entity.addComponent(component);
 
                 // iterate over the methods and attributes of the component.
-                for (Method method : componentAttrs.getKeySet())
-                {
+                for (Method method : componentAttrs.getKeySet()) {
                     Object[] attr = componentAttrs.getValue(method);
 
                     if (attr == null) {
                         throw new JMokaException("Some error happened... Maybe the resource is null at this time?");
                     }
 
-                    for (int i = 0; i < attr.length; i++)
-                    {
+                    for (int i = 0; i < attr.length; i++) {
                         // if the attr[i] is an instance of a trigger, then get a new instance of that trigger
                         // in order to pass it to the setter method.
                         if (attr[i] != null && attr[i].getClass().isAssignableFrom(TriggerPromise.class))
                             attr[i] = Trigger.newTriggerInstance(((TriggerPromise) attr[i]).getTriggerClass());
                     }
 
-                    try
-                    {
+                    try {
                         method.invoke(component, attr);
-                    }
-                    catch (InvocationTargetException e)
-                    {
+                    } catch (InvocationTargetException e) {
                         throw new JMokaException("Cannot set the attribute '"
                                 + method.getAnnotation(ComponentAttribute.class).value() + "' because: "
                                 + e.getTargetException().getMessage());
                     }
                 }
-            }
-            catch (InstantiationException e)
-            {
+            } catch (InstantiationException e) {
                 throw new JMokaException("Cannot instantiate the component " + cClass.getName()
                         + ", maybe there's no non-args constructor.");
-            }
-            catch (IllegalAccessException e)
-            {
+            } catch (IllegalAccessException e) {
                 throw new JMokaException("Cannot access the component " + cClass.getName() + ".");
             }
         }
@@ -233,8 +223,8 @@ public final class Prefab
      * Creates a new instance with using this prefab states. The instance will
      * be automatically added to the stage.
      *
-     * @param name  unique name for the new instance.
-     * @return      the getEntity.
+     * @param name unique name for the new instance.
+     * @return the getEntity.
      */
     public Entity newEntity(String name)
     {
@@ -247,7 +237,7 @@ public final class Prefab
     }
 
     /**
-     * This is just a hack so I don't have to write that big HashMap every time.
+     * This is just a shortcut so I don't have to write that big HashMap every time.
      */
     public static class PreComponents extends HashMap<Class<?>, ComponentAttrs>
     {
@@ -255,7 +245,7 @@ public final class Prefab
     }
 
     /**
-     * Wrapper and helper class to the prefab.
+     * Wrapper and helper class for the prefab.
      */
     public static class ComponentAttrs
     {

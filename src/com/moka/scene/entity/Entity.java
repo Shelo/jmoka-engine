@@ -107,14 +107,14 @@ public class Entity
     /**
      * Finds a component by the given class.
      *
-     * Usage
-     * <code>
+     * Usage:
+     * <pre>
      * MyComponent myComponent = myEntity.getComponent(MyComponent.class);
      *
      * if (myComponent != null) {
      *     // component found!
      * }
-     * </code>
+     * </pre>
      *
      * @param componentClass the component class to be fetched.
      * @return the component object or {@code null} if none.

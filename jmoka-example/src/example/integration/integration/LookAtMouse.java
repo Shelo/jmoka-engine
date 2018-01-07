@@ -24,7 +24,7 @@ public class LookAtMouse extends Component
 
         cursorBuffer.sub(getTransform().getPosition());
 
-        getEntity().getTransform().setRotation(cursorBuffer.angle());
+        getEntity().getTransform().setRotationRadians(cursorBuffer.angle());
     }
 
     @Override

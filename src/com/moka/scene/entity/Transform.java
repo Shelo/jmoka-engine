@@ -132,7 +132,12 @@ public class Transform
         this.position.set(position);
     }
 
-    public void setRotation(float radians)
+    public void setRotation(float degrees)
+    {
+        this.rotation.toRotation(degrees * 0.01745329252f);
+    }
+
+    public void setRotationRadians(float radians)
     {
         this.rotation.toRotation(radians);
     }
@@ -291,7 +296,7 @@ public class Transform
         Vector2 buffer = Pools.vec2.take(0, 0);
         buffer.set(target);
         buffer.sub(position);
-        setRotation(buffer.angle());
+        setRotationRadians(buffer.angle());
         Pools.vec2.put(buffer);
     }
 }

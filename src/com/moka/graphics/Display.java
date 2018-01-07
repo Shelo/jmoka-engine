@@ -18,13 +18,21 @@ public final class Display extends SubEngine
 {
     private static final String TAG = "DISPLAY";
 
-    WindowFocusCallback windowFocusCallback;
+    private WindowFocusCallback windowFocusCallback;
+
     private boolean focus;
     private String title;
     private long window;
     private int height;
     private int width;
 
+    /**
+     * Creates the main display for the game.
+     *
+     * @param width  initial width of the screen.
+     * @param height initial height of the screen.
+     * @param title  initial title of the screen.
+     */
     public void createDisplay(int width, int height, String title)
     {
         this.height = height;
@@ -46,7 +54,7 @@ public final class Display extends SubEngine
 
         // center window.
         ByteBuffer vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowPos(window,(GLFWvidmode.width(vidMode) - width) / 2,
+        glfwSetWindowPos(window, (GLFWvidmode.width(vidMode) - width) / 2,
                 (GLFWvidmode.height(vidMode) - height) / 2);
 
         glfwMakeContextCurrent(window);

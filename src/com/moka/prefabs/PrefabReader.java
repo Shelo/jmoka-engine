@@ -36,11 +36,11 @@ public abstract class PrefabReader
     public abstract Prefab newPrefab(String filePath);
 
     /**
-     * Test the value to match the param class, also if the param type is a Entity, this will find
+     * Test the value to match the param class, also if the param type is an Entity, this will find
      * that getEntity for you. If the value is a reference to a resource value, that value will be
      * searched and delivered, and finally, if the value is an expression, this will attempt to
      * resolve it.
-     * <p/>
+     *
      * TODO: catch components with EntityName.ComponentClass.
      *
      * @param param the parameter class

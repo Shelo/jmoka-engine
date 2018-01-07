@@ -32,9 +32,9 @@ public class Time extends SubEngine
      * for a great way to synchronize events even with frame drops.
      *
      * Usage:
-     * <code>
+     * <pre>
      * getTransform().move(100 * getDelta(), 0);
-     * </code>
+     * </pre>
      *
      * This will effectively move the entity 100 pixels to the right, per second.
      *

@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Wrapper for pool static classes.
  * <p>
- * Pool classes have a general contract: take, put and never use again, i.e. after taking an object
+ * Pool classes have a general contract: take and put, never store, i.e. after taking an object
  * from a given pool, you should use it and then put it on the pool knowing well that this object
  * should never be used again with another reference other than one given by take methods.
  */
@@ -68,7 +68,20 @@ public class Pools
         }
 
         /**
-         * Takes a vector2 object from the pool setting x and y values to 0.
+         * Takes a vector2 object from the pool setting x and y values to 0 and passing that vector
+         * to the callback, this allows for a safe usage of vectors without losing references by
+         * mistake.
+         * <p>
+         * It is not recommended to use this method frequently, since it adds some overhead.
+         * <p>
+         * Usage (using lambdas):
+         * <pre>
+         * Pools.vec2.with(vector -> {
+         *      // do something with the vector.
+         * })
+         * </pre>
+         *
+         * @param callback the using method for the vector (may be a lambda)
          */
         public static void with(UsingCallback<Vector2> callback)
         {

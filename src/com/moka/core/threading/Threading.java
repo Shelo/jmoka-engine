@@ -9,17 +9,16 @@ public class Threading
 {
     private static Queue<EntityRunner> runners = new LinkedBlockingQueue<>();
 
-    public static Runnable runnable(ActionDelegator delegator, Entity entity)
+    public static Runnable runnable(ActionDelegate delegator, Entity entity)
     {
         EntityRunner runner = runners.poll();
 
-        if (runner == null)
-        {
+        if (runner == null) {
             runner = new EntityRunner();
         }
 
         runner.setEntity(entity);
-        runner.setDelegator(delegator);
+        runner.setDelegate(delegator);
 
         return runner;
     }

@@ -24,8 +24,7 @@ public class Texture
 
     public Texture(String filePath, Filter filter)
     {
-        if (filePath != null)
-        {
+        if (filePath != null) {
             IntBuffer width = BufferUtils.createIntBuffer(1);
             IntBuffer height = BufferUtils.createIntBuffer(1);
             IntBuffer components = BufferUtils.createIntBuffer(1);
@@ -51,9 +50,7 @@ public class Texture
                     GL_UNSIGNED_BYTE, imageBuffer);
 
             STBImage.stbi_image_free(imageBuffer);
-        }
-        else
-        {
+        } else {
             throw new JMokaException("The image's filePath cannot be null.");
         }
     }
@@ -65,10 +62,11 @@ public class Texture
 
     private int getFilter(Filter filter)
     {
-        if (filter == Filter.NEAREST)
+        if (filter == Filter.NEAREST) {
             return GL_NEAREST;
-        else
-            return GL_LINEAR;
+        }
+
+        return GL_LINEAR;
     }
 
     public void bind()

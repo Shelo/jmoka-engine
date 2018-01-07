@@ -4,7 +4,7 @@ import com.moka.scene.entity.Entity;
 
 public class EntityRunner implements Runnable
 {
-    protected ActionDelegator delegator;
+    protected ActionDelegate delegate;
     protected Entity entity;
 
     public void setEntity(Entity entity)
@@ -12,14 +12,14 @@ public class EntityRunner implements Runnable
         this.entity = entity;
     }
 
-    public void setDelegator(ActionDelegator delegator)
+    public void setDelegate(ActionDelegate delegate)
     {
-        this.delegator = delegator;
+        this.delegate = delegate;
     }
 
     @Override
     public void run()
     {
-        delegator.execute(entity, this);
+        delegate.execute(entity, this);
     }
 }

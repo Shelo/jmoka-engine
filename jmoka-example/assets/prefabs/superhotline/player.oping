@@ -1,21 +1,23 @@
 + Prefab
-    - Position: screen.WIDTH / 2, screen.HEIGHT / 2
+    - Position: 200, screen.HEIGHT / 2
     - Rotation: 0
     - Group: Player
-    - Size: 32, 32
+    - Size: 64, 64
     - Layer: 1
 
     + Sprite
         - Texture: @textures.player
 
     + Controllable
-        - TopSpeed: 500
+        - TopSpeed: 1000
         - Acceleration: 1200
-        - Drag: 2000
+        - Drag: 1000
         - AxisVertical: @axes.VERTICAL
         - AxisHorizontal: @axes.HORIZONTAL
 
     + LookAt
         - Target: @objects.mousePosition
 
-    + Hotline:CameraFollow
+    + Shooting
+        - BulletPrefab: @prefabs.bullet
+        - Button: @buttons.FIRE_1

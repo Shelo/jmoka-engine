@@ -1,0 +1,12 @@
++ Prefab
+    - Group: Tiles
+    - Size: 64 * 13, 64
+    - Layer: 0
+    - Rotation: 270
+
+    + Sprite
+        - Texture: @textures.tiles.dirt01
+
+    + StaticBody
+        - Shape: BOX
+        - Size: 64 * 13, 64

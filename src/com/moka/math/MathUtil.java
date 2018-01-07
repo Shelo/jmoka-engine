@@ -6,8 +6,8 @@ public class MathUtil
      * Clamps the value between two bounds.
      *
      * @param value the value to be clamped.
-     * @param min   the min bound.
-     * @param max   the max bound.
+     * @param min the min bound.
+     * @param max the max bound.
      * @return the bounded value.
      */
     public static float clamp(float value, float min, float max)
@@ -75,5 +75,27 @@ public class MathUtil
     public static float lerp(int target, float value, float f)
     {
         return (target - value) * f;
+    }
+
+    /**
+     * Moves a value with a step distance every call, until in reaches the target.
+     *
+     * The last value (when the origin is too near the target) is always the target value.
+     *
+     * @param origin the origin of the value.
+     * @param target the final value.
+     * @param step absolute distance to travel in one call.
+     * @return the next value.
+     */
+    public static float moveTowards(float origin, float target, float step)
+    {
+        float distance =  target - origin;
+        int sign = (int) (Math.abs(distance) / distance);
+
+        if (Math.abs(distance) < step) {
+            return target;
+        }
+
+        return origin + sign * step;
     }
 }
